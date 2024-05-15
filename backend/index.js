@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import multer from "multer";
+import { userRoutes } from "./routes/index.js";
 const app = express();
 
 // middlewares
@@ -33,6 +34,9 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   const file = req.file;
   res.status(200).json(file.filename);
 });
+
+app.use("/api/users", userRoutes);
+
 
 app.listen(8800, () => {
   console.log("backend working.");
