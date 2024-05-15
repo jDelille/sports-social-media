@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-
-
-import './App.css'
-import { useAxios } from './hooks/useAxios'
+import { useEffect, useState } from "react";
+import { useAxios } from "./hooks/useAxios";
+import Login from "./components/Login";
+import { AuthProvider } from "./context/AuthContext";
+import "./App.css";
+import Register from "./components/Register";
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<any>(null);
   const [body, setBody] = useState("Testing body from react");
 
   const userId = 1;
@@ -16,29 +14,32 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       await useAxios.get("users/find/" + userId).then((res) => {
-        return setUser(res.data)
-      })
-    }
+        return setUser(res.data);
+      });
+    };
 
     fetchUser();
-  }, [userId])
+  }, [userId]);
 
-  console.log(user)
+  console.log(user);
 
   const postData = {
-    body
-  }
-
+    body,
+  };
 
   const createPost = async () => {
-    return useAxios.post('/posts', postData)
-  }
+    return useAxios.post("/posts", postData);
+  };
 
   return (
     <>
-     <button onClick={createPost}>Create post</button>
+      <AuthProvider>
+        <button onClick={createPost}>Create post</button>
+        <Login />
+        <Register />
+      </AuthProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
