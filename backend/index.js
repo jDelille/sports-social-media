@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import multer from "multer";
-import { userRoutes } from "./routes/index.js";
+import { authRoutes, postRoutes, userRoutes } from "./routes/index.js";
 const app = express();
 
 // middlewares
@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
   })
 );
 app.use(cookieParser());
@@ -36,6 +36,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/auth", authRoutes);
 
 
 app.listen(8800, () => {
