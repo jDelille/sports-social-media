@@ -1,49 +1,46 @@
-import { useEffect, useState } from "react";
-import { useAxios } from "./hooks/useAxios";
-import Login from "./components/Login";
 import { AuthProvider } from "./context/AuthContext";
+import LeftSidebar from "./components/sidebar/LeftSidebar";
+import RightSidebar from "./components/sidebar/RightSidebar";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import Home from "./pages/Home";
+import "./scss/globals.scss";
+import Login from "./components/Login";
 import Register from "./components/Register";
-import useLoginModal from "./hooks/useLoginModal";
-import useRegisterModal from "./hooks/useRegisterModal";
 
 function App() {
-  const [user, setUser] = useState<any>(null);
-  const [body, setBody] = useState("Testing body from react");
-  const loginModal = useLoginModal();
-  const registerModal = useRegisterModal();
-
-
-
-  const userId = 1;
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      await useAxios.get("users/find/" + userId).then((res) => {
-        return setUser(res.data);
-      });
-    };
-
-    fetchUser();
-  }, [userId]);
-
-  console.log(user);
-
-  const postData = {
-    body,
+  const Layout = () => {
+    return (
+      <div className="layout">
+        <LeftSidebar />
+        <div className="main-content">
+          <Login />
+          <Register />
+          <Outlet />
+        </div>
+        <RightSidebar />
+      </div>
+    );
   };
 
-  const createPost = async () => {
-    return useAxios.post("/posts", postData);
-  };
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+      ],
+    },
+  ]);
 
   return (
     <>
       <AuthProvider>
-        <button onClick={createPost}>Create post</button>
-        <button onClick={loginModal.onOpen}>Login</button>
-        <button onClick={registerModal.onOpen}>Register</button>
-        <Login />
-        <Register />
+        <div>
+          <RouterProvider router={router} />
+        </div>
       </AuthProvider>
     </>
   );
