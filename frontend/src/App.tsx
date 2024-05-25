@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useAxios } from "./hooks/useAxios";
 import Login from "./components/Login";
 import { AuthProvider } from "./context/AuthContext";
-import "./App.css";
 import Register from "./components/Register";
+import useLoginModal from "./hooks/useLoginModal";
+import useRegisterModal from "./hooks/useRegisterModal";
 
 function App() {
   const [user, setUser] = useState<any>(null);
   const [body, setBody] = useState("Testing body from react");
+  const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
+
+
 
   const userId = 1;
 
@@ -35,6 +40,8 @@ function App() {
     <>
       <AuthProvider>
         <button onClick={createPost}>Create post</button>
+        <button onClick={loginModal.onOpen}>Login</button>
+        <button onClick={registerModal.onOpen}>Register</button>
         <Login />
         <Register />
       </AuthProvider>

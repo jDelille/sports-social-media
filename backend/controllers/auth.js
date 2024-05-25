@@ -2,6 +2,7 @@ import { db } from "../connect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import moment from "moment/moment.js";
 
 dotenv.config();
 
@@ -24,12 +25,14 @@ export const register = (req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
     const q =
-      "INSERT INTO users (`username`, `email`, `password`, `name`) VALUES ?";
+      "INSERT INTO users (`username`, `email`, `password`, `name`, `created_at`) VALUES ?";
     const values = [
       req.body.username,
       req.body.email,
       hashedPassword,
       req.body.name,
+      moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+
     ];
     db.query(q, [[values]], (err, data) => {
       if (err) return res.status(500).json(err);

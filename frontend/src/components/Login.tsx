@@ -1,5 +1,7 @@
 import React, { ChangeEvent, MouseEvent, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import Modal from "./modal/Modal";
+import useLoginModal from "../hooks/useLoginModal";
 
 type LoginProps = {};
 const Login: React.FC<LoginProps> = () => {
@@ -9,6 +11,7 @@ const Login: React.FC<LoginProps> = () => {
   });
   const [error, setError] = useState<any | null>(null);
   const { login } = useContext(AuthContext);
+  const loginModal = useLoginModal();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -19,14 +22,18 @@ const Login: React.FC<LoginProps> = () => {
 
     try {
       await login(inputs);
-      //   handleNavigate('/')
+      loginModal.onClose();
     } catch (error: any) {
       setError(error.response.data);
       console.log(error);
     }
   };
 
-  return (
+  const handleClose = () => {
+    loginModal.onClose();
+  };
+
+  const bodyContent = (
     <div className="login">
       <form>
         <input
@@ -46,6 +53,15 @@ const Login: React.FC<LoginProps> = () => {
         <button onClick={handleLogin}>Login</button>
       </form>
     </div>
+  );
+
+  return (
+    <Modal
+      body={bodyContent}
+      isOpen={loginModal.isOpen}
+      title={"Login"}
+      onClose={handleClose}
+    />
   );
 };
 
