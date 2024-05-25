@@ -16,9 +16,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<string | null>(initialUser);
 
   const login = async (inputs: any) => {
-    const res = await axios.post(`${APP_CONSTANTS.API_BASE_URL}/auth/login`, inputs, {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${APP_CONSTANTS.API_BASE_URL}/auth/login`,
+      inputs,
+      {
+        withCredentials: true,
+      }
+    );
 
     setCurrentUser(res.data);
   };
@@ -34,3 +38,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+
