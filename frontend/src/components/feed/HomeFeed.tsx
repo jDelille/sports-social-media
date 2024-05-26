@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useAxios } from "../../hooks/useAxios";
 import { AuthContext } from "../../context/AuthContext";
+import useCreateQuoteRepostModal from "../../hooks/useCreateQuoteRepost";
 import "./feed.scss";
 
 type HomeFeedProps = {};
@@ -8,11 +9,9 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
   const [error, setError] = useState<string | null>(null);
   const [posts, setPosts] = useState<any[]>([]);
 
-  const [quotePostBody, setQuotePostBody] = useState(
-    "testing quote repost super latest!!"
-  );
-
   const { currentUser } = useContext(AuthContext) || {};
+
+  const createQuoteRepostModal = useCreateQuoteRepostModal();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -39,29 +38,8 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
   };
 
   const handleQuoteRepost = async (postId: number, type: string) => {
-    console.log(type);
-    try {
-      if (type === "post") {
-        await useAxios.post("/quote-reposts", {
-          postId: postId,
-          quoteRepostedQuoteRepostId: null,
-          body: quotePostBody,
-          image: null,
-        });
-      } else if (type === "quote repost") {
-        await useAxios.post("/quote-reposts", {
-          postId: null,
-          quoteRepostedQuoteRepostId: postId,
-          body: quotePostBody,
-          image: null,
-        });
-      }
-    } catch (error) {
-      setError("error quote reposting!!");
-    }
+    createQuoteRepostModal.onOpen(postId, type);
   };
-
-  console.log(posts);
 
   return (
     <div className="feed home-feed">

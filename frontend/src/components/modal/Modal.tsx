@@ -1,10 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import './modal.scss';
+
 type ModalProps = {
     isOpen: boolean;
     body: ReactElement;
     onClose: () => void;
     title: string;
+  
   };
 
 const Modal: React.FC<ModalProps> = ({ isOpen, body, onClose, title }) => {

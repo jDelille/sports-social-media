@@ -3,9 +3,11 @@ import LeftSidebar from "./components/sidebar/LeftSidebar";
 import RightSidebar from "./components/sidebar/RightSidebar";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
-import "./scss/globals.scss";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import CreatePost from "./components/create-post/CreatePost";
+import "./scss/globals.scss";
+import CreateQuoteRepost from "./components/create-quote-repost/CreateQuoteRepost";
 
 function App() {
   const Layout = () => {
@@ -15,6 +17,8 @@ function App() {
         <div className="main-content">
           <Login />
           <Register />
+          <CreatePost />
+          <CreateQuoteRepost />
           <Outlet />
         </div>
         <RightSidebar />
