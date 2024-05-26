@@ -3,12 +3,13 @@ import useLoginModal from "../hooks/useLoginModal";
 import useRegisterModal from "../hooks/useRegisterModal";
 import { useAxios } from "../hooks/useAxios";
 import { AuthContext } from "../context/AuthContext";
+import HomeFeed from "../components/feed/HomeFeed";
 
 type HomeProps = {};
 const Home: React.FC<HomeProps> = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const [body, setBody] = useState("Testing body from react");
+  const [body, setBody] = useState("Testing fourth post from react");
   const { currentUser } = useContext(AuthContext) || {};
 
   const postData = {
@@ -21,7 +22,10 @@ const Home: React.FC<HomeProps> = () => {
   return (
     <div className="home-page">
       {currentUser ? (
+        <>
         <button onClick={createPost}>Create post</button>
+        <HomeFeed />
+        </>
       ) : (
         <>
           <button onClick={loginModal.onOpen}>Login</button>
