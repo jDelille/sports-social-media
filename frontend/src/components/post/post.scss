@@ -16,6 +16,13 @@
             height: 30px;
             border-radius: 50%;
             background-color: dodgerblue;
+            img {
+                object-fit: cover;
+                max-width: 30px;
+                max-height: 30px;
+                border-radius: 50%;
+
+            }
         }
         .user {
             display: flex;
