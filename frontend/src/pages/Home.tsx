@@ -31,6 +31,7 @@ const Home: React.FC<HomeProps> = () => {
         <>
         <button onClick={handleCreatePostClick}>Create post</button>
         <HomeFeed />
+        
         </>
       ) : (
         <>
