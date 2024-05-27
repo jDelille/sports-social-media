@@ -12,7 +12,7 @@ export const addRepost = (req, res) => {
     jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
       if (err) return res.status(403).json("Token is not valid");
   
-      const q = "INSERT INTO reposts (`post_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
+      const q = "INSERT INTO reposts (`reposted_post_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
 
       const values = [
         req.body.postId,

@@ -11,6 +11,9 @@ const CreateQuoteRepost: React.FC<CreateQuoteRepostProps> = () => {
 
   const postId = createQuoteRepostModal.postId;
   const type = createQuoteRepostModal.type;
+  const originalPostUserId = createQuoteRepostModal.originalPostUserId
+
+  console.log(originalPostUserId)
 
   const handleSubmit = async () => {
     try {
@@ -18,6 +21,7 @@ const CreateQuoteRepost: React.FC<CreateQuoteRepostProps> = () => {
         await useAxios.post("/quote-reposts", {
           postId: postId,
           quoteRepostedQuoteRepostId: null,
+          originalPostUserId,
           body,
           image: null,
         });
@@ -26,6 +30,7 @@ const CreateQuoteRepost: React.FC<CreateQuoteRepostProps> = () => {
         await useAxios.post("/quote-reposts", {
           postId: null,
           quoteRepostedQuoteRepostId: postId,
+          originalPostUserId,
           body,
           image: null,
         });

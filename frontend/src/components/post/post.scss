@@ -1,0 +1,38 @@
+.post,
+.quote-repost {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 5px;
+    border: 1px solid lightgray;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .post-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: dodgerblue;
+        }
+        .user {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .body {
+    }
+
+}
+
+.quote-repost {
+    .original-post {
+        border: 1px solid lightblue;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
