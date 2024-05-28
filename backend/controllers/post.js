@@ -77,6 +77,35 @@ export const getAllPosts = (req, res) => {
   JOIN users ur ON r.reposter_id = ur.id
   `;
 
+  const quoteRepostsRepostsQuery = `
+  SELECT
+      qr.id,
+      qr.body,
+      qr.image,
+      qr.created_at,
+      r.reposter_id AS user_id,
+      JSON_OBJECT(
+        'id', ur.id,
+        'name', ur.name,
+        'username', ur.username
+      ) AS user,
+      ur.username AS reposter_username,
+      r.created_at AS reposted_at,
+      qr.body AS original_post_body,
+      qr.quote_reposted_post_id,
+      qr.quote_reposted_quote_repost_id,
+      JSON_OBJECT(
+        'id', ou.id,
+        'name', ou.name,
+        'username', ou.username
+      ) AS original_post_user,
+      'quote_repost_repost' AS type
+  FROM quote_reposts qr
+  JOIN reposts r ON qr.id = r.reposted_quote_repost_id
+  JOIN users ur ON r.reposter_id = ur.id
+  LEFT JOIN users ou ON qr.original_post_user_id = ou.id
+  `;
+
   const quoteRepostsQuery = `
   SELECT 
       qr.id,
@@ -114,6 +143,7 @@ export const getAllPosts = (req, res) => {
     ${originalPostsQuery} 
     UNION ${repostsQuery} 
     UNION ${quoteRepostsQuery}
+    UNION ${quoteRepostsRepostsQuery}
     ORDER BY COALESCE(reposted_at, created_at) DESC
   `;
 

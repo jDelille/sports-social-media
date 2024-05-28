@@ -11,8 +11,15 @@ export const addRepost = (req, res) => {
   
     jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
       if (err) return res.status(403).json("Token is not valid");
+
+      let q;
+
+      if(req.body.type === 'post' || req.body.type === "repost") {
+        q = "INSERT INTO reposts (`reposted_post_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
+      } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost") {
+        q = "INSERT INTO reposts (`reposted_quote_repost_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
+      }
   
-      const q = "INSERT INTO reposts (`reposted_post_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
 
       const values = [
         req.body.postId,

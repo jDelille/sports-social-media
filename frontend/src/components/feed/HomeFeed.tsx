@@ -34,13 +34,17 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
               <Post
             post={post}
             key={
-              post.type === "post" ? `post_id${post.id}` : `repost_id${post.id}`
+              post.type === "post" 
+                ? `post_id${post.id}` 
+                : `post_id${post.id}${post.reposted_at}`
             }
           />
             )
-          } else if(post.type === 'quote_repost') {
+          } else if(post.type === 'quote_repost' || post.type === 'quote_repost_repost') {
             return (
-              <QuoteRepost post={post} key={`quote_repost_id${post.id}`}/>
+              <QuoteRepost post={post} key={
+              `post_id${post.id}${post.reposted_at}`
+              }/>
             )
           }
         })}

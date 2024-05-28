@@ -24,8 +24,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
     try {
       await useAxios.post("/reposts", {
         postId: postId,
-        username: currentUser.username, // use for 'reposted by ${username}'
-      });
+        username: currentUser.username,
+        type: post.type
+    });
     } catch (error) {
       setError("error reposting!!");
     }

@@ -18,7 +18,7 @@ export const getLikes = (req, res) => {
       if (req.query.type === "post" || req.query.type === "repost") {
         q = "SELECT user_id FROM likes WHERE post_id = ?";
         values = [req.query.postId];
-      } else if (req.query.type === "quote_repost") {
+      } else if (req.query.type === "quote_repost" || req.query.type === "quote_repost_repost") {
         q = "SELECT user_id FROM likes WHERE quote_repost_id = ?";
         values = [req.query.quoteRepostId];
       } else {
@@ -31,6 +31,7 @@ export const getLikes = (req, res) => {
       });
     });
   };
+
 export const addLike = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");
