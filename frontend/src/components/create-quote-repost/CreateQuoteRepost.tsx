@@ -26,7 +26,7 @@ const CreateQuoteRepost: React.FC<CreateQuoteRepostProps> = () => {
           image: null,
         });
         createQuoteRepostModal.onClose();
-      } else if (type === "quote repost") {
+      } else if (type === "quote_repost") {
         await useAxios.post("/quote-reposts", {
           postId: null,
           quoteRepostedQuoteRepostId: postId,

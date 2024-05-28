@@ -102,7 +102,7 @@ export const getAllPosts = (req, res) => {
         'name', ou.name,
         'username', ou.username
       ) AS original_post_user,
-      'quote repost' AS type
+      'quote_repost' AS type
   FROM quote_reposts qr
   LEFT JOIN posts p1 ON qr.quote_reposted_post_id = p1.id
   LEFT JOIN quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
