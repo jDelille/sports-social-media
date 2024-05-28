@@ -23,8 +23,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const handleRepost = async (postId: number) => {
     try {
       await useAxios.post("/reposts", {
-        quoteRepostId: postId,
+        postId: postId,
         username: currentUser.username,
+        type: post.type
       });
     } catch (error) {
       setError("error reposting!!");
@@ -66,6 +67,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
 
   return (
     <div className="quote-repost">
+      {post.type === 'quote_repost_repost' && (
+        <p>(repost icon) reposted by {post.reposter_username}</p>
+      )}
       <PostHeader user={post.user} />
       <p className="body">{post.body}</p>
       <div className="original-post">
