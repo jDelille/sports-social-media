@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PostTypes from "../../types/Post";
 import PostHeader from "./PostHeader";
 import { AuthContext } from "../../context/AuthContext";
@@ -12,6 +12,9 @@ type QuoteRepostProps = {
 
 const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
+  const [likes, setLikes] = useState<any>(null);
+  const postId = post.id;
+  const type = post.type;
 
   const { currentUser } = useContext(AuthContext) || {};
 
@@ -20,7 +23,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const handleRepost = async (postId: number) => {
     try {
       await useAxios.post("/reposts", {
-        postId: postId,
+        quoteRepostId: postId,
         username: currentUser.username,
       });
     } catch (error) {
@@ -36,6 +39,31 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
   };
 
+  const handleLike = async (postId: number, type: string) => {
+    try {
+      await useAxios.post("/likes", {
+        quoteRepostId: postId,
+        type: type // post type
+      })
+    } catch (error) {
+      setError("error liking post")
+    }
+  };
+
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        const response = await useAxios.get(`/likes?quoteRepostId=${postId}&type=${type}`);
+        setLikes(response.data);
+      } catch (error) {
+        console.error("Failed to fetch likes:", error);
+      }
+    };
+
+    fetchLikes();
+  }, [postId]);
+
+
   return (
     <div className="quote-repost">
       <PostHeader user={post.user} />
@@ -50,6 +78,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       >
         quote repost
       </button>
+      <button onClick={() => handleLike(post.id, post.type)}>Like, {likes?.length || 0} likes</button>
     </div>
   );
 };
