@@ -15,10 +15,13 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
   const [likes, setLikes] = useState<any>(null);
   const [comments, setComments] = useState<any>(null);
+  const [mutedPostIds, setMutedPostIds] = useState<Set<number>>(new Set());
 
   const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
   const createCommentModal = useCreateCommentModal();
+
+  const currentUserId = currentUser.id;
 
   const postId = post.id;
   const type = post.type;
@@ -28,8 +31,8 @@ const Post: React.FC<PostProps> = ({ post }) => {
       await useAxios.post("/reposts", {
         postId: postId,
         username: currentUser.username,
-        type: post.type
-    });
+        type: post.type,
+      });
     } catch (error) {
       setError("error reposting!!");
     }
@@ -47,22 +50,37 @@ const Post: React.FC<PostProps> = ({ post }) => {
     try {
       await useAxios.post("/likes", {
         postId: postId,
-        type: type // post type
-      })
+        type: type,
+      });
     } catch (error) {
-      setError("error liking post")
+      setError("error liking post");
+    }
+  };
+
+  const handleMutePost = async (postId: number, type: string) => {
+    try {
+      await useAxios.post("/muted-posts", {
+        postId: postId,
+        type: type,
+      });
+    } catch (error) {
+      setError("error muting post");
     }
   };
 
   const handleComment = (postId: number, type: string) => {
-    createCommentModal.onOpen(postId, type)
-  }
+    createCommentModal.onOpen(postId, type);
+  };
 
   useEffect(() => {
     const fetchLikes = async () => {
       try {
-        const likesResponse = await useAxios.get(`/likes?postId=${postId}&type=${type}`);
-        const commentsResponse = await useAxios.get(`/comments?postId=${postId}&type=${type}`)
+        const likesResponse = await useAxios.get(
+          `/likes?postId=${postId}&type=${type}`
+        );
+        const commentsResponse = await useAxios.get(
+          `/comments?postId=${postId}&type=${type}`
+        );
         setLikes(likesResponse.data);
         setComments(commentsResponse.data);
       } catch (error) {
@@ -70,13 +88,37 @@ const Post: React.FC<PostProps> = ({ post }) => {
       }
     };
 
+    const fetchMutedPosts = async () => {
+      try {
+        const response = await useAxios.get(
+          `/muted-posts?postId=${post.id}&type=${post.type}`
+        );
+        const mutedPostIds = response.data; // Array of muted post IDs
+        setMutedPostIds(new Set(mutedPostIds));
+      } catch (error) {
+        console.error("Error fetching muted posts.");
+      }
+    };
+
     fetchLikes();
+
+    if (currentUserId) {
+      fetchMutedPosts();
+    }
   }, [postId]);
 
+  console.log(mutedPostIds)
+
+  const isMuted = mutedPostIds.has(postId);
+
+  // if(isMuted) {
+  //   return null;
+  // }
 
 
   return (
     <div className="post">
+      {isMuted && <strong>Post is muted</strong>}
       {post.type === "repost" && (
         <p>(repost icon) reposted by {post.reposter_username}</p>
       )}
@@ -91,8 +133,15 @@ const Post: React.FC<PostProps> = ({ post }) => {
       >
         quote repost
       </button>
-      <button onClick={() => handleLike(post.id, post.type)}>Like, {likes?.length || 0} likes</button>
-      <button onClick={() => handleComment(post.id, post.type)}>Comment, {comments?.length || 0} comments</button>
+      <button onClick={() => handleLike(post.id, post.type)}>
+        Like, {likes?.length || 0} likes
+      </button>
+      <button onClick={() => handleComment(post.id, post.type)}>
+        Comment, {comments?.length || 0} comments
+      </button>
+      <button onClick={() => handleMutePost(post.id, post.type)}>
+        Mute post
+      </button>
     </div>
   );
 };

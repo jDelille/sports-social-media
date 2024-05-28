@@ -15,10 +15,17 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
   const [likes, setLikes] = useState<any>(null);
   const [comments, setComments] = useState<any>(null);
-  
+  const [hideMutedPost, setHideMutedPost] = useState(false);
+
+  const [mutedPostIds, setMutedPostIds] = useState<Set<number>>(new Set());
+  const [repostedMutedPostIds, setRepostedMutedPostIds] = useState<Set<number>>(
+    new Set()
+  );
+
   const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
   const createCommentModal = useCreateCommentModal();
+  const currentUserId = currentUser.id;
 
   const postId = post.id;
   const type = post.type;
@@ -28,7 +35,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       await useAxios.post("/reposts", {
         postId: postId,
         username: currentUser.username,
-        type: post.type
+        type: post.type,
       });
     } catch (error) {
       setError("error reposting!!");
@@ -47,45 +54,101 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     try {
       await useAxios.post("/likes", {
         quoteRepostId: postId,
-        type: type // post type
-      })
+        type: type, // post type
+      });
     } catch (error) {
-      setError("error liking post")
+      setError("error liking post");
+    }
+  };
+
+  const handleMutePost = async (postId: number, type: string) => {
+    try {
+      await useAxios.post("/muted-posts", {
+        quoteRepostId: postId,
+        type: type,
+      });
+    } catch (error) {
+      setError("error muting post");
     }
   };
 
   const handleComment = async (postId: number, type: string) => {
-    createCommentModal.onOpen(postId, type)
-  }
-
-  
+    createCommentModal.onOpen(postId, type);
+  };
 
   useEffect(() => {
     const fetchLikesAndComments = async () => {
       try {
-        const likesResponse = await useAxios.get(`/likes?quoteRepostId=${postId}&type=${type}`);
-        const commentsResponse = await useAxios.get(`/comments?quoteRepostId=${postId}&type=${type}`)
+        const likesResponse = await useAxios.get(
+          `/likes?quoteRepostId=${postId}&type=${type}`
+        );
+        const commentsResponse = await useAxios.get(
+          `/comments?quoteRepostId=${postId}&type=${type}`
+        );
         setLikes(likesResponse.data);
         setComments(commentsResponse.data);
       } catch (error) {
-        console.error("Failed to fetch likes:", error);
+        console.error("Failed to fetch likes or comments:", error);
+      }
+    };
+
+    const fetchMutedPosts = async () => {
+      try {
+        const response = await useAxios.get(
+          `/muted-posts?quoteRepostId=${post.id}&type=${post.type}`
+        );
+        const repostedReponse = await useAxios.get(
+          `/muted-posts?postId=${post.quote_reposted_post_id}&type=post`
+        );
+
+        const mutedPostIds = response.data; // Array of muted post IDs
+        const repostedMutedPostIds = repostedReponse.data;
+
+        setMutedPostIds(new Set(mutedPostIds));
+        setRepostedMutedPostIds(new Set(repostedMutedPostIds));
+      } catch (error) {
+        console.error("Error fetching muted posts.");
       }
     };
 
     fetchLikesAndComments();
+
+    if (currentUserId) {
+      fetchMutedPosts();
+    }
   }, [postId]);
 
+  const handleHideMutedPost = () => {
+    setHideMutedPost(!hideMutedPost);
+  };
+
+  const isMuted = mutedPostIds.has(postId);
+  const isOriginalPostMuted = repostedMutedPostIds.has(
+    post.quote_reposted_post_id
+  );
 
   return (
     <div className="quote-repost">
-      {post.type === 'quote_repost_repost' && (
+      {isMuted && <strong>Post is muted</strong>}
+
+      {post.type === "quote_repost_repost" && (
         <p>(repost icon) reposted by {post.reposter_username}</p>
       )}
       <PostHeader user={post.user} />
       <p className="body">{post.body}</p>
       <div className="original-post">
         <PostHeader user={post.original_post_user} />
-        <p className="body">{post.original_post_body}</p>
+        {!hideMutedPost && isOriginalPostMuted ? (
+          <>
+            <p>You have muted this post</p>
+            <button onClick={handleHideMutedPost}>View</button>
+          </>
+        ) : (
+          <>
+            <p className="body">{post.original_post_body}</p>
+            <button onClick={handleHideMutedPost}>Hide</button>
+          </>
+        )}
       </div>
       <button onClick={() => handleRepost(post.id)}>repost</button>
       <button
@@ -93,9 +156,15 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       >
         quote repost
       </button>
-      <button onClick={() => handleLike(post.id, post.type)}>Like, {likes?.length || 0} likes</button>
-      <button onClick={() => handleComment(post.id, post.type)}>Comment, {comments?.length || 0} comments</button>
-
+      <button onClick={() => handleLike(post.id, post.type)}>
+        Like, {likes?.length || 0} likes
+      </button>
+      <button onClick={() => handleComment(post.id, post.type)}>
+        Comment, {comments?.length || 0} comments
+      </button>
+      <button onClick={() => handleMutePost(post.id, post.type)}>
+        Mute post
+      </button>
     </div>
   );
 };

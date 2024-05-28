@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import multer from "multer";
-import {  authRoutes, commentRoutes, likeRoutes, postRoutes, quoteRepostRoutes, repostRoutes, userRoutes } from "./routes/index.js";
+import {  authRoutes, commentRoutes, likeRoutes, mutePostRoutes, postRoutes, quoteRepostRoutes, repostRoutes, userRoutes } from "./routes/index.js";
 const app = express();
 
 // middlewares
@@ -42,6 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/quote-reposts", quoteRepostRoutes)
 app.use("/api/likes", likeRoutes);
 app.use("/api/comments", commentRoutes)
+app.use("/api/muted-posts", mutePostRoutes)
 
 
 app.listen(8800, () => {
