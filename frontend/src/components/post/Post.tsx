@@ -46,16 +46,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
     createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
   };
 
-  const handleLike = async (postId: number, type: string) => {
-    try {
-      await useAxios.post("/likes", {
-        postId: postId,
-        type: type,
-      });
-    } catch (error) {
-      setError("error liking post");
-    }
-  };
+
 
 
 
@@ -98,7 +89,30 @@ const Post: React.FC<PostProps> = ({ post }) => {
     }
   }, [postId]);
 
-  console.log(mutedPostIds)
+  console.log(likes)
+
+  const hasLiked = likes?.includes(currentUserId)
+
+  const handleLike = async (postId: number, type: string) => {
+    try {
+      if(!hasLiked) {
+        await useAxios.post("/likes", {
+          postId: postId,
+          type: type,
+        });
+      } else {
+        await useAxios.delete("/likes", {
+          data: {
+            postId: postId,
+            type: type,
+          }
+        });
+      }
+     
+    } catch (error) {
+      setError("error liking post");
+    }
+  };
 
   const isMuted = mutedPostIds.has(postId);
 
@@ -147,7 +161,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
         quote repost
       </button>
       <button onClick={() => handleLike(post.id, post.type)}>
-        Like, {likes?.length || 0} likes
+        {hasLiked ? 'Unlike' : 'Like'}, {likes?.length || 0} likes
       </button>
       <button onClick={() => handleComment(post.id, post.type)}>
         Comment, {comments?.length || 0} comments
