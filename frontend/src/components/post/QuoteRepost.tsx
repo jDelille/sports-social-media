@@ -61,16 +61,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     }
   };
 
-  const handleMutePost = async (postId: number, type: string) => {
-    try {
-      await useAxios.post("/muted-posts", {
-        quoteRepostId: postId,
-        type: type,
-      });
-    } catch (error) {
-      setError("error muting post");
-    }
-  };
+ 
 
   const handleComment = async (postId: number, type: string) => {
     createCommentModal.onOpen(postId, type);
@@ -127,6 +118,30 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     post.quote_reposted_post_id
   );
 
+
+  const handleMutePost = async (postId: number, type: string) => {
+    try {
+      if(!isMuted) {
+        await useAxios.post("/muted-posts", {
+          quoteRepostId: postId,
+          type: type,
+        });
+      } else {
+        console.log('here')
+        await useAxios.delete("/muted-posts", {
+          data: {
+            quoteRepostId: postId,
+            type: type
+          }
+        })
+      }
+     
+    } catch (error) {
+      setError("error muting post");
+    }
+  };
+
+
   return (
     <div className="quote-repost">
       {isMuted && <strong>Post is muted</strong>}
@@ -163,7 +178,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
         Comment, {comments?.length || 0} comments
       </button>
       <button onClick={() => handleMutePost(post.id, post.type)}>
-        Mute post
+        {isMuted ? 'Unmute' : 'Mute'}
       </button>
     </div>
   );

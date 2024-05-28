@@ -57,16 +57,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
     }
   };
 
-  const handleMutePost = async (postId: number, type: string) => {
-    try {
-      await useAxios.post("/muted-posts", {
-        postId: postId,
-        type: type,
-      });
-    } catch (error) {
-      setError("error muting post");
-    }
-  };
+
 
   const handleComment = (postId: number, type: string) => {
     createCommentModal.onOpen(postId, type);
@@ -111,6 +102,28 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
   const isMuted = mutedPostIds.has(postId);
 
+  const handleMutePost = async (postId: number, type: string) => {
+  
+    try {
+      if(!isMuted) {
+        await useAxios.post("/muted-posts", {
+          postId: postId,
+          type: type,
+        });
+      } else {
+        await useAxios.delete("/muted-posts", {
+          data: {
+            postId: postId,
+            type: type
+          }
+        })
+      }
+      
+    } catch (error) {
+      setError("error muting post");
+    }
+  };
+
   // if(isMuted) {
   //   return null;
   // }
@@ -140,7 +153,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
         Comment, {comments?.length || 0} comments
       </button>
       <button onClick={() => handleMutePost(post.id, post.type)}>
-        Mute post
+        {isMuted ? 'Unmute' : 'Mute'}
       </button>
     </div>
   );
