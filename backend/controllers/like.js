@@ -42,10 +42,10 @@ export const addLike = (req, res) => {
     let q;
     let values;
 
-    if (req.body.type === "post") {
+    if (req.body.type === "post" || req.body.type === "repost" ) {
       q = "INSERT INTO likes (`user_id`, `post_id`) VALUES (?, ?)";
       values = [userInfo.id, req.body.postId];
-    } else if (req.body.type === "quote_repost") {
+    } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost" ) {
       q = "INSERT INTO likes (`user_id`, `quote_repost_id`) VALUES (?, ?)";
       values = [userInfo.id, req.body.quoteRepostId];
     } else {
