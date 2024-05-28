@@ -49,7 +49,7 @@ const CreateComment: React.FC<CreateCommentProps> = () => {
       <Modal
         body={bodyContent}
         isOpen={createCommentModal.isOpen}
-        title="Create quote repost"
+        title="Create comment"
         onClose={handleClose}
       />
     </div>
