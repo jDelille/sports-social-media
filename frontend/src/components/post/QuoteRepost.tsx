@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import useCreateQuoteRepostModal from "../../hooks/useCreateQuoteRepost";
 import { useAxios } from "../../hooks/useAxios";
 import "./post.scss";
+import useCreateCommentModal from "../../hooks/useCreateCommentModal";
 
 type QuoteRepostProps = {
   post: PostTypes;
@@ -13,12 +14,14 @@ type QuoteRepostProps = {
 const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
   const [likes, setLikes] = useState<any>(null);
+  const [comments, setComments] = useState<any>(null);
+  
+  const { currentUser } = useContext(AuthContext) || {};
+  const createQuoteRepostModal = useCreateQuoteRepostModal();
+  const createCommentModal = useCreateCommentModal();
+
   const postId = post.id;
   const type = post.type;
-
-  const { currentUser } = useContext(AuthContext) || {};
-
-  const createQuoteRepostModal = useCreateQuoteRepostModal();
 
   const handleRepost = async (postId: number) => {
     try {
@@ -51,17 +54,25 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     }
   };
 
+  const handleComment = async (postId: number, type: string) => {
+    createCommentModal.onOpen(postId, type)
+  }
+
+  
+
   useEffect(() => {
-    const fetchLikes = async () => {
+    const fetchLikesAndComments = async () => {
       try {
-        const response = await useAxios.get(`/likes?quoteRepostId=${postId}&type=${type}`);
-        setLikes(response.data);
+        const likesResponse = await useAxios.get(`/likes?quoteRepostId=${postId}&type=${type}`);
+        const commentsResponse = await useAxios.get(`/comments?quoteRepostId=${postId}&type=${type}`)
+        setLikes(likesResponse.data);
+        setComments(commentsResponse.data);
       } catch (error) {
         console.error("Failed to fetch likes:", error);
       }
     };
 
-    fetchLikes();
+    fetchLikesAndComments();
   }, [postId]);
 
 
@@ -83,6 +94,8 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
         quote repost
       </button>
       <button onClick={() => handleLike(post.id, post.type)}>Like, {likes?.length || 0} likes</button>
+      <button onClick={() => handleComment(post.id, post.type)}>Comment, {comments?.length || 0} comments</button>
+
     </div>
   );
 };
