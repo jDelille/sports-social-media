@@ -22,7 +22,7 @@ export const getLikes = (req, res) => {
         q = "SELECT user_id FROM likes WHERE quote_repost_id = ?";
         values = [req.query.quoteRepostId];
       } else {
-        return res.status(400).json("Invalid like type");
+        return res.status(400).json("Invalid type");
       }
   
       db.query(q, values, (err, data) => {
@@ -49,12 +49,39 @@ export const addLike = (req, res) => {
       q = "INSERT INTO likes (`user_id`, `quote_repost_id`) VALUES (?, ?)";
       values = [userInfo.id, req.body.quoteRepostId];
     } else {
-      return res.status(400).json("Invalid like type");
+      return res.status(400).json("Invalid type");
     }
 
     db.query(q, values, (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json("Post has been liked.");
+    });
+  });
+};
+
+export const removeLike = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    let q;
+    let values;
+
+    if (req.body.type === "post" || req.body.type === "repost" ) {
+      q = "DELETE FROM likes WHERE user_id = ? AND post_id = ?";
+      values = [userInfo.id, req.body.postId];
+    } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost" ) {
+      q = "DELETE FROM likes WHERE user_id = ? AND quote_repost_id = ?";
+      values = [userInfo.id, req.body.quoteRepostId];
+    } else {
+      return res.status(400).json("Invalid type");
+    }
+
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Post has been unliked.");
     });
   });
 };
