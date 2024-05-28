@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import useCreateQuoteRepostModal from "../../hooks/useCreateQuoteRepost";
 import PostHeader from "./PostHeader";
 import "./post.scss";
+import useCreateCommentModal from "../../hooks/useCreateCommentModal";
 
 type PostProps = {
   post: PostTypes;
@@ -13,9 +14,11 @@ type PostProps = {
 const Post: React.FC<PostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
   const [likes, setLikes] = useState<any>(null);
-  const { currentUser } = useContext(AuthContext) || {};
+  const [comments, setComments] = useState<any>(null);
 
+  const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
+  const createCommentModal = useCreateCommentModal();
 
   const postId = post.id;
   const type = post.type;
@@ -51,11 +54,17 @@ const Post: React.FC<PostProps> = ({ post }) => {
     }
   };
 
+  const handleComment = (postId: number, type: string) => {
+    createCommentModal.onOpen(postId, type)
+  }
+
   useEffect(() => {
     const fetchLikes = async () => {
       try {
-        const response = await useAxios.get(`/likes?postId=${postId}&type=${type}`);
-        setLikes(response.data);
+        const likesResponse = await useAxios.get(`/likes?postId=${postId}&type=${type}`);
+        const commentsResponse = await useAxios.get(`/comments?postId=${postId}&type=${type}`)
+        setLikes(likesResponse.data);
+        setComments(commentsResponse.data);
       } catch (error) {
         console.error("Failed to fetch likes:", error);
       }
@@ -64,7 +73,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
     fetchLikes();
   }, [postId]);
 
-  console.log(likes)
+
 
   return (
     <div className="post">
@@ -83,6 +92,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
         quote repost
       </button>
       <button onClick={() => handleLike(post.id, post.type)}>Like, {likes?.length || 0} likes</button>
+      <button onClick={() => handleComment(post.id, post.type)}>Comment, {comments?.length || 0} comments</button>
     </div>
   );
 };

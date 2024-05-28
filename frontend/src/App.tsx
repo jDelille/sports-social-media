@@ -8,6 +8,7 @@ import Register from "./components/Register";
 import CreatePost from "./components/create-post/CreatePost";
 import "./scss/globals.scss";
 import CreateQuoteRepost from "./components/create-quote-repost/CreateQuoteRepost";
+import CreateComment from "./components/create-comment/CreateComment";
 
 function App() {
   const Layout = () => {
@@ -19,6 +20,7 @@ function App() {
           <Register />
           <CreatePost />
           <CreateQuoteRepost />
+          <CreateComment />
           <Outlet />
         </div>
         <RightSidebar />
