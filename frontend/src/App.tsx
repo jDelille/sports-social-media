@@ -9,10 +9,14 @@ import CreatePost from "./components/create-post/CreatePost";
 import "./scss/globals.scss";
 import CreateQuoteRepost from "./components/create-quote-repost/CreateQuoteRepost";
 import CreateComment from "./components/create-comment/CreateComment";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
+  const queryClient = new QueryClient();
+
   const Layout = () => {
     return (
+      <QueryClientProvider client={queryClient}>
       <div className="layout">
         <LeftSidebar />
         <div className="main-content">
@@ -25,6 +29,8 @@ function App() {
         </div>
         <RightSidebar />
       </div>
+      </QueryClientProvider>
+
     );
   };
 

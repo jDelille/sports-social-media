@@ -2,20 +2,39 @@ import React, { useState } from "react";
 import Modal from "../modal/Modal";
 import useCreatePostModal from "../../hooks/useCreatePostModal";
 import { useAxios } from "../../hooks/useAxios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type CreatePostProps = {};
 const CreatePost: React.FC<CreatePostProps> = () => {
   const [body, setBody] = useState("");
   const createPostModal = useCreatePostModal();
 
-  const postData = {
-    body,
+  const queryClient = useQueryClient()
+
+  const handleSubmit = async (newPost: any) => {
+    await useAxios.post("/posts", newPost);
   };
 
-  const handleSubmit = async () => {
-    await useAxios.post("/posts", postData);
-    createPostModal.onClose();
-  };
+  const { mutate } = useMutation({
+    mutationFn: (newPost: any) => handleSubmit(newPost),
+    onSettled: async () => {
+      queryClient.refetchQueries();
+      setBody("");
+    },
+    mutationKey: ["addPost"]
+  })
+
+  const handlePostClick = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      mutate({body});
+      setBody("");
+      createPostModal.onClose();
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const bodyContent = (
     <div>
@@ -24,7 +43,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
         placeholder="What's on your mind?"
         onChange={(e) => setBody(e.target.value)}
       />
-      <button onClick={handleSubmit}>Post</button>
+      <button onClick={handlePostClick}>Post</button>
     </div>
   );
 
