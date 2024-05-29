@@ -30,13 +30,24 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const postId = post.id;
   const type = post.type;
 
+  const hasReposted = post.reposter_username === currentUser.username;
+
   const handleRepost = async (postId: number) => {
     try {
-      await useAxios.post("/reposts", {
-        postId: postId,
-        username: currentUser.username,
-        type: post.type,
-      });
+      if(!hasReposted) {
+        await useAxios.post("/reposts", {
+          postId: postId,
+          username: currentUser.username,
+          type: post.type,
+        });
+      } else {
+        await useAxios.delete("/reposts", {
+         data:{
+          postId: postId,
+          type: post.type,
+         }
+        });
+      }
     } catch (error) {
       setError("error reposting!!");
     }
@@ -49,9 +60,6 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   ) => {
     createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
   };
-
-
- 
 
   const handleComment = async (postId: number, type: string) => {
     createCommentModal.onOpen(postId, type);
@@ -154,6 +162,22 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     }
   };
 
+  const handleDeletePost = async (postId: number, type: string) => {
+    try {
+      
+        await useAxios.delete("/posts", {
+          data: {
+            postId: postId,
+            type: type
+          }
+        })
+      
+     
+    } catch (error) {
+      setError("error muting post");
+    }
+  }
+
 
   return (
     <div className="quote-repost">
@@ -178,7 +202,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
           </>
         )}
       </div>
-      <button onClick={() => handleRepost(post.id)}>repost</button>
+      <button onClick={() => handleRepost(post.id)}>{hasReposted ? "unrepost" : "repost"}</button>
       <button
         onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
       >
@@ -193,6 +217,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       <button onClick={() => handleMutePost(post.id, post.type)}>
         {isMuted ? 'Unmute' : 'Mute'}
       </button>
+      <button onClick={() => handleDeletePost(post.id, post.type)}>Delete</button>
     </div>
   );
 };

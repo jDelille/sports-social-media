@@ -152,3 +152,35 @@ export const getAllPosts = (req, res) => {
     return res.status(200).json(data);
   });
 };
+
+
+
+export const deletePost = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    let q;
+    let values;
+
+    if (req.body.type === 'post' || req.body.type === 'repost') {
+      q = 'DELETE FROM posts WHERE id = ? AND user_id = ?';
+      values = [req.body.postId, userInfo.id];
+    } else if (req.body.type === 'quote_repost' || req.body.type === 'quote_repost_repost') {
+      q = 'DELETE FROM quote_reposts WHERE id = ? AND quote_reposter_id = ?';
+      values = [req.body.postId, userInfo.id];
+    } else {
+      return res.status(400).json('Invalid post type');
+    }
+
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+      if (data.affectedRows === 0) {
+        return res.status(400).json("Post not found or you don't have permission to delete it.");
+      }
+      return res.status(200).json("Post has been deleted.");
+    });
+  });
+};

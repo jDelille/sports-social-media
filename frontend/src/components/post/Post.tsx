@@ -26,13 +26,25 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const postId = post.id;
   const type = post.type;
 
+  const hasReposted = post.reposter_username === currentUser.username;
+
   const handleRepost = async (postId: number) => {
     try {
-      await useAxios.post("/reposts", {
-        postId: postId,
-        username: currentUser.username,
-        type: post.type,
-      });
+      if(!hasReposted) {
+        await useAxios.post("/reposts", {
+          postId: postId,
+          username: currentUser.username,
+          type: post.type,
+        });
+      } else {
+        await useAxios.delete("/reposts", {
+         data:{
+          postId: postId,
+          type: post.type,
+         }
+        });
+      }
+    
     } catch (error) {
       setError("error reposting!!");
     }
@@ -142,6 +154,22 @@ const Post: React.FC<PostProps> = ({ post }) => {
   //   return null;
   // }
 
+  const handleDeletePost = async (postId: number, type: string) => {
+    try {
+      
+        await useAxios.delete("/posts", {
+          data: {
+            postId: postId,
+            type: type
+          }
+        })
+      
+     
+    } catch (error) {
+      setError("error muting post");
+    }
+  }
+
 
   return (
     <div className="post">
@@ -154,7 +182,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
       <p className="body">{post.body}</p>
 
-      <button onClick={() => handleRepost(post.id)}>repost</button>
+      <button onClick={() => handleRepost(post.id)}>{hasReposted ? 'unrepost' : 'repost'} </button>
       <button
         onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
       >
@@ -169,6 +197,8 @@ const Post: React.FC<PostProps> = ({ post }) => {
       <button onClick={() => handleMutePost(post.id, post.type)}>
         {isMuted ? 'Unmute' : 'Mute'}
       </button>
+      <button onClick={() => handleDeletePost(post.id, post.type)}>Delete</button>
+
     </div>
   );
 };
