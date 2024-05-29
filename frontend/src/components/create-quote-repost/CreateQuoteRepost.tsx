@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import Modal from "../modal/Modal";
 import { useAxios } from "../../hooks/useAxios";
 import useCreateQuoteRepostModal from "../../hooks/useCreateQuoteRepost";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type CreateQuoteRepostProps = {};
 const CreateQuoteRepost: React.FC<CreateQuoteRepostProps> = () => {
   const [body, setBody] = useState("");
 
   const createQuoteRepostModal = useCreateQuoteRepostModal();
+  const queryClient = useQueryClient()
 
   const postId = createQuoteRepostModal.postId;
   const type = createQuoteRepostModal.type;
   const originalPostUserId = createQuoteRepostModal.originalPostUserId
 
-  console.log(originalPostUserId)
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (body: string) => {
     try {
       if (type === "post") {
         await useAxios.post("/quote-reposts", {
@@ -41,6 +41,27 @@ const CreateQuoteRepost: React.FC<CreateQuoteRepostProps> = () => {
     }
   };
 
+  const { mutate } = useMutation({
+    mutationFn: (body: string) => handleSubmit(body),
+    onSettled: async () => {
+      queryClient.refetchQueries();
+      setBody("");
+    },
+    mutationKey: ["addQuoteRepost"]
+  })
+
+  const handlePostClick = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      mutate(body);
+      setBody("");
+      createQuoteRepostModal.onClose();
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const bodyContent = (
     <div>
       <input
@@ -48,7 +69,7 @@ const CreateQuoteRepost: React.FC<CreateQuoteRepostProps> = () => {
         placeholder="What's on your mind?"
         onChange={(e) => setBody(e.target.value)}
       />
-      <button onClick={handleSubmit}>Post</button>
+      <button onClick={handlePostClick}>Post</button>
     </div>
   );
 
