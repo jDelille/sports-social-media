@@ -10,6 +10,7 @@ import "./scss/globals.scss";
 import CreateQuoteRepost from "./components/create-quote-repost/CreateQuoteRepost";
 import CreateComment from "./components/create-comment/CreateComment";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import DeletePost from "./components/delete-post/DeletePost";
 
 function App() {
   const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ function App() {
           <CreateQuoteRepost />
           <CreateComment />
           <Outlet />
+          <DeletePost />
         </div>
         <RightSidebar />
       </div>

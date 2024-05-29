@@ -6,6 +6,8 @@ import useCreateQuoteRepostModal from "../../hooks/useCreateQuoteRepost";
 import { useAxios } from "../../hooks/useAxios";
 import "./post.scss";
 import useCreateCommentModal from "../../hooks/useCreateCommentModal";
+import useDeletePopup from "../../hooks/useDeletePopup";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type QuoteRepostProps = {
   post: PostTypes;
@@ -25,6 +27,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
   const createCommentModal = useCreateCommentModal();
+  const deletePopup = useDeletePopup();
+  const queryClient = useQueryClient();
+
   const currentUserId = currentUser.id;
 
   const postId = post.id;
@@ -34,7 +39,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
 
   const handleRepost = async (postId: number) => {
     try {
-      if(!hasReposted) {
+      if (!hasReposted) {
         await useAxios.post("/reposts", {
           postId: postId,
           username: currentUser.username,
@@ -42,14 +47,30 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
         });
       } else {
         await useAxios.delete("/reposts", {
-         data:{
-          postId: postId,
-          type: post.type,
-         }
+          data: {
+            postId: postId,
+            type: post.type,
+          },
         });
       }
     } catch (error) {
       setError("error reposting!!");
+    }
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: handleRepost,
+    onSettled: async () => {
+      queryClient.refetchQueries();
+    },
+    mutationKey: ["addRepost"],
+  });
+
+  const handleRepostClick = async (postId: number) => {
+    try {
+      mutate(postId);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -115,48 +136,44 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const isOriginalPostMuted = repostedMutedPostIds.has(
     post.quote_reposted_post_id
   );
-  const hasLiked = likes?.includes(currentUserId)
+  const hasLiked = likes?.includes(currentUserId);
 
   const handleLike = async (postId: number, type: string) => {
     try {
-      if(!hasLiked) {
+      if (!hasLiked) {
         await useAxios.post("/likes", {
           quoteRepostId: postId,
-          type: type, 
+          type: type,
         });
       } else {
         await useAxios.delete("/likes", {
           data: {
             quoteRepostId: postId,
             type: type,
-          }
+          },
         });
       }
-     
     } catch (error) {
       setError("error liking post");
     }
   };
 
-
-
   const handleMutePost = async (postId: number, type: string) => {
     try {
-      if(!isMuted) {
+      if (!isMuted) {
         await useAxios.post("/muted-posts", {
           quoteRepostId: postId,
           type: type,
         });
       } else {
-        console.log('here')
+        console.log("here");
         await useAxios.delete("/muted-posts", {
           data: {
             quoteRepostId: postId,
-            type: type
-          }
-        })
+            type: type,
+          },
+        });
       }
-     
     } catch (error) {
       setError("error muting post");
     }
@@ -164,20 +181,11 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
 
   const handleDeletePost = async (postId: number, type: string) => {
     try {
-      
-        await useAxios.delete("/posts", {
-          data: {
-            postId: postId,
-            type: type
-          }
-        })
-      
-     
+      deletePopup.onOpen(postId, type);
     } catch (error) {
       setError("error muting post");
     }
-  }
-
+  };
 
   return (
     <div className="quote-repost">
@@ -202,7 +210,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
           </>
         )}
       </div>
-      <button onClick={() => handleRepost(post.id)}>{hasReposted ? "unrepost" : "repost"}</button>
+      <button onClick={() => handleRepostClick(post.id)}>
+        {hasReposted ? "unrepost" : "repost"}
+      </button>
       <button
         onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
       >
@@ -215,9 +225,11 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
         Comment, {comments?.length || 0} comments
       </button>
       <button onClick={() => handleMutePost(post.id, post.type)}>
-        {isMuted ? 'Unmute' : 'Mute'}
+        {isMuted ? "Unmute" : "Mute"}
       </button>
-      <button onClick={() => handleDeletePost(post.id, post.type)}>Delete</button>
+      <button onClick={() => handleDeletePost(post.id, post.type)}>
+        Delete
+      </button>
     </div>
   );
 };

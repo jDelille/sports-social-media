@@ -6,7 +6,6 @@ type ModalProps = {
     body: ReactElement;
     onClose: () => void;
     title: string;
-  
   };
 
 const Modal: React.FC<ModalProps> = ({ isOpen, body, onClose, title }) => {
