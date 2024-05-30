@@ -105,10 +105,12 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     const fetchMutedPosts = async () => {
       try {
         const response = await useAxios.get(
-          `/muted-posts?quoteRepostId=${post.id}&type=${post.type}`
+          `/muted-posts?postId=${post.id}&type=${post.type}`
         );
         const repostedReponse = await useAxios.get(
-          `/muted-posts?postId=${post.quote_reposted_post_id}&type=post`
+          `/muted-posts?postId=${
+            post.quote_reposted_post_id || post.quote_reposted_quote_repost_id
+          }&type=${post.quote_reposted_post_id ? "post" : "quote_repost"}`
         );
 
         const mutedPostIds = response.data; // Array of muted post IDs
@@ -134,7 +136,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
 
   const isMuted = mutedPostIds.has(postId);
   const isOriginalPostMuted = repostedMutedPostIds.has(
-    post.quote_reposted_post_id
+    post.quote_reposted_post_id || post.quote_reposted_quote_repost_id
   );
   const hasLiked = likes?.includes(currentUserId);
 
