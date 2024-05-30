@@ -20,7 +20,7 @@ export const getMutedPosts = (req, res) => {
       values = [userInfo.id, req.query.postId];
     } else if (req.query.type === "quote_repost" || req.query.type === "quote_repost_repost") {
       q = "SELECT quote_repost_id FROM muted_posts WHERE user_id = ? AND quote_repost_id = ?";
-      values = [userInfo.id, req.query.quoteRepostId];
+      values = [userInfo.id, req.query.postId];
     } else {
       return res.status(400).json("Invalid type");
     }
