@@ -12,6 +12,7 @@ type PostTypes = {
     original_post_body: string;
     quote_reposted_post_id: number;
     quote_reposted_quote_repost_id: number;
+    created_at: string;
     original_post_user: {
         id: number;
         name: string;
