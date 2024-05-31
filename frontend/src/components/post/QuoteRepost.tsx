@@ -196,10 +196,10 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       {post.type === "quote_repost_repost" && (
         <p>(repost icon) reposted by {post.reposter_username}</p>
       )}
-      <PostHeader user={post.user} />
+      <PostHeader user={post.user} post={post}/>
       <p className="body">{post.body}</p>
       <div className="original-post">
-        <PostHeader user={post.original_post_user} />
+        <PostHeader user={post.original_post_user} post={post} />
         {!hideMutedPost && isOriginalPostMuted ? (
           <>
             <p>You have muted this post</p>

@@ -181,7 +181,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
         <p>(repost icon) reposted by {post.reposter_username}</p>
       )}
 
-      <PostHeader user={post.user} />
+      <PostHeader user={post.user} post={post} />
 
       <p className="body">{post.body}</p>
 
