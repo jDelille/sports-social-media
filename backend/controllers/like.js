@@ -20,7 +20,7 @@ export const getLikes = (req, res) => {
         values = [req.query.postId];
       } else if (req.query.type === "quote_repost" || req.query.type === "quote_repost_repost") {
         q = "SELECT user_id FROM likes WHERE quote_repost_id = ?";
-        values = [req.query.quoteRepostId];
+        values = [req.query.postId];
       } else {
         return res.status(400).json("Invalid type");
       }
@@ -47,7 +47,7 @@ export const addLike = (req, res) => {
       values = [userInfo.id, req.body.postId];
     } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost" ) {
       q = "INSERT INTO likes (`user_id`, `quote_repost_id`) VALUES (?, ?)";
-      values = [userInfo.id, req.body.quoteRepostId];
+      values = [userInfo.id, req.body.postId];
     } else {
       return res.status(400).json("Invalid type");
     }
@@ -74,7 +74,7 @@ export const removeLike = (req, res) => {
       values = [userInfo.id, req.body.postId];
     } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost" ) {
       q = "DELETE FROM likes WHERE user_id = ? AND quote_repost_id = ?";
-      values = [userInfo.id, req.body.quoteRepostId];
+      values = [userInfo.id, req.body.postId];
     } else {
       return res.status(400).json("Invalid type");
     }

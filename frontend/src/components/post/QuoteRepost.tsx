@@ -8,6 +8,8 @@ import "./post.scss";
 import useCreateCommentModal from "../../hooks/useCreateCommentModal";
 import useDeletePopup from "../../hooks/useDeletePopup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import LikeButton from "./post-controls/LikeButton";
+import useFetchLikes from "../../hooks/post-hooks/useFetchLikes";
 
 type QuoteRepostProps = {
   post: PostTypes;
@@ -15,7 +17,6 @@ type QuoteRepostProps = {
 
 const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
-  const [likes, setLikes] = useState<any>(null);
   const [comments, setComments] = useState<any>(null);
   const [hideMutedPost, setHideMutedPost] = useState(false);
 
@@ -34,6 +35,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
 
   const postId = post.id;
   const type = post.type;
+
+  const { likes } = useFetchLikes(postId, type);
+
 
   const hasReposted = post.reposter_username === currentUser.username;
 
@@ -89,13 +93,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   useEffect(() => {
     const fetchLikesAndComments = async () => {
       try {
-        const likesResponse = await useAxios.get(
-          `/likes?quoteRepostId=${postId}&type=${type}`
-        );
         const commentsResponse = await useAxios.get(
           `/comments?quoteRepostId=${postId}&type=${type}`
         );
-        setLikes(likesResponse.data);
         setComments(commentsResponse.data);
       } catch (error) {
         console.error("Failed to fetch likes or comments:", error);
@@ -140,25 +140,6 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   );
   const hasLiked = likes?.includes(currentUserId);
 
-  const handleLike = async (postId: number, type: string) => {
-    try {
-      if (!hasLiked) {
-        await useAxios.post("/likes", {
-          quoteRepostId: postId,
-          type: type,
-        });
-      } else {
-        await useAxios.delete("/likes", {
-          data: {
-            quoteRepostId: postId,
-            type: type,
-          },
-        });
-      }
-    } catch (error) {
-      setError("error liking post");
-    }
-  };
 
   const handleMutePost = async (postId: number, type: string) => {
     try {
@@ -188,6 +169,8 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       setError("error muting post");
     }
   };
+
+  console.log(likes)
 
   return (
     <div className="quote-repost">
@@ -220,9 +203,15 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       >
         quote repost
       </button>
-      <button onClick={() => handleLike(post.id, post.type)}>
-        {hasLiked ? "Unlike" : "Like"} {likes?.length || 0} likes
-      </button>
+
+      <LikeButton
+        postId={postId}
+        type={type}
+        hasLiked={hasLiked}
+        likesCount={likes?.length}
+        setError={setError}
+      />
+
       <button onClick={() => handleComment(post.id, post.type)}>
         Comment, {comments?.length || 0} comments
       </button>
