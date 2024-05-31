@@ -23,7 +23,7 @@ export const getComments = (req, res) => {
       req.query.type === "quote_repost_repost"
     ) {
       q = "SELECT user_id FROM comments WHERE quote_repost_id = ?";
-      values = [req.query.quoteRepostId];
+      values = [req.query.postId];
     } else {
       return res.status(400).json("Invalid like type");
     }

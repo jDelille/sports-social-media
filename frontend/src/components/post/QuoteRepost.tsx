@@ -10,6 +10,8 @@ import useDeletePopup from "../../hooks/useDeletePopup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import LikeButton from "./post-controls/LikeButton";
 import useFetchLikes from "../../hooks/post-hooks/useFetchLikes";
+import useFetchComments from "../../hooks/post-hooks/useFetchComments";
+import CommentButton from "./post-controls/CommentButton";
 
 type QuoteRepostProps = {
   post: PostTypes;
@@ -17,7 +19,6 @@ type QuoteRepostProps = {
 
 const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
-  const [comments, setComments] = useState<any>(null);
   const [hideMutedPost, setHideMutedPost] = useState(false);
 
   const [mutedPostIds, setMutedPostIds] = useState<Set<number>>(new Set());
@@ -37,6 +38,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const type = post.type;
 
   const { likes } = useFetchLikes(postId, type);
+  const { comments } = useFetchComments(postId, type);
 
 
   const hasReposted = post.reposter_username === currentUser.username;
@@ -86,22 +88,8 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
   };
 
-  const handleComment = async (postId: number, type: string) => {
-    createCommentModal.onOpen(postId, type);
-  };
 
   useEffect(() => {
-    const fetchLikesAndComments = async () => {
-      try {
-        const commentsResponse = await useAxios.get(
-          `/comments?quoteRepostId=${postId}&type=${type}`
-        );
-        setComments(commentsResponse.data);
-      } catch (error) {
-        console.error("Failed to fetch likes or comments:", error);
-      }
-    };
-
     const fetchMutedPosts = async () => {
       try {
         const response = await useAxios.get(
@@ -122,8 +110,6 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
         console.error("Error fetching muted posts.");
       }
     };
-
-    fetchLikesAndComments();
 
     if (currentUserId) {
       fetchMutedPosts();
@@ -212,9 +198,11 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
         setError={setError}
       />
 
-      <button onClick={() => handleComment(post.id, post.type)}>
-        Comment, {comments?.length || 0} comments
-      </button>
+      <CommentButton 
+        postId={postId}
+        type={type}
+        commentsCount={comments?.length}
+      />
       <button onClick={() => handleMutePost(post.id, post.type)}>
         {isMuted ? "Unmute" : "Mute"}
       </button>

@@ -10,6 +10,8 @@ import useDeletePopup from "../../hooks/useDeletePopup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import LikeButton from "./post-controls/LikeButton";
 import useFetchLikes from "../../hooks/post-hooks/useFetchLikes";
+import CommentButton from "./post-controls/CommentButton";
+import useFetchComments from "../../hooks/post-hooks/useFetchComments";
 
 type PostProps = {
   post: PostTypes;
@@ -17,7 +19,6 @@ type PostProps = {
 
 const Post: React.FC<PostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
-  const [comments, setComments] = useState<any>(null);
   const [mutedPostIds, setMutedPostIds] = useState<Set<number>>(new Set());
 
   const postId = post.id;
@@ -30,6 +31,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const queryClient = useQueryClient();
 
   const { likes } = useFetchLikes(postId, type);
+  const { comments } = useFetchComments(postId, type);
 
   const currentUserId = currentUser.id;
 
@@ -85,16 +87,6 @@ const Post: React.FC<PostProps> = ({ post }) => {
   };
 
   useEffect(() => {
-    const fetchLikes = async () => {
-      try {
-        const commentsResponse = await useAxios.get(
-          `/comments?postId=${postId}&type=${type}`
-        );
-        setComments(commentsResponse.data);
-      } catch (error) {
-        console.error("Failed to fetch likes:", error);
-      }
-    };
 
     const fetchMutedPosts = async () => {
       try {
@@ -107,8 +99,6 @@ const Post: React.FC<PostProps> = ({ post }) => {
         console.error("Error fetching muted posts.");
       }
     };
-
-    fetchLikes();
 
     if (currentUserId) {
       fetchMutedPosts();
@@ -179,9 +169,12 @@ const Post: React.FC<PostProps> = ({ post }) => {
         setError={setError}
       />
 
-      <button onClick={() => handleComment(post.id, post.type)}>
-        Comment, {comments?.length || 0} comments
-      </button>
+      <CommentButton 
+        postId={postId}
+        type={type}
+        commentsCount={comments?.length}
+      />
+
       <button onClick={() => handleMutePost(post.id, post.type)}>
         {isMuted ? "Unmute" : "Mute"}
       </button>
