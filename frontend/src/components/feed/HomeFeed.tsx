@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Post from "../post/Post";
-import "./feed.scss";
 import QuoteRepost from "../post/QuoteRepost";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAxios } from "../../hooks";
+import "./feed.scss";
 
 type HomeFeedProps = {};
 const HomeFeed: React.FC<HomeFeedProps> = () => {
@@ -26,23 +26,8 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
 
   const posts = data ? data.pages.flatMap((page) => page) : [];
 
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     try {
-  //       const response = await useAxios.get("/posts");
-  //       setPosts(response.data);
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   };
-
-  //   fetchPosts();
-  // }, []);
-
-
   return (
     <div className="feed home-feed">
-      {/* {error && <p>{error}</p>} */}
       {!error &&
         posts.map((post) => {
           if(post.type === 'post' || post.type === 'repost') {

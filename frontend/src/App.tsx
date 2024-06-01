@@ -6,11 +6,11 @@ import Home from "./pages/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import CreatePost from "./components/create-post/CreatePost";
-import "./scss/globals.scss";
 import CreateQuoteRepost from "./components/create-quote-repost/CreateQuoteRepost";
 import CreateComment from "./components/create-comment/CreateComment";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import DeletePost from "./components/delete-post/DeletePost";
+import "./scss/app.scss";
 
 function App() {
   const queryClient = new QueryClient();
