@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Modal from "../modal/Modal";
-import { useAxios } from "../../hooks/useAxios";
 import useCreateCommentModal from "../../hooks/useCreateCommentModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAxios } from "../../hooks";
 
 type CreateCommentProps = {};
 const CreateComment: React.FC<CreateCommentProps> = () => {

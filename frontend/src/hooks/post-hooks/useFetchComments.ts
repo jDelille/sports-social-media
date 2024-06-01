@@ -1,5 +1,5 @@
-import { useAxios } from "../useAxios";
 import { useQuery } from "@tanstack/react-query";
+import useAxios from "../useAxios";
 
 const useFetchComments = (postId: number, type: string) => {
 

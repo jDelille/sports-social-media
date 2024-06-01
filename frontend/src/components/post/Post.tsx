@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import PostTypes from "../../types/Post";
-import { useAxios } from "../../hooks/useAxios";
 import { AuthContext } from "../../context/AuthContext";
-import useCreateQuoteRepostModal from "../../hooks/useCreateQuoteRepost";
 import PostHeader from "./PostHeader";
+import {
+  useFetchComments,
+  useFetchLikes,
+  useDeletePopup,
+  useCreateQuoteRepostModal,
+  useFetchMutedPosts,
+} from "../../hooks";
+import { CommentButton, LikeButton, MuteButton, RepostButton } from "./post-controls";
 import "./post.scss";
-import useCreateCommentModal from "../../hooks/useCreateCommentModal";
-import useDeletePopup from "../../hooks/useDeletePopup";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import LikeButton from "./post-controls/LikeButton";
-import useFetchLikes from "../../hooks/post-hooks/useFetchLikes";
-import CommentButton from "./post-controls/CommentButton";
-import useFetchComments from "../../hooks/post-hooks/useFetchComments";
 
 type PostProps = {
   post: PostTypes;
@@ -19,117 +18,24 @@ type PostProps = {
 
 const Post: React.FC<PostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
-  const [mutedPostIds, setMutedPostIds] = useState<Set<number>>(new Set());
-
-  const postId = post.id;
-  const type = post.type;
 
   const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
-  const createCommentModal = useCreateCommentModal();
   const deletePopup = useDeletePopup();
-  const queryClient = useQueryClient();
+
+  const currentUserId = currentUser.id;
+  const postId = post.id;
+  const type = post.type;
 
   const { likes } = useFetchLikes(postId, type);
   const { comments } = useFetchComments(postId, type);
-
-  const currentUserId = currentUser.id;
-
-  const hasReposted = post.reposter_username === currentUser.username;
-
-  const handleRepost = async (postId: number) => {
-    try {
-      if (!hasReposted) {
-        await useAxios.post("/reposts", {
-          postId: postId,
-          username: currentUser.username,
-          type: post.type,
-        });
-      } else {
-        await useAxios.delete("/reposts", {
-          data: {
-            postId: postId,
-            type: post.type,
-          },
-        });
-      }
-    } catch (error) {
-      setError("error reposting!!");
-    }
-  };
-
-  const { mutate } = useMutation({
-    mutationFn: handleRepost,
-    onSettled: async () => {
-      queryClient.refetchQueries();
-    },
-    mutationKey: ["addRepost"],
-  });
-
-  const handleRepostClick = async (postId: number) => {
-    try {
-      mutate(postId);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleQuoteRepost = async (
-    postId: number,
-    type: string,
-    originalPostUserId: number
-  ) => {
-    createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
-  };
-
-  const handleComment = (postId: number, type: string) => {
-    createCommentModal.onOpen(postId, type);
-  };
-
-  useEffect(() => {
-
-    const fetchMutedPosts = async () => {
-      try {
-        const response = await useAxios.get(
-          `/muted-posts?postId=${post.id}&type=${post.type}`
-        );
-        const mutedPostIds = response.data; // Array of muted post IDs
-        setMutedPostIds(new Set(mutedPostIds));
-      } catch (error) {
-        console.error("Error fetching muted posts.");
-      }
-    };
-
-    if (currentUserId) {
-      fetchMutedPosts();
-    }
-  }, [postId]);
+  const { muted } = useFetchMutedPosts(postId, type);
 
   const hasLiked = likes?.includes(currentUserId);
+  const hasReposted = post.reposter_username === currentUser.username;
+  const hasMuted = muted?.includes(postId);
 
-  const isMuted = mutedPostIds.has(postId);
-
-  const handleMutePost = async (postId: number, type: string) => {
-    try {
-      if (!isMuted) {
-        await useAxios.post("/muted-posts", {
-          postId: postId,
-          type: type,
-        });
-      } else {
-        await useAxios.delete("/muted-posts", {
-          data: {
-            postId: postId,
-            type: type,
-          },
-        });
-      }
-    } catch (error) {
-      setError("error muting post");
-    }
-  };
-
-  // if(isMuted) {
+  // if(hasMuted) {
   //   return null;
   // }
 
@@ -141,9 +47,17 @@ const Post: React.FC<PostProps> = ({ post }) => {
     }
   };
 
+  const handleQuoteRepost = async (
+    postId: number,
+    type: string,
+    originalPostUserId: number
+  ) => {
+    createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
+  };
+
   return (
     <div className="post">
-      {isMuted && <strong>Post is muted</strong>}
+      {hasMuted && <strong>Post is muted</strong>}
       {post.type === "repost" && (
         <p>(repost icon) reposted by {post.reposter_username}</p>
       )}
@@ -152,9 +66,13 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
       <p className="body">{post.body}</p>
 
-      <button onClick={() => handleRepostClick(post.id)}>
-        {hasReposted ? "unrepost" : "repost"}{" "}
-      </button>
+      <RepostButton
+        postId={postId}
+        type={type}
+        username={currentUser.username}
+        setError={setError}
+        hasReposted={hasReposted}
+      />
       <button
         onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
       >
@@ -169,15 +87,18 @@ const Post: React.FC<PostProps> = ({ post }) => {
         setError={setError}
       />
 
-      <CommentButton 
+      <CommentButton
         postId={postId}
         type={type}
         commentsCount={comments?.length}
       />
 
-      <button onClick={() => handleMutePost(post.id, post.type)}>
-        {isMuted ? "Unmute" : "Mute"}
-      </button>
+      <MuteButton 
+        hasMuted={hasMuted}
+        type={type}
+        postId={postId}
+        setError={setError}
+      />
       <button onClick={() => handleDeletePost(post.id, post.type)}>
         Delete
       </button>

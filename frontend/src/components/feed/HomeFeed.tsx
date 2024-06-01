@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useAxios } from "../../hooks/useAxios";
 import Post from "../post/Post";
 import "./feed.scss";
 import QuoteRepost from "../post/QuoteRepost";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useAxios } from "../../hooks";
 
 type HomeFeedProps = {};
 const HomeFeed: React.FC<HomeFeedProps> = () => {
@@ -39,7 +39,6 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
   //   fetchPosts();
   // }, []);
 
-  console.log(posts);
 
   return (
     <div className="feed home-feed">
