@@ -1,8 +1,8 @@
 import React from "react";
 import Popup from "../popup/Popup";
 import useDeletePopup from "../../hooks/useDeletePopup";
-import { useAxios } from "../../hooks/useAxios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAxios } from "../../hooks";
 
 type DeletePostProps = {};
 const DeletePost: React.FC<DeletePostProps> = () => {

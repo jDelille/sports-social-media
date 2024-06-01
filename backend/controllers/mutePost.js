@@ -48,7 +48,7 @@ export const mutePost = (req, res) => {
         values = [userInfo.id, req.body.postId];
       } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost") {
         q = "INSERT INTO muted_posts (`user_id`, `quote_repost_id`) VALUES (?, ?)";
-        values = [userInfo.id, req.body.quoteRepostId];
+        values = [userInfo.id, req.body.postId];
       } else {
         return res.status(400).json("Invalid type");
       }
@@ -75,7 +75,7 @@ export const mutePost = (req, res) => {
         values = [userInfo.id, req.body.postId];
       } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost") {
         q = "DELETE FROM muted_posts WHERE user_id = ? AND quote_repost_id = ?";
-        values = [userInfo.id, req.body.quoteRepostId];
+        values = [userInfo.id, req.body.postId];
       } else {
         return res.status(400).json("Invalid type");
       }

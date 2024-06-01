@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAxios } from "../../../hooks/useAxios";
+import { useAxios } from "../../../hooks";
 
 type LikeButtonProps = {
   postId: number;
@@ -10,7 +10,13 @@ type LikeButtonProps = {
   likesCount: number;
 };
 
-const LikeButton: React.FC<LikeButtonProps> = ({ postId, type, hasLiked, setError, likesCount }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({
+  postId,
+  type,
+  hasLiked,
+  setError,
+  likesCount,
+}) => {
   const queryClient = useQueryClient();
 
   const handleLike = async (postId: number) => {
@@ -29,18 +35,17 @@ const LikeButton: React.FC<LikeButtonProps> = ({ postId, type, hasLiked, setErro
     mutationFn: handleLike,
     onSettled: async () => {
       queryClient.refetchQueries();
-    
     },
-    mutationKey: ["addLike"]
-  })
+    mutationKey: ["addLike"],
+  });
 
   const handleLikeClick = async (postId: number) => {
     try {
-      mutate(postId)
+      mutate(postId);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <button onClick={() => handleLikeClick(postId)}>
