@@ -37,11 +37,11 @@ const PostHeader: React.FC<PostHeaderProps> = ({user, post}) => {
         <img src='../avatar-placeholder.png' />
       </div>
       <div className="user">
-        <strong>{user.name}</strong>
-        <span>{user.username}</span>
+        <p className='name'>{user.name}</p>
+        <p className='username'>{user.username} · <span className='date'>{moment(post.created_at).fromNow()}</span></p>
       </div>
-      <div className="details">
-        <span>{moment(post.created_at).fromNow()}</span>
+      <div className="date">
+        
       </div>
     </div>
   );

@@ -11,6 +11,9 @@ import {
 } from "../../hooks";
 import { CommentButton, LikeButton, MuteButton, RepostButton } from "./post-controls";
 import "./post.scss";
+import { RepostIcon } from "../../icons";
+import { useNavigate } from "react-router-dom";
+import { COLOR_CONSTANTS } from "../../constants";
 
 type PostProps = {
   post: PostTypes;
@@ -22,6 +25,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
   const deletePopup = useDeletePopup();
+  const navigate = useNavigate();
 
   const currentUserId = currentUser.id;
   const postId = post.id;
@@ -55,11 +59,21 @@ const Post: React.FC<PostProps> = ({ post }) => {
     createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
   };
 
+  const navigateToProfile = (e: any) => {
+    e.stopPropagation();
+    navigate(`/profile/${post.user_id}`);
+  };
+
   return (
     <div className="post">
-      {hasMuted && <strong>Post is muted</strong>}
-      {post.type === "repost" && (
-        <p>(repost icon) reposted by {post.reposter_username}</p>
+      {(type === "repost") && (
+        <p className="reposter">
+          <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />
+          Reposted by{" "}
+          <span onClick={(e) => navigateToProfile(e)}>
+            @{post.reposter_username}
+          </span>
+        </p>
       )}
 
       <PostHeader user={post.user} post={post} />
