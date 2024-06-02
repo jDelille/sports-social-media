@@ -43,10 +43,11 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     post.quote_reposted_quote_repost_id
   );
 
+
   const hasLiked = likes?.includes(currentUserId);
   const hasMuted = muted?.includes(postId);
   const isOriginalPostMuted = mutedOriginalPost?.includes(
-    post.quote_reposted_post_id || post.quote_reposted_quote_repost_id
+    post.quote_reposted_quote_repost_id || post.quote_reposted_post_id 
   );
 
   const hasReposted = post.reposter_username === currentUser.username;
@@ -73,28 +74,27 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
 
   return (
     <div className="quote-repost">
-      {hasMuted && <strong>Post is muted</strong>}
-
       {post.type === "quote_repost_repost" && (
         <p>(repost icon) reposted by {post.reposter_username}</p>
       )}
       <PostHeader user={post.user} post={post} />
       <p className="body">{post.body}</p>
-      <div className="original-post">
-        <PostHeader user={post.original_post_user} post={post} />
-        {!hideMutedPost && isOriginalPostMuted ? (
+      <div className={isOriginalPostMuted && !hideMutedPost ? "muted-original-post" : "original-post"}>
+        {isOriginalPostMuted && (
+           <div className="muted-post">
+           <p>You have muted this post.</p>
+           <button onClick={handleHideMutedPost}>View</button>
+         </div>
+        )}
+        {!isOriginalPostMuted && (
           <>
-            <p>You have muted this post</p>
-            <button onClick={handleHideMutedPost}>View</button>
-          </>
-        ) : (
-          <>
+            <PostHeader user={post.original_post_user} post={post} />
             <p className="body">{post.original_post_body}</p>
-            <button onClick={handleHideMutedPost}>Hide</button>
           </>
         )}
-      </div>
+        </div>
 
+      <div className="footer">
       <RepostButton
         postId={postId}
         type={type}
@@ -132,6 +132,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       <button onClick={() => handleDeletePost(post.id, post.type)}>
         Delete
       </button>
+      </div>
+
+
     </div>
   );
 };
