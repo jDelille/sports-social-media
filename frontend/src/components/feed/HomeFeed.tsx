@@ -26,9 +26,6 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
 
   const posts = data ? data.pages.flatMap((page) => page) : [];
 
-  console.log(posts)
-
-
   return (
     <div className="feed home-feed">
       {!error &&

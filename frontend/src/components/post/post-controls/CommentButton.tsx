@@ -1,5 +1,7 @@
 import React from "react";
 import useCreateCommentModal from "../../../hooks/useCreateCommentModal";
+import { CommentIcon } from "../../../icons";
+import { COLOR_CONSTANTS } from "../../../constants";
 
 type CommentButtonProps = {
   commentsCount: number;
@@ -18,9 +20,7 @@ const CommentButton: React.FC<CommentButtonProps> = ({
   };
 
   return (
-    <button className="comment button" onClick={handleComment}>
-      Comment, {commentsCount} comments
-    </button>
+    <CommentIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} onClick={handleComment} />
   );
 };
 

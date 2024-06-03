@@ -9,6 +9,7 @@ type PostTypes = {
     username: string;
     user: UserTypes;
     reposter_username: string;
+    reposted_post_id: number;
     original_post_body: string;
     quote_reposted_post_id: number;
     quote_reposted_quote_repost_id: number;

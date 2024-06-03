@@ -14,6 +14,7 @@ import "./post.scss";
 import { RepostIcon } from "../../icons";
 import { useNavigate } from "react-router-dom";
 import { COLOR_CONSTANTS } from "../../constants";
+import PostFooter from "./PostFooter";
 
 type PostProps = {
   post: PostTypes;
@@ -27,16 +28,11 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const deletePopup = useDeletePopup();
   const navigate = useNavigate();
 
-  const currentUserId = currentUser.id;
   const postId = post.id;
   const type = post.type;
 
-  const { likes } = useFetchLikes(postId, type);
-  const { comments } = useFetchComments(postId, type);
   const { muted } = useFetchMutedPosts(postId, type);
 
-  const hasLiked = likes?.includes(currentUserId);
-  const hasReposted = post.reposter_username === currentUser.username;
   const hasMuted = muted?.includes(postId);
 
   // if(hasMuted) {
@@ -80,32 +76,16 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
       <p className="body">{post.body}</p>
 
-      <RepostButton
-        postId={postId}
-        type={type}
-        username={currentUser.username}
-        setError={setError}
-        hasReposted={hasReposted}
-      />
-      <button
+      <PostFooter post={post} type={type} />
+
+   
+      {/* <button
         onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
       >
         quote repost
       </button>
 
-      <LikeButton
-        postId={postId}
-        type={type}
-        hasLiked={hasLiked}
-        likesCount={likes?.length}
-        setError={setError}
-      />
 
-      <CommentButton
-        postId={postId}
-        type={type}
-        commentsCount={comments?.length}
-      />
 
       <MuteButton 
         hasMuted={hasMuted}
@@ -115,7 +95,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
       />
       <button onClick={() => handleDeletePost(post.id, post.type)}>
         Delete
-      </button>
+      </button> */}
     </div>
   );
 };

@@ -1,115 +1,166 @@
-@use '../../scss/variables' as *;
-
+@use "../../scss/variables" as *;
 
 .post,
 .quote-repost {
-    width: 100%;
-    padding: 16px 16px 16px;
-    min-height: 140px;
-    border-bottom: 1px solid $lightBorderColor;
-    .reposter {
-        font-size: 12px;
-        color: $lightgray;
-        padding-bottom: 10px;
+  width: 100%;
+  padding: 16px 16px 16px;
+  min-height: 140px;
+  border-bottom: 1px solid $lightBorderColor;
+  .reposter {
+    font-size: 12px;
+    color: $lightgray;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    span {
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+  .post-header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    .avatar {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      img {
+        object-fit: cover;
+        max-width: 30px;
+        max-height: 30px;
+        border-radius: 50%;
+      }
+    }
+    .user {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+      .name {
+        font-size: 14px;
+        font-weight: 500;
+        color: rgb(8, 5, 27);
         display: flex;
         align-items: center;
-        gap: 5px;
-        span {
-          &:hover {
-            text-decoration: underline;
-            cursor: pointer;
-          }
+        gap: 3px;
+        position: relative;
+      }
+      .username {
+        color: $darkgray;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 400;
+        .date {
+          font-size: 12px;
+          color: $darkgray;
+          display: flex;
+          align-items: center;
+          position: relative;
+          top: 1px;
         }
       }
-    .post-header {
-        display: flex;
-        align-items: center;
+    }
+  }
+  .body {
+    padding: 14px 0;
+    font-size: 14px;
+    color: rgb(8, 5, 27);
+    word-wrap: break-word;
+  }
+
+  .post-footer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    svg {
+      cursor: pointer;
+    }
+    .icon {
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      gap: 4px;
+      cursor: pointer;
+     
+    }
+    .repost-icon,
+    .like-icon {
         position: relative;
-        .avatar {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            img {
-                object-fit: cover;
-                max-width: 30px;
-                max-height: 30px;
-                border-radius: 50%;
+        &:hover {
+            svg, span{
+                z-index: 9999;
+            }
+            &::after {
+              position: absolute;
+              content: "";
+              border-radius: 50%;
+              width: 35px;
+              height: 35px;
+              opacity: 0.3;
+              left: -6px;
+            }
+          }
+    }
+
+    .repost-icon {
+        &:hover {
+            &::after {
+                background-color: lighten(#2ecc71, 40%);
 
             }
         }
-        .user {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 1;
-            .name {
-              font-size: 14px;
-              font-weight: 500;
-              color: rgb(8, 5, 27);
-              display: flex;
-              align-items: center;
-              gap: 3px;
-              position: relative;
-             
-              
-            }
-            .username {
-              color: $darkgray;
-              font-size: 13px;
-              display: flex;
-              align-items: center;
-              gap: 4px;
-              font-weight: 400;
-              .date {
-                font-size: 12px;
-                color: $darkgray;
-                display: flex;
-                align-items: center;
-                position: relative;
-                top: 1px;
-              }
-            }
-          }
-         
-    }
-    .body {
-        padding: 15px 0;
-        padding-top: 8px;
-        font-size: 14px;
-        color: rgb(8, 5, 27);
-        word-wrap: break-word;
     }
 
+    .like-icon {
+        &:hover {
+            &::after {
+                background-color: lighten(#fc5185, 26%);
+
+            }
+        }
+    }
+  }
 }
 
 .quote-repost {
-    .original-post,
-    .muted-original-post {
-        border: 1px solid $lightBorderColor;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        border-radius: 4px;
-       
-    }
+  .original-post,
+  .muted-original-post {
+    border: 1px solid $lightBorderColor;
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
 
-    .muted-original-post {
-        background-color: darken(white, 3%);
-        border: 1px solid darken(white, 15%);
-        .muted-post {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 13px;
-            color: darken($darkgray, 10%);
+  .muted-original-post {
+    background-color: darken(white, 3%);
+    border: 1px solid darken(white, 15%);
+
+    .muted-post {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: darken($darkgray, 10%);
+      span {
+        font-weight: 500;
+        color: $accent;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
         }
+      }
     }
-
-    .footer {
-        margin-top: 15px;
-    }
+  }
 }

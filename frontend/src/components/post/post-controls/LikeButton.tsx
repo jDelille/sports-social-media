@@ -1,6 +1,8 @@
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios } from "../../../hooks";
+import { LikeIcon, LikedIcon } from "../../../icons";
+import { COLOR_CONSTANTS } from "../../../constants";
 
 type LikeButtonProps = {
   postId: number;
@@ -47,10 +49,24 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     }
   };
 
-  return (
-    <button onClick={() => handleLikeClick(postId)}>
-      {hasLiked ? "Unlike" : "Like"}, {likesCount} likes
-    </button>
+  return hasLiked ? (
+    <div className="icon like-icon">
+      <LikedIcon
+        size={18}
+        color={COLOR_CONSTANTS.LIKE_COLOR}
+        onClick={() => handleLikeClick(postId)}
+      />
+      <span style={{ color: COLOR_CONSTANTS.LIKE_COLOR }}>{likesCount}</span>
+    </div>
+  ) : (
+    <div className="icon like-icon">
+      <LikeIcon
+        size={18}
+        color={COLOR_CONSTANTS.LIGHTGRAY}
+        onClick={() => handleLikeClick(postId)}
+      />
+      <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{likesCount}</span>
+    </div>
   );
 };
 
