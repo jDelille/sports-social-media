@@ -64,3 +64,33 @@ export const removeRepost = (req, res) => {
   });
 };
 
+export const isPostReposted = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    let q;
+
+    if (req.query.type === 'post' || req.query.type === "repost") {
+      q = "SELECT * FROM reposts WHERE reposted_post_id = ? AND reposter_id = ?";
+    } else if (req.query.type === "quote_repost" || req.query.type === "quote_repost_repost") {
+      q = "SELECT * FROM reposts WHERE reposted_quote_repost_id = ? AND reposter_id = ?";
+    }
+    const values = [
+      req.query.postId,
+      userInfo.id,
+    ];
+
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+      if (data.length > 0) {
+        return res.status(200).json({ reposted: true, count: data.length });
+      } else {
+        return res.status(200).json({ reposted: false, count: data.length });
+      }
+    });
+  });
+}
+

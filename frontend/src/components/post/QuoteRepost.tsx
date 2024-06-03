@@ -17,7 +17,7 @@ import {
   useFetchMutedPosts,
 } from "../../hooks";
 import "./post.scss";
-
+import PostFooter from "./PostFooter";
 
 type QuoteRepostProps = {
   post: PostTypes;
@@ -43,11 +43,10 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     post.quote_reposted_quote_repost_id
   );
 
-
   const hasLiked = likes?.includes(currentUserId);
   const hasMuted = muted?.includes(postId);
   const isOriginalPostMuted = mutedOriginalPost?.includes(
-    post.quote_reposted_quote_repost_id || post.quote_reposted_post_id 
+    post.quote_reposted_quote_repost_id || post.quote_reposted_post_id
   );
 
   const hasReposted = post.reposter_username === currentUser.username;
@@ -79,12 +78,18 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       )}
       <PostHeader user={post.user} post={post} />
       <p className="body">{post.body}</p>
-      <div className={isOriginalPostMuted && !hideMutedPost ? "muted-original-post" : "original-post"}>
+      <div
+        className={
+          isOriginalPostMuted && !hideMutedPost
+            ? "muted-original-post"
+            : "original-post"
+        }
+      >
         {isOriginalPostMuted && (
-           <div className="muted-post">
-           <p>You have muted this post.</p>
-           <button onClick={handleHideMutedPost}>View</button>
-         </div>
+          <div className="muted-post">
+            <p>You have muted this post.</p>
+            <span onClick={handleHideMutedPost}>View</span>
+          </div>
         )}
         {!isOriginalPostMuted && (
           <>
@@ -92,36 +97,16 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
             <p className="body">{post.original_post_body}</p>
           </>
         )}
-        </div>
+      </div>
 
-      <div className="footer">
-      <RepostButton
-        postId={postId}
-        type={type}
-        username={currentUser.username}
-        setError={setError}
-        hasReposted={hasReposted}
-      />
+      <PostFooter post={post} type={type} />
 
-      <button
+      {/* <button
         onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
       >
         quote repost
       </button>
 
-      <LikeButton
-        postId={postId}
-        type={type}
-        hasLiked={hasLiked}
-        likesCount={likes?.length}
-        setError={setError}
-      />
-
-      <CommentButton
-        postId={postId}
-        type={type}
-        commentsCount={comments?.length}
-      />
 
       <MuteButton
         hasMuted={hasMuted}
@@ -131,10 +116,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       />
       <button onClick={() => handleDeletePost(post.id, post.type)}>
         Delete
-      </button>
-      </div>
-
-
+      </button> */}
     </div>
   );
 };
