@@ -23,7 +23,6 @@ function App() {
         <div className="main-content">
           <Login />
           <Register />
-          <CreatePost />
           <CreateQuoteRepost />
           <CreateComment />
           <Outlet />

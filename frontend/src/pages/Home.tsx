@@ -6,6 +6,7 @@ import HomeFeed from "../components/feed/HomeFeed";
 import useCreatePostModal from "../hooks/useCreatePostModal";
 import PageHeader from "../components/page-header/PageHeader";
 import './page.scss';
+import CreatePost from "../components/create-post/CreatePost";
 
 type HomeProps = {};
 const Home: React.FC<HomeProps> = () => {
@@ -26,6 +27,7 @@ const Home: React.FC<HomeProps> = () => {
   return (
     <div className="page">
       <PageHeader title="Home"/>
+      <CreatePost />
       <HomeFeed />
     </div>
   );
