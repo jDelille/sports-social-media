@@ -1,0 +1,97 @@
+@use '../../scss/variables' as *;
+
+.create-post-container {
+    width: $mainContentWidth;
+    padding: 0 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid $lightBorderColor;
+    .header {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+    .privacy,
+    .active {
+        border: 1px solid lightgray;
+        padding: .35rem 0.80rem;
+        border-radius: 22px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        position: relative;
+        transition: all 100ms ease-in-out;
+        outline: 0px;
+        &:hover {
+            background-color: darken(white, 2%);
+        }
+
+        .posting-menu {
+            width: 250px;
+            height: 180px;
+            position: absolute;
+            bottom: -190px;
+            z-index: 99999;
+            left: 0;
+            border-radius: 8px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            background-color: white;
+            ul {
+                list-style: none;
+                li {
+                    padding: 20px;
+                    font-size: 15px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    border-bottom: 1px solid $lightBorderColor;
+                    color: $darkgray;
+                    font-weight: 400;
+                    &:hover {
+                        background-color: darken(white, 2%);
+                    }
+                    span {
+                        background-color: lighten($accent, 30%);
+                        padding: 5px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: fit-content;
+                        border-radius: 50%;
+                    }
+                }
+                .groups {
+                    flex-direction: column;
+                    align-items: baseline;
+                    font-weight: 500;
+                    color: black;
+                    p {
+                        font-size: 12px;
+                        color: $darkgray;
+                        font-weight: 400;
+                    }
+                }
+            }
+
+        }
+    }
+
+    .active {
+        outline: 1px solid lighten($accent, 10%);
+        outline-offset: 1px;
+        outline-width: 2px;
+        transition: all 90ms ease-in-out;
+    }
+}
+
