@@ -71,6 +71,8 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     }
   };
 
+  console.log(post)
+
   return (
     <div className="quote-repost">
       {post.type === "quote_repost_repost" && (
@@ -87,11 +89,12 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
       >
         {isOriginalPostMuted && (
           <div className="muted-post">
-            <p>You have muted this post.</p>
-            <span onClick={handleHideMutedPost}>View</span>
+            <p>You have muted this post</p>
+            <MuteButton postId={post.quote_reposted_post_id} type={type} hasMuted={hasMuted} setError={setError}/>
           </div>
         )}
-        {!isOriginalPostMuted && (
+        
+        {(!isOriginalPostMuted || hideMutedPost) && (
           <>
             <PostHeader user={post.original_post_user} post={post} />
             <p className="body">{post.original_post_body}</p>

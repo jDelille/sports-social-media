@@ -24,6 +24,23 @@
     display: flex;
     align-items: center;
     position: relative;
+    .menu {
+      position: absolute;
+      right: 0;
+      top: 0;
+      p {
+        width: fit-content;
+        margin-left: auto;
+        cursor: pointer;
+        &:hover {
+          svg {
+            circle {
+              stroke: $darkgray;
+            }
+          }
+        }
+      }
+    }
     .avatar {
       width: 40px;
       height: 40px;
@@ -90,43 +107,41 @@
       font-size: 13px;
       gap: 4px;
       cursor: pointer;
-     
     }
     .repost-icon,
     .like-icon {
-        position: relative;
-        &:hover {
-            svg, span{
-                z-index: 9999;
-            }
-            &::after {
-              position: absolute;
-              content: "";
-              border-radius: 50%;
-              width: 35px;
-              height: 35px;
-              opacity: 0.3;
-              left: -6px;
-            }
-          }
+      position: relative;
+      &:hover {
+        svg,
+        span {
+          z-index: 9999;
+        }
+        &::after {
+          position: absolute;
+          content: "";
+          border-radius: 50%;
+          width: 35px;
+          height: 35px;
+          opacity: 0.3;
+          left: -6px;
+        }
+      }
     }
 
     .repost-icon {
-        &:hover {
-            &::after {
-                background-color: lighten(#2ecc71, 40%);
-
-            }
+      &:hover {
+        &::after {
+          background-color: lighten(#2ecc71, 40%);
         }
+      }
     }
 
     .like-icon {
-        &:hover {
-            &::after {
-                background-color: lighten(#fc5185, 26%);
-
-            }
+      &:hover {
+        &::after {
+          background-color: lighten(#fc5185, 26%);
         }
+      }
     }
   }
 }
@@ -155,10 +170,10 @@
       color: darken($darkgray, 10%);
       span {
         font-weight: 500;
-        color: $accent;
+        color: darken($darkgray, 10%);
         cursor: pointer;
         &:hover {
-          text-decoration: underline;
+          color: darken($darkgray, 20%);
         }
       }
     }

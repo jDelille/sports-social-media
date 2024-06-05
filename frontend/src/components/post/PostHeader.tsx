@@ -1,14 +1,22 @@
-import React from 'react';
-import UserTypes from '../../types/User';
-import PostTypes from '../../types/Post';
+import React, { useState } from "react";
+import UserTypes from "../../types/User";
+import PostTypes from "../../types/Post";
 import moment from "moment";
+import PostMenu from "./post-menu/PostMenu";
+import { MenuIcon } from "../../icons";
+import { COLOR_CONSTANTS } from "../../constants";
 
 type PostHeaderProps = {
-    user: UserTypes;
-    post: PostTypes;
- }
+  user: UserTypes;
+  post: PostTypes;
+};
 
-const PostHeader: React.FC<PostHeaderProps> = ({user, post}) => {
+const PostHeader: React.FC<PostHeaderProps> = ({ user, post }) => {
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const handleMenuClose = () => {
+    setOpenMenu(false);
+  };
 
   moment.updateLocale("en", {
     relativeTime: {
@@ -32,16 +40,22 @@ const PostHeader: React.FC<PostHeaderProps> = ({user, post}) => {
   });
 
   return (
-    <div className='post-header'>
+    <div className="post-header">
       <div className="avatar">
-        <img src='../avatar-placeholder.png' />
+        <img src="../avatar-placeholder.png" />
       </div>
       <div className="user">
-        <p className='name'>{user.name}</p>
-        <p className='username'>{user.username} · <span className='date'>{moment(post.created_at).fromNow()}</span></p>
+        <p className="name">{user.name}</p>
+        <p className="username">
+          {user.username} ·{" "}
+          <span className="date">{moment(post.created_at).fromNow()}</span>
+        </p>
       </div>
-      <div className="date">
-        
+      <div className="menu">
+        <p onClick={() => setOpenMenu(!openMenu)}>
+          <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
+        </p>
+        {openMenu && <PostMenu isOpen={openMenu} onClose={handleMenuClose} postId={post.id} type={post.type} />}
       </div>
     </div>
   );

@@ -12,6 +12,8 @@ type MuteButtonProps = {
 const MuteButton: React.FC<MuteButtonProps> = ({type, postId, setError, hasMuted}) => {
     const queryClient = useQueryClient();
 
+    console.log(postId)
+
     const handleMutePost = async (postId: number) => {
         try {
           if (!hasMuted) {
