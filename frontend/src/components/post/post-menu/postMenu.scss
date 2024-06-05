@@ -1,0 +1,36 @@
+@use '../../../scss/variables' as *;
+
+.post-menu {
+    background-color: darken(white, 2%);
+    width: 140px;
+    height: fit-content;
+    position: relative;
+    z-index: 999;
+    border: 1px solid $lightBorderColor;
+    border-radius: 4px;
+    ul {
+        list-style-type: none;
+        li {
+            padding: 8px 10px;
+            font-size: 12px;
+            color: $darkgray;
+            &:hover {
+                background-color: darken(white, 5%);
+                cursor: pointer;
+                color: darken($darkgray, 55%);
+            }
+        }
+    }
+}
+
+.post-menu.open {
+    display: block;
+  }
+
+  .post-menu.downwards {
+    top: 100%; /* Opens downwards */
+  }
+
+  .post-menu.upwards {
+    bottom: 100%; /* Opens upwards */
+  }
