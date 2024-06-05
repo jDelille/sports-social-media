@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./postMenu.scss";
 import useDynamicMenuPosition from "../../../hooks/post-hooks/useDynamicMenuPosition";
-import { useDeletePopup } from "../../../hooks";
+import { useDeletePopup, useFetchMutedPosts } from "../../../hooks";
+import { MuteButton } from "../post-controls";
 
 type PostMenuProps = {
   isOpen: boolean;
@@ -10,10 +11,19 @@ type PostMenuProps = {
   type: string;
 };
 
-const PostMenu: React.FC<PostMenuProps> = ({ isOpen, onClose, postId, type }) => {
+const PostMenu: React.FC<PostMenuProps> = ({
+  isOpen,
+  onClose,
+  postId,
+  type,
+}) => {
   const [error, setError] = useState<string | null>(null);
   const { menuRef, openUpwards } = useDynamicMenuPosition(isOpen, onClose);
   const deletePopup = useDeletePopup();
+
+  const { muted } = useFetchMutedPosts(postId, type);
+
+  const hasMuted = muted?.includes(postId);
 
   const handleDeletePost = async () => {
     try {
@@ -22,6 +32,10 @@ const PostMenu: React.FC<PostMenuProps> = ({ isOpen, onClose, postId, type }) =>
       setError("error muting post");
     }
   };
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div
@@ -32,8 +46,17 @@ const PostMenu: React.FC<PostMenuProps> = ({ isOpen, onClose, postId, type }) =>
     >
       {/* Menu items */}
       <ul>
-        <li>Mute post</li>
-        <li onClick={handleDeletePost}>Delete</li>
+        <li>
+          <MuteButton
+            postId={postId}
+            type={type}
+            setError={setError}
+            hasMuted={hasMuted}
+          />
+        </li>
+        <li>
+          <button onClick={handleDeletePost}>Delete</button>
+        </li>
       </ul>
     </div>
   );

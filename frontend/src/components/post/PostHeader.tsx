@@ -55,7 +55,12 @@ const PostHeader: React.FC<PostHeaderProps> = ({ user, post }) => {
         <p onClick={() => setOpenMenu(!openMenu)}>
           <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
         </p>
-        {openMenu && <PostMenu isOpen={openMenu} onClose={handleMenuClose} postId={post.id} type={post.type} />}
+        <PostMenu
+            isOpen={openMenu}
+            onClose={handleMenuClose}
+            postId={post.id}
+            type={post.type}
+          />
       </div>
     </div>
   );
