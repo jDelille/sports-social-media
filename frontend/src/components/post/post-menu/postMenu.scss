@@ -11,9 +11,16 @@
     ul {
         list-style-type: none;
         li {
-            padding: 8px 10px;
             font-size: 12px;
             color: $darkgray;
+            overflow-x: hidden;
+            button {
+              all: unset;
+              width: 100%;
+              height: 100%;
+              padding: 8px 10px;
+
+            }
             &:hover {
                 background-color: darken(white, 5%);
                 cursor: pointer;

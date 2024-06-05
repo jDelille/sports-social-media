@@ -130,6 +130,12 @@
 
     .repost-icon {
       &:hover {
+        svg {
+          path {
+            fill: #2ecc71;
+          }
+        }
+      }
         &::after {
           background-color: lighten(#2ecc71, 40%);
         }
@@ -138,13 +144,18 @@
 
     .like-icon {
       &:hover {
+        svg {
+          path {
+            stroke: #fc5185;
+          }
+        }
         &::after {
           background-color: lighten(#fc5185, 26%);
         }
       }
     }
   }
-}
+
 
 .quote-repost {
   .original-post,
