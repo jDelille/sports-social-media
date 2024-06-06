@@ -3,7 +3,7 @@ import React from "react";
 type CommentIconProps = {
   size: number;
   color: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const CommentIcon: React.FC<CommentIconProps> = ({ size, color, onClick }) => {

@@ -10,9 +10,10 @@ import Avatar from "../avatar/Avatar";
 type PostHeaderProps = {
   user: UserTypes;
   post: PostTypes;
+  quoteReposted?: boolean;
 };
 
-const PostHeader: React.FC<PostHeaderProps> = ({ user, post }) => {
+const PostHeader: React.FC<PostHeaderProps> = ({ user, post, quoteReposted }) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleMenuClose = () => {
@@ -43,12 +44,12 @@ const PostHeader: React.FC<PostHeaderProps> = ({ user, post }) => {
   return (
     <div className="post-header">
       <div className="avatar">
-        <Avatar userId={post.user_id} />
+        <Avatar userId={post.user_id} src={user.avatar} />
       </div>
-      <div className="user">
+      <div className={quoteReposted ? "qr_user" : "user"}>
         <p className="name">{user.name}</p>
         <p className="username">
-          {user.username} ·{" "}
+          @{user.username} ·{" "}
           <span className="date">{moment(post.created_at).fromNow()}</span>
         </p>
       </div>

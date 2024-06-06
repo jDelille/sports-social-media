@@ -10,17 +10,22 @@ type RepostPopupProps = {
   hasReposted: boolean;
   originalPostUserId: number;
   type: string;
+  currentUserId: number | undefined;
 };
 const RepostPopup: React.FC<RepostPopupProps> = ({
   handleRepostClick,
   postId,
   hasReposted,
   originalPostUserId,
-  type
+  type,
+  currentUserId
 }) => {
     const createQuoteRepost = useCreateQuoteRepostModal();
 
     const handleOpenQuoteRepost = () => {
+      if(!currentUserId) {
+        return;
+      }
         createQuoteRepost.onOpen(postId, type, originalPostUserId)
     }
 

@@ -13,6 +13,7 @@ type RepostButtonProps = {
   username: string;
   repostCount: number;
   originalPostUserId: number;
+  currentUserId: number | undefined;
 };
 
 const RepostButton: React.FC<RepostButtonProps> = ({
@@ -22,7 +23,8 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   hasReposted,
   username,
   repostCount,
-  originalPostUserId
+  originalPostUserId,
+  currentUserId
 }) => {
   const queryClient = useQueryClient();
   const [openRepostPopup, setOpenRepostPopup] = useState(false);
@@ -58,6 +60,9 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   });
 
   const handleRepostClick = async (postId: number) => {
+    if(!currentUserId) {
+      return;
+    }
     try {
       mutate(postId);
     } catch (error) {
@@ -66,28 +71,29 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   };
 
   const handleOpenRepostPopup = () => {
+    
     setOpenRepostPopup(!openRepostPopup);
   };
 
   return (
     <div className="icon-container">
       {hasReposted ? (
-        <div className="icon repost-icon">
+        <div className="icon repost-icon" onClick={handleOpenRepostPopup}>
           <RepostIcon
             size={18}
             color={COLOR_CONSTANTS.REPOST_COLOR}
-            onClick={handleOpenRepostPopup}
+            
           />
           <span style={{ color: COLOR_CONSTANTS.REPOST_COLOR }}>
             {repostCount}
           </span>
         </div>
       ) : (
-        <div className="icon repost-icon">
+        <div className="icon repost-icon"  onClick={handleOpenRepostPopup}>
           <RepostIcon
             size={18}
             color={COLOR_CONSTANTS.LIGHTGRAY}
-            onClick={handleOpenRepostPopup}
+           
           />
           <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>
             {repostCount}
@@ -101,6 +107,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
           hasReposted={hasReposted}
           originalPostUserId={originalPostUserId}
           type={type}
+          currentUserId={currentUserId}
         />
       )}
     </div>

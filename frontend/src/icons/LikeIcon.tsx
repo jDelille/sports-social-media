@@ -3,7 +3,7 @@ import React from "react";
 type LikeIconProps = {
   size: number;
   color: string;
-  onClick: (e: any) => void;
+  onClick?: (e: any) => void;
 };
 
 const LikeIcon: React.FC<LikeIconProps> = ({ size, color, onClick }) => {
