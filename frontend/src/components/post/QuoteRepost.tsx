@@ -18,6 +18,9 @@ import {
 } from "../../hooks";
 import "./post.scss";
 import PostFooter from "./PostFooter";
+import { RepostIcon } from "../../icons";
+import { COLOR_CONSTANTS } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 type QuoteRepostProps = {
   post: PostTypes;
@@ -30,8 +33,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
   const deletePopup = useDeletePopup();
+  const navigate = useNavigate();
 
-  const currentUserId = currentUser.id;
+  const currentUserId = currentUser?.id;
   const postId = post.id;
   const type = post.type;
 
@@ -49,7 +53,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     post.quote_reposted_quote_repost_id || post.quote_reposted_post_id
   );
 
-  const hasReposted = post.reposter_username === currentUser.username;
+  const hasReposted = post.reposter_username === currentUser?.username;
 
   const handleQuoteRepost = async (
     postId: number,
@@ -71,12 +75,22 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
     }
   };
 
-  console.log(post)
+  const navigateToProfile = (e: any) => {
+    e.stopPropagation();
+    navigate(`/profile/${post.user_id}`);
+  };
+
 
   return (
     <div className="quote-repost">
-      {post.type === "quote_repost_repost" && (
-        <p>(repost icon) reposted by {post.reposter_username}</p>
+      {(type === "quote_repost_repost") && (
+        <p className="reposter">
+          <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />
+          Reposted by{" "}
+          <span onClick={(e) => navigateToProfile(e)}>
+            @{post.reposter_username}
+          </span>
+        </p>
       )}
       <PostHeader user={post.user} post={post} />
       <p className="body">{post.body}</p>
@@ -96,8 +110,8 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
         
         {(!isOriginalPostMuted || hideMutedPost) && (
           <>
-            <PostHeader user={post.original_post_user} post={post} />
-            <p className="body">{post.original_post_body}</p>
+            <PostHeader user={post.original_post_user} post={post} quoteReposted />
+            <p className="qr_body">{post.original_post_body}</p>
           </>
         )}
       </div>

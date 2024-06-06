@@ -67,6 +67,8 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     createPostModal.onClose();
   };
 
+  console.log(currentUser)
+
   return (
     <div className="create-post-container">
       {/* <Modal
@@ -78,8 +80,8 @@ const CreatePost: React.FC<CreatePostProps> = () => {
       <div className="header">
         <div className="profile-picture">
           <Avatar  
-            src={currentUser.profilePicture}
-            userId={currentUser.id} />
+            src={currentUser?.avatar}
+            userId={currentUser?.id} />
         </div>
         <div className={openPostMenu ? "active" : "privacy"} onClick={handleOpenPostMenu}>
           <p>{TEXT_CONSTANTS.POST_TO_PUBLIC}</p>

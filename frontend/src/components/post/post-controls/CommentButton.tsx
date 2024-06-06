@@ -20,7 +20,14 @@ const CommentButton: React.FC<CommentButtonProps> = ({
   };
 
   return (
-    <CommentIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} onClick={handleComment} />
+    <div className="icon comment-icon"  onClick={handleComment}>
+      <CommentIcon
+        size={18}
+        color={COLOR_CONSTANTS.LIGHTGRAY}
+       
+      />
+      <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{commentsCount}</span>
+    </div>
   );
 };
 

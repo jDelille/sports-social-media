@@ -44,7 +44,8 @@ export const getAllPosts = (req, res) => {
       JSON_OBJECT(
         'id', u.id,
         'name', u.name,
-        'username', u.username
+        'username', u.username,
+        'avatar', u.avatar
       ) AS user,
       NULL AS reposter_username,
       NULL AS reposted_at,
@@ -67,7 +68,8 @@ export const getAllPosts = (req, res) => {
       JSON_OBJECT(
         'id', ur.id,
         'name', ur.name,
-        'username', ur.username
+        'username', ur.username,
+        'avatar', ur.avatar
       ) AS user,
       r.reposter_username,
       r.created_at AS reposted_at,
@@ -91,7 +93,8 @@ export const getAllPosts = (req, res) => {
       JSON_OBJECT(
         'id', ur.id,
         'name', ur.name,
-        'username', ur.username
+        'username', ur.username,
+        'avatar', ur.avatar
       ) AS user,
       ur.username AS reposter_username,
       r.created_at AS reposted_at,
@@ -101,7 +104,8 @@ export const getAllPosts = (req, res) => {
       JSON_OBJECT(
         'id', ou.id,
         'name', ou.name,
-        'username', ou.username
+        'username', ou.username,
+        'avatar', ou.avatar
       ) AS original_post_user,
       'quote_repost_repost' AS type
   FROM quote_reposts qr
@@ -120,7 +124,8 @@ export const getAllPosts = (req, res) => {
       JSON_OBJECT(
         'id', ur.id,
         'name', ur.name,
-        'username', ur.username
+        'username', ur.username,
+        'avatar', ur.avatar
       ) AS user,
       NULL AS reposter_username,
       qr.created_at AS reposted_at,
@@ -133,7 +138,8 @@ export const getAllPosts = (req, res) => {
       JSON_OBJECT(
         'id', ou.id,
         'name', ou.name,
-        'username', ou.username
+        'username', ou.username,
+        'avatar', ou.avatar
       ) AS original_post_user,
       'quote_repost' AS type
   FROM quote_reposts qr
