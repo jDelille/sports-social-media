@@ -1,0 +1,34 @@
+@use '../../scss/variables' as *;
+
+.repost-popup {
+    background-color: white;
+    border: 1px solid $lightBorderColor;
+    z-index: 999;
+    position: absolute;
+    top: 20px;
+    border-radius: 4px;
+    width: 120px;
+
+    .popup-options {   
+      font-size: 13px;
+      .option {
+        padding: 7px 10px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        &:hover {
+          background-color: darken(white, 3%);
+          cursor: pointer;
+            svg {
+              path {
+                fill: rgb(134, 131, 147) !important;
+              }
+            }
+            &::after {
+                background-color: transparent !important;
+              }
+        }
+      }
+    }
+  }

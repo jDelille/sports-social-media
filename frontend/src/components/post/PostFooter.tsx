@@ -45,6 +45,7 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         setError={setError}
         hasReposted={hasReposted}
         repostCount={repostCount}
+        originalPostUserId={post.user_id}
       />
     </div>
   );

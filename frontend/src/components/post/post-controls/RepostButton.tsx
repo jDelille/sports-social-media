@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAxios } from "../../../hooks";
+import { useAxios, useCreateQuoteRepostModal } from "../../../hooks";
 import { RepostIcon } from "../../../icons";
 import { APP_CONSTANTS, COLOR_CONSTANTS } from "../../../constants";
+import RepostPopup from "../../repost-popup/RepostPopup";
 
 type RepostButtonProps = {
   type: string;
@@ -11,6 +12,7 @@ type RepostButtonProps = {
   hasReposted: boolean;
   username: string;
   repostCount: number;
+  originalPostUserId: number;
 };
 
 const RepostButton: React.FC<RepostButtonProps> = ({
@@ -20,8 +22,10 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   hasReposted,
   username,
   repostCount,
+  originalPostUserId
 }) => {
   const queryClient = useQueryClient();
+  const [openRepostPopup, setOpenRepostPopup] = useState(false);
 
   const handleRepost = async (postId: number) => {
     try {
@@ -48,6 +52,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
     mutationFn: handleRepost,
     onSettled: async () => {
       queryClient.refetchQueries();
+      handleOpenRepostPopup();
     },
     mutationKey: ["addLike"],
   });
@@ -60,23 +65,44 @@ const RepostButton: React.FC<RepostButtonProps> = ({
     }
   };
 
-  return hasReposted ? (
-    <div className="icon repost-icon">
-      <RepostIcon
-        size={18}
-        color={COLOR_CONSTANTS.REPOST_COLOR}
-        onClick={() => handleRepostClick(postId)}
-      />
-      <span style={{ color: COLOR_CONSTANTS.REPOST_COLOR }}>{repostCount}</span>
-    </div>
-  ) : (
-    <div className="icon repost-icon">
-      <RepostIcon
-        size={18}
-        color={COLOR_CONSTANTS.LIGHTGRAY}
-        onClick={() => handleRepostClick(postId)}
-      />
-      <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{repostCount}</span>
+  const handleOpenRepostPopup = () => {
+    setOpenRepostPopup(!openRepostPopup);
+  };
+
+  return (
+    <div className="icon-container">
+      {hasReposted ? (
+        <div className="icon repost-icon">
+          <RepostIcon
+            size={18}
+            color={COLOR_CONSTANTS.REPOST_COLOR}
+            onClick={handleOpenRepostPopup}
+          />
+          <span style={{ color: COLOR_CONSTANTS.REPOST_COLOR }}>
+            {repostCount}
+          </span>
+        </div>
+      ) : (
+        <div className="icon repost-icon">
+          <RepostIcon
+            size={18}
+            color={COLOR_CONSTANTS.LIGHTGRAY}
+            onClick={handleOpenRepostPopup}
+          />
+          <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>
+            {repostCount}
+          </span>
+        </div>
+      )}
+      {openRepostPopup && (
+        <RepostPopup
+          handleRepostClick={handleRepostClick}
+          postId={postId}
+          hasReposted={hasReposted}
+          originalPostUserId={originalPostUserId}
+          type={type}
+        />
+      )}
     </div>
   );
 };

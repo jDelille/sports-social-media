@@ -1,33 +1,25 @@
-import React, { useContext, useState } from "react";
-import useLoginModal from "../hooks/useLoginModal";
-import useRegisterModal from "../hooks/useRegisterModal";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState } from "react";
 import HomeFeed from "../components/feed/HomeFeed";
-import useCreatePostModal from "../hooks/useCreatePostModal";
 import PageHeader from "../components/page-header/PageHeader";
-import './page.scss';
 import CreatePost from "../components/create-post/CreatePost";
+import FeedSelector from "../components/feed-selector/FeedSelector";
+import './page.scss';
 
 type HomeProps = {};
 const Home: React.FC<HomeProps> = () => {
-  const loginModal = useLoginModal();
-  const registerModal = useRegisterModal();
-  const { currentUser } = useContext(AuthContext) || {};
-  const createPostModal = useCreatePostModal();
-
   const [selectedFeed, setSelectedFeed] = useState("for you");
 
   const feeds = ["For You", "Following", "Bets"];
-
-
-  const handleCreatePostClick = () => {
-    createPostModal.onOpen();
-  }
 
   return (
     <div className="page">
       <PageHeader title="Home"/>
       <CreatePost />
+      <FeedSelector
+        setSelectedFeed={setSelectedFeed}
+        selectedFeed={selectedFeed}
+        feeds={feeds}
+      />
       <HomeFeed />
     </div>
   );

@@ -9,3 +9,4 @@ export { default as PollIcon } from './PollIcon';
 export { default as ProgressIndicator } from './ProgressIndicator';
 export { default as ChevronDownIcon } from './ChevronDownIcon';
 export { default as GlobeIcon } from './GlobeIcon';
+export { default as PencilIcon } from './PencilIcon';

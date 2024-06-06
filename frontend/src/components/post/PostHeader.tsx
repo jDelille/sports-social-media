@@ -5,6 +5,7 @@ import moment from "moment";
 import PostMenu from "./post-menu/PostMenu";
 import { MenuIcon } from "../../icons";
 import { COLOR_CONSTANTS } from "../../constants";
+import Avatar from "../avatar/Avatar";
 
 type PostHeaderProps = {
   user: UserTypes;
@@ -42,7 +43,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ user, post }) => {
   return (
     <div className="post-header">
       <div className="avatar">
-        <img src="../avatar-placeholder.jpg" />
+        <Avatar userId={post.user_id} />
       </div>
       <div className="user">
         <p className="name">{user.name}</p>
