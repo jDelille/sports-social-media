@@ -8,6 +8,7 @@ import './createPost.scss';
 import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import { COLOR_CONSTANTS, TEXT_CONSTANTS } from "../../constants";
 import { ChevronDownIcon, GlobeIcon } from "../../icons";
+import createPostStore from "../../../store/createPostStore";
 
 type CreatePostProps = {};
 const CreatePost: React.FC<CreatePostProps> = () => {
@@ -40,6 +41,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
       mutate({ body });
       setBody("");
       createPostModal.onClose();
+      createPostStore.setIsInactive;
     } catch (error) {
       console.log(error);
     }

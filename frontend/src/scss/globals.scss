@@ -14,8 +14,12 @@ textarea {
     outline: none
 }
 
+ul {
+    list-style-type: none;
+}
+
 .layout {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     .main-content {
