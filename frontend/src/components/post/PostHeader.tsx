@@ -13,7 +13,11 @@ type PostHeaderProps = {
   quoteReposted?: boolean;
 };
 
-const PostHeader: React.FC<PostHeaderProps> = ({ user, post, quoteReposted }) => {
+const PostHeader: React.FC<PostHeaderProps> = ({
+  user,
+  post,
+  quoteReposted,
+}) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleMenuClose = () => {
@@ -53,17 +57,20 @@ const PostHeader: React.FC<PostHeaderProps> = ({ user, post, quoteReposted }) =>
           <span className="date">{moment(post.created_at).fromNow()}</span>
         </p>
       </div>
-      <div className="menu">
-        <p onClick={() => setOpenMenu(!openMenu)}>
-          <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
-        </p>
-        <PostMenu
+
+      {!quoteReposted && (
+        <div className="menu">
+          <p onClick={() => setOpenMenu(!openMenu)}>
+            <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
+          </p>
+          <PostMenu
             isOpen={openMenu}
             onClose={handleMenuClose}
             postId={post.id}
             type={post.type}
           />
-      </div>
+        </div>
+      )}
     </div>
   );
 };

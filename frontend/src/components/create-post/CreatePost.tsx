@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import useCreatePostModal from "../../hooks/useCreatePostModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAxios } from "../../hooks";
+import { useAxios, useLoginReminder } from "../../hooks";
 import Avatar from "../avatar/Avatar";
 import { AuthContext } from "../../context/AuthContext";
 import './createPost.scss';
 import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import { COLOR_CONSTANTS, TEXT_CONSTANTS } from "../../constants";
-import { ChevronDownIcon, GlobeIcon } from "../../icons";
+import { ChevronDownIcon, GlobeIcon, PencilIcon } from "../../icons";
 import createPostStore from "../../store/createPostStore";
 
 type CreatePostProps = {};
@@ -17,6 +17,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   const [openPostMenu, setOpenPostMenu] = useState(false);
 
   const createPostModal = useCreatePostModal();
+  const loginReminder = useLoginReminder();
   const { currentUser } = useContext(AuthContext);
 
   const queryClient = useQueryClient();
@@ -60,6 +61,9 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   );
 
   const handleOpenPostMenu = () => {
+    if(!currentUser) {
+      return;
+    }
     setOpenPostMenu(!openPostMenu)
   };
 
@@ -67,10 +71,15 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     createPostModal.onClose();
   };
 
-  console.log(currentUser)
+  const handleContainerClick = () => {
+    if(currentUser) {
+      return;
+    }
+    loginReminder.onOpen(<PencilIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={50} />, "Share your thoughts.", "Create an account to share your thoughts with the community.")
+  }
 
   return (
-    <div className="create-post-container">
+    <div className="create-post-container" onClick={handleContainerClick}>
       {/* <Modal
         body={bodyContent}
         isOpen={createPostModal.isOpen}
