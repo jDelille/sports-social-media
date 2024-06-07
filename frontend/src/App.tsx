@@ -5,12 +5,12 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import CreatePost from "./components/create-post/CreatePost";
 import CreateQuoteRepost from "./components/create-quote-repost/CreateQuoteRepost";
 import CreateComment from "./components/create-comment/CreateComment";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import DeletePost from "./components/delete-post/DeletePost";
 import "./scss/app.scss";
+import LoginReminder from "./components/login-reminder/LoginReminder";
 
 function App() {
   const queryClient = new QueryClient();
@@ -25,6 +25,7 @@ function App() {
           <Register />
           <CreateQuoteRepost />
           <CreateComment />
+          <LoginReminder />
           <Outlet />
           <DeletePost />
         </div>

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAxios, useCreateQuoteRepostModal } from "../../../hooks";
+import {
+  useAxios,
+  useCreateQuoteRepostModal,
+  useLoginReminder,
+} from "../../../hooks";
 import { RepostIcon } from "../../../icons";
 import { APP_CONSTANTS, COLOR_CONSTANTS } from "../../../constants";
 import RepostPopup from "../../repost-popup/RepostPopup";
@@ -24,10 +28,11 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   username,
   repostCount,
   originalPostUserId,
-  currentUserId
+  currentUserId,
 }) => {
   const queryClient = useQueryClient();
   const [openRepostPopup, setOpenRepostPopup] = useState(false);
+  const loginReminder = useLoginReminder();
 
   const handleRepost = async (postId: number) => {
     try {
@@ -60,7 +65,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   });
 
   const handleRepostClick = async (postId: number) => {
-    if(!currentUserId) {
+    if (!currentUserId) {
       return;
     }
     try {
@@ -71,7 +76,14 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   };
 
   const handleOpenRepostPopup = () => {
-    
+    if (!currentUserId) {
+      loginReminder.onOpen(
+        <RepostIcon size={50} color={COLOR_CONSTANTS.REPOST_COLOR} />,
+        "Repost to spread the word.",
+        "When you join Huddle, you can share (username's) post with your followers"
+      );
+      return;
+    }
     setOpenRepostPopup(!openRepostPopup);
   };
 
@@ -79,22 +91,14 @@ const RepostButton: React.FC<RepostButtonProps> = ({
     <div className="icon-container">
       {hasReposted ? (
         <div className="icon repost-icon" onClick={handleOpenRepostPopup}>
-          <RepostIcon
-            size={18}
-            color={COLOR_CONSTANTS.REPOST_COLOR}
-            
-          />
+          <RepostIcon size={18} color={COLOR_CONSTANTS.REPOST_COLOR} />
           <span style={{ color: COLOR_CONSTANTS.REPOST_COLOR }}>
             {repostCount}
           </span>
         </div>
       ) : (
-        <div className="icon repost-icon"  onClick={handleOpenRepostPopup}>
-          <RepostIcon
-            size={18}
-            color={COLOR_CONSTANTS.LIGHTGRAY}
-           
-          />
+        <div className="icon repost-icon" onClick={handleOpenRepostPopup}>
+          <RepostIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} />
           <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>
             {repostCount}
           </span>

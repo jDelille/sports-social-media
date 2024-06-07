@@ -1,0 +1,40 @@
+@use '../../scss/variables' as *;
+
+.login-reminder-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    .icon {
+        svg {
+            height: 50px;
+        }
+    }
+   .content {
+    width: 75%;
+    h1 {
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+    span {
+        color: $lightgray;
+        font-size: 14px; 
+        padding-top: 10px;
+    }
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 2rem 0;
+        padding-bottom: 4rem;
+        button {
+            width: 100%;
+            padding: 7px 10px;
+            border-radius: 12px;
+            border: none;
+            height: 50px;
+        }
+    }
+  
+   }
+}

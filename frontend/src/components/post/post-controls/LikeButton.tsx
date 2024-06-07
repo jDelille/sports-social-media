@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAxios } from "../../../hooks";
+import { useAxios, useLoginReminder } from "../../../hooks";
 import { LikeIcon, LikedIcon } from "../../../icons";
 import { COLOR_CONSTANTS } from "../../../constants";
 
@@ -22,6 +22,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   currentUserId
 }) => {
   const queryClient = useQueryClient();
+  const loginReminder = useLoginReminder();
 
 
   const handleLike = async (postId: number) => {
@@ -46,6 +47,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 
   const handleLikeClick = async (postId: number) => {
     if(!currentUserId) {
+      loginReminder.onOpen(<LikedIcon size={50} color={COLOR_CONSTANTS.LIKE_COLOR} />, "Like a post to show some props.", "Join Huddle now to let (username) know you like their post." );
       return;
     }
     try {
