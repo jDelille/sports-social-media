@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import DeletePost from "./components/delete-post/DeletePost";
 import "./scss/app.scss";
 import LoginReminder from "./components/login-reminder/LoginReminder";
+import Matches from "./pages/Matches";
 
 function App() {
   const queryClient = new QueryClient();
@@ -44,6 +45,10 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/matches",
+          element: <Matches />,
         },
       ],
     },
