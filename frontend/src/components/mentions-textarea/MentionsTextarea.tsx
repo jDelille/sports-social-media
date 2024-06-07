@@ -1,7 +1,7 @@
 import React, { RefObject, useEffect, useRef, useState } from "react";
 import { MentionsInput, Mention, OnChangeHandlerFunc } from "react-mentions";
 import { EmojiIcon, ImgIcon, PollIcon, ProgressIndicator } from "../../icons";
-import createPostStore from "../../../store/createPostStore";
+import createPostStore from "../../store/createPostStore";
 import { observer } from "mobx-react";
 import FileInput from "./FileInput";
 import { COLOR_CONSTANTS } from "../../constants";
