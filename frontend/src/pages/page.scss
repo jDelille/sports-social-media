@@ -1,5 +1,7 @@
+@use "../scss/variables" as *;
+
 .page {
-    min-height: 100vh;
-    position: relative;
-    height: fit-content;
+  min-height: 100vh;
+  position: relative;
+  height: fit-content;
 }
