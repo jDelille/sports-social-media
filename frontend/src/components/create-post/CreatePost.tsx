@@ -78,6 +78,8 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     loginReminder.onOpen(<PencilIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={50} />, "Share your thoughts.", "Create an account to share your thoughts with the community.")
   }
 
+  console.log(currentUser)
+
   return (
     <div className="create-post-container" onClick={handleContainerClick}>
       {/* <Modal
