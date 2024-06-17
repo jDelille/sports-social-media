@@ -12,6 +12,8 @@ import DeletePost from "./components/delete-post/DeletePost";
 import "./scss/app.scss";
 import LoginReminder from "./components/login-reminder/LoginReminder";
 import Matches from "./pages/Matches";
+import Match from "./pages/Match";
+import BetSlip from "./components/bet-slip/BetSlip";
 
 function App() {
   const queryClient = new QueryClient();
@@ -27,6 +29,7 @@ function App() {
           <CreateQuoteRepost />
           <CreateComment />
           <LoginReminder />
+          <BetSlip />
           <Outlet />
           <DeletePost />
         </div>
@@ -49,6 +52,10 @@ function App() {
         {
           path: "/matches",
           element: <Matches />,
+        },
+        {
+          path: "/match",
+          element: <Match />,
         },
       ],
     },
