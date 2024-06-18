@@ -98,7 +98,10 @@ export const getAllPosts = (req, res) => {
       ) AS user,
       ur.username AS reposter_username,
       r.created_at AS reposted_at,
-      qr.body AS original_post_body,
+      CASE
+        WHEN qrr.body IS NOT NULL THEN qrr.body
+        ELSE p1.body
+      END AS original_post_body,
       qr.quote_reposted_post_id,
       qr.quote_reposted_quote_repost_id,
       JSON_OBJECT(
@@ -111,6 +114,8 @@ export const getAllPosts = (req, res) => {
   FROM quote_reposts qr
   JOIN reposts r ON qr.id = r.reposted_quote_repost_id
   JOIN users ur ON r.reposter_id = ur.id
+  LEFT JOIN posts p1 ON qr.quote_reposted_post_id = p1.id
+  LEFT JOIN quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
   LEFT JOIN users ou ON qr.original_post_user_id = ou.id
   `;
 
