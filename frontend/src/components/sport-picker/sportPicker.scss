@@ -1,0 +1,27 @@
+@use '../../scss/variables' as *;
+
+.sport-picker {
+    display: flex;
+    gap: 10px;
+    padding: 0 15px;
+    border-bottom: 1px solid $lightBorderColor;
+    padding-bottom: 3px;
+    button {
+        border: none;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 16px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        border: 1px solid $lightBorderColor;
+        &:hover {
+            background-color: darken(white, 3%);
+            cursor: pointer;
+        }
+        img {
+            max-width: 23px;
+        }
+    }
+}
