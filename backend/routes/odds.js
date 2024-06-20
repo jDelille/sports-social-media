@@ -3,6 +3,6 @@ import { getOdds } from '../controllers/odds.js';
 
 const router = express.Router();
 
-router.get('/', getOdds);
+router.get('/:sport/:league', getOdds);
 
 export default router;
