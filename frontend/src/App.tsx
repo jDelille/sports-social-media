@@ -22,7 +22,7 @@ function App() {
     return (
       <QueryClientProvider client={queryClient}>
       <div className="layout">
-        <LeftSidebar />
+        {/* <LeftSidebar /> */}
         <div className="main-content">
           <Login />
           <Register />
@@ -33,7 +33,7 @@ function App() {
           <Outlet />
           <DeletePost />
         </div>
-        <RightSidebar />
+        {/* <RightSidebar /> */}
       </div>
       </QueryClientProvider>
 
