@@ -7,16 +7,6 @@
     position: relative;
     gap: 2rem;
     max-width: calc(100vw - 16px);
-    .right-sidebar {
-        width: $sidebarWidth;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: sticky;
-        top: 0;
-        height: 100vh;
-
-    }
     
     .main-content {
         width: $mainContentWidth;
