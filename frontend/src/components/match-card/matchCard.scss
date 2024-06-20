@@ -1,0 +1,13 @@
+@use '../../scss/variables' as *;
+
+.match-card {
+    border-bottom: 1px solid $lightBorderColor;
+    padding: 10px 15px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    &:hover {
+        background-color: darken(white, 3%);
+        cursor: pointer;
+    }
+}
