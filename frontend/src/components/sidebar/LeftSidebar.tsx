@@ -21,8 +21,10 @@ const LeftSidebar: React.FC<LeftSidebarProps> = () => {
 
   return (
     <div className="sidebar left-sidebar">
-      <p>left sidebar</p>
-      <ul>
+      <div className="title">
+        <h3>Huddle</h3>
+      </div>
+      <ul className="sidebar-links">
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -30,10 +32,10 @@ const LeftSidebar: React.FC<LeftSidebarProps> = () => {
           <Link to="/matches">Matches</Link>
         </li>
         <li onClick={handleOpenLogin}>
-          Login
+          <a>Login</a>
         </li>
         <li onClick={handleOpenSignup}>
-          Sign up
+          <a>Sign up</a>
         </li>
       </ul>
     </div>
