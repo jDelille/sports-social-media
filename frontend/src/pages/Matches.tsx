@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../components/page-header/PageHeader";
 import { useAxios } from "../hooks";
 import BovadaMatchTypes from "../types/BovadaMatch";
-import "./page.scss";
-import Match from "./Match";
 import { useNavigate } from "react-router-dom";
 import matchStore from "../store/matchStore";
+import MatchCategories from "../components/match-categories/MatchCategories";
+import "./page.scss";
 
 type MatchesProps = {};
 const Matches: React.FC<MatchesProps> = () => {

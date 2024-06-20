@@ -1,0 +1,28 @@
+@use '../../scss/variables' as *;
+
+.match-categories {
+    min-width: 100%;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1rem;
+    border: 1px solid $lightBorderColor;
+    border-left: none;
+    border-right: none;
+    padding: 0 10px;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    p {
+        min-width: fit-content;
+        font-size: 14px;
+        cursor: pointer; 
+        padding: 10px;
+
+        &:hover {
+            background-color: darken(white, 3%);
+        }
+    }
+}

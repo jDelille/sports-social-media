@@ -3,6 +3,7 @@ import matchStore from "../store/matchStore";
 import { useBetSlip } from "../hooks";
 import "./page.scss";
 import { Price } from "../types/BovadaMatch";
+import MatchCategories from "../components/match-categories/MatchCategories";
 
 type MatchProps = {};
 
@@ -22,7 +23,10 @@ const Match: React.FC<MatchProps> = () => {
 
   return (
     <div className="page">
-      <p>{match?.description}</p>
+            <p>{match?.description}</p>
+
+      <MatchCategories displayGroups={displayGroups}/>
+
 
       {displayGroups?.map((group, index) => {
         if (index === 0) {
