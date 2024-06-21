@@ -9,6 +9,11 @@
     cursor: pointer;
   }
 
+
+  .outcome {
+    padding: 10px 15px;
+    border: 1px solid lightgray;
+  }
   .outcomes {
     margin: 10px 0;
     border: 1px solid $lightBorderColor;

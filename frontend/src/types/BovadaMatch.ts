@@ -26,7 +26,7 @@ export type Price = {
     malay: string;
 };
 
-type DisplayGroup = {
+export type DisplayGroup = {
     id: string;
     description: string;
     defaultType: boolean;
