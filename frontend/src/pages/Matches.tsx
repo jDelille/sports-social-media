@@ -25,9 +25,13 @@ const Matches: React.FC<MatchesProps> = () => {
     const fetchOdds = async () => {
       setLoading(true); // Set loading to true before fetching data
       try {
-        const response = await useAxios.get(`/odds/${sport}/${league}`);
-        const data = await response.data;
-        setMatches(data);
+        const bovadaResponse = await useAxios.get(`/odds/${sport}/${league}`);
+        const espnResponse = await useAxios.get(`/espn/${sport}/${league}`);
+        const bovadaData = await bovadaResponse.data;
+        const espnData = await espnResponse.data.events;
+        const combinedData = { bovada: bovadaData, espn: espnData };
+        console.log(combinedData);
+        setMatches(bovadaData);
       } catch (error) {
         console.error("Error fetching odds:", error);
       } finally {
@@ -54,6 +58,7 @@ const Matches: React.FC<MatchesProps> = () => {
       <PageHeader title="Matches" />
       <SportPicker onSportSelect={handleChooseSport}/>
 
+      <div className="matches-content">
       {loading ? (
         <div className="loading-indicator">Loading...</div>
       ) : (
@@ -61,6 +66,9 @@ const Matches: React.FC<MatchesProps> = () => {
           <MatchCard match={match} onClick={handleMatchClick} key={match.id} />
         ))
       )}
+      </div>
+
+      
     </div>
   );
 };

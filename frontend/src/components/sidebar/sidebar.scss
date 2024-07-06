@@ -9,7 +9,7 @@
   // background-color: lightblue;
 
   @include breakpoint(md) {
-    background: red;
+    // background: red;
     width: 240px;
   }
 }

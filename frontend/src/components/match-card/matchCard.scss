@@ -1,11 +1,13 @@
 @use '../../scss/variables' as *;
 
 .match-card {
-    border-bottom: 1px solid $lightBorderColor;
-    padding: 10px 15px;
-    height: 60px;
+    min-height: 120px;
+    padding: 12px 20px;
+    border: #e5e5e5 1px solid;
+    border-radius: 5px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     &:hover {
         background-color: darken(white, 3%);
         cursor: pointer;

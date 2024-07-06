@@ -23,7 +23,7 @@ const sports: Sport[] = [
       <div className="sport-picker">
         {sports.map((sport) => (
           <button key={`${sport.sport}-${sport.league}`} onClick={() => onSportSelect(sport)}>
-            <img src={`${sport.league}.png`} />
+            {/* <img src={`${sport.league}.png`} /> */}
             {sport.league.toUpperCase()}
           </button>
         ))}
