@@ -5,12 +5,13 @@
     min-height: 100vh;
     justify-content: center;
     position: relative;
-    gap: 2rem;
-    max-width: calc(100vw - 16px);
+    
+    
     
     .main-content {
         width: $mainContentWidth;
         border-right: 1px solid $borderColor;
         border-left: 1px solid $borderColor;
+        background-color: #fff;
     }
 }

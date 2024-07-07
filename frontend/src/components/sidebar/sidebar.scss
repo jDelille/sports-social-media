@@ -1,53 +1,89 @@
 @use "../../scss/breakpoints" as *;
 @use "../../scss/variables" as *;
 
-.sidebar {
-  width: 280px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  // background-color: lightblue;
 
-  @include breakpoint(md) {
-    // background: red;
-    width: 240px;
-  }
-}
+.sidebar-container {
+  padding-right: 2rem;
+  width: 286px;
 
-.left-sidebar {
-  .title {
-    height: 53px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 20px;
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
   }
-  .sidebar-links {
-    height: 80%;
+  
+  .left-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    li {
-      color: black;
-      padding: 10px 5px;
-      border-radius: 6px;
+    gap: 1rem;
+    .title {
+      height: 53px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .sidebar-links {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      
+      padding-bottom: 1rem;
+      li {
+        color: black;
+        padding: 13px 20px;
+        border-radius: 22px;
+        &:hover {
+          background-color: darken(white, 3%);
+          cursor: pointer;
+          a {
+            color: black;
+          }
+        }
+        a {
+          text-decoration: none;
+          color: black;
+          height: 100%;
+          width: 100%;
+          font-size: 15px;
+          font-weight: 500;
+          color: #888595;
+        }
+        
+      }
+      
+    }
+    .post-btn {
+      background-color: #FF4775;
+      border: none;
+      padding:  0.9rem 1.5rem;
+      border-radius: 22px;
+      font-size: 14px;
+      color: white;
+      width: 100%;
       &:hover {
-        background-color: darken(white, 2%);
         cursor: pointer;
       }
-      a {
-        text-decoration: none;
-        color: black;
-        height: 100%;
-        width: 100%;
-        font-size: 15px;
-      }
+    }
+  }
+  
+  .right-sidebar {
+    @include breakpoint(lg) {
+      background-color: orange;
+    }
+    @include breakpoint(md) {
+      display: none;
     }
   }
 }
 
-.right-sidebar {
+.right-sidebar-container {
+  padding-left: 2rem;
+  padding-right: 0rem;
   @include breakpoint(md) {
-    background-color: orange;
+    display: none;
   }
 }
+
