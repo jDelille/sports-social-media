@@ -2,6 +2,7 @@ import React, { ChangeEvent, MouseEvent, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Modal from "./modal/Modal";
 import useLoginModal from "../hooks/useLoginModal";
+import { useNavigate } from "react-router-dom";
 
 type LoginProps = {};
 const Login: React.FC<LoginProps> = () => {
@@ -12,6 +13,7 @@ const Login: React.FC<LoginProps> = () => {
   const [error, setError] = useState<any | null>(null);
   const { login } = useContext(AuthContext);
   const loginModal = useLoginModal();
+  const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -23,6 +25,7 @@ const Login: React.FC<LoginProps> = () => {
     try {
       await login(inputs);
       loginModal.onClose();
+      navigate('/home')
     } catch (error: any) {
       setError(error.response.data);
       console.log(error);

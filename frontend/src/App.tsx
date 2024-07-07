@@ -1,7 +1,13 @@
-import { AuthProvider } from "./context/AuthContext";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
 import LeftSidebar from "./components/sidebar/LeftSidebar";
 import RightSidebar from "./components/sidebar/RightSidebar";
-import { Outlet, RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -15,38 +21,46 @@ import Match from "./pages/Match";
 import BetSlip from "./components/bet-slip/BetSlip";
 import "./scss/app.scss";
 import LandingPage from "./pages/LandingPage";
+import { useContext } from "react";
 
 function App() {
   const queryClient = new QueryClient();
 
-
   const Layout = () => {
     const location = useLocation();
     const pathname = location.pathname;
+    const { currentUser } = useContext(AuthContext);
+
+    if (pathname === "/" && currentUser) {
+      return <Navigate to="/home" />;
+    }
+
     return (
       <QueryClientProvider client={queryClient}>
-      <div className="layout">
-        {pathname === '/' ? (
-          <LandingPage />
-        ) : (
-          <>
-            <LeftSidebar />
-            <div className="main-content">
+        <div className="layout">
+          {pathname === "/" && !currentUser ? (
+            <>
               <Login />
-              <Register />
-              <CreateQuoteRepost />
-              <CreateComment />
-              <LoginReminder />
-              <BetSlip />
-              <Outlet />
-              <DeletePost />
-            </div>
-            <RightSidebar />
-          </>
-        )}
-      </div>
-    </QueryClientProvider>
-  );
+              <LandingPage />
+            </>
+          ) : (
+            <>
+              <LeftSidebar />
+              <div className="main-content">
+                <Register />
+                <CreateQuoteRepost />
+                <CreateComment />
+                <LoginReminder />
+                <BetSlip />
+                <Outlet />
+                <DeletePost />
+              </div>
+              <RightSidebar />
+            </>
+          )}
+        </div>
+      </QueryClientProvider>
+    );
   };
 
   const router = createBrowserRouter([
