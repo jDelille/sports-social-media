@@ -49,16 +49,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   };
   
 
-  const bodyContent = (
-    <div>
-      <input
-        type="text"
-        placeholder="What's on your mind?"
-        onChange={(e) => setBody(e.target.value)}
-      />
-      <button onClick={handlePostClick}>Post</button>
-    </div>
-  );
+ 
 
   const handleOpenPostMenu = () => {
     if(!currentUser) {
@@ -67,9 +58,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     setOpenPostMenu(!openPostMenu)
   };
 
-  const handleClose = () => {
-    createPostModal.onClose();
-  };
+
 
   const handleContainerClick = () => {
     if(currentUser) {
@@ -82,12 +71,6 @@ const CreatePost: React.FC<CreatePostProps> = () => {
 
   return (
     <div className="create-post-container" onClick={handleContainerClick}>
-      {/* <Modal
-        body={bodyContent}
-        isOpen={createPostModal.isOpen}
-        title="Create post"
-        onClose={handleClose}
-      /> */}
       <div className="header">
         <div className="profile-picture">
           <Avatar  

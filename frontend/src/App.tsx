@@ -22,6 +22,7 @@ import BetSlip from "./components/bet-slip/BetSlip";
 import "./scss/app.scss";
 import LandingPage from "./pages/LandingPage";
 import { useContext } from "react";
+import CreatePostModal from "./components/create-post-modal/CreatePostModal";
 
 function App() {
   const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ function App() {
                 <Register />
                 <CreateQuoteRepost />
                 <CreateComment />
+                <CreatePostModal />
                 <LoginReminder />
                 <BetSlip />
                 <Outlet />

@@ -5,11 +5,13 @@ import useLoginModal from "../../hooks/useLoginModal";
 import useRegisterModal from "../../hooks/useRegisterModal";
 import { LogoIcon } from "../../icons";
 import SearchBar from "../search-bar/SearchBar";
+import useCreatePostModal from "../../hooks/useCreatePostModal";
 
 type LeftSidebarProps = {};
 const LeftSidebar: React.FC<LeftSidebarProps> = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const createPostModal = useCreatePostModal();
 
 
   const handleOpenLogin = () => {
@@ -19,6 +21,10 @@ const LeftSidebar: React.FC<LeftSidebarProps> = () => {
   const handleOpenSignup = () => {
     registerModal.onOpen();
   };
+
+  const handleOpenCreatePost = () => {
+    createPostModal.onOpen();
+  }
 
 
   return (
@@ -57,7 +63,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = () => {
             <a>Sign up</a>
           </li>
         </ul>
-        <button className="post-btn">Compose</button>
+        <button className="post-btn" onClick={handleOpenCreatePost}>Compose</button>
       </div>
     </div>
   );
