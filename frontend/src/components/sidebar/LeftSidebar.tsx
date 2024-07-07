@@ -11,6 +11,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
+
   const handleOpenLogin = () => {
     loginModal.onOpen();
   };
@@ -18,6 +19,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = () => {
   const handleOpenSignup = () => {
     registerModal.onOpen();
   };
+
 
   return (
     <div className="sidebar-container">
@@ -28,7 +30,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = () => {
         <SearchBar />
         <ul className="sidebar-links">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li>
             <Link to="/matches">Discover</Link>
