@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useAxios } from "../../hooks";
+import React from "react";
 import { LinkIcon } from "../../icons";
 import "./articleDisplay.scss";
 
@@ -7,17 +6,7 @@ type ArticleDisplayProps = {
     metadata: any;
 };
 
-interface ArticleData {
-  og: {
-    image: string;
-    url: string;
-    title: string;
-    site_name: string;
-    description: string;
-  };
-}
 const ArticleDisplay: React.FC<ArticleDisplayProps> = ({metadata}) => {
-
 
   const extractDomain = (url: string) => {
     const match = url.match(/:\/\/(www[0-9]?\.)?([^/:]+)/i);
