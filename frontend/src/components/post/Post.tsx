@@ -15,6 +15,7 @@ import { RepostIcon } from "../../icons";
 import { useNavigate } from "react-router-dom";
 import { COLOR_CONSTANTS } from "../../constants";
 import PostFooter from "./PostFooter";
+import ArticleDisplay from "../article-display/ArticleDisplay";
 
 type PostProps = {
   post: PostTypes;
@@ -75,6 +76,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
       <PostHeader user={post.user} post={post} />
 
       <p className="body">{post.body}</p>
+      <ArticleDisplay />
 
       <PostFooter post={post} type={type} />
 

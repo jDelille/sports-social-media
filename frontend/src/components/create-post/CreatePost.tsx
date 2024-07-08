@@ -4,11 +4,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios, useLoginReminder } from "../../hooks";
 import Avatar from "../avatar/Avatar";
 import { AuthContext } from "../../context/AuthContext";
-import './createPost.scss';
 import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import { COLOR_CONSTANTS, TEXT_CONSTANTS } from "../../constants";
 import { ChevronDownIcon, GlobeIcon, PencilIcon } from "../../icons";
 import createPostStore from "../../store/createPostStore";
+import "./createPost.scss";
 
 type CreatePostProps = {};
 const CreatePost: React.FC<CreatePostProps> = () => {
@@ -47,37 +47,37 @@ const CreatePost: React.FC<CreatePostProps> = () => {
       console.log(error);
     }
   };
-  
-
- 
 
   const handleOpenPostMenu = () => {
-    if(!currentUser) {
+    if (!currentUser) {
       return;
     }
-    setOpenPostMenu(!openPostMenu)
+    setOpenPostMenu(!openPostMenu);
   };
 
-
-
   const handleContainerClick = () => {
-    if(currentUser) {
+    if (currentUser) {
       return;
     }
-    loginReminder.onOpen(<PencilIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={50} />, "Share your thoughts.", "Create an account to share your thoughts with the community.")
-  }
+    loginReminder.onOpen(
+      <PencilIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={50} />,
+      "Share your thoughts.",
+      "Create an account to share your thoughts with the community."
+    );
+  };
 
-  console.log(currentUser)
+  console.log(currentUser);
 
   return (
     <div className="create-post-container" onClick={handleContainerClick}>
       <div className="header">
         <div className="profile-picture">
-          <Avatar  
-            src={currentUser?.avatar}
-            userId={currentUser?.id} />
+          <Avatar src={currentUser?.avatar} userId={currentUser?.id} />
         </div>
-        <div className={openPostMenu ? "active" : "privacy"} onClick={handleOpenPostMenu}>
+        <div
+          className={openPostMenu ? "active" : "privacy"}
+          onClick={handleOpenPostMenu}
+        >
           <p>{TEXT_CONSTANTS.POST_TO_PUBLIC}</p>
           <ChevronDownIcon size={17} color="black" />
 
@@ -88,10 +88,15 @@ const CreatePost: React.FC<CreatePostProps> = () => {
                   <span>
                     <GlobeIcon size={16} color={COLOR_CONSTANTS.ACCENT} />
                   </span>
-                  Public</li>
-                  <li className="groups">My Groups
-                    <p>Join groups so you can share your thoughts and ideas with more people.</p>
-                  </li>
+                  Public
+                </li>
+                <li className="groups">
+                  My Groups
+                  <p>
+                    Join groups so you can share your thoughts and ideas with
+                    more people.
+                  </p>
+                </li>
               </ul>
             </div>
           )}

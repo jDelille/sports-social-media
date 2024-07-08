@@ -1,0 +1,52 @@
+@use '../../scss/variables' as *;
+
+.article-data-container {
+    width: 100%;
+    border: 1px solid darken($lightBorderColor, 0%);
+    display: flex;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    transition: all 200ms ease-in-out;
+    overflow: hidden;
+    height: fit-content;
+    height: 180px;
+    &:hover {
+        background-color: darken(white, 3%);
+    }
+    text-decoration: none;
+   .img {
+    background-position: 50%;
+    background-size: cover;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+    min-width: 217px;
+    
+   } 
+   .content {
+    padding: 1rem;
+    .url {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        p {
+            font-size: 13px;
+            font-weight: 600;
+            color: $darkgray;
+        }
+    }
+    .description {
+        padding-left: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        p {
+            color: black;
+        }
+        span {
+            font-size: 14px;
+            color: $darkgray;
+        }
+    }
+   }
+}

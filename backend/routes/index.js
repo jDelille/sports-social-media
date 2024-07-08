@@ -8,3 +8,4 @@ export { default as commentRoutes } from './comment.js';
 export { default as mutePostRoutes } from './mutePost.js';
 export { default as oddsRoutes } from './odds.js';
 export { default as espnRoutes } from './espn.js';
+export { default as metadataRoutes } from './metadata.js';
