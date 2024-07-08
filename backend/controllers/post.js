@@ -13,13 +13,14 @@ export const addPost = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q =
-      "INSERT INTO posts (`body`, `image`, `created_at`, `user_id`) VALUES (?)";
+      "INSERT INTO posts (`body`, `image`, `created_at`, `user_id`, `metadata`) VALUES (?)";
 
     const values = [
       req.body.body,
       req.body.image,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       userInfo.id,
+      JSON.stringify(req.body.urlMetadata)
     ];
 
     db.query(q, [values], (err, data) => {
@@ -53,6 +54,7 @@ export const getAllPosts = (req, res) => {
       NULL AS quote_reposted_post_id,
       NULL AS quote_reposted_quote_repost_id,
       NULL AS original_post_user,
+      p.metadata,
       'post' AS type
   FROM posts p
   JOIN users u ON p.user_id = u.id
@@ -77,6 +79,7 @@ export const getAllPosts = (req, res) => {
       NULL AS quote_reposted_post_id,
       NULL AS quote_reposted_quote_repost_id,
       NULL AS original_post_user,
+      p.metadata,
       'repost' AS type
   FROM posts p
   JOIN reposts r ON p.id = r.reposted_post_id
@@ -110,6 +113,7 @@ export const getAllPosts = (req, res) => {
         'username', ou.username,
         'avatar', ou.avatar
       ) AS original_post_user,
+      p1.metadata,
       'quote_repost_repost' AS type
   FROM quote_reposts qr
   JOIN reposts r ON qr.id = r.reposted_quote_repost_id
@@ -146,6 +150,7 @@ export const getAllPosts = (req, res) => {
         'username', ou.username,
         'avatar', ou.avatar
       ) AS original_post_user,
+      p1.metadata,
       'quote_repost' AS type
   FROM quote_reposts qr
   LEFT JOIN posts p1 ON qr.quote_reposted_post_id = p1.id
@@ -160,6 +165,7 @@ export const getAllPosts = (req, res) => {
     UNION ${quoteRepostsQuery}
     UNION ${quoteRepostsRepostsQuery}
     ORDER BY COALESCE(reposted_at, created_at) DESC
+    LIMIT ?, ?
   `;
 
   db.query(q, [offset, pageSize], (err, data) => {

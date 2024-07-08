@@ -3,7 +3,9 @@ import { useAxios } from "../../hooks";
 import { LinkIcon } from "../../icons";
 import "./articleDisplay.scss";
 
-type ArticleDisplayProps = {};
+type ArticleDisplayProps = {
+    metadata: any;
+};
 
 interface ArticleData {
   og: {
@@ -14,23 +16,8 @@ interface ArticleData {
     description: string;
   };
 }
-const ArticleDisplay: React.FC<ArticleDisplayProps> = () => {
-  const [articleData, setArticleData] = useState<ArticleData | null>(null);
+const ArticleDisplay: React.FC<ArticleDisplayProps> = ({metadata}) => {
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await useAxios.get("/metadata");
-        setArticleData(response.data);
-      } catch (error) {
-        console.error("Error fetching article data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  console.log(articleData);
 
   const extractDomain = (url: string) => {
     const match = url.match(/:\/\/(www[0-9]?\.)?([^/:]+)/i);
@@ -43,25 +30,25 @@ const ArticleDisplay: React.FC<ArticleDisplayProps> = () => {
 
   return (
     <div>
-      {articleData ? (
-        <a href={articleData.og.url} target="_blank" className="article-data-container">
+      {metadata ? (
+        <a href={metadata.url} target="_blank" className="article-data-container">
           <div
             className="img"
-            style={{ backgroundImage: `url(${articleData?.og.image})` }}
+            style={{ backgroundImage: `url(${metadata.image})` }}
           ></div>
           <div className="content">
             <div className="url">
             <LinkIcon size={18} color="gray" />
-            <p>www.{extractDomain(articleData.og.url)}</p>
+            <p>www.{extractDomain(metadata.url)}</p>
             </div>
             <div className="description">
-                <p>{articleData.og.title}</p>
-                <span>{articleData.og.description}</span>
+                <p>{metadata.title}</p>
+                <span>{metadata.description}</span>
             </div>
           </div>
         </a>
       ) : (
-        <p>Loading...</p>
+        null
       )}
     </div>
   );

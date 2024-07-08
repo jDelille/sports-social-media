@@ -9,7 +9,7 @@
     transition: all 200ms ease-in-out;
     overflow: hidden;
     height: fit-content;
-    height: 180px;
+    height: 160px;
     &:hover {
         background-color: darken(white, 3%);
     }
@@ -17,14 +17,19 @@
    .img {
     background-position: 50%;
     background-size: cover;
+    background-repeat: no-repeat;
     display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
+    -o-object-fit: contain;
+    object-fit: contain;
     min-width: 217px;
     
    } 
    .content {
-    padding: 1rem;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
     .url {
         display: flex;
         align-items: center;
@@ -40,12 +45,16 @@
         display: flex;
         flex-direction: column;
         gap: 5px;
+        height: 100%;
         p {
             color: black;
+            margin-top: auto;
+
         }
         span {
-            font-size: 14px;
+            font-size: 12px;
             color: $darkgray;
+            margin-top: auto;
         }
     }
    }

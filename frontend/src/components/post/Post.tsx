@@ -9,7 +9,6 @@ import {
   useCreateQuoteRepostModal,
   useFetchMutedPosts,
 } from "../../hooks";
-import { CommentButton, LikeButton, MuteButton, RepostButton } from "./post-controls";
 import "./post.scss";
 import { RepostIcon } from "../../icons";
 import { useNavigate } from "react-router-dom";
@@ -60,6 +59,12 @@ const Post: React.FC<PostProps> = ({ post }) => {
     e.stopPropagation();
     navigate(`/profile/${post.user_id}`);
   };
+  
+
+  const hideUrlsInBody = (body: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return body.replace(urlRegex, "");
+  };
 
   return (
     <div className="post">
@@ -75,8 +80,8 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
       <PostHeader user={post.user} post={post} />
 
-      <p className="body">{post.body}</p>
-      <ArticleDisplay />
+      <p className="body">{hideUrlsInBody(post.body)}</p>
+      <ArticleDisplay metadata={post.metadata} />
 
       <PostFooter post={post} type={type} />
 

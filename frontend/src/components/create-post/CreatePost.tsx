@@ -15,6 +15,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   const [file, setFile] = useState(null);
   const [body, setBody] = useState("");
   const [openPostMenu, setOpenPostMenu] = useState(false);
+  const [urlMetadata, setUrlMetadata] = useState<any>(null);
 
   const createPostModal = useCreatePostModal();
   const loginReminder = useLoginReminder();
@@ -31,6 +32,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     onSettled: async () => {
       queryClient.refetchQueries();
       setBody("");
+      setUrlMetadata("");
     },
     mutationKey: ["addPost"],
   });
@@ -39,7 +41,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     e.preventDefault();
 
     try {
-      mutate({ body });
+      mutate({ body, urlMetadata });
       setBody("");
       createPostModal.onClose();
       createPostStore.setIsInactive;
@@ -65,8 +67,6 @@ const CreatePost: React.FC<CreatePostProps> = () => {
       "Create an account to share your thoughts with the community."
     );
   };
-
-  console.log(currentUser);
 
   return (
     <div className="create-post-container" onClick={handleContainerClick}>
@@ -109,6 +109,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
           setFile={setFile}
           file={file}
           handleClick={(e) => handlePostClick(e)}
+          setUrlMetadata={setUrlMetadata}
         />
       </div>
     </div>

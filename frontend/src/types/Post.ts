@@ -19,6 +19,13 @@ type PostTypes = {
         name: string;
         username: string;
         avatar: string;
+    };
+    metadata: {
+        url: string;
+        title: string;
+        site_name: string;
+        description: string;
+        image: string;
     }
 }
 

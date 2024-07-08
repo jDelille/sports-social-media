@@ -4,7 +4,7 @@ const { parse } = pkg;
 
 export const fetchMetadata = async (url) => {
     try {
-        const metadata = await parse("https://www.foxsports.com/stories/soccer/germany-great-toni-kroos-pens-emotional-farewell-post-pedri-accepts-apology");
+        const metadata = await parse(url);
         console.log(metadata); // Check if metadata is logged correctly
         return metadata; // Return the parsed metadata
     } catch (error) {

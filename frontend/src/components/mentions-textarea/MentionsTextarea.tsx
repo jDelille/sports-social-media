@@ -7,6 +7,7 @@ import FileInput from "./FileInput";
 import { COLOR_CONSTANTS } from "../../constants";
 // import CreatePoll from "../create-poll/CreatePoll";
 import "./mentionsTextarea.scss";
+import { useAxios } from "../../hooks";
 
 type MentionsTextareaProps = {
   setBody: (body: string) => void;
@@ -15,10 +16,11 @@ type MentionsTextareaProps = {
   handleClick: (e: any) => void;
   file: any;
   isComment?: boolean;
+  setUrlMetadata?: any;
 };
 
 const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
-  ({ setBody, setFile, handleClick, body, file, isComment }) => {
+  ({ setBody, setFile, handleClick, body, file, isComment, setUrlMetadata }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [openPoll, setOpenPoll] = useState(false);
 
@@ -39,6 +41,18 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
       });
 
       setBody(updatedValue);
+      detectUrls(updatedValue);
+
+    };
+
+    const detectUrls = (text: string) => {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const urls = text.match(urlRegex);
+      if (urls && urls.length > 0) {
+        fetchUrlMetadata(urls[0]);
+      } else {
+        setUrlMetadata(null);
+      }
     };
 
     // Hard coded for now, in future get trending hashtags from db
@@ -91,6 +105,15 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
     const handleOpenPoll = () => {
       setOpenPoll(!openPoll)
     }
+
+    const fetchUrlMetadata = async (url: string) => {
+      try {
+        const response = await useAxios.get(`/metadata?url=${encodeURIComponent(url)}`);
+        setUrlMetadata(response.data.og);
+      } catch (error) {
+        console.error("Error fetching URL metadata:", error);
+      }
+    };
 
     return (
       <div
