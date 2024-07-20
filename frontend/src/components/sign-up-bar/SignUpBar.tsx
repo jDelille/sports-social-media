@@ -1,6 +1,6 @@
 import React from 'react';
-import './signupbar.scss';
 import useSidebar from '../../hooks/useSidebar';
+import './signupbar.scss';
 
 type SignUpBarProps = {
     currentUser: any | null;

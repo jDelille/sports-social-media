@@ -1,22 +1,23 @@
 import React from 'react';
-import useRegisterModal from '../hooks/useRegisterModal';
-import useLoginModal from '../hooks/useLoginModal';
+import useSidebar from '../hooks/useSidebar';
+import { useNavigate } from 'react-router-dom';
 import './page.scss';
 
 type LandingPageProps = {
  
  }
 const LandingPage: React.FC<LandingPageProps> = () => {
-    const loginModal = useLoginModal();
-    const registerModal = useRegisterModal();
+  const {
+    handleOpenLogin,
+    handleOpenSignup,
+  } = useSidebar();
 
-    const handleOpenLogin = () => {
-        loginModal.onOpen();
-      };
-    
-      const handleOpenSignup = () => {
-        registerModal.onOpen();
-      };
+  const navigate = useNavigate();
+
+  const continueWithoutSignin = () => {
+    navigate('/home')
+  }
+
   return (
     <div className="landing-page">
         <div className="content">
@@ -25,8 +26,12 @@ const LandingPage: React.FC<LandingPageProps> = () => {
         <h1>Huddle</h1>
         <h2>Get in the huddle to hear all the sports betting news</h2>
         </div>
-        <button>Create an account</button>
+        <button onClick={handleOpenSignup}>Create an account</button>
         <button onClick={handleOpenLogin}>Log in</button>
+
+        <div className='continue-without-signin'>
+        <p onClick={continueWithoutSignin}>Continue without signing in</p>
+        </div>
         <div className="disclaimer">
             <p>By continuing, you agree to our <span>terms of service</span> and <span>privacy policy</span></p>
         </div>

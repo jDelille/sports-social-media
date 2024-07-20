@@ -42,6 +42,7 @@ function App() {
         <div className="layout">
           {pathname === "/" && !currentUser ? (
             <>
+              <Register />
               <Login />
               <LandingPage />
             </>
@@ -60,7 +61,7 @@ function App() {
                 <DeletePost />
               </div>
               <RightSidebar currentUser={currentUser} />
-              <SignUpBar currentUser={currentUser}/>
+              <SignUpBar currentUser={currentUser} />
             </>
           )}
         </div>
