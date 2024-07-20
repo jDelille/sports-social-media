@@ -29,14 +29,14 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content: center;
+    // justify-content: center;
     .url {
         display: flex;
         align-items: center;
         gap: 10px;
         p {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 500;
             color: $darkgray;
         }
     }
@@ -46,15 +46,18 @@
         flex-direction: column;
         gap: 5px;
         height: 100%;
+        padding-top: 5px;
         p {
             color: black;
-            margin-top: auto;
+            font-size: 15px;
+            font-weight: 400;
 
         }
         span {
-            font-size: 12px;
+            font-size: 13px;
             color: $darkgray;
-            margin-top: auto;
+            padding-top: 2px;
+            line-height: 21px;
         }
     }
    }
