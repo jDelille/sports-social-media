@@ -4,12 +4,12 @@ import "./avatar.scss";
 
 type AvatarProps = {
   src?: string;
-  userId: number;
+  username: string;
 };
 
 const Avatar: React.FC<AvatarProps> = ({
   src,
-  userId,
+  username
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -19,7 +19,7 @@ const Avatar: React.FC<AvatarProps> = ({
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    navigate(`/profile/${userId}`);
+    navigate(`/profile/${username}`);
   };
 
   const handleMouseEnter = () => {

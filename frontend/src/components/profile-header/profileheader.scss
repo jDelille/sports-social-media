@@ -1,0 +1,64 @@
+@use "../../scss/variables" as *;
+
+.profile-header {
+  .header-img {
+    background-color: dodgerblue;
+    width: 100%;
+    height: 182px;
+    position: relative;
+    .profile-picture-container {
+      width: 96px;
+      height: 96px;
+      position: absolute;
+      bottom: -45px;
+      left: 20px;
+      .profile-picture {
+        width: 100%;
+        height: 100%;
+        border: 3px solid white;
+      }
+    }
+  }
+  .user-content {
+    padding-top: 50px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+    .name {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .username {
+      font-size: 14px;
+      color: $lightgray;
+      font-weight: 500;
+    }
+    .bio {
+      font-size: 15px;
+      padding-top: 10px;
+    }
+    .relationships {
+      display: flex;
+      padding-top: 10px;
+      gap: 10px;
+      p {
+        display: flex;
+        gap: 3px;
+        font-size: 14px;
+        color: $lightgray;
+        span {
+          color: black;
+          font-weight: 600;
+        }
+      }
+    }
+    .joined {
+      color: $lightgray;
+      font-weight: 500;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding-top: 15px;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import './pageHeader.scss';
+import { BackIcon } from '../../icons';
 
 type PageHeaderProps = {
     title: string;
@@ -40,7 +41,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({title, hasBack}) => {
    <div className={`page-header ${isScrolled ? 'scrolled' : ''}`}>
     {hasBack && (
       <div className='back-icon' onClick={handleBackClick}>
-        {/* <BackIcon size={22} color={"black"} /> */}
+        <BackIcon size={22} color={"black"} />
       </div>
     )}
       <p>{title}</p>

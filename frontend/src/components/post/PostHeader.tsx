@@ -18,6 +18,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   post,
   quoteReposted,
 }) => {
+  
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleMenuClose = () => {
@@ -48,7 +49,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   return (
     <div className="post-header">
       <div className="avatar">
-        <Avatar userId={post.user_id} src={user.avatar} />
+        <Avatar username={post.user.username} src={user.avatar} />
       </div>
       <div className={quoteReposted ? "qr_user" : "user"}>
         <p className="name">{user.name}</p>

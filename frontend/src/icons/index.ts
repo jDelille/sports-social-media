@@ -13,3 +13,5 @@ export { default as PencilIcon } from './PencilIcon';
 export { default as CloseIcon } from './CloseIcon';
 export { default as LogoIcon } from './Logo';
 export { default as LinkIcon} from './LinkIcon';
+export { default as BackIcon } from './BackIcon';
+export { default as CalendarIcon } from './CalendarIcon';

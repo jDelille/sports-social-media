@@ -1,6 +1,4 @@
 import { AuthContext, AuthProvider } from "./context/AuthContext";
-import LeftSidebar from "./components/sidebar/LeftSidebar";
-import RightSidebar from "./components/sidebar/RightSidebar";
 import {
   Navigate,
   Outlet,
@@ -8,22 +6,24 @@ import {
   createBrowserRouter,
   useLocation,
 } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import CreateQuoteRepost from "./components/create-quote-repost/CreateQuoteRepost";
-import CreateComment from "./components/create-comment/CreateComment";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import DeletePost from "./components/delete-post/DeletePost";
-import LoginReminder from "./components/login-reminder/LoginReminder";
-import Matches from "./pages/Matches";
-import Match from "./pages/Match";
-import BetSlip from "./components/bet-slip/BetSlip";
-import LandingPage from "./pages/LandingPage";
 import { useContext } from "react";
-import CreatePostModal from "./components/create-post-modal/CreatePostModal";
+import { Home, LandingPage, Match, Matches, Profile } from "./pages";
+import {
+  BetSlip,
+  CreateComment,
+  CreatePostModal,
+  CreateQuoteRepost,
+  DeletePost,
+  LeftSidebar,
+  Login,
+  LoginReminder,
+  Register,
+  RightSidebar,
+  SignUpBar,
+} from "./components";
 import "./scss/app.scss";
-import SignUpBar from "./components/sign-up-bar/SignUpBar";
+
 
 function App() {
   const queryClient = new QueryClient();
@@ -86,6 +86,10 @@ function App() {
           path: "/match",
           element: <Match />,
         },
+        {
+          path: "/profile/:username",
+          element: <Profile />
+        }
       ],
     },
   ]);
