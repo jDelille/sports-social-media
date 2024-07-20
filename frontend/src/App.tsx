@@ -32,9 +32,9 @@ function App() {
     const pathname = location.pathname;
     const { currentUser } = useContext(AuthContext);
 
-    if (pathname === "/" && currentUser) {
-      return <Navigate to="/home" />;
-    }
+    // if (pathname === "/" && currentUser) {
+    //   return <Navigate to="/home" />;
+    // }
 
     return (
       <QueryClientProvider client={queryClient}>

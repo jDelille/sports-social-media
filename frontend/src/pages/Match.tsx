@@ -3,11 +3,12 @@ import matchStore from "../store/matchStore";
 import { useBetSlip } from "../hooks";
 import MatchCategories from "../components/match-categories/MatchCategories";
 import "./page.scss";
+import "./matchPage.scss";
 
 type MatchProps = {};
 
 const Match: React.FC<MatchProps> = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Game Lines");
+  const [selectedCategory, setSelectedCategory] = useState("Player Props");
 
   const match = matchStore.match;
   const displayGroups = match?.displayGroups;
@@ -25,26 +26,36 @@ const Match: React.FC<MatchProps> = () => {
   console.log(displayGroups);
 
   return (
-    <div className="page">
+    <div className="page match-page">
       <p>{match?.description}</p>
 
       <MatchCategories displayGroups={displayGroups} />
 
       {displayGroups?.map((group, index) => {
-        if(selectedCategory === group?.description) {
+        if (selectedCategory === group?.description) {
           return (
-            <div>
-              <p>{group?.description}</p>
-  
-              {group.markets.map((market) =>
-                market.outcomes.map((outcome) => (
-                  <p className="outcome">{outcome.description}</p>
-                ))
-              )}
+            <div key={index} >
+              <p className="group-description">{group?.description}</p>
+              <div className="markets">
+                {group.markets.map((market) => (
+                  <div className="market">
+                    <div key={market.description} >
+                      <p className="description">{market.description}</p>
+                      <div className="market1">
+                      {market.outcomes.map((outcome) => (
+                        <p className="outcome" key={outcome.description}>
+                          {outcome.description} {outcome.price.handicap} {outcome.price.american}
+                        </p>
+                      ))}
+                      </div>
+                     
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           );
         }
-        
       })}
     </div>
   );

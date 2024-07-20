@@ -24,6 +24,7 @@ export type Price = {
     id: string;
     indonesian: string;
     malay: string;
+    handicap: string;
 };
 
 export type DisplayGroup = {

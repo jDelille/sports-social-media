@@ -35,10 +35,8 @@ const LandingPage: React.FC<LandingPageProps> = () => {
         </div>
       </div>
       <div className="image-column-1">
-        <img src="../column-1.webp" alt="" />
         </div> 
       <div className="image-column-2">
-      <img src="../column-2.webp" alt="" />
 
         </div> 
         </div>

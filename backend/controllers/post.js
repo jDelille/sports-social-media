@@ -62,28 +62,31 @@ export const getAllPosts = (req, res) => {
 
   const repostsQuery = `
   SELECT
-      p.id,
-      p.body,
-      p.image,
-      p.created_at,
-      r.reposter_id AS user_id,
-      JSON_OBJECT(
-        'id', ur.id,
-        'name', ur.name,
-        'username', ur.username,
-        'avatar', ur.avatar
-      ) AS user,
-      r.reposter_username,
-      r.created_at AS reposted_at,
-      NULL AS original_post_body,
-      NULL AS quote_reposted_post_id,
-      NULL AS quote_reposted_quote_repost_id,
-      NULL AS original_post_user,
-      p.metadata,
-      'repost' AS type
-  FROM posts p
-  JOIN reposts r ON p.id = r.reposted_post_id
-  JOIN users ur ON r.reposter_id = ur.id
+    p.id,
+    p.body,
+    p.image,
+    p.created_at,
+    r.reposter_id AS user_id,
+    JSON_OBJECT(
+      'id', ou.id,
+      'name', ou.name,
+      'username', ou.username,
+      'avatar', ou.avatar
+    ) AS user,
+    r.reposter_username,
+    r.created_at AS reposted_at,
+    NULL AS original_post_body,
+    NULL AS quote_reposted_post_id,
+    NULL AS quote_reposted_quote_repost_id,
+    NULL AS original_post_user,
+    p.metadata,
+    'repost' AS type
+FROM posts p
+JOIN reposts r ON p.id = r.reposted_post_id
+JOIN users ur ON r.reposter_id = ur.id
+LEFT JOIN posts op ON p.id = op.id
+LEFT JOIN users ou ON op.user_id = ou.id
+
   `;
 
   const quoteRepostsRepostsQuery = `
