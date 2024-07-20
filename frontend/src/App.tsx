@@ -19,10 +19,10 @@ import LoginReminder from "./components/login-reminder/LoginReminder";
 import Matches from "./pages/Matches";
 import Match from "./pages/Match";
 import BetSlip from "./components/bet-slip/BetSlip";
-import "./scss/app.scss";
 import LandingPage from "./pages/LandingPage";
 import { useContext } from "react";
 import CreatePostModal from "./components/create-post-modal/CreatePostModal";
+import "./scss/app.scss";
 
 function App() {
   const queryClient = new QueryClient();
@@ -46,9 +46,10 @@ function App() {
             </>
           ) : (
             <>
-              <LeftSidebar />
+              <LeftSidebar currentUser={currentUser} />
               <div className="main-content">
                 <Register />
+                <Login />
                 <CreateQuoteRepost />
                 <CreateComment />
                 <CreatePostModal />

@@ -1,31 +1,31 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./sidebar.scss";
-import useLoginModal from "../../hooks/useLoginModal";
-import useRegisterModal from "../../hooks/useRegisterModal";
+import { NavLink } from "react-router-dom";
 import { LogoIcon } from "../../icons";
 import SearchBar from "../search-bar/SearchBar";
-import useCreatePostModal from "../../hooks/useCreatePostModal";
+import useSidebar from "../../hooks/useSidebar";
+import "./sidebar.scss";
 
-type LeftSidebarProps = {};
-const LeftSidebar: React.FC<LeftSidebarProps> = () => {
-  const loginModal = useLoginModal();
-  const registerModal = useRegisterModal();
-  const createPostModal = useCreatePostModal();
+type LeftSidebarProps = {
+  currentUser: any | null;
+};
+const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
+  const {
+    handleOpenLogin,
+    handleOpenSignup,
+    handleOpenCreatePost,
+    handleLogout,
+  } = useSidebar();
 
-
-  const handleOpenLogin = () => {
-    loginModal.onOpen();
-  };
-
-  const handleOpenSignup = () => {
-    registerModal.onOpen();
-  };
-
-  const handleOpenCreatePost = () => {
-    createPostModal.onOpen();
-  }
-
+  const MenuItem: React.FC<{ to: string; label: string }> = ({ to, label }) => (
+    <li>
+      <NavLink
+        to={to}
+        className={({ isActive }) => (isActive ? "active" : undefined)}
+      >
+        {label}
+      </NavLink>
+    </li>
+  );
 
   return (
     <div className="sidebar-container">
@@ -35,35 +35,32 @@ const LeftSidebar: React.FC<LeftSidebarProps> = () => {
         </div>
         <SearchBar />
         <ul className="sidebar-links">
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-            <Link to="/matches">Discover</Link>
-          </li>
-          <li>
-            <Link to="/matches">Alerts</Link>
-          </li>
-          <li>
-            <Link to="/matches">Matches</Link>
-          </li>
-          <li>
-            <Link to="/matches">Groups</Link>
-          </li>
-          <li>
-            <Link to="/matches">Profile</Link>
-          </li>
-          <li>
-            <Link to="/matches">Settings</Link>
-          </li>
-          <li onClick={handleOpenLogin}>
-            <a>Login</a>
-          </li>
-          <li onClick={handleOpenSignup}>
-            <a>Sign up</a>
-          </li>
+          <MenuItem to="/home" label="Home" />
+          <MenuItem to="/matches" label="Discover" />
+          <MenuItem to="/alerts" label="Alerts" />
+          <MenuItem to="/matches" label="Matches" />
+          <MenuItem to="/groups" label="Groups" />
+          <MenuItem to="/profile" label="Profile" />
+          <MenuItem to="/settings" label="Settings" />
+
+          {currentUser ? (
+            <li onClick={handleLogout}>
+              <a>Logout</a>
+            </li>
+          ) : (
+            <>
+              <li onClick={handleOpenLogin}>
+                <a>Login</a>
+              </li>
+              <li onClick={handleOpenSignup}>
+                <a>Sign up</a>
+              </li>
+            </>
+          )}
         </ul>
-        <button className="post-btn" onClick={handleOpenCreatePost}>Compose</button>
+        <button className="post-btn" onClick={handleOpenCreatePost}>
+          Compose
+        </button>
       </div>
     </div>
   );

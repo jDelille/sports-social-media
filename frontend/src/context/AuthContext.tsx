@@ -27,6 +27,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setCurrentUser(res.data);
   };
 
+  const logout = async () => {
+    await axios.post(
+      `${APP_CONSTANTS.API_BASE_URL}/auth/logout`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    setCurrentUser(null);
+    localStorage.removeItem("user");
+  };
+
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
@@ -34,6 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = {
     currentUser,
     login,
+    logout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
