@@ -33,22 +33,29 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
         <div className="title">
           <LogoIcon size={100} color="black" />
         </div>
-        <SearchBar />
+      
         <ul className="sidebar-links">
-          <MenuItem to="/home" label="Home" />
-          <MenuItem to="/matches" label="Discover" />
-          <MenuItem to="/alerts" label="Alerts" />
-          <MenuItem to="/matches" label="Matches" />
-          <MenuItem to="/groups" label="Groups" />
-          <MenuItem to="/profile" label="Profile" />
-          <MenuItem to="/settings" label="Settings" />
-
           {currentUser ? (
-            <li onClick={handleLogout}>
-              <a>Logout</a>
-            </li>
+            <>
+              <SearchBar />
+              <MenuItem to="/home" label="Home" />
+              <MenuItem to="/matches" label="Discover" />
+              <MenuItem to="/alerts" label="Alerts" />
+              <MenuItem to="/matches" label="Matches" />
+              <MenuItem to="/groups" label="Groups" />
+              <MenuItem to="/profile" label="Profile" />
+              <MenuItem to="/settings" label="Settings" />
+              <li onClick={handleLogout}>
+                <a>Logout</a>
+              </li>
+              <button className="post-btn" onClick={handleOpenCreatePost}>
+                Compose
+              </button>
+            </>
           ) : (
             <>
+              <MenuItem to="/home" label="Home" />
+              <MenuItem to="/matches" label="Discover" />
               <li onClick={handleOpenLogin}>
                 <a>Login</a>
               </li>
@@ -58,9 +65,6 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
             </>
           )}
         </ul>
-        <button className="post-btn" onClick={handleOpenCreatePost}>
-          Compose
-        </button>
       </div>
     </div>
   );

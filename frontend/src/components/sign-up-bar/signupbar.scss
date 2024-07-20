@@ -1,0 +1,73 @@
+.sign-up-bar {
+    height: 120px;
+    display: flex;    
+    position: fixed;
+    bottom: 0;
+    background: rgba(29, 35, 122, 0.9);
+    backdrop-filter: blur(10px);
+    opacity: 0.95;
+    z-index: 9999;
+    width: 100vw;
+    justify-content: center;
+    
+    align-items: center;
+    color: white;
+    .text {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        .bold {
+            font-weight: 700;
+            font-size: 1.225rem;
+            line-height: 1.75rem;
+        }
+        .description {
+            font-size: 0.9000rem;
+            line-height: 1.25rem;
+           
+        }
+    }
+    .btns {
+        display: flex;
+        width: 50%;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        button:nth-of-type(1) {
+            background-color: #ff4775;
+            border: none;
+            padding: 0.8rem 0.6rem;
+            border-radius: 22px;
+            font-size: 14px;
+            color: white;
+            width: 100%;
+            font-weight: 500;
+            max-width: 90px;
+            &:hover {
+              cursor: pointer;
+              background-color: lighten(#ff4775, 3%);
+
+            }
+        }
+        button:nth-of-type(2) {
+            background-color: #f1eced;
+            border: none;
+            padding: 0.7rem 0.6rem;
+            border-radius: 22px;
+            font-size: 14px;
+            color: rgb(46, 45, 45);
+            width: 100%;
+            font-weight: 500;
+            max-width: 90px;
+
+
+            &:hover {
+              cursor: pointer;
+              background-color: lighten(#f1eced, 5%);
+            }
+        }
+    }
+}

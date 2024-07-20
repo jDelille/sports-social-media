@@ -23,6 +23,7 @@ import LandingPage from "./pages/LandingPage";
 import { useContext } from "react";
 import CreatePostModal from "./components/create-post-modal/CreatePostModal";
 import "./scss/app.scss";
+import SignUpBar from "./components/sign-up-bar/SignUpBar";
 
 function App() {
   const queryClient = new QueryClient();
@@ -58,7 +59,8 @@ function App() {
                 <Outlet />
                 <DeletePost />
               </div>
-              <RightSidebar />
+              <RightSidebar currentUser={currentUser} />
+              <SignUpBar currentUser={currentUser}/>
             </>
           )}
         </div>
