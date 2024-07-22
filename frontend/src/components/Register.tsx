@@ -36,57 +36,59 @@ const Register: React.FC<RegisterProps> = () => {
 
   const handleClose = () => {
     registerModal.onClose();
-  }
+  };
 
   const bodyContent = (
     <div className="register">
-    <form>
-      <Input 
-        type="text"
-        id="name"
-        name="name"
-        label="Your Name"
-        placeholder="John Doe"
-        onChange={(e) => handleChange(e)}
-        
-      />
-      <Input 
-        type="text"
-        id="username"
-        name="username"
-        label="Your username"
-        description="May only contain A-Z, 0-9, and underscores"
-        placeholder="username"
-        onChange={(e) => handleChange(e)}
-        isUsername
-        
-      />
-      <Input 
-        type="email"
-        id="email"
-        name="email"
-        label="Email"
-        description="Provide your email for support, account recovery, and marketing updates."
-        placeholder="you@youremail.com"
-        onChange={(e) => handleChange(e)}
-        
-      />
-       <Input 
-        type="password"
-        id="password"
-        name="password"
-        label="Password"
-        description=""
-        placeholder="●●●●●●●●"
-        onChange={(e) => handleChange(e)}
-        
-      />
-      <button onClick={handleClick} className="submit-btn">Create account</button>
-    </form>
-  </div>
-  )
+      <form>
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          label="Your Name"
+          placeholder="John Doe"
+          onChange={(e) => handleChange(e)}
+        />
+        <Input
+          type="text"
+          id="username"
+          name="username"
+          label="Your username"
+          description="May only contain A-Z, 0-9, and underscores"
+          placeholder="username"
+          onChange={(e) => handleChange(e)}
+          isUsername
+        />
+
+        <Input
+          type="password"
+          id="password"
+          name="password"
+          label="Password"
+          description=""
+          placeholder="●●●●●●●●"
+          onChange={(e) => handleChange(e)}
+          isPassword
+        />
+
+        <Input
+          type="email"
+          id="email"
+          name="email"
+          label="Email"
+          description="Provide your email for support, account recovery, and marketing updates."
+          placeholder="you@youremail.com"
+          onChange={(e) => handleChange(e)}
+        />
+
+        <button onClick={handleClick} className="submit-btn">
+          Create account
+        </button>
+      </form>
+    </div>
+  );
   return (
-    <Modal 
+    <Modal
       body={bodyContent}
       title="Account info"
       isOpen={registerModal.isOpen}

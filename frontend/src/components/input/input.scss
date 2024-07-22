@@ -42,5 +42,16 @@
     
         }
     }
+    ul {
+        padding-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        li {
+            display: flex;
+            gap: 5px;
+            color: rgb(53, 53, 53);
+        }
+    }
    
 }
