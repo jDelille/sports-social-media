@@ -35,7 +35,7 @@ const Input: React.FC<InputProps> = ({
         {isUsername && (
             <div className="symbol">@</div>
         )}
-        <input type={type} placeholder={placeholder} id={inputId} {...rest} />
+        <input type={type} placeholder={placeholder} id={inputId} {...rest} onChange={onChange} />
       </div>
     </div>
   );
