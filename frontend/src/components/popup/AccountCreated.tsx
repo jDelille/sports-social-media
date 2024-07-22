@@ -1,12 +1,18 @@
 import React from "react";
 import Popup from "./Popup";
-import { useAccountCreated } from "../../hooks";
+import { useAccountCreated, useCustomizeProfile } from "../../hooks";
 import "./accountCreated.scss";
 import { PartyIcon } from "../../icons";
 
 type AccountCreatedProps = {};
 const AccountCreated: React.FC<AccountCreatedProps> = () => {
   const accountCreatedPopup = useAccountCreated();
+  const customizeProfileModal = useCustomizeProfile();
+
+  const closePopup = () => {
+    accountCreatedPopup.onClose();
+    customizeProfileModal.onOpen();
+  }
 
   const bodyContent = (
     <div className="popup-content">
@@ -17,7 +23,7 @@ const AccountCreated: React.FC<AccountCreatedProps> = () => {
         Your account has been created. You're all set to customize your profile,
         connect with other sports fans, and post your bets.
       </p>
-      <button onClick={accountCreatedPopup.onClose}>Continue</button>
+      <button onClick={closePopup}>Continue</button>
     </div>
   );
   return (

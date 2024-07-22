@@ -1,19 +1,18 @@
 import { create } from 'zustand';
 
-type AccountCreatedPopupStore = {
+type CustomizeProfileModalStore = {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
 
 };
 
-const useAccountCreatedPopup = create<AccountCreatedPopupStore>((set) => ({
+const useCustomizeProfileModal = create<CustomizeProfileModalStore>((set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false}),
-
 }));
 
 
 
-export default useAccountCreatedPopup;
+export default useCustomizeProfileModal;

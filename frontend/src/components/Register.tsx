@@ -1,11 +1,11 @@
 import axios from "axios";
-import React, { ChangeEvent, MouseEvent, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useContext, useState } from "react";
 import { APP_CONSTANTS } from "../constants";
 import Modal from "./modal/Modal";
 import useRegisterModal from "../hooks/useRegisterModal";
 import useLoginModal from "../hooks/useLoginModal";
 import Input from "./input/Input";
-import { useAccountCreated } from "../hooks";
+import { useAccountCreated} from "../hooks";
 import { AuthContext } from "../context/AuthContext";
 
 type RegisterProps = {};
@@ -20,7 +20,7 @@ const Register: React.FC<RegisterProps> = () => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const accountCreatedPopup = useAccountCreated();
-  const { login } = React.useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -35,6 +35,7 @@ const Register: React.FC<RegisterProps> = () => {
       // loginModal.onOpen();
       accountCreatedPopup.onOpen();
       await login({ username: inputs.username, password: inputs.password });
+      
       
     } catch (error: any) {
       setError(error.response.data);

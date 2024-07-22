@@ -24,6 +24,7 @@ import {
 } from "./components";
 import "./scss/app.scss";
 import AccountCreated from "./components/popup/AccountCreated";
+import CustomizeProfileModal from "./components/customize-profile-modal/CustomizeProfileModal";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
                 <Outlet />
                 <DeletePost />
                 <AccountCreated />
+                <CustomizeProfileModal />
               </div>
               <RightSidebar currentUser={currentUser} />
               <SignUpBar currentUser={currentUser} />

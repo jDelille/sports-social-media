@@ -1,0 +1,74 @@
+@use '../../scss/variables' as *;
+
+.customize-profile-modal {
+    padding-top: 5px;
+    .disclaimer {
+        color: gray;
+    }
+    .upload-header {
+        margin: 20px 0;
+        height: 180px;
+        background-color: #e0e7ff;
+        border-radius: 12px;
+        color: $accent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+        p {
+            font-weight: 700;
+            font-size: 17px;
+        }
+        &:hover {
+            // background-color: lighten(#e0e7ff, 1%);
+            cursor: pointer;
+        }
+        .upload-avatar {
+            background-color: $accent;
+            width: 75px;
+            height: 75px;
+            position: absolute;
+            bottom: -40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+                background-color: darken($accent, 3%);
+            }
+        }
+    }
+    .profile-info {
+        padding: 20px 0;
+        textarea {
+            border: 2px solid rgb(236, 236, 236);
+            border-radius: .375rem;
+            width: 100%;
+            padding: .675rem;
+            min-height: 100px;
+        }
+        button {
+            background-color: #6947ff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 22px;
+            font-size: 16px;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+            &:hover {
+              cursor: pointer;
+              background-color: lighten(#6947ff, 3%);
+            }
+        }
+        .skip-step {
+            color: $accent;
+            text-align: center;
+            padding: 30px 0;
+            padding-bottom: 0;
+            cursor: pointer;
+            font-weight: 500;
+        }
+    }
+}
