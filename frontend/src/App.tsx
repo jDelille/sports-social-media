@@ -23,6 +23,7 @@ import {
   SignUpBar,
 } from "./components";
 import "./scss/app.scss";
+import AccountCreated from "./components/popup/AccountCreated";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
                 <BetSlip />
                 <Outlet />
                 <DeletePost />
+                <AccountCreated />
               </div>
               <RightSidebar currentUser={currentUser} />
               <SignUpBar currentUser={currentUser} />

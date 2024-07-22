@@ -1,15 +1,15 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import "./popup.scss";
-import { CloseIcon } from "../../icons";
-import { COLOR_CONSTANTS } from "../../constants";
+
 
 type PopupProps = {
   isOpen: boolean;
   body: ReactElement;
   onClose: () => void;
+  hideHeader?: boolean;
 };
 
-const Popup: React.FC<PopupProps> = ({ isOpen, body, onClose }) => {
+const Popup: React.FC<PopupProps> = ({ isOpen, body, onClose, hideHeader }) => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
@@ -23,11 +23,14 @@ const Popup: React.FC<PopupProps> = ({ isOpen, body, onClose }) => {
   return (
     <div className="overlay">
       <div className="popup">
-        <div className="header">
-          <div className="close" onClick={onClose}>
-            <CloseIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
-          </div>
-        </div>
+        {!hideHeader && (
+    <div className="header">
+    {/* <div className="close" onClick={onClose}>
+      <CloseIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
+    </div> */}
+  </div>
+        )}
+    
         <div className="body">{body}</div>
       </div>
     </div>

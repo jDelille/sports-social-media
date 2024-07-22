@@ -16,3 +16,4 @@ export { default as LinkIcon} from './LinkIcon';
 export { default as BackIcon } from './BackIcon';
 export { default as CalendarIcon } from './CalendarIcon';
 export { default as CheckIcon } from './CheckIcon';
+export { default as PartyIcon} from './PartyIcon';

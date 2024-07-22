@@ -8,3 +8,4 @@ export { default as useFetchMutedPosts } from './post-hooks/useFetchMutedPosts';
 export { default as useFetchMutedOriginalPost } from './post-hooks/useFetchMutedOriginalPost';
 export { default as useLoginReminder } from './useLoginReminderStore';
 export { default as useBetSlip} from './useBetSlipModal';
+export { default as useAccountCreated } from './useAccountCreatedPopup';
