@@ -41,7 +41,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     e.preventDefault();
 
     try {
-      mutate({ body, urlMetadata });
+      mutate({ body, urlMetadata, file });
       setBody("");
       createPostModal.onClose();
       createPostStore.setIsInactive;

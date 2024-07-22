@@ -80,6 +80,8 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
       }
     };
 
+    console.log(file)
+
     const handleClickOutside = (e: MouseEvent) => {
       if (
         textareaRef.current &&

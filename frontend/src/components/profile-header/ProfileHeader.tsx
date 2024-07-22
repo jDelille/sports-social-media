@@ -19,7 +19,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
       <div className="user-content">
         <p className="name">{user?.name}</p>
         <p className="username">@{user?.username}</p>
+        {user?.bio && (
         <p className="bio">{user?.bio}</p>
+        )}
         <div className="relationships">
             <p><span>0</span>Followers</p>
             <p><span>0</span>Following</p>

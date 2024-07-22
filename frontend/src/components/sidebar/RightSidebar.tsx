@@ -1,6 +1,7 @@
 import React from "react";
 import "./sidebar.scss";
 import useSidebar from "../../hooks/useSidebar";
+import SuggestedUsers from "../suggested-users/SuggestedUsers";
 
 type RightSidebarProps = {
   currentUser: any | null;
@@ -14,12 +15,14 @@ const RightSidebar: React.FC<RightSidebarProps> = ({currentUser}) => {
   return (
     <div className="sidebar-container right-sidebar-container">
       <div className="sidebar right-sidebar">
-        {!currentUser && (
+        {!currentUser ? (
           <div className="new-to-huddle-sign-up">
             <p className="bold">New to Huddle?</p>
             <p className="description">Sign up now to join the community.</p>
             <button className="sign-up-btn" onClick={handleOpenSignup}>Sign up</button>
           </div>
+        ): (
+          <SuggestedUsers />
         )}
       </div>
     </div>

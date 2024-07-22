@@ -14,3 +14,26 @@ export const getUser = (req, res) => {
         return res.json(info);
     })
 }
+
+export const getSuggestedUsers = (req, res) => {
+    // Update SQL query to sort by follower count and limit the result to 3
+    const q = `
+        SELECT * 
+        FROM users 
+        ORDER BY follower_count DESC 
+        LIMIT 3
+    `;
+
+    db.query(q, (err, data) => {
+        if (err) return res.status(500).json(err);
+        if (!data || data.length === 0) {
+            return res.status(404).json({ message: 'No users found' });
+        }
+        // Exclude passwords from user data
+        const users = data.map(user => {
+            const { password, ...userInfo } = user;
+            return userInfo;
+        });
+        return res.json(users);
+    });
+};
