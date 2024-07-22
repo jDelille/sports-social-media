@@ -23,8 +23,6 @@ const Match: React.FC<MatchProps> = () => {
     betSlip.onOpen(bet);
   };
 
-  console.log(displayGroups);
-
   return (
     <div className="page match-page">
       <p>{match?.description}</p>

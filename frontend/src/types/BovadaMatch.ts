@@ -1,3 +1,5 @@
+import { EspnMatch } from "./EspnMatch";
+
 type Market = {
     description: string;
     descriptionKey: string;
@@ -41,6 +43,7 @@ type BovadaMatchTypes = {
     id: string;
     live: boolean;
     displayGroups: DisplayGroup[];
+    espnMatch: EspnMatch;
 };
 
 export default BovadaMatchTypes;

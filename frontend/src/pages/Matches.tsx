@@ -4,9 +4,9 @@ import { useAxios } from "../hooks";
 import BovadaMatchTypes from "../types/BovadaMatch";
 import { useNavigate } from "react-router-dom";
 import matchStore from "../store/matchStore";
-import "./page.scss";
 import SportPicker from "../components/sport-picker/SportPicker";
 import MatchCard from "../components/match-card/MatchCard";
+import "./page.scss";
 
 type Sport = {
   sport: string;
@@ -21,21 +21,31 @@ const Matches: React.FC<MatchesProps> = () => {
   const [matches, setMatches] = useState<BovadaMatchTypes[]>([]);
   const navigate = useNavigate();
 
+  const combineData = (bovadaData: any[], espnData: any[]) => {
+    return bovadaData.map(bovadaMatch => {
+      const espnMatch = espnData.find(espnMatch => 
+        espnMatch.name.toLowerCase().includes(bovadaMatch.description.toLowerCase().split(' @ ')[0]) && 
+        espnMatch.name.toLowerCase().includes(bovadaMatch.description.toLowerCase().split(' @ ')[1])
+      );
+      return { ...bovadaMatch, espnMatch };
+    });
+  };
+
   useEffect(() => {
     const fetchOdds = async () => {
-      setLoading(true); // Set loading to true before fetching data
+      setLoading(true); 
       try {
         const bovadaResponse = await useAxios.get(`/odds/${sport}/${league}`);
         const espnResponse = await useAxios.get(`/espn/${sport}/${league}`);
-        const bovadaData = await bovadaResponse.data;
-        const espnData = await espnResponse.data.events;
-        const combinedData = { bovada: bovadaData, espn: espnData };
+        const bovadaData = bovadaResponse.data;
+        const espnData = espnResponse.data.events;
+        const combinedData = combineData(bovadaData, espnData);
         console.log(combinedData);
-        setMatches(bovadaData);
+        setMatches(combinedData);
       } catch (error) {
         console.error("Error fetching odds:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching data
+        setLoading(false); 
       }
     };
     fetchOdds();
@@ -45,8 +55,6 @@ const Matches: React.FC<MatchesProps> = () => {
     matchStore.setMatch(match);
     navigate(`/match`);
   };
-
-  console.log(matches);
 
   const handleChooseSport = (selectedSport: Sport) => {
     setSport(selectedSport.sport)

@@ -25,7 +25,6 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
     fetchUsers();
   }, []);
 
-  console.log(users)
   return (
     <div className="suggested-users">
       <p className="title">Who to follow</p>

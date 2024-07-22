@@ -37,8 +37,6 @@ const PostMenu: React.FC<PostMenuProps> = ({
     return null;
   }
 
-  console.log(openUpwards)
-
   return (
     <div
       className={`post-menu ${isOpen ? "open" : ""} ${

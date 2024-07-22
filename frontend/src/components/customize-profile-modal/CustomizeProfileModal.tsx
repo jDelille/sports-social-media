@@ -26,11 +26,11 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
 
       <div className="profile-info">
         <Input
-          placeholder={currentUser.username}
+          placeholder={currentUser?.username}
           type="text"
           label=""
           onChange={(e) => console.log(e.target.value)}
-          defaultValue={currentUser.username}
+          defaultValue={currentUser?.username}
         />
         <textarea placeholder="Wite a bio..."/>
         <Input

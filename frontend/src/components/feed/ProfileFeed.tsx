@@ -28,8 +28,6 @@ const ProfileFeed: React.FC<ProfileFeedProps> = ({username}) => {
 
   const posts = data ? data.pages.flatMap((page) => page) : [];
 
-  console.log("profile feed:", posts)
-
   return (
     <div className="feed home-feed">
       {!error &&
