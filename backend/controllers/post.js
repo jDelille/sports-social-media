@@ -20,7 +20,7 @@ export const addPost = (req, res) => {
       req.body.image,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       userInfo.id,
-      JSON.stringify(req.body.urlMetadata)
+      JSON.stringify(req.body.urlMetadata),
     ];
 
     db.query(q, [values], (err, data) => {
@@ -172,6 +172,126 @@ LEFT JOIN users ou ON op.user_id = ou.id
   `;
 
   db.query(q, [offset, pageSize], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json(data);
+  });
+};
+
+export const getPostsByUsername = (req, res) => {
+  const username = req.params.username;
+
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 6;
+  const offset = (page - 1) * pageSize;
+
+  const originalPostsQuery = `
+  SELECT
+  p.id,
+  p.body,
+  p.image,
+  p.created_at,
+  p.user_id,
+  JSON_OBJECT(
+    'id', u.id,
+    'name', u.name,
+    'username', u.username,
+    'avatar', u.avatar
+  ) AS user,
+  NULL AS reposter_username,
+  NULL AS reposted_at,
+  NULL AS original_post_body,
+  NULL AS quote_reposted_post_id,
+  NULL AS quote_reposted_quote_repost_id,
+  NULL AS original_post_user,
+  p.metadata,
+  'post' AS type
+  FROM posts p
+  JOIN users u ON p.user_id = u.id
+    WHERE u.username = ?
+  `;
+
+  const repostsQuery = `
+  SELECT
+    p.id,
+    p.body,
+    p.image,
+    p.created_at,
+    r.reposter_id AS user_id,
+    JSON_OBJECT(
+      'id', ou.id,
+      'name', ou.name,
+      'username', ou.username,
+      'avatar', ou.avatar
+    ) AS user,
+    r.reposter_username,
+    r.created_at AS reposted_at,
+    NULL AS original_post_body,
+    NULL AS quote_reposted_post_id,
+    NULL AS quote_reposted_quote_repost_id,
+    NULL AS original_post_user,
+    p.metadata,
+    'repost' AS type
+    FROM posts p
+    JOIN reposts r ON p.id = r.reposted_post_id
+    JOIN users ur ON r.reposter_id = ur.id
+    LEFT JOIN posts op ON p.id = op.id
+    LEFT JOIN users ou ON op.user_id = ou.id
+      WHERE ur.username = ?
+  `;
+
+  const quoteRepostsQuery = `
+  SELECT 
+      qr.id,
+      qr.body,
+      qr.image,
+      qr.created_at,
+      qr.quote_reposter_id AS user_id,
+      JSON_OBJECT(
+        'id', ur.id,
+        'name', ur.name,
+        'username', ur.username,
+        'avatar', ur.avatar
+      ) AS user,
+      NULL AS reposter_username,
+      qr.created_at AS reposted_at,
+      CASE
+        WHEN qrr.id IS NOT NULL THEN qrr.body
+        ELSE p1.body
+      END AS original_post_body,
+      qr.quote_reposted_post_id,
+      qr.quote_reposted_quote_repost_id,
+      JSON_OBJECT(
+        'id', ou.id,
+        'name', ou.name,
+        'username', ou.username,
+        'avatar', ou.avatar
+      ) AS original_post_user,
+      p1.metadata,
+      'quote_repost' AS type
+  FROM quote_reposts qr
+  LEFT JOIN posts p1 ON qr.quote_reposted_post_id = p1.id
+  LEFT JOIN quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
+  JOIN users ur ON qr.quote_reposter_id = ur.id
+  LEFT JOIN users ou ON qr.original_post_user_id = ou.id
+  WHERE ur.username = ?
+  `;
+
+  const q = `
+    ${originalPostsQuery}
+    UNION ALL
+    ${repostsQuery}
+    UNION ALL
+    ${quoteRepostsQuery}
+    ORDER BY COALESCE(reposted_at, created_at) DESC
+  `;
+
+  
+  // UNION ALL
+  // ${quoteRepostsRepostsQuery}
+  // 
+  // LIMIT ?, ?
+
+  db.query(q, [username, username, username, offset, pageSize], (err, data) => {
     if (err) return res.status(500).json(err);
     return res.status(200).json(data);
   });

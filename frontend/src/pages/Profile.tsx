@@ -5,6 +5,8 @@ import { PageHeader, ProfileHeader } from "../components";
 import UserTypes from "../types/User";
 import "./page.scss";
 import FeedSelector from "../components/feed-selector/FeedSelector";
+import PostTypes from "../types/Post";
+import ProfileFeed from "../components/feed/ProfileFeed";
 
 type ProfileProps = {};
 
@@ -14,6 +16,8 @@ const Profile: React.FC<ProfileProps> = () => {
   const [selectedFeed, setSelectedFeed] = useState("posts");
 
   const [userData, setUserData] = useState<UserTypes | null>(null);
+  const [posts, setPosts] = useState<PostTypes[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,18 +25,25 @@ const Profile: React.FC<ProfileProps> = () => {
 
 
   useEffect(() => {
-    if (username) {
-      const fetchUserData = async () => {
-        try {
-          const response = await useAxios.get(`users/find/${username}`);
-          setUserData(response.data);
-          setLoading(false);
-        } catch (err) {
-          setError('Failed to fetch user data');
-          setLoading(false);
-        }
-      };
+    const fetchUserData = async () => {
+      setLoading(true);
+      try {
+        // Fetch user data
+        const response = await useAxios.get(`users/find/${username}`);
+        const user = response.data;
+        setUserData(user);
 
+        // Fetch posts using the fetched user data
+        const postsResponse = await useAxios.get(`posts/user/${username}`);
+        setPosts(postsResponse.data);
+      } catch (err) {
+        setError('Failed to fetch user data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (username) {
       fetchUserData();
     }
   }, [username]);
@@ -47,7 +58,9 @@ const Profile: React.FC<ProfileProps> = () => {
       <FeedSelector 
         setSelectedFeed={setSelectedFeed}
         selectedFeed={selectedFeed}
-        feeds={feeds}/>
+        feeds={feeds}
+      />
+      <ProfileFeed username={username as string} />
     </div>
   );
 };
