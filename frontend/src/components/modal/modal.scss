@@ -1,47 +1,67 @@
 .overlay {
-    background-color: rgb(211, 210, 216, 0.9);
-    backdrop-filter: blur(8px);
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    left: 0;
-    z-index: 99999;
+  background-color: rgb(211, 210, 216, 0.9);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  top: 0;
+
+  .modal {
+    background-color: white;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    width: 36rem;
+    height: fit-content;
+    border-radius: 22px;
+    padding: 24px 24px 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: scroll;
-    top: 0;
-
-  
-    .modal {
-        background-color: white;
-        box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
-        width: 36rem;
-        height: fit-content;
-        border-radius: 22px;
-        padding: 24px 24px 0;
+    flex-direction: column;
+    gap: 20px;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h3 {
+        font-weight: 700;
+        font-size: 22px;
+      }
+      .close {
+        cursor: pointer;
+        padding: .25rem;
         display: flex;
-        flex-direction: column;
-        gap: 20px;
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            h3 {
-                font-weight: 600;
-            }
-            .close {
-                cursor: pointer;
-            }
+        align-items: center;
+        justify-content: center;
+        
+        border-radius: 50%;
+        &:hover {
+            background-color: darken(white, 3%);
         }
-        .body {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 20px;
-            
-            
-        }
-
+      }
     }
+    .body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 20px;
+      .submit-btn {
+        background-color: #6947ff;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 22px;
+        font-size: 14px;
+        color: white;
+        width: 100%;
+        margin-top: 5px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }

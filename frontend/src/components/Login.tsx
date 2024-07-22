@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import Modal from "./modal/Modal";
 import useLoginModal from "../hooks/useLoginModal";
 import { useNavigate } from "react-router-dom";
+import Input from "./input/Input";
 
 type LoginProps = {};
 const Login: React.FC<LoginProps> = () => {
@@ -39,21 +40,23 @@ const Login: React.FC<LoginProps> = () => {
   const bodyContent = (
     <div className="login">
       <form>
-        <input
+        <Input 
           type="text"
           name="username"
           id="username"
-          placeholder="enter username"
+          placeholder="Enter your username"
+          label="Username"
           onChange={(e) => handleChange(e)}
         />
-        <input
+        <Input 
           type="password"
           name="password"
           id="password"
-          placeholder="enter password"
+          placeholder="Enter your password"
+          label="Password"
           onChange={(e) => handleChange(e)}
         />
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleLogin} className="submit-btn">Login</button>
       </form>
     </div>
   );

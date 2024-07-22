@@ -4,6 +4,7 @@ import { APP_CONSTANTS } from "../constants";
 import Modal from "./modal/Modal";
 import useRegisterModal from "../hooks/useRegisterModal";
 import useLoginModal from "../hooks/useLoginModal";
+import Input from "./input/Input";
 
 type RegisterProps = {};
 const Register: React.FC<RegisterProps> = () => {
@@ -40,42 +41,54 @@ const Register: React.FC<RegisterProps> = () => {
   const bodyContent = (
     <div className="register">
     <form>
-      <input
+      <Input 
         type="text"
         id="name"
         name="name"
-        placeholder="enter name"
+        label="Your Name"
+        placeholder="John Doe"
         onChange={(e) => handleChange(e)}
+        
       />
-      <input
+      <Input 
         type="text"
         id="username"
         name="username"
-        placeholder="enter username"
+        label="Your username"
+        description="May only contain A-Z, 0-9, and underscores"
+        placeholder="username"
         onChange={(e) => handleChange(e)}
+        isUsername
+        
       />
-      <input
+      <Input 
         type="email"
         id="email"
         name="email"
-        placeholder="enter email"
+        label="Email"
+        description="Provide your email for support, account recovery, and marketing updates."
+        placeholder="you@youremail.com"
         onChange={(e) => handleChange(e)}
+        
       />
-      <input
+       <Input 
         type="password"
         id="password"
         name="password"
-        placeholder="enter password"
+        label="Password"
+        description=""
+        placeholder="●●●●●●●●"
         onChange={(e) => handleChange(e)}
+        
       />
-      <button onClick={handleClick}>Create account</button>
+      <button onClick={handleClick} className="submit-btn">Create account</button>
     </form>
   </div>
   )
   return (
     <Modal 
       body={bodyContent}
-      title="Register"
+      title="Account info"
       isOpen={registerModal.isOpen}
       onClose={handleClose}
     />

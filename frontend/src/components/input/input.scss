@@ -1,0 +1,46 @@
+.input {
+    font-size: .875rem;
+    line-height: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    &:focus {
+        border: 1px solid red;
+    }
+    label {
+        font-weight: 500;
+        font-size: 14px;
+        padding-bottom: 3px;
+    }
+    span {
+        color: gray;
+        font-size: 12px;
+        padding-bottom: 3px;
+
+    }
+    .input-wrapper {
+        background-color: orange;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border: 2px solid rgb(236, 236, 236);
+        border-radius: .375rem;
+        .symbol {
+            padding: 0 0.75rem;
+            color: gray;
+            padding-right: 0rem;
+            
+        }
+        input {
+            padding: .675rem;
+            width: 100%;
+            border: none;
+            &:focus {
+                border: none;
+                outline: none;
+            }
+    
+        }
+    }
+   
+}

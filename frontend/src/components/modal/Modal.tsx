@@ -1,5 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import './modal.scss';
+import { COLOR_CONSTANTS } from '../../constants';
+import { CloseIcon } from '../../icons';
 
 type ModalProps = {
     isOpen: boolean;
@@ -25,8 +27,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, body, onClose, title }) => {
         <div className="header">
             <h3>{title}</h3>
             <div className="close" onClick={onClose}>
-                {/* <CloseIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} /> */}
-                <p>close</p>
+                <CloseIcon size={22} color={COLOR_CONSTANTS.LIGHTGRAY} />
             </div>
         </div>
         <div className="body">
