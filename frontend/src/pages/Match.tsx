@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import matchStore from "../store/matchStore";
 import { useBetSlip } from "../hooks";
 import MatchCategories from "../components/match-categories/MatchCategories";
+import { PageHeader } from "../components";
+import MatchHeader from "../components/match-header/MatchHeader";
 import "./page.scss";
 import "./matchPage.scss";
 
 type MatchProps = {};
 
 const Match: React.FC<MatchProps> = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Player Props");
+  const [selectedCategory, setSelectedCategory] = useState("Game Props");
 
   const match = matchStore.match;
   const displayGroups = match?.displayGroups;
@@ -25,11 +27,17 @@ const Match: React.FC<MatchProps> = () => {
 
   return (
     <div className="page match-page">
-      <p>{match?.description}</p>
+      <PageHeader title={match?.espnMatch.shortName as string} hasBack />
 
-      <MatchCategories displayGroups={displayGroups} />
+      <MatchHeader match={match} />
 
-      {displayGroups?.map((group, index) => {
+      <MatchCategories
+        displayGroups={displayGroups}
+        setSelectedCategory={setSelectedCategory}
+        selectedCategory={selectedCategory}
+      />
+
+      {/* {displayGroups?.map((group, index) => {
         if (selectedCategory === group?.description) {
           return (
             <div key={index} >
@@ -54,7 +62,7 @@ const Match: React.FC<MatchProps> = () => {
             </div>
           );
         }
-      })}
+      })} */}
     </div>
   );
 };

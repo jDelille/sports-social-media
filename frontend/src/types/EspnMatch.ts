@@ -27,6 +27,24 @@ export type Team = {
     statistics: any[]; 
     team: Team;
   };
+
+  export type Headlines = {
+    description: string;
+    shortLinkText: string;
+    type: string;
+    video: {
+      headline: string;
+      source: string;
+      thumbnail: string;
+      links: {
+        source: {
+          HD: {
+            href: string
+          }
+        }
+      }
+    }[]
+  }
   
   export type Competition = {
     attendance: number;
@@ -36,6 +54,7 @@ export type Team = {
     date: string;
     format: { regulation: any }; 
     geoBroadcasts: any[]; 
+    headlines: Headlines[]
   };
 
   export type Status = {
@@ -56,4 +75,5 @@ export type Team = {
   export type EspnMatch = {
     competitions: Competition[];
     status: Status;
+    shortName: string;
   };

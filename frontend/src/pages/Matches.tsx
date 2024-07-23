@@ -15,17 +15,22 @@ type Sport = {
 
 type MatchesProps = {};
 const Matches: React.FC<MatchesProps> = () => {
-  const [sport, setSport] = useState('baseball');
-  const [league, setLeague] = useState('mlb')
+  const [sport, setSport] = useState("baseball");
+  const [league, setLeague] = useState("mlb");
   const [loading, setLoading] = useState(false);
   const [matches, setMatches] = useState<BovadaMatchTypes[]>([]);
   const navigate = useNavigate();
 
   const combineData = (bovadaData: any[], espnData: any[]) => {
-    return bovadaData.map(bovadaMatch => {
-      const espnMatch = espnData.find(espnMatch => 
-        espnMatch.name.toLowerCase().includes(bovadaMatch.description.toLowerCase().split(' @ ')[0]) && 
-        espnMatch.name.toLowerCase().includes(bovadaMatch.description.toLowerCase().split(' @ ')[1])
+    return bovadaData.map((bovadaMatch) => {
+      const espnMatch = espnData.find(
+        (espnMatch) =>
+          espnMatch.name
+            .toLowerCase()
+            .includes(bovadaMatch.description.toLowerCase().split(" @ ")[0]) &&
+          espnMatch.name
+            .toLowerCase()
+            .includes(bovadaMatch.description.toLowerCase().split(" @ ")[1])
       );
       return { ...bovadaMatch, espnMatch };
     });
@@ -33,7 +38,7 @@ const Matches: React.FC<MatchesProps> = () => {
 
   useEffect(() => {
     const fetchOdds = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
         const bovadaResponse = await useAxios.get(`/odds/${sport}/${league}`);
         const espnResponse = await useAxios.get(`/espn/${sport}/${league}`);
@@ -45,7 +50,7 @@ const Matches: React.FC<MatchesProps> = () => {
       } catch (error) {
         console.error("Error fetching odds:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
     fetchOdds();
@@ -57,26 +62,34 @@ const Matches: React.FC<MatchesProps> = () => {
   };
 
   const handleChooseSport = (selectedSport: Sport) => {
-    setSport(selectedSport.sport)
-    setLeague(selectedSport.league)
-  }
+    setSport(selectedSport.sport);
+    setLeague(selectedSport.league);
+  };
+
+  console.log(matches);
 
   return (
     <div className="page matches-page">
       <PageHeader title="Matches" />
-      <SportPicker onSportSelect={handleChooseSport}/>
+      <SportPicker onSportSelect={handleChooseSport} />
 
       <div className="matches-content">
-      {loading ? (
-        <div className="loading-indicator">Loading...</div>
-      ) : (
-        matches.map((match) => (
-          <MatchCard match={match} onClick={handleMatchClick} key={match.id} />
-        ))
-      )}
+        {loading ? (
+          <div className="loading-indicator">Loading...</div>
+        ) : (
+          matches.map((match) => {
+            if (match.espnMatch) {
+              return (
+                <MatchCard
+                  match={match}
+                  onClick={handleMatchClick}
+                  key={match.id}
+                />
+              );
+            }
+          })
+        )}
       </div>
-
-      
     </div>
   );
 };

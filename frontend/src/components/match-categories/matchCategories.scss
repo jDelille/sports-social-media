@@ -2,27 +2,42 @@
 
 .match-categories {
     min-width: 100%;
-    min-height: 50px;
+    // min-height: 50px;
     display: flex;
     align-items: center;
     overflow-x: auto;
     overflow-y: hidden;
     gap: 1rem;
-    border: 1px solid $lightBorderColor;
+    border-bottom: 1px solid $lightBorderColor;
     border-left: none;
     border-right: none;
     padding: 0 10px;
     &::-webkit-scrollbar {
         display: none;
     }
-    p {
+    .category-button,
+    .active {
+        all: unset;
         min-width: fit-content;
         font-size: 14px;
         cursor: pointer; 
         padding: 10px;
+        padding-bottom: 0;
+        position: relative;
+        height: 100%;
+        padding: 10px;
 
-        &:hover {
-            background-color: darken(white, 3%);
-        }
     }
+    .active {
+        &::after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            background-color: black;
+            width: fit-content;
+            width: 100%;
+            bottom: 0;
+            left: 0
+        }
+    };
 }

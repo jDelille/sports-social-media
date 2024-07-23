@@ -41,6 +41,7 @@ type BovadaMatchTypes = {
     availableSGP: boolean;
     description: string;
     id: string;
+    date: string;
     live: boolean;
     displayGroups: DisplayGroup[];
     espnMatch: EspnMatch;
