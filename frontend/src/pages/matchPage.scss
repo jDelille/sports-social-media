@@ -1,4 +1,6 @@
 .match-page {
+  min-height: 110vh;
+  padding-bottom: 6rem;
   .group-description {
     font-size: 18px;
     padding: 15px;
@@ -7,33 +9,8 @@
   .markets {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    // gap: 1rem;
+    padding: 1rem 0;
   }
-  .market {
-    padding: 0 1rem;
-    .market1 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding: 10px 0;
-      
-      :nth-last-child(1):nth-child(odd) {
-        grid-column: span 2;
-      }
-      .description {
-        width: 100%;
-        
-      }
-    }
-    .outcome {
-      border: 1px solid rgb(239, 243, 244);
-      padding: 10px 15px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      &:hover {
-        background-color: darken(white, 3%);
-      }
-    }
-  }
+  
 }

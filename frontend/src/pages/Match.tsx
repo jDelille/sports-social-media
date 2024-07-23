@@ -6,6 +6,8 @@ import { PageHeader } from "../components";
 import MatchHeader from "../components/match-header/MatchHeader";
 import "./page.scss";
 import "./matchPage.scss";
+import BetslipButton from "../components/betslip-button/BetslipButton";
+import MarketFeed from "../components/market-feed/MarketFeed";
 
 type MatchProps = {};
 
@@ -37,32 +39,12 @@ const Match: React.FC<MatchProps> = () => {
         selectedCategory={selectedCategory}
       />
 
-      {/* {displayGroups?.map((group, index) => {
-        if (selectedCategory === group?.description) {
-          return (
-            <div key={index} >
-              <p className="group-description">{group?.description}</p>
-              <div className="markets">
-                {group.markets.map((market) => (
-                  <div className="market">
-                    <div key={market.description} >
-                      <p className="description">{market.description}</p>
-                      <div className="market1">
-                      {market.outcomes.map((outcome) => (
-                        <p className="outcome" key={outcome.description}>
-                          {outcome.description} {outcome.price.handicap} {outcome.price.american}
-                        </p>
-                      ))}
-                      </div>
-                     
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        }
-      })} */}
+      <MarketFeed
+        displayGroups={displayGroups}
+        selectedCategory={selectedCategory}
+      />
+
+      <BetslipButton />
     </div>
   );
 };

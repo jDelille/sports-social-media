@@ -1,0 +1,63 @@
+@use '../../scss/variables' as *;
+
+.market-card {
+  padding: 1rem;
+  border-bottom: 1px solid rgb(228, 228, 228);
+  &:hover {
+    // background-color: darken(white, 3%);
+    cursor: pointer;
+  }
+
+  .market-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .description {
+        width: 100%;
+        font-weight: 500;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        gap: 5px;
+        svg {
+            margin-left: auto;
+        }
+      }
+      .market1 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 1rem 0;
+        padding-top: 2rem;
+    
+        :nth-last-child(1):nth-child(odd) {
+          grid-column: span 2;
+        }
+        .description {
+          width: 100%;
+        }
+      }
+      .outcome {
+        border: 1px solid rgb(239, 243, 244);
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        gap: 5px;
+        &:hover {
+          background-color: darken(white, 3%);
+        }
+        .handicap {
+            font-weight: 500;
+        }
+        .price {
+            margin-left: auto;
+            color: $accent;
+            font-weight: 500;
+        }
+      }
+  }
+  
+}
