@@ -2,7 +2,8 @@ import { create } from 'zustand';
 
 type Bet = {
     description: string;
-    price: string
+    price: string;
+    type: string;
 }
 
 type BetSlipModalStore = {

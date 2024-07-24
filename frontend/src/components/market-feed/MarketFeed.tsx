@@ -5,8 +5,9 @@ import MarketCard from '../market-card/MarketCard';
 type MarketFeedProps = {
     displayGroups: DisplayGroup[] | undefined;
     selectedCategory: string;
+    handleClick: (description: string, price: string, type: string) => void;
  }
-const MarketFeed: React.FC<MarketFeedProps> = ({displayGroups, selectedCategory}) => {
+const MarketFeed: React.FC<MarketFeedProps> = ({displayGroups, selectedCategory, handleClick}) => {
     if(!displayGroups) {
         return null;
     }
@@ -19,7 +20,7 @@ const MarketFeed: React.FC<MarketFeedProps> = ({displayGroups, selectedCategory}
             <div key={index} >
               <div className="markets">
                 {group.markets.map((market) => (
-                  <MarketCard market={market}/>
+                  <MarketCard market={market} handleClick={handleClick}/>
                 ))}
               </div>
             </div>

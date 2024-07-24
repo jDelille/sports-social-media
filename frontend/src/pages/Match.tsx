@@ -18,10 +18,11 @@ const Match: React.FC<MatchProps> = () => {
   const displayGroups = match?.displayGroups;
   const betSlip = useBetSlip();
 
-  const handleClick = (description: string, price: string) => {
+  const handleClick = (description: string, price: string, type: string) => {
     const bet = {
       description,
       price,
+      type
     };
 
     betSlip.onOpen(bet);
@@ -42,6 +43,7 @@ const Match: React.FC<MatchProps> = () => {
       <MarketFeed
         displayGroups={displayGroups}
         selectedCategory={selectedCategory}
+        handleClick={handleClick}
       />
 
       <BetslipButton />

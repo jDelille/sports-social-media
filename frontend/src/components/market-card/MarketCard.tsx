@@ -8,9 +8,10 @@ import "./marketCard.scss";
 
 type MarketCardProps = {
   market: any;
+  handleClick: (description: string, price: string, type: string) => void;
 };
 
-const MarketCard: React.FC<MarketCardProps> = ({ market }) => {
+const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick }) => {
     const [hasClickedMarket, setHasClickedMarket] = useState(false);
 
   return (
@@ -22,9 +23,9 @@ const MarketCard: React.FC<MarketCardProps> = ({ market }) => {
         </p>
         
         {hasClickedMarket && (
-          <div className="market1">
+          <div className="market1" >
             {market.outcomes.map((outcome: any) => (
-              <p className="outcome" key={outcome.description}>
+              <p className="outcome" key={outcome.description} onClick={() => handleClick(outcome.description, outcome.price.american, market.description)}>
                 {outcome.description} 
                 <span className="handicap">{outcome.price.handicap}</span>
                 <span className="price">{outcome.price.american}</span>
