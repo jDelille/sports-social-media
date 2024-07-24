@@ -44,8 +44,8 @@ const Matches: React.FC<MatchesProps> = () => {
         const espnResponse = await useAxios.get(`/espn/${sport}/${league}`);
         const bovadaData = bovadaResponse.data;
         const espnData = espnResponse.data.events;
+        console.log(espnData)
         const combinedData = combineData(bovadaData, espnData);
-        console.log(combinedData);
         setMatches(combinedData);
       } catch (error) {
         console.error("Error fetching odds:", error);

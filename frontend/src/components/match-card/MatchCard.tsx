@@ -1,6 +1,6 @@
 import React from "react";
 import BovadaMatchTypes from "../../types/BovadaMatch";
-import moment from 'moment';
+import moment from "moment";
 import "./matchCard.scss";
 
 type MatchCardProps = {
@@ -16,15 +16,22 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
 
   // make into reusable hook
   const dateString = status?.type.shortDetail;
-  const timePart = dateString?.split(' - ')[1]?.split(' ')[0] + ' ' + dateString?.split(' - ')[1]?.split(' ')[1];
-  const formattedTime = moment(timePart, 'h:mm A').format('h:mm A');
+  const timePart =
+    dateString?.split(" - ")[1]?.split(" ")[0] +
+    " " +
+    dateString?.split(" - ")[1]?.split(" ")[1];
+  const formattedTime = moment(timePart, "h:mm A").format("h:mm A");
 
-  if(!match) {
+  if (!match) {
     return null;
   }
 
   return (
     <div className="match-card" onClick={() => onClick(match)}>
+      <div className="status">
+        <p>{status.type.shortDetail}</p>
+      </div>
+      <div className="content">
       <div className="teams">
         <div className="home">
           <img src={homeTeam?.team.logo} alt="" className="team-logo" />
@@ -41,17 +48,19 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
           </p>
         </div>
       </div>
+
       <div className="data">
         {status?.type.state === "pre" ? (
           <p className="time">{formattedTime}</p>
-        ): (
-         <>
-          <p>{homeTeam?.score}</p>
-          <p>{awayTeam?.score}</p>
-         </>
+        ) : (
+          <>
+            <p>{homeTeam?.score}</p>
+            <p>{awayTeam?.score}</p>
+          </>
         )}
-    
       </div>
+      </div>
+   
     </div>
   );
 };

@@ -12,7 +12,7 @@ import MarketFeed from "../components/market-feed/MarketFeed";
 type MatchProps = {};
 
 const Match: React.FC<MatchProps> = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Game Props");
+  const [selectedCategory, setSelectedCategory] = useState("Game Lines");
 
   const match = matchStore.match;
   const displayGroups = match?.displayGroups;
