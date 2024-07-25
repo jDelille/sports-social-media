@@ -5,6 +5,7 @@ export type Pick = {
     type: string;
     price: string;
     description: string;
+    matchup: string;
 }
 
 export type Picks = {

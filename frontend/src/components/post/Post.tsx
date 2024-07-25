@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { COLOR_CONSTANTS } from "../../constants";
 import PostFooter from "./PostFooter";
 import ArticleDisplay from "../article-display/ArticleDisplay";
+import Bet from "./Bet";
 
 type PostProps = {
   post: PostTypes;
@@ -62,8 +63,13 @@ const Post: React.FC<PostProps> = ({ post }) => {
   
 
   const hideUrlsInBody = (body: string) => {
+    // Regular expression to match URLs
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return body.replace(urlRegex, "");
+  
+    // Remove URLs
+    let cleanedBody = body.replace(urlRegex, "");
+  
+    return cleanedBody;
   };
 
   return (
@@ -82,6 +88,8 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
       <p className="body">{hideUrlsInBody(post.body)}</p>
       <ArticleDisplay metadata={post.metadata} />
+      
+      <Bet post={post} />
 
       <PostFooter post={post} type={type} />
 

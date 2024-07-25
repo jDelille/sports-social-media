@@ -7,8 +7,6 @@ import { observer } from "mobx-react";
 
 type BetSlipProps = {};
 const BetSlip: React.FC<BetSlipProps> = observer(() => {
-
-
   const betSlip = useBetSlip();
   const betPostModal = useBetPostModal();
 
@@ -22,38 +20,46 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
   const handleConfirmPicks = () => {
     betSlip.onClose();
     betPostModal.onOpen();
-  }
+  };
+
+  const hasPicks = picks.length > 0;
+
+  console.log(picks)
 
   const bodyContent = (
     <div className="bet-body">
       <div className="bet-content-wrapper">
-      {picks.map((pick) => (
-        <div className="bet-content">
-          <div className="info">
-            <div className="text">
-              <p className="type">
-                {pick.type}
-                {" -"}
+        {!hasPicks && <div>You have not added any picks yet.</div>}
+        {hasPicks &&
+          picks.map((pick) => (
+            <div className="bet-content">
+              <div className="info">
+                <div className="text">
+                  <div className="matchup">
+                    <p>{pick.matchup}</p>
+                  </div>
+                  <p className="type">
+                    {pick.type}
+                    {" -"}
 
-                <span className="description">{pick.description}</span>
-              </p>
+                    <span className="description">{pick.description}</span>
+                  </p>
 
-              <span className="price">{pick.price}</span>
+                  <span className="price">{pick.price}</span>
+                </div>
+              </div>
+              {!betstore.isParlay && (
+                <input type="text" placeholder="Enter wager" />
+              )}
+              <div
+                className="delete-pick"
+                onClick={() => handleRemovePick(pick.id)}
+              >
+                <CloseIcon size={16} color="#e2434b" />
+              </div>
             </div>
-          </div>
-          {!betstore.isParlay && (
-            <input type="text" placeholder="Enter wager" />
-          )}
-          <div
-            className="delete-pick"
-            onClick={() => handleRemovePick(pick.id)}
-          >
-            <CloseIcon size={16} color="#e2434b" />
-          </div>
-        </div>
-      ))}
+          ))}
       </div>
- 
 
       {betstore.isParlay && (
         <div className="bet-amount">
@@ -68,13 +74,15 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
         </div>
       )}
 
-      <button onClick={() => betstore.toggleParlay()} className="parlay-btn">
-        parlay {betstore.isParlay ? "on" : "off"}
+      {hasPicks && (
+        <button onClick={() => betstore.toggleParlay()} className="parlay-btn">
+          parlay {betstore.isParlay ? "on" : "off"}
+        </button>
+      )}
+
+      <button className="confirm-btn" onClick={handleConfirmPicks} disabled={!hasPicks}>
+        Confirm Picks
       </button>
-
-      
-
-      <button className="confirm-btn" onClick={handleConfirmPicks}>Confirm Picks</button>
     </div>
   );
 

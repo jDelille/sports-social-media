@@ -1,0 +1,30 @@
+.bet-post-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .picks {
+        border: 1px solid rgb(240, 240, 240);
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 1rem;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        .parlay-picks {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .pick {
+            display: flex;
+            gap: 5px;
+        }
+
+
+    }
+    .textarea-wrapper {
+        border: 1px solid rgb(240, 240, 240);
+        padding: 10px;
+        border-radius: 8px;
+      }
+}

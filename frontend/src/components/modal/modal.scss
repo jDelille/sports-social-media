@@ -209,10 +209,15 @@
           font-size: 14px;
           color: white;
           width: 100%;
-          margin-top: 15px;
+          // margin-top: 15px;
           &:hover {
             cursor: pointer;
             background-color: lighten(#6947ff, 3%);
+          }
+          &:disabled {
+            background-color: lighten(#6947ff, 10%);
+            cursor: default;
+            pointer-events: none;
           }
         }
         .parlay-btn {
@@ -221,11 +226,7 @@
         }
        
       }
-      .textarea-wrapper {
-        border: 1px solid rgb(240, 240, 240);
-        padding: 10px;
-        border-radius: 8px;
-      }
+      
     }
   }
 }

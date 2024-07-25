@@ -10,10 +10,11 @@ import betslipStore, { Pick, Picks } from "../../store/betslipStore";
 
 type MarketCardProps = {
   market: any;
-  handleClick: (description: string, price: string, type: string) => void;
+  handleClick: (description: string, price: string, type: string, matchup: string) => void;
+  matchup: string
 };
 
-const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick }) => {
+const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup}) => {
     const [hasClickedMarket, setHasClickedMarket] = useState(false);
     const betslip = useBetSlip();
     const betstore = betslipStore;
@@ -38,7 +39,8 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick }) => {
                 id: `${outcome.description} ${market.description}`,
                 type: outcome.description, 
                 price: outcome.price.american,
-                 description: market.description
+                 description: market.description,
+                 matchup: matchup
               })}>
                 {outcome.description} 
                 <span className="handicap">{outcome.price.handicap}</span>

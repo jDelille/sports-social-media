@@ -26,7 +26,14 @@ type PostTypes = {
         site_name: string;
         description: string;
         image: string;
-    }
+    };
+    bet: {
+        id: string;
+        matchup: string;
+        type: string;
+        price: string;
+        description: string;
+    }[]
 }
 
 export default PostTypes;

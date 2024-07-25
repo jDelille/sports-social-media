@@ -5,22 +5,25 @@ import MarketCard from '../market-card/MarketCard';
 type MarketFeedProps = {
     displayGroups: DisplayGroup[] | undefined;
     selectedCategory: string;
-    handleClick: (description: string, price: string, type: string) => void;
+    handleClick: (description: string, price: string, type: string, matchup: string) => void;
+    matchup: string;
  }
-const MarketFeed: React.FC<MarketFeedProps> = ({displayGroups, selectedCategory, handleClick}) => {
+const MarketFeed: React.FC<MarketFeedProps> = ({displayGroups, selectedCategory, handleClick, matchup}) => {
     if(!displayGroups) {
         return null;
     }
 
+    console.log(matchup)
   return (
     <div className="market-feed">
       {displayGroups.map((group, index) => {
         if (selectedCategory === group.description) {
+          
           return (
             <div key={index} >
               <div className="markets">
                 {group.markets.map((market) => (
-                  <MarketCard market={market} handleClick={handleClick}/>
+                  <MarketCard market={market} handleClick={handleClick} matchup={matchup}/>
                 ))}
               </div>
             </div>

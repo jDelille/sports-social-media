@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { useBetPostModal, useBetSlip } from "../../hooks";
+import { useAxios, useBetPostModal, useBetSlip } from "../../hooks";
 import Modal from "../modal/Modal";
 import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import betslipStore, { Pick } from "../../store/betslipStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import "./betpostmodal.scss";
 
 type BetPostModalProps = {};
 
@@ -12,32 +14,66 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
 
   const betPostModal = useBetPostModal();
   const betslip = useBetSlip();
+  const queryClient = useQueryClient();
 
   const betstore = betslipStore;
 
+  const isParlay = betstore.isParlay
+
+  const handleSubmitBet = async (newPost: any) => {
+    await useAxios.post("/posts", newPost)
+  }
+
+  const { mutate } = useMutation({
+    mutationFn: (newPost: any) => handleSubmitBet(newPost),
+    onSettled: async () => {
+      queryClient.refetchQueries();
+      setBody("");
+    },
+    mutationKey: ["addPost"],
+  });
+
+  const handlePostClick = async (e: any) => {
+    e.preventDefault();
+    const bet = betstore.picks;
+
+    try {
+      mutate({ body, bet });
+      setBody("");
+      betslip.onClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const bodyContent = (
     <div className="bet-post-modal">
-        <div className="picks">
-            {betstore.picks.map((pick: Pick) => (
-                <div className="pick">
-                    <p>{pick.description}</p>
-                </div>
-            ))}
-        </div>
-    <div className="textarea-wrapper">
-      <MentionsTextarea
-        setBody={setBody}
-        body={body}
-        setFile={setFile}
-        file={file}
-        handleClick={(e) => console.log(e)}
-        placeholder="Got something to say?"
-        isActive
-      />
+      <div className="picks">
+        {isParlay && (
+          <p className="parlay-picks">(Parlay) {betstore.picks.length} picks</p>
+        )}
+        {betstore.picks.map((pick: Pick) => (
+          <div className="pick">
+            <p>{pick.matchup}</p>
+            <p>{pick.type}</p>
+            <p>{pick.description} </p>
+            <span>{pick.price}</span>
+          </div>
+        ))}
+      </div>
+      <div className="textarea-wrapper">
+        <MentionsTextarea
+          setBody={setBody}
+          body={body}
+          setFile={setFile}
+          file={file}
+          handleClick={(e) => console.log(e)}
+          placeholder="Say something about your picks"
+          isActive
+        />
+      </div>
+      <button className="submit-btn" onClick={handlePostClick}>Post your bet</button>
     </div>
-    <button className="submit-btn">Post your bet</button>
-    </div>
-    
   );
 
   const handleClose = () => {
@@ -47,7 +83,7 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
   const previousModal = () => {
     betPostModal.onClose();
     betslip.onOpen();
-  }
+  };
 
   return (
     <div className="bet-post-modal">

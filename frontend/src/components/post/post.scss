@@ -117,6 +117,48 @@
     font-size: 14px;
     color: rgb(8, 5, 27);
     word-wrap: break-word;
+    white-space: pre-wrap;
+
+  }
+
+  .bet {
+    border: 1px solid rgb(240, 240, 240);
+    padding: 10px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+
+    .pick {
+      border: 1px solid rgb(240, 240, 240);
+      padding: 10px;
+      border-radius: 8px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      .matchup {
+        color: gray;
+        font-weight: 500;
+      }
+      .price {
+        font-weight: 600;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: $accent;
+      }
+    }
+
+    .payout {
+      padding: 0 5px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+    }
+
   }
 
   .post-footer {
@@ -211,7 +253,7 @@
 .quote-repost {
   .original-post,
   .muted-original-post {
-    border: 1px solid darken($lightBorderColor, 10%);
+    border: 1px solid rgb(240, 240, 240);
     padding: 5px 10px;
     display: flex;
     flex-direction: column;

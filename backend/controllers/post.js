@@ -13,7 +13,7 @@ export const addPost = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q =
-      "INSERT INTO posts (`body`, `image`, `created_at`, `user_id`, `metadata`) VALUES (?)";
+      "INSERT INTO posts (`body`, `image`, `created_at`, `user_id`, `metadata`, `bet`) VALUES (?)";
 
     const values = [
       req.body.body,
@@ -21,6 +21,7 @@ export const addPost = (req, res) => {
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       userInfo.id,
       JSON.stringify(req.body.urlMetadata),
+      JSON.stringify(req.body.bet)
     ];
 
     db.query(q, [values], (err, data) => {
@@ -48,6 +49,7 @@ export const getAllPosts = (req, res) => {
         'username', u.username,
         'avatar', u.avatar
       ) AS user,
+      p.bet AS bet,
       NULL AS reposter_username,
       NULL AS reposted_at,
       NULL AS original_post_body,
@@ -73,6 +75,7 @@ export const getAllPosts = (req, res) => {
       'username', ou.username,
       'avatar', ou.avatar
     ) AS user,
+    p.bet AS bet,
     r.reposter_username,
     r.created_at AS reposted_at,
     NULL AS original_post_body,
@@ -102,6 +105,7 @@ LEFT JOIN users ou ON op.user_id = ou.id
         'username', ur.username,
         'avatar', ur.avatar
       ) AS user,
+      p1.bet AS bet,
       ur.username AS reposter_username,
       r.created_at AS reposted_at,
       CASE
@@ -139,6 +143,7 @@ LEFT JOIN users ou ON op.user_id = ou.id
         'username', ur.username,
         'avatar', ur.avatar
       ) AS user,
+      p1.bet AS bet,
       NULL AS reposter_username,
       qr.created_at AS reposted_at,
       CASE

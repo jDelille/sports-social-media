@@ -4,10 +4,10 @@ import { useBetSlip } from "../hooks";
 import MatchCategories from "../components/match-categories/MatchCategories";
 import { PageHeader } from "../components";
 import MatchHeader from "../components/match-header/MatchHeader";
-import "./page.scss";
-import "./matchPage.scss";
 import BetslipButton from "../components/betslip-button/BetslipButton";
 import MarketFeed from "../components/market-feed/MarketFeed";
+import "./page.scss";
+import "./matchPage.scss";
 
 type MatchProps = {};
 
@@ -18,14 +18,15 @@ const Match: React.FC<MatchProps> = () => {
   const displayGroups = match?.displayGroups;
   const betSlip = useBetSlip();
 
-  const handleClick = (description: string, price: string, type: string) => {
+  const handleClick = (description: string, price: string, type: string, matchup: string) => {
     const bet = {
       description,
       price,
-      type
+      type,
+      matchup
     };
 
-    betSlip.onOpen(bet);
+    betSlip.onOpen();
   };
 
   return (
@@ -44,6 +45,7 @@ const Match: React.FC<MatchProps> = () => {
         displayGroups={displayGroups}
         selectedCategory={selectedCategory}
         handleClick={handleClick}
+        matchup={match?.description as string}
       />
 
       <BetslipButton />
