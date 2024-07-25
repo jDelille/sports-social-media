@@ -1,7 +1,7 @@
 import React from "react";
 import UserTypes from "../../types/User";
 import Avatar from "../avatar/Avatar";
-import { CalendarIcon } from "../../icons";
+import { CalendarIcon, MenuDotsIcon } from "../../icons";
 import moment from "moment";
 import "./profileheader.scss";
 
@@ -16,7 +16,15 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
       <div className="header-img" style={{backgroundImage: `url(${user?.header_img})`, backgroundSize: 'cover', backgroundPositionY: '-40px'}}>
         <Avatar src={user?.avatar} username={user?.username as string} />
       </div>
+    
       <div className="user-content">
+      <div className="menu-wrapper">
+        <div className="menu-btn">
+         <MenuDotsIcon color="gray" size={20} />
+        </div>
+        <button className="follow-btn">Follow</button>
+
+      </div>
         <p className="name">{user?.name}</p>
         <p className="username">@{user?.username}</p>
         {user?.bio && (

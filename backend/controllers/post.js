@@ -276,22 +276,61 @@ export const getPostsByUsername = (req, res) => {
   WHERE ur.username = ?
   `;
 
+  const quoteRepostsRepostsQuery = `
+  SELECT
+      qr.id,
+      qr.body,
+      qr.image,
+      qr.created_at,
+      r.reposter_id AS user_id,
+      JSON_OBJECT(
+        'id', ur.id,
+        'name', ur.name,
+        'username', ur.username,
+        'avatar', ur.avatar
+      ) AS user,
+      ur.username AS reposter_username,
+      r.created_at AS reposted_at,
+      CASE
+        WHEN qrr.body IS NOT NULL THEN qrr.body
+        ELSE p1.body
+      END AS original_post_body,
+      qr.quote_reposted_post_id,
+      qr.quote_reposted_quote_repost_id,
+      JSON_OBJECT(
+        'id', ou.id,
+        'name', ou.name,
+        'username', ou.username,
+        'avatar', ou.avatar
+      ) AS original_post_user,
+      p1.metadata,
+      'quote_repost_repost' AS type
+  FROM quote_reposts qr
+  JOIN reposts r ON qr.id = r.reposted_quote_repost_id
+  JOIN users ur ON r.reposter_id = ur.id
+  LEFT JOIN posts p1 ON qr.quote_reposted_post_id = p1.id
+  LEFT JOIN quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
+  LEFT JOIN users ou ON qr.original_post_user_id = ou.id
+  WHERE ur.username = ?
+  `;
+
   const q = `
     ${originalPostsQuery}
     UNION ALL
     ${repostsQuery}
     UNION ALL
     ${quoteRepostsQuery}
+    UNION ALL
+    ${quoteRepostsRepostsQuery}
     ORDER BY COALESCE(reposted_at, created_at) DESC
   `;
 
   
-  // UNION ALL
-  // ${quoteRepostsRepostsQuery}
+
   // 
   // LIMIT ?, ?
 
-  db.query(q, [username, username, username, offset, pageSize], (err, data) => {
+  db.query(q, [username, username, username, username, offset, pageSize], (err, data) => {
     if (err) return res.status(500).json(err);
     return res.status(200).json(data);
   });
