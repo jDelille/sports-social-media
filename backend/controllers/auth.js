@@ -90,3 +90,47 @@ export const logout = (req, res) => {
     .status(200)
     .json("User successfully logged out.");
 };
+
+
+/**
+ * Edit profile
+ */
+
+export const editProfile = (req, res) => {
+  const userId = req.body.id;
+  const { name, username, location } = req.body;
+
+  let query = "UPDATE users SET ";
+  const values = [];
+
+  if (name) {
+    query += "name = ?, ";
+    values.push(name);
+  }
+
+  if (username) {
+    query += "username = ?, ";
+    values.push(username);
+  }
+
+  if (location) {
+    query += "location = ?, ";
+    values.push(location);
+  }
+
+  query += "updated_at = ? "; 
+  values.push(moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"));
+
+  query += "WHERE id = ?";
+  values.push(userId);
+
+  db.query(query, values, (err, data) => {
+    if (err) return res.status(500).json(err);
+
+    // Fetch the updated user data and return it
+    db.query("SELECT * FROM users WHERE id = ?", [userId], (err, result) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(result[0]);
+    });
+  });
+};

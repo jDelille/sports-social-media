@@ -13,7 +13,6 @@ const MarketFeed: React.FC<MarketFeedProps> = ({displayGroups, selectedCategory,
         return null;
     }
 
-    console.log(matchup)
   return (
     <div className="market-feed">
       {displayGroups.map((group, index) => {

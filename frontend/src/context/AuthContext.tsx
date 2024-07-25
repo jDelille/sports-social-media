@@ -27,6 +27,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setCurrentUser(res.data);
   };
 
+  const updateProfile = async (profileData: any) => {
+    try {
+      // Update profile
+      const res = await axios.put(
+        `${APP_CONSTANTS.API_BASE_URL}/auth/editProfile`,
+        profileData,
+        {
+          withCredentials: true,
+        }
+      );
+
+      // Update state and localStorage with the updated user data
+      setCurrentUser(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
   const logout = async () => {
     await axios.post(
       `${APP_CONSTANTS.API_BASE_URL}/auth/logout`,
@@ -47,6 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     currentUser,
     login,
     logout,
+    updateProfile
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -24,8 +24,6 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
 
   const hasPicks = picks.length > 0;
 
-  console.log(picks)
-
   const bodyContent = (
     <div className="bet-body">
       <div className="bet-content-wrapper">

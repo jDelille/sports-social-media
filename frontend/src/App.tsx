@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useContext } from "react";
-import { Home, LandingPage, Match, Matches, Profile } from "./pages";
+import { EditProfile, Home, LandingPage, Match, Matches, Profile } from "./pages";
 import {
   BetSlip,
   CreateComment,
@@ -95,6 +95,10 @@ function App() {
         {
           path: "/profile/:username",
           element: <Profile />
+        },
+        {
+          path: "/settings/profile",
+          element: <EditProfile/>
         }
       ],
     },

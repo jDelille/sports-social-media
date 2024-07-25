@@ -44,7 +44,6 @@ const Matches: React.FC<MatchesProps> = () => {
         const espnResponse = await useAxios.get(`/espn/${sport}/${league}`);
         const bovadaData = bovadaResponse.data;
         const espnData = espnResponse.data.events;
-        console.log(espnData)
         const combinedData = combineData(bovadaData, espnData);
         setMatches(combinedData);
       } catch (error) {
@@ -65,8 +64,6 @@ const Matches: React.FC<MatchesProps> = () => {
     setSport(selectedSport.sport);
     setLeague(selectedSport.league);
   };
-
-  console.log(matches);
 
   return (
     <div className="page matches-page">
