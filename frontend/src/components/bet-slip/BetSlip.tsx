@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "../modal/Modal";
-import { useBetSlip } from "../../hooks";
+import { useBetPostModal, useBetSlip } from "../../hooks";
 import { CloseIcon, TrashIcon } from "../../icons";
 import betslipStore from "../../store/betslipStore";
 import { observer } from "mobx-react";
-import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 
 type BetSlipProps = {};
 const BetSlip: React.FC<BetSlipProps> = observer(() => {
-  const [file, setFile] = useState(null);
-  const [body, setBody] = useState("");
+
+
   const betSlip = useBetSlip();
+  const betPostModal = useBetPostModal();
 
   const betstore = betslipStore;
   const picks = betstore.getPicks();
@@ -18,6 +18,11 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
   const handleRemovePick = (id: string) => {
     betstore.removePick(id);
   };
+
+  const handleConfirmPicks = () => {
+    betSlip.onClose();
+    betPostModal.onOpen();
+  }
 
   const bodyContent = (
     <div className="bet-body">
@@ -67,18 +72,9 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
         parlay {betstore.isParlay ? "on" : "off"}
       </button>
 
-      {/* <div className="textarea-wrapper">
-        <MentionsTextarea
-          setBody={setBody}
-          body={body}
-          setFile={setFile}
-          file={file}
-          handleClick={(e) => console.log(e)}
-          placeholder="Got something to say?"
-        />
-      </div> */}
+      
 
-      <button className="confirm-btn">Confirm Picks</button>
+      <button className="confirm-btn" onClick={handleConfirmPicks}>Confirm Picks</button>
     </div>
   );
 

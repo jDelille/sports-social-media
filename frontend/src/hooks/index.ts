@@ -10,3 +10,4 @@ export { default as useLoginReminder } from './useLoginReminderStore';
 export { default as useBetSlip} from './useBetSlipModal';
 export { default as useAccountCreated } from './useAccountCreatedPopup';
 export { default as useCustomizeProfile } from './useCustomizeProfileModal'
+export { default as useBetPostModal} from './useBetPostModal';

@@ -27,14 +27,18 @@
     gap: 0px;
     .header {
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
       align-items: center;
-
+      gap: 0.55rem;
+      svg {
+        cursor: pointer;
+      }
       h3 {
         font-weight: 700;
         font-size: 22px;
       }
       .close {
+        margin-left: auto;
         cursor: pointer;
         padding: 0.25rem;
         display: flex;
@@ -215,11 +219,12 @@
           width: fit-content;
           padding: 5px;
         }
-        .textarea-wrapper {
-          border: 1px solid rgb(240, 240, 240);
-          padding: 10px;
-          border-radius: 8px;
-        }
+       
+      }
+      .textarea-wrapper {
+        border: 1px solid rgb(240, 240, 240);
+        padding: 10px;
+        border-radius: 8px;
       }
     }
   }

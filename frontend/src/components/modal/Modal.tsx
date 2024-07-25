@@ -1,16 +1,18 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import './modal.scss';
 import { COLOR_CONSTANTS } from '../../constants';
-import { CloseIcon } from '../../icons';
+import { BackIcon, CloseIcon } from '../../icons';
 
 type ModalProps = {
     isOpen: boolean;
     body: ReactElement;
     onClose: () => void;
     title: string;
+    previousModal?: () => void;
+    hasBack?: boolean;
   };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, body, onClose, title }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, body, onClose, title, previousModal, hasBack }) => {
     const [showModal, setShowModal] = useState(false);
 
     
@@ -25,6 +27,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, body, onClose, title }) => {
   return <div className="overlay">
     <div className="modal">
         <div className="header">
+          {hasBack && (
+            <BackIcon color='black' size={28} onClick={previousModal} />
+          )}
             <h3>{title}</h3>
             <div className="close" onClick={onClose}>
                 <CloseIcon size={22} color={COLOR_CONSTANTS.LIGHTGRAY} />

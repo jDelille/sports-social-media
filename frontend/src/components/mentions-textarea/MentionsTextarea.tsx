@@ -18,10 +18,11 @@ type MentionsTextareaProps = {
   isComment?: boolean;
   setUrlMetadata?: any;
   placeholder?: string;
+  isActive?: boolean;
 };
 
 const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
-  ({ setBody, setFile, handleClick, body, file, isComment, setUrlMetadata, placeholder = "What's on your mind?" }) => {
+  ({ setBody, setFile, handleClick, body, file, isComment, setUrlMetadata, isActive, placeholder = "What's on your mind?" }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [openPoll, setOpenPoll] = useState(false);
 
@@ -116,10 +117,18 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
       }
     };
 
+    const activatedTextarea = () => {
+      if(isActive) {
+        return true;
+      } else {
+        return createPostStore.isActive;
+      }
+    }
+
     return (
       <div
         className={
-          createPostStore.isActive || isComment
+          activatedTextarea() || isComment
             ? "mentions-textarea-container-active"
             : "mentions-textarea-container"
         }
@@ -149,7 +158,7 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
           <CreatePoll close={handleOpenPoll} />
         )} */}
 
-        {!isComment && createPostStore.isActive && (
+        {!isComment && activatedTextarea() && (
           <div className="footer">
             <div className="icons">
               <FileInput handleChange={handleChange} />
