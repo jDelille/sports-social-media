@@ -1,4 +1,4 @@
-@use '../../scss/variables' as *;
+@use "../../scss/variables" as *;
 
 .overlay {
   background-color: rgb(211, 210, 216, 0.9);
@@ -36,14 +36,14 @@
       }
       .close {
         cursor: pointer;
-        padding: .25rem;
+        padding: 0.25rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
         border-radius: 50%;
         &:hover {
-            background-color: darken(white, 3%);
+          background-color: darken(white, 3%);
         }
       }
     }
@@ -66,10 +66,23 @@
         }
       }
       .bet-body {
-        margin: 1rem 0;
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        .bet-content-wrapper {
+          max-height: 580px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          margin: 1rem 0;
+          padding: 1rem 0;
+          padding-bottom: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          position: relative;
+          padding-right: 0.75rem;
+         
+        }
         .bet-content {
           display: flex;
           align-items: center;
@@ -78,6 +91,11 @@
           border: 1px solid rgb(240, 240, 240);
           padding: 1rem 1rem;
           border-radius: 8px;
+          position: relative;
+          max-height: 200px;
+          
+
+         
           .info {
             display: flex;
             align-items: center;
@@ -96,56 +114,111 @@
                   flex-direction: column;
                   gap: 5px;
                   font-weight: 600;
-                
                 }
-                
               }
               .price {
                 color: $accent;
                 font-weight: 500;
               }
-              
-             
             }
-           
           }
           input {
             margin-left: auto;
             border: 1px solid lightgray;
             padding: 10px;
             border-radius: 8px;
+            
             &:focus {
               border: none;
               outline: 2px solid $accent;
             }
           }
           .delete-pick {
-            padding-left: 10px;
             cursor: pointer;
+            position: absolute;
+            right: -10px;
+            top: -10px;
+            background-color: lighten(#e23a42, 35%);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+              background-color: lighten(#e23a42, 33%);
+            }
+            
+          }
+        }
+        .bet-amount {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          .wager-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            label {
+              font-weight: 500;
+              font-size: 14px;
+            }
+            input {
+              margin-left: auto;
+              border: 1px solid lightgray;
+              padding: 10px;
+              border-radius: 8px;
+              &:focus {
+                border: none;
+                outline: 2px solid $accent;
+              }
+            }
+          }
+          .payout-wrapper {
+            margin-left: auto;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 10px;
+            .payout {
+              font-weight: 500;
+              font-size: 14px;
+              text-align: left;
+              
+            }
+            p {
+              padding: 10px 0;
+              font-size: 16px;
+
+            }
           }
         }
         .confirm-btn {
           background-color: #6947ff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 22px;
-            font-size: 14px;
-            color: white;
-            width: 100%;
-            margin-top: 15px;
-            &:hover {
-              cursor: pointer;
-              background-color: lighten(#6947ff, 3%);
-            }
-        }
-        .payout-wrapper {
-          display: flex;
-          justify-content: space-between;
+          border: none;
+          padding: 0.8rem 1.5rem;
+          border-radius: 22px;
           font-size: 14px;
-          font-weight: 500;
-          .payout {
-            color: #1a936f;
+          color: white;
+          width: 100%;
+          margin-top: 15px;
+          &:hover {
+            cursor: pointer;
+            background-color: lighten(#6947ff, 3%);
           }
+        }
+        .parlay-btn {
+          width: fit-content;
+          padding: 5px;
+        }
+        .textarea-wrapper {
+          border: 1px solid rgb(240, 240, 240);
+          padding: 10px;
+          border-radius: 8px;
         }
       }
     }

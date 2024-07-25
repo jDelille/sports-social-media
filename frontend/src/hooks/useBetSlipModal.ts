@@ -8,18 +8,16 @@ type Bet = {
 
 type BetSlipModalStore = {
     isOpen: boolean;
-    onOpen: (bet: Bet) => void;
+    onOpen: () => void;
     onClose: () => void;
-    bet: Bet | null;
 };
 
 const useBetSlipModal = create<BetSlipModalStore>((set) => ({
     isOpen: false,
-    onOpen: (bet: Bet) => set({ isOpen: true, bet: bet }),
+    onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),
-    bet: null,
+    
 }));
-
 
 
 export default useBetSlipModal;

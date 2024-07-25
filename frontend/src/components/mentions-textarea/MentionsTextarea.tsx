@@ -17,10 +17,11 @@ type MentionsTextareaProps = {
   file: any;
   isComment?: boolean;
   setUrlMetadata?: any;
+  placeholder?: string;
 };
 
 const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
-  ({ setBody, setFile, handleClick, body, file, isComment, setUrlMetadata }) => {
+  ({ setBody, setFile, handleClick, body, file, isComment, setUrlMetadata, placeholder = "What's on your mind?" }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [openPoll, setOpenPoll] = useState(false);
 
@@ -128,7 +129,7 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
         <MentionsInput
           value={body}
           onChange={onChange}
-          placeholder="What's on your mind?"
+          placeholder={placeholder}
           className="mentions-textarea"
         >
           <Mention trigger="#" data={hashTagData} />

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { ChevronDownIcon } from "../../icons";
 import "./marketCard.scss";
+import { useBetSlip } from "../../hooks";
+import betslipStore, { Pick, Picks } from "../../store/betslipStore";
 
 /**
  * Make market types
@@ -13,6 +15,13 @@ type MarketCardProps = {
 
 const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick }) => {
     const [hasClickedMarket, setHasClickedMarket] = useState(false);
+    const betslip = useBetSlip();
+    const betstore = betslipStore;
+
+    const handleOutcomeClick = (bet: Pick) => {
+      betstore.addPick(bet)
+      betslip.onOpen()
+    }
 
   return (
     <div className="market-card" onClick={() => setHasClickedMarket(!hasClickedMarket)}>
@@ -25,7 +34,12 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick }) => {
         {hasClickedMarket && (
           <div className="market1" >
             {market.outcomes.map((outcome: any) => (
-              <p className="outcome" key={outcome.description} onClick={() => handleClick(outcome.description, outcome.price.american, market.description)}>
+              <p className="outcome" key={outcome.description} onClick={() => handleOutcomeClick({
+                id: `${outcome.description} ${market.description}`,
+                type: outcome.description, 
+                price: outcome.price.american,
+                 description: market.description
+              })}>
                 {outcome.description} 
                 <span className="handicap">{outcome.price.handicap}</span>
                 <span className="price">{outcome.price.american}</span>
