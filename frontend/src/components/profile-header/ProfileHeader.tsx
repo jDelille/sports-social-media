@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import UserTypes from "../../types/User";
 import Avatar from "../avatar/Avatar";
-import { CalendarIcon, MenuDotsIcon } from "../../icons";
+import { CalendarIcon, CheckIcon, LocationIcon, MenuDotsIcon } from "../../icons";
 import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
 import "./profileheader.scss";
@@ -18,11 +18,13 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
 
   console.log(currentUser);
 
+  const isVerified = user?.isVerified === 1;
+
   const isUserProfile = currentUser?.id === user?.id;
 
   const navigateToEditProfile = () => {
     navigate("/settings/profile");
-  }
+  };
 
   return (
     <div className="profile-header">
@@ -34,7 +36,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
           backgroundPositionY: "-40px",
         }}
       >
-        <Avatar src={user?.avatar} username={user?.username as string} />
+        <Avatar src={user?.avatar} username={user?.username as string} isVerified={isVerified} />
       </div>
 
       <div className="user-content">
@@ -43,12 +45,14 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
             <MenuDotsIcon color="black" size={20} />
           </div>
           {isUserProfile ? (
-            <button className="follow-btn" onClick={navigateToEditProfile}>Edit profile</button>
+            <button className="follow-btn" onClick={navigateToEditProfile}>
+              Edit profile
+            </button>
           ) : (
             <button className="follow-btn">Follow</button>
           )}
         </div>
-        <p className="name">{user?.name}</p>
+        <p className="name">{user?.name} </p>
         <p className="username">@{user?.username}</p>
         {user?.bio && <p className="bio">{user?.bio}</p>}
         <div className="relationships">
@@ -64,6 +68,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
         </div>
         <p className="joined">
           <CalendarIcon size={15} color="#868393" /> Joined {joinedDate}
+          {currentUser.location && (
+            <div className="location">
+              <LocationIcon size={16} color="#868393" />
+              <span>{currentUser.location}</span>
+            </div>
+          )}
         </p>
       </div>
     </div>

@@ -6,6 +6,7 @@
     bio: string;
     created_at: string;
     header_img: string;
+    isVerified: number;
 }
 
 export default UserTypes;

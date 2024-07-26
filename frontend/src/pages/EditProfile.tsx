@@ -11,6 +11,8 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   const [name, setName] = useState(currentUser.name || "");
   const [username, setUsername] = useState(currentUser.username || "");
   const [location, setLocation] = useState(currentUser.location || "");
+  const [bio, setBio] = useState(currentUser.bio|| "");
+
 
 
 
@@ -19,7 +21,8 @@ const EditProfile: React.FC<EditProfileProps> = () => {
         id: currentUser.id,
         name: name,
         username: username,
-        location: location
+        location: location,
+        bio: bio
       };
 
     try {
@@ -73,7 +76,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
         <Input label="Location" type="text"  placeholder={currentUser.location} onChange={(e) => setLocation(e.target.value)} />
         <Input label="Website" type="text" onChange={(e) => console.log(e)} />
         <label htmlFor="bio">Bio</label>
-        <textarea placeholder="Tell us about yourself." />
+        <textarea placeholder="Tell us about yourself." onChange={(e) => setBio(e.target.value)}/>
       </div>
       <div className="action-btns">
         <button>Cancel</button>

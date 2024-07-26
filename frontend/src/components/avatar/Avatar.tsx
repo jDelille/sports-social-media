@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./avatar.scss";
+import { CheckIcon } from "../../icons";
 
 type AvatarProps = {
   src?: string;
   username: string;
+  isVerified?: boolean;
 };
 
 const Avatar: React.FC<AvatarProps> = ({
   src,
-  username
+  username,
+  isVerified
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -42,7 +45,10 @@ const Avatar: React.FC<AvatarProps> = ({
         onClick={(e) => navigateToProfile(e)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        
       />
+            {isVerified && <CheckIcon color="#5448ee" size={28} />}
+
     </div>
   );
 };

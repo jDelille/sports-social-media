@@ -19,3 +19,4 @@ export { default as CheckIcon } from './CheckIcon';
 export { default as PartyIcon} from './PartyIcon';
 export { default as TrashIcon } from './TrashIcon';
 export { default as MenuDotsIcon } from './MenuDotsIcon';
+export { default as LocationIcon } from './LocationIcon';

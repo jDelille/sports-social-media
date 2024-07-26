@@ -67,6 +67,13 @@
     .name {
       font-size: 20px;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      svg {
+        position: relative;
+        top: 0px;
+      }
     }
     .username {
       font-size: 14px;
@@ -100,6 +107,12 @@
       align-items: center;
       gap: 5px;
       padding-top: 15px;
+      .location {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-left: 10px;
+      }
     }
   }
 }
