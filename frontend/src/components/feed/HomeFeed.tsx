@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Post from "../post/Post";
 import QuoteRepost from "../post/QuoteRepost";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAxios } from "../../hooks";
+import { useInView } from "react-intersection-observer";
+
 import "./feed.scss";
 
 type HomeFeedProps = {};
 const HomeFeed: React.FC<HomeFeedProps> = () => {
+  const { ref, inView } = useInView();
+
   const getPosts = async (pageParam: number) => {
     let res;
     res = await useAxios.get(`/posts?page=${pageParam}`);
@@ -24,6 +28,12 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
   });
 
   const posts = data ? data.pages.flatMap((page) => page) : [];
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
   return (
     <div className="feed home-feed">
@@ -52,6 +62,7 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
             );
           }
         })}
+      <div ref={ref}></div>
     </div>
   );
 };

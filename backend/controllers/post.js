@@ -33,7 +33,7 @@ export const addPost = (req, res) => {
 
 export const getAllPosts = (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const pageSize = 6;
+  const pageSize = 7;
   const offset = (page - 1) * pageSize;
 
   const originalPostsQuery = `

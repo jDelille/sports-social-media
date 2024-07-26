@@ -11,28 +11,24 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   const [name, setName] = useState(currentUser.name || "");
   const [username, setUsername] = useState(currentUser.username || "");
   const [location, setLocation] = useState(currentUser.location || "");
-  const [bio, setBio] = useState(currentUser.bio|| "");
-
-
-
+  const [bio, setBio] = useState(currentUser.bio || "");
 
   const handleSave = async () => {
     const payload = {
-        id: currentUser.id,
-        name: name,
-        username: username,
-        location: location,
-        bio: bio
-      };
+      id: currentUser.id,
+      name: name,
+      username: username,
+      location: location,
+      bio: bio,
+    };
 
     try {
-        await updateProfile(payload);
-        console.log("Profile successfully updated");
-
+      await updateProfile(payload);
+      console.log("Profile successfully updated");
     } catch (error) {
-        console.error("Error editing profile", error)
+      console.error("Error editing profile", error);
     }
-  }
+  };
 
   return (
     <div className="page edit-profile">
@@ -71,12 +67,30 @@ const EditProfile: React.FC<EditProfileProps> = () => {
       </div>
 
       <div className="info">
-        <Input label="Name" type="text" placeholder={currentUser.name} onChange={(e) => setName(e.target.value)} />
-        <Input label="Username" type="text" placeholder={currentUser.username} onChange={(e) => setUsername(e.target.value)} />
-        <Input label="Location" type="text"  placeholder={currentUser.location} onChange={(e) => setLocation(e.target.value)} />
+        <Input
+          label="Name"
+          type="text"
+          placeholder={currentUser.name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
+          label="Username"
+          type="text"
+          placeholder={currentUser.username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <Input
+          label="Location"
+          type="text"
+          placeholder={currentUser.location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
         <Input label="Website" type="text" onChange={(e) => console.log(e)} />
         <label htmlFor="bio">Bio</label>
-        <textarea placeholder="Tell us about yourself." onChange={(e) => setBio(e.target.value)}/>
+        <textarea
+          placeholder="Tell us about yourself."
+          onChange={(e) => setBio(e.target.value)}
+        />
       </div>
       <div className="action-btns">
         <button>Cancel</button>
