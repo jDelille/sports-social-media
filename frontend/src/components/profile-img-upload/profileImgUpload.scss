@@ -1,0 +1,74 @@
+@use '../../scss/variables' as *;
+
+.profile-header-upload {
+    margin: 20px 0;
+    height: 180px;
+    background-color: #e0e7ff;
+    border-radius: 12px;
+    color: $accent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    p {
+        font-weight: 700;
+        font-size: 17px;
+    }
+   
+    .upload-header {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: #e0e7ff;
+        border-radius: 12px;
+        color: $accent;
+
+        &:hover {
+            background-color: darken(#e0e7ff, 2%);
+            cursor: pointer;
+        }
+
+    }
+    .avatar-upload {
+        background-color: $accent;
+        width: 75px;
+        height: 75px;
+        position: absolute;
+        bottom: -40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // overflow: hidden;
+        outline: 2px solid $accent;
+        z-index: 9999;
+        &:hover {
+            background-color: darken($accent, 3%);
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        input {
+            display: none;
+        }
+        .remove-img {
+            background-color: lighten(#f11010, 10%);
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            padding: 0px 4px;
+            border-radius: 50%;
+            &:hover {
+                background-color: #f11010;
+            }
+            
+        }
+    }
+}

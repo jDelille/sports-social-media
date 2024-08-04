@@ -6,6 +6,7 @@ import "./page.scss";
 import "./editprofile.scss";
 
 type EditProfileProps = {};
+
 const EditProfile: React.FC<EditProfileProps> = () => {
   const { currentUser, updateProfile } = useContext(AuthContext);
   const [name, setName] = useState(currentUser.name || "");
@@ -16,10 +17,10 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   const handleSave = async () => {
     const payload = {
       id: currentUser.id,
-      name: name,
-      username: username,
-      location: location,
-      bio: bio,
+      name,
+      username,
+      location,
+      bio,
     };
 
     try {
