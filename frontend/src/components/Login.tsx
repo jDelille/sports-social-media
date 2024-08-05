@@ -4,6 +4,7 @@ import Modal from "./modal/Modal";
 import useLoginModal from "../hooks/useLoginModal";
 import { useNavigate } from "react-router-dom";
 import Input from "./input/Input";
+import useRegisterModal from "../hooks/useRegisterModal";
 
 type LoginProps = {};
 const Login: React.FC<LoginProps> = () => {
@@ -15,6 +16,7 @@ const Login: React.FC<LoginProps> = () => {
   const { login } = useContext(AuthContext);
   const loginModal = useLoginModal();
   const navigate = useNavigate();
+  const registerModal = useRegisterModal();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -37,6 +39,11 @@ const Login: React.FC<LoginProps> = () => {
     loginModal.onClose();
   };
 
+  const handleOpenRegister = () => {
+    handleClose();
+    registerModal.onOpen();
+  }
+
   const bodyContent = (
     <div className="login">
       <form>
@@ -57,6 +64,7 @@ const Login: React.FC<LoginProps> = () => {
           onChange={(e) => handleChange(e)}
         />
         <button onClick={handleLogin} className="submit-btn">Login</button>
+        <span className="redirect">Don't have an account? <button onClick={handleOpenRegister}>Sign up</button></span>
       </form>
     </div>
   );

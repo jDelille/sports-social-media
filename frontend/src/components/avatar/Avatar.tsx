@@ -7,12 +7,14 @@ type AvatarProps = {
   src?: string;
   username: string;
   isVerified?: boolean;
+  disabled?: boolean;
 };
 
 const Avatar: React.FC<AvatarProps> = ({
   src,
   username,
-  isVerified
+  isVerified,
+  disabled
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -22,6 +24,9 @@ const Avatar: React.FC<AvatarProps> = ({
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
     e.stopPropagation();
+    if(disabled) {
+      return null;
+    }
     navigate(`/profile/${username}`);
   };
 

@@ -12,10 +12,10 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
   const customizeProfile = useCustomizeProfile();
   const { currentUser, updateProfile } = useContext(AuthContext);
 
-  const [name, setName] = useState(currentUser.name || "");
-  const [username, setUsername] = useState(currentUser.username || "");
-  const [location, setLocation] = useState(currentUser.location || "");
-  const [bio, setBio] = useState(currentUser.bio || "");
+  const [name, setName] = useState(currentUser?.name || "");
+  const [username, setUsername] = useState(currentUser?.username || "");
+  const [location, setLocation] = useState(currentUser?.location || "");
+  const [bio, setBio] = useState(currentUser?.bio || "");
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [profileHeader, setProfileHeader] = useState<File | null>(null);
 

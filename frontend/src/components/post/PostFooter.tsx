@@ -33,12 +33,15 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         likesCount={likes?.length}
         setError={setError}
         currentUserId={currentUser?.id}
+        postUsername={post.user.username}
       />
       <CommentButton
         postId={postId}
         type={type}
         commentsCount={comments?.length}
         currentUserId={currentUser?.id}
+        postUsername={post.user.username}
+
       />
       <RepostButton
         postId={postId}
@@ -49,6 +52,8 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         repostCount={repostCount}
         originalPostUserId={post.user_id}
         currentUserId={currentUser?.id}
+        postUsername={post.user.username}
+
       />
     </div>
   );

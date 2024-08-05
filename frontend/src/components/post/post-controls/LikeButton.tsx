@@ -11,6 +11,7 @@ type LikeButtonProps = {
   setError: (error: string | null) => void;
   likesCount: number;
   currentUserId: number | undefined;
+  postUsername: string;
 };
 
 const LikeButton: React.FC<LikeButtonProps> = ({
@@ -19,11 +20,11 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   hasLiked,
   setError,
   likesCount,
-  currentUserId
+  currentUserId,
+  postUsername,
 }) => {
   const queryClient = useQueryClient();
   const loginReminder = useLoginReminder();
-
 
   const handleLike = async (postId: number) => {
     try {
@@ -46,8 +47,12 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   });
 
   const handleLikeClick = async (postId: number) => {
-    if(!currentUserId) {
-      loginReminder.onOpen(<LikedIcon size={50} color={COLOR_CONSTANTS.LIKE_COLOR} />, "Like a post to show some props.", "Join Huddle now to let (username) know you like their post." );
+    if (!currentUserId) {
+      loginReminder.onOpen(
+        <LikedIcon size={50} color={COLOR_CONSTANTS.LIKE_COLOR} />,
+        "Like a post to show some props.",
+        `Join Huddle now to let ${postUsername} know you like their post.`
+      );
       return;
     }
     try {
@@ -59,20 +64,12 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 
   return hasLiked ? (
     <div className="icon like-icon" onClick={() => handleLikeClick(postId)}>
-      <LikedIcon
-        size={18}
-        color={COLOR_CONSTANTS.LIKE_COLOR}
-        
-      />
+      <LikedIcon size={18} color={COLOR_CONSTANTS.LIKE_COLOR} />
       <span style={{ color: COLOR_CONSTANTS.LIKE_COLOR }}>{likesCount}</span>
     </div>
   ) : (
     <div className="icon like-icon" onClick={() => handleLikeClick(postId)}>
-      <LikeIcon
-        size={18}
-        color={COLOR_CONSTANTS.LIGHTGRAY}
-        
-      />
+      <LikeIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} />
       <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{likesCount}</span>
     </div>
   );

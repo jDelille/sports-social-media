@@ -46,6 +46,11 @@ const Register: React.FC<RegisterProps> = () => {
     registerModal.onClose();
   };
 
+  const handleLogin = () => {
+    handleClose();
+    loginModal.onOpen();
+  }
+
   const bodyContent = (
     <div className="register">
       <form>
@@ -92,6 +97,7 @@ const Register: React.FC<RegisterProps> = () => {
         <button onClick={handleClick} className="submit-btn">
           Create account
         </button>
+        <span className="redirect">Already have an account? <button onClick={handleLogin}>Login</button></span>
       </form>
     </div>
   );

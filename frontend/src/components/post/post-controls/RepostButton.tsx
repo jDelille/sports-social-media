@@ -18,6 +18,7 @@ type RepostButtonProps = {
   repostCount: number;
   originalPostUserId: number;
   currentUserId: number | undefined;
+  postUsername: string;
 };
 
 const RepostButton: React.FC<RepostButtonProps> = ({
@@ -29,6 +30,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   repostCount,
   originalPostUserId,
   currentUserId,
+  postUsername
 }) => {
   const queryClient = useQueryClient();
   const [openRepostPopup, setOpenRepostPopup] = useState(false);
@@ -80,7 +82,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
       loginReminder.onOpen(
         <RepostIcon size={50} color={COLOR_CONSTANTS.REPOST_COLOR} />,
         "Repost to spread the word.",
-        "When you join Huddle, you can share (username's) post with your followers"
+        `When you join Huddle, you can share ${postUsername}'s post with your followers`
       );
       return;
     }

@@ -7,6 +7,7 @@
     created_at: string;
     header_img: string;
     isVerified: number;
+    location: string;
 }
 
 export default UserTypes;

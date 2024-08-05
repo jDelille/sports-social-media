@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import UserTypes from "../../types/User";
 import Avatar from "../avatar/Avatar";
-import { CalendarIcon, CheckIcon, LocationIcon, MenuDotsIcon } from "../../icons";
+import { CalendarIcon, LocationIcon, MenuDotsIcon } from "../../icons";
 import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
-import "./profileheader.scss";
 import { useNavigate } from "react-router-dom";
+import "./profileheader.scss";
 
 type ProfileHeaderProps = {
   user: UserTypes;
@@ -68,10 +68,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
         </div>
         <p className="joined">
           <CalendarIcon size={15} color="#868393" /> Joined {joinedDate}
-          {currentUser.location && (
+          {user?.location && (
             <div className="location">
               <LocationIcon size={16} color="#868393" />
-              <span>{currentUser.location}</span>
+              <span>{user?.location}</span>
             </div>
           )}
         </p>

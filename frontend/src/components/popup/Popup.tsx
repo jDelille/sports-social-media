@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import { CloseIcon } from "../../icons";
+import { COLOR_CONSTANTS } from "../../constants";
 import "./popup.scss";
-
 
 type PopupProps = {
   isOpen: boolean;
@@ -24,13 +25,13 @@ const Popup: React.FC<PopupProps> = ({ isOpen, body, onClose, hideHeader }) => {
     <div className="overlay">
       <div className="popup">
         {!hideHeader && (
-    <div className="header">
-    {/* <div className="close" onClick={onClose}>
-      <CloseIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
-    </div> */}
-  </div>
+          <div className="header">
+            <div className="close" onClick={onClose}>
+              <CloseIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
+            </div>
+          </div>
         )}
-    
+
         <div className="body">{body}</div>
       </div>
     </div>

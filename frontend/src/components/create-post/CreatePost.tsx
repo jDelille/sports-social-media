@@ -72,7 +72,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     <div className="create-post-container" onClick={handleContainerClick}>
       <div className="header">
         <div className="profile-picture">
-          <Avatar src={currentUser?.avatar} username={currentUser?.username} />
+          <Avatar src={currentUser?.avatar} username={currentUser?.username} disabled={!currentUser} />
         </div>
         <div
           className={openPostMenu ? "active" : "privacy"}

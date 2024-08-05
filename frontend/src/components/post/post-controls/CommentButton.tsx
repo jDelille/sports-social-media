@@ -9,12 +9,14 @@ type CommentButtonProps = {
   postId: number;
   type: string;
   currentUserId: number | undefined;
+  postUsername: string;
 };
 const CommentButton: React.FC<CommentButtonProps> = ({
   commentsCount,
   postId,
   type,
-  currentUserId
+  currentUserId,
+  postUsername
 }) => {
   const createCommentModal = useCreateCommentModal();
   const loginReminder = useLoginReminder();
@@ -24,7 +26,7 @@ const CommentButton: React.FC<CommentButtonProps> = ({
       loginReminder.onOpen(
         <CommentIcon size={50} color={COLOR_CONSTANTS.ACCENT} />,
         "Reply to join the conversation.",
-        "Once you create an account, you can respond to (username's) post."
+        `Once you create an account, you can respond to ${postUsername}'s post.`
       );
       return;
     }
