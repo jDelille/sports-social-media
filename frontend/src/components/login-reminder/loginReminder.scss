@@ -33,6 +33,10 @@
             border-radius: 12px;
             border: none;
             height: 50px;
+            &:hover {
+                background-color: darken(white, 8%);
+                cursor: pointer;
+            }
         }
     }
   
