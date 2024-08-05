@@ -107,7 +107,7 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
 
   return (
     <Modal
-      isOpen={true}
+      isOpen={customizeProfile.isOpen}
       onClose={customizeProfile.onClose}
       body={bodyContent}
       title="Create your profile"
