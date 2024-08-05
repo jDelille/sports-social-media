@@ -16,6 +16,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
     handleLogout,
   } = useSidebar();
 
+
   const MenuItem: React.FC<{ to: string; label: string }> = ({ to, label }) => (
     <li>
       <NavLink
@@ -43,7 +44,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
               <MenuItem to="/alerts" label="Alerts" />
               <MenuItem to="/matches" label="Matches" />
               <MenuItem to="/groups" label="Groups" />
-              <MenuItem to="/profile" label="Profile" />
+              <MenuItem to={`/profile/${currentUser.username}`} label="Profile" />
               <MenuItem to="/settings" label="Settings" />
               <li onClick={handleLogout}>
                 <a>Logout</a>

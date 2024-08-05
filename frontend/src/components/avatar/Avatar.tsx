@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./avatar.scss";
 import { CheckIcon } from "../../icons";
+import "./avatar.scss";
 
 type AvatarProps = {
   src?: string;
