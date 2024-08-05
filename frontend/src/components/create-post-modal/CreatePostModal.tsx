@@ -3,11 +3,14 @@ import useCreatePostModal from "../../hooks/useCreatePostModal";
 import Modal from "../modal/Modal";
 import { useAxios } from "../../hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import "./createPostModal.scss";
 
 type CreatePostModalProps = {};
 const CreatePostModal: React.FC<CreatePostModalProps> = () => {
   const [body, setBody] = useState("");
+  const [file, setFile] = useState(null);
+  const [urlMetadata, setUrlMetadata] = useState<any>(null);
 
   const createPostModal = useCreatePostModal();
   const queryClient = useQueryClient();
@@ -40,16 +43,20 @@ const CreatePostModal: React.FC<CreatePostModalProps> = () => {
 
   const handleClose = () => {
     createPostModal.onClose();
+    setBody("");
   };
 
   const bodyContent = (
-    <div>
-      <input
-        type="text"
-        placeholder="What's on your mind?"
-        onChange={(e) => setBody(e.target.value)}
+    <div className="content">
+      <MentionsTextarea 
+        setBody={setBody}
+        body={body}
+        setFile={setFile}
+        file={file}
+        handleClick={(e) => handlePostClick(e)}
+        setUrlMetadata={setUrlMetadata}
+        isActive
       />
-      <button onClick={handlePostClick}>Post</button>
     </div>
   );
 
@@ -60,6 +67,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = () => {
         isOpen={createPostModal.isOpen}
         title="Compose"
         onClose={handleClose}
+        
       />
     </div>
   );

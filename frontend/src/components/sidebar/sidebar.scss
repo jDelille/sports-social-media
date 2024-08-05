@@ -1,5 +1,6 @@
 @use "../../scss/breakpoints" as *;
 @use "../../scss/variables" as *;
+@use '../../scss/mixins' as *;
 
 .sidebar-container {
   padding-right: 2rem;
@@ -52,17 +53,7 @@
       }
     }
     .post-btn {
-      background-color: #ff4775;
-      border: none;
-      padding: 0.9rem 1.5rem;
-      border-radius: 22px;
-      font-size: 14px;
-      color: white;
-      width: 100%;
-      margin: 2rem 0;
-      &:hover {
-        cursor: pointer;
-      }
+      @include button_lg();
     }
   }
 

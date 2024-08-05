@@ -1,0 +1,31 @@
+@use './variables' as *;
+
+@mixin button() {
+    border: none;
+    border-radius: 22px;
+    font-size: 14px;
+    color: white;
+    width: 100%;
+    margin: 2rem 0;
+    &:hover {
+        cursor: pointer;
+        background-color: darken($buttonPrimaryColor, 5%);
+    }
+    &:disabled {
+        cursor: default;
+        background-color: lighten($buttonPrimaryColor, 5%);
+    }
+}
+
+@mixin button_sm() {
+    @include button();
+    background-color: $buttonPrimaryColor;
+    padding: 0.6rem 1rem;
+}
+
+@mixin button_lg() {
+    @include button();
+    background-color: $buttonPrimaryColor;
+    padding: 0.9rem 1.5rem;
+
+}
