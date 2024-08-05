@@ -30,25 +30,22 @@
       flex-direction: column;
       gap: 10px;
       padding-bottom: 1rem;
-      li {
+      .menu-item {
         color: black;
         padding: 13px 20px;
         border-radius: 22px;
+        text-decoration: none;
+        text-decoration: none;
+        color: black;
+        height: 100%;
+        width: 100%;
+        font-size: 15px;
+        font-weight: 500;
+        color: #888595;
         &:hover {
           background-color: darken(white, 3%);
           cursor: pointer;
-          a {
-            color: black;
-          }
-        }
-        a {
-          text-decoration: none;
           color: black;
-          height: 100%;
-          width: 100%;
-          font-size: 15px;
-          font-weight: 500;
-          color: #888595;
         }
       }
     }

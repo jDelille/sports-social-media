@@ -18,14 +18,12 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
 
 
   const MenuItem: React.FC<{ to: string; label: string }> = ({ to, label }) => (
-    <li>
       <NavLink
         to={to}
-        className={({ isActive }) => (isActive ? "active" : undefined)}
+        className={({ isActive }) => (isActive ? "active menu-item" : "menu-item")}
       >
         {label}
       </NavLink>
-    </li>
   );
 
   return (
@@ -46,7 +44,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
               <MenuItem to="/groups" label="Groups" />
               <MenuItem to={`/profile/${currentUser.username}`} label="Profile" />
               <MenuItem to="/settings" label="Settings" />
-              <li onClick={handleLogout}>
+              <li onClick={handleLogout} className="menu-item">
                 <a>Logout</a>
               </li>
               <button className="post-btn" onClick={handleOpenCreatePost}>
