@@ -19,24 +19,24 @@ const MenuDotsIcon: React.FC<MenuDotsIconProps> = ({ size, color }) => {
         cy="12"
         r="1"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <circle
         cx="6"
         cy="12"
         r="1"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <circle
         cx="18"
         cy="12"
         r="1"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
     </svg>
   );

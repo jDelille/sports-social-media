@@ -30,7 +30,7 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
       <p className="title">Who to follow</p>
       <div className="users">
         {users.map((user) => (
-            <div className="user">
+            <div className="user" key={user.id}>
                 <div className="img">
                     <Avatar src={user.avatar} username={user.username} />
                 </div>

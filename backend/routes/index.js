@@ -10,3 +10,4 @@ export { default as oddsRoutes } from './odds.js';
 export { default as espnRoutes } from './espn.js';
 export { default as metadataRoutes } from './metadata.js';
 export { default as imageUploadRoutes } from './imageUpload.js';
+export { default as relationshipRoutes} from './relationship.js';

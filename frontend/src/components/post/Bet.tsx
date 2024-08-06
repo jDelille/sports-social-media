@@ -6,7 +6,6 @@ type BetProps = {
 };
 
 const Bet: React.FC<BetProps> = ({ post }) => {
-  console.log(post);
   if (!post.bet) {
     return null;
   }

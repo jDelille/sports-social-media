@@ -59,7 +59,6 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
   };
 
   const handleHeaderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('here')
     if (event.target.files && event.target.files[0]) {
       setProfileHeader(event.target.files[0]);
     }

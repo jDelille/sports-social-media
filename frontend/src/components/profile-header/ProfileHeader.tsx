@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import UserTypes from "../../types/User";
 import Avatar from "../avatar/Avatar";
 import { CalendarIcon, LocationIcon, MenuDotsIcon } from "../../icons";
 import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import "./profileheader.scss";
 import { useLoginReminder } from "../../hooks";
 import UserPlus from "../../icons/UserPlusIcon";
 import { COLOR_CONSTANTS } from "../../constants";
+import useFollowUser from "../../hooks/relationships/followUser";
+import useUserRelationships from "../../hooks/relationships/userRelationships";
+import "./profileheader.scss";
 
 type ProfileHeaderProps = {
   user: UserTypes;
@@ -24,20 +26,30 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
 
   const isUserProfile = currentUser?.id === user?.id;
 
+  const { followUser, loading, error, success } = useFollowUser(user?.id);
+  const { data: userRelationships } = useUserRelationships(user?.id);
+
+
   const navigateToEditProfile = () => {
     navigate("/settings/profile");
   };
 
-  const handleFollowClick = () => {
+  const handleFollowClick = async () => {
     if(!currentUser) {
       loginReminder.onOpen(
         <UserPlus size={50} color={COLOR_CONSTANTS.ACCENT} />,
         `Follow ${user.username} to see what they're posting.`,
         "Join Huddle now to follow accounts and stay in touch."
       )
+      return;
     }
-    return;
+    try {
+      await followUser()
+    } catch (error) {
+      console.error(error)
+    }
   }
+
 
   return (
     <div className="profile-header">
@@ -70,10 +82,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
         {user?.bio && <p className="bio">{user?.bio}</p>}
         <div className="relationships">
           <p>
-            <span>{user?.follower_count || 0} </span>Followers
+            <span>{userRelationships?.followerCount || 0} </span>Followers
           </p>
           <p>
-            <span>0</span>Following
+            <span>{userRelationships?.followingCount || 0}</span>Following
           </p>
           <p>
             <span>0</span>Bets

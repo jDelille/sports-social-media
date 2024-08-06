@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import multer from "multer";
-import {  authRoutes, commentRoutes, espnRoutes, imageUploadRoutes, likeRoutes, metadataRoutes, mutePostRoutes, oddsRoutes, postRoutes, quoteRepostRoutes, repostRoutes, userRoutes } from "./routes/index.js";
+import {  authRoutes, commentRoutes, espnRoutes, imageUploadRoutes, likeRoutes, metadataRoutes, mutePostRoutes, oddsRoutes, postRoutes, quoteRepostRoutes, relationshipRoutes, repostRoutes, userRoutes } from "./routes/index.js";
 const app = express();
 
 // middlewares
@@ -35,18 +35,30 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json(file.filename);
 });
 
-app.use("/api/users", userRoutes);
+/**
+ * Post routes
+ */
 app.use("/api/posts", postRoutes);
-app.use("/api/reposts", repostRoutes)
-app.use("/api/auth", authRoutes);
 app.use("/api/quote-reposts", quoteRepostRoutes)
 app.use("/api/likes", likeRoutes);
 app.use("/api/comments", commentRoutes)
+app.use("/api/reposts", repostRoutes)
 app.use("/api/muted-posts", mutePostRoutes)
-app.use("/api/odds", oddsRoutes);
-app.use("/api/espn", espnRoutes)
 app.use("/api/metadata", metadataRoutes);
 app.use("/api/image-upload", imageUploadRoutes);
+
+/**
+ * User routes
+ */
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/relationships", relationshipRoutes);
+
+/**
+ * Sport routes
+ */
+app.use("/api/odds", oddsRoutes);
+app.use("/api/espn", espnRoutes)
 
 app.listen(8800, () => {
   console.log("backend working.");

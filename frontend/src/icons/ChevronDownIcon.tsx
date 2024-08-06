@@ -17,8 +17,8 @@ const ChervonDownIcon: React.FC<ChervonDownIconProps> = ({ size, color }) => {
       <path
         d="M6 9L12 15L18 9"
         stroke={color}
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
         stroke-linejoin="round"
       />
     </svg>

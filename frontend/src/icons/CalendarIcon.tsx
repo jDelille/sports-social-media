@@ -21,31 +21,31 @@ const CalendarIcon: React.FC<CalendarIconProps> = ({ size, color }) => {
         height="15"
         rx="2"
         stroke="#33363F"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <path
         d="M4 11H20"
         stroke="#33363F"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <path
         d="M9 16H15"
         stroke="#33363F"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <path
         d="M8 3L8 7"
         stroke="#33363F"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <path
         d="M16 3L16 7"
         stroke="#33363F"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
     </svg>
   );

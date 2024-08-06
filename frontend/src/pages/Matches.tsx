@@ -46,7 +46,6 @@ const Matches: React.FC<MatchesProps> = () => {
         const espnData = espnResponse.data.events;
         const combinedData = combineData(bovadaData, espnData);
         setMatches(combinedData);
-        console.log(combinedData)
       } catch (error) {
         console.error("Error fetching odds:", error);
       } finally {
