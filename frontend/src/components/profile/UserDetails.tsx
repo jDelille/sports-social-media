@@ -1,0 +1,47 @@
+import { CalendarIcon, LocationIcon, MenuDotsIcon } from "../../icons";
+import UserTypes from "../../types/User";
+import moment from "moment";
+import Relationships from "./Relationships";
+import ActionButtons from "./ActionButtons";
+
+const UserDetails: React.FC<{ user: UserTypes; currentUser: any }> = ({
+  user,
+  currentUser,
+}) => {
+  const joinedDate = moment(user?.created_at).format("MMMM YYYY");
+  const isUserProfile = currentUser?.id === user?.id;
+
+  return (
+    <div className="user-content">
+      <div className="menu-wrapper">
+        <div className="menu-btn">
+          <MenuDotsIcon color="black" size={20} />
+        </div>
+
+        <ActionButtons
+          isUserProfile={isUserProfile}
+          user={user}
+          currentUser={currentUser}
+        />
+      </div>
+
+      <p className="name">{user?.name}</p>
+      <p className="username">@{user?.username}</p>
+      {user?.bio && <p className="bio">{user?.bio}</p>}
+
+      <Relationships user={user} />
+
+      <p className="joined">
+        <CalendarIcon size={15} color="#868393" /> Joined {joinedDate}
+        {user?.location && (
+          <div className="location">
+            <LocationIcon size={16} color="#868393" />
+            <span>{user?.location}</span>
+          </div>
+        )}
+      </p>
+    </div>
+  );
+};
+
+export default UserDetails;

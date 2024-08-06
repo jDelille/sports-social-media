@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { useAxios } from "../hooks";
 import { PageHeader, ProfileHeader } from "../components";
 import UserTypes from "../types/User";
-import "./page.scss";
 import FeedSelector from "../components/feed-selector/FeedSelector";
 import PostTypes from "../types/Post";
 import ProfileFeed from "../components/feed/ProfileFeed";
+import "./page.scss";
 
 type ProfileProps = {};
 

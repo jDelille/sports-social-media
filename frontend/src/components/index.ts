@@ -11,4 +11,4 @@ export { default as CreatePostModal } from './create-post-modal/CreatePostModal'
 export { default as SignUpBar } from './sign-up-bar/SignUpBar';
 export { default as Avatar } from './avatar/Avatar';
 export { default as PageHeader } from './page-header/PageHeader';
-export { default as ProfileHeader } from './profile-header/ProfileHeader';
+export { default as ProfileHeader } from './profile/ProfileHeader';
