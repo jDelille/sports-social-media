@@ -6,6 +6,9 @@ import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./profileheader.scss";
+import { useLoginReminder } from "../../hooks";
+import UserPlus from "../../icons/UserPlusIcon";
+import { COLOR_CONSTANTS } from "../../constants";
 
 type ProfileHeaderProps = {
   user: UserTypes;
@@ -13,10 +16,9 @@ type ProfileHeaderProps = {
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
   const joinedDate = moment(user?.created_at).format("MMMM YYYY");
   const navigate = useNavigate();
+  const loginReminder = useLoginReminder();
 
   const { currentUser } = useContext(AuthContext);
-
-  console.log(currentUser);
 
   const isVerified = user?.isVerified === 1;
 
@@ -25,6 +27,17 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
   const navigateToEditProfile = () => {
     navigate("/settings/profile");
   };
+
+  const handleFollowClick = () => {
+    if(!currentUser) {
+      loginReminder.onOpen(
+        <UserPlus size={50} color={COLOR_CONSTANTS.ACCENT} />,
+        `Follow ${user.username} to see what they're posting.`,
+        "Join Huddle now to follow accounts and stay in touch."
+      )
+    }
+    return;
+  }
 
   return (
     <div className="profile-header">
@@ -49,7 +62,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
               Edit profile
             </button>
           ) : (
-            <button className="follow-btn">Follow</button>
+            <button className="follow-btn" onClick={handleFollowClick}>Follow</button>
           )}
         </div>
         <p className="name">{user?.name} </p>
@@ -57,7 +70,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
         {user?.bio && <p className="bio">{user?.bio}</p>}
         <div className="relationships">
           <p>
-            <span>0</span>Followers
+            <span>{user?.follower_count || 0} </span>Followers
           </p>
           <p>
             <span>0</span>Following

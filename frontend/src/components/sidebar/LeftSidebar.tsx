@@ -55,10 +55,10 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
             <>
               <MenuItem to="/home" label="Home" />
               <MenuItem to="/matches" label="Discover" />
-              <li onClick={handleOpenLogin}>
+              <li onClick={handleOpenLogin} className="menu-item">
                 <a>Login</a>
               </li>
-              <li onClick={handleOpenSignup}>
+              <li onClick={handleOpenSignup} className="menu-item">
                 <a>Sign up</a>
               </li>
             </>

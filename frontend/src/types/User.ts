@@ -8,6 +8,7 @@
     header_img: string;
     isVerified: number;
     location: string;
+    follower_count: number;
 }
 
 export default UserTypes;

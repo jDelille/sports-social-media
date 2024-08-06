@@ -48,6 +48,8 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
     } catch (error) {
       console.error("Error editing profile", error);
     }
+    customizeProfile.onClose();
+
   };
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {

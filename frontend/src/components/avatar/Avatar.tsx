@@ -14,7 +14,7 @@ const Avatar: React.FC<AvatarProps> = ({
   src,
   username,
   isVerified,
-  disabled
+  disabled,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -24,7 +24,7 @@ const Avatar: React.FC<AvatarProps> = ({
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    if(disabled) {
+    if (disabled) {
       return null;
     }
     navigate(`/profile/${username}`);
@@ -50,10 +50,8 @@ const Avatar: React.FC<AvatarProps> = ({
         onClick={(e) => navigateToProfile(e)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        
       />
-            {isVerified && <CheckIcon color="#5448ee" size={28} />}
-
+      {isVerified && <CheckIcon color="#ff4775" size={28} />}
     </div>
   );
 };
