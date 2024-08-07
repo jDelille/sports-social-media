@@ -7,11 +7,11 @@ import FeedSelector from "../components/feed-selector/FeedSelector";
 import PostTypes from "../types/Post";
 import ProfileFeed from "../components/feed/ProfileFeed";
 import "./page.scss";
+import FollowingFeed from "../components/feed/FollowingFeed";
 
 type ProfileProps = {};
 
 const Profile: React.FC<ProfileProps> = () => {
-  
   const { username } = useParams<{ username: string }>();
   const [selectedFeed, setSelectedFeed] = useState("posts");
 
@@ -22,7 +22,6 @@ const Profile: React.FC<ProfileProps> = () => {
   const [error, setError] = useState<string | null>(null);
 
   const feeds = ["Posts", "Posts & Replies", "Bets"];
-
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -37,7 +36,7 @@ const Profile: React.FC<ProfileProps> = () => {
         const postsResponse = await useAxios.get(`posts/user/${username}`);
         setPosts(postsResponse.data);
       } catch (err) {
-        setError('Failed to fetch user data');
+        setError("Failed to fetch user data");
       } finally {
         setLoading(false);
       }
@@ -48,19 +47,26 @@ const Profile: React.FC<ProfileProps> = () => {
     }
   }, [username]);
 
-
   return (
     <div className="page">
       <PageHeader title={username as string} hasBack />
       <div className="profile-content">
-        <ProfileHeader user={userData as UserTypes}/>
+        <ProfileHeader
+          user={userData as UserTypes}
+          setSelectedFeed={setSelectedFeed}
+        />
       </div>
-      <FeedSelector 
+      <FeedSelector
         setSelectedFeed={setSelectedFeed}
         selectedFeed={selectedFeed}
         feeds={feeds}
       />
-      <ProfileFeed username={username as string} />
+      {selectedFeed === "posts" && (
+        <ProfileFeed username={username as string} />
+      )}
+      {selectedFeed === "following" && (
+        <FollowingFeed userId={userData?.id as number} key={userData?.id} />
+      )}
     </div>
   );
 };

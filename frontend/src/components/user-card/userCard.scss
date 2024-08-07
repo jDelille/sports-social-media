@@ -1,0 +1,27 @@
+@use '../../scss/variables' as *;
+@use '../../scss/mixins' as *;
+
+.user-card {
+    padding: 1rem 15px;
+    border-bottom: 1px solid $lightBorderColor;
+    display: flex;
+    align-items: center;
+    gap: 10px;;
+    .text {
+        .name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .username {
+            font-size: 13px;
+            color: gray;
+        }
+    }
+    .follow-btn {
+        @include button_sm();
+        width: fit-content;
+        margin: 0;
+        margin-left: auto;
+        font-size: 12px;
+    }
+}

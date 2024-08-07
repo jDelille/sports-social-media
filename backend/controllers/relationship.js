@@ -37,65 +37,118 @@ export const followUser = (req, res) => {
 };
 
 export const getUserRelationships = (req, res) => {
-    const token = req.cookies.accessToken;
-    if (!token) return res.status(401).json("Not logged in.");
-  
-    const userId = req.params.userId;
-  
-    jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
-      if (err) return res.status(403).json("Token is not valid");
-  
-      // Get follower count
-      const followerCountQuery =
-        "SELECT COUNT(*) AS follower_count FROM relationships WHERE followed_id = ?";
-      db.query(followerCountQuery, [userId], (err, followerData) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  const userId = req.params.userId;
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    // Get follower count
+    const followerCountQuery =
+      "SELECT COUNT(*) AS follower_count FROM relationships WHERE followed_id = ?";
+    db.query(followerCountQuery, [userId], (err, followerData) => {
+      if (err) {
+        console.error('Error fetching follower count:', err);
+        return res.status(500).json({ message: 'Error fetching follower count' });
+      }
+
+      // Get following count
+      const followingCountQuery =
+        "SELECT COUNT(*) AS following_count FROM relationships WHERE follower_id = ?";
+      db.query(followingCountQuery, [userId], (err, followingData) => {
         if (err) {
-          console.error('Error fetching follower count:', err); // Log the error for debugging
-          return res.status(500).json({ message: 'Error fetching follower count' });
+          console.error('Error fetching following count:', err);
+          return res.status(500).json({ message: 'Error fetching following count' });
         }
-  
-        // Get following count
-        const followingCountQuery =
-          "SELECT COUNT(*) AS following_count FROM relationships WHERE follower_id = ?";
-        db.query(followingCountQuery, [userId], (err, followingData) => {
+
+        // Get followers IDs
+        const followersIdsQuery = `
+          SELECT follower_id 
+          FROM relationships 
+          WHERE followed_id = ?`;
+        db.query(followersIdsQuery, [userId], (err, followers) => {
           if (err) {
-            console.error('Error fetching following count:', err);
-            return res.status(500).json({ message: 'Error fetching following count' });
+            console.error('Error fetching followers IDs:', err);
+            return res.status(500).json({ message: 'Error fetching followers IDs' });
           }
-  
-          // Get followers
-          const followersQuery = `
-            SELECT u.id, u.username, u.avatar 
-            FROM relationships r 
-            JOIN users u ON r.follower_id = u.id 
-            WHERE r.followed_id = ?`;
-          db.query(followersQuery, [userId], (err, followers) => {
+
+          // Get following IDs
+          const followingIdsQuery = `
+            SELECT followed_id 
+            FROM relationships 
+            WHERE follower_id = ?`;
+          db.query(followingIdsQuery, [userId], (err, following) => {
             if (err) {
-              console.error('Error fetching followers:', err);
-              return res.status(500).json({ message: 'Error fetching followers' });
+              console.error('Error fetching following IDs:', err);
+              return res.status(500).json({ message: 'Error fetching following IDs' });
             }
-  
-            // Get following
-            const followingQuery = `
-              SELECT u.id, u.username, u.avatar 
-              FROM relationships r 
-              JOIN users u ON r.followed_id = u.id 
-              WHERE r.follower_id = ?`;
-            db.query(followingQuery, [userId], (err, following) => {
-              if (err) {
-                console.error('Error fetching following:', err);
-                return res.status(500).json({ message: 'Error fetching following' });
-              }
-  
-              return res.status(200).json({
-                followerCount: followerData[0].follower_count,
-                followingCount: followingData[0].following_count,
-                followers,
-                following,
-              });
+
+            // Map results to arrays of IDs
+            const followerIdsArray = followers.map(follower => follower.follower_id);
+            const followingIdsArray = following.map(followed => followed.followed_id);
+
+            return res.status(200).json({
+              followerCount: followerData[0].follower_count,
+              followingCount: followingData[0].following_count,
+              followers: followerIdsArray,
+              following: followingIdsArray,
             });
           });
         });
       });
     });
-  };
+  });
+};
+
+export const getFollowingUsers = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 7;
+  const offset = (page - 1) * pageSize;
+
+  const userId = req.params.userId;
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    // Get following user IDs
+    const followingIdsQuery = `
+      SELECT followed_id 
+      FROM relationships 
+      WHERE follower_id = ?`;
+    db.query(followingIdsQuery, [userId], (err, following) => {
+      if (err) {
+        console.error('Error fetching following user IDs:', err);
+        return res.status(500).json({ message: 'Error fetching following user IDs' });
+      }
+
+      // If no users are followed
+      if (following.length === 0) {
+        return res.status(200).json([]);
+      }
+
+      // Prepare an array of user IDs
+      const followedUserIds = following.map(user => user.followed_id);
+
+      // Get details of followed users
+      const followedUsersQuery = `
+        SELECT u.id, u.username, u.name, u.avatar, u.created_at, 
+               (SELECT COUNT(*) FROM posts WHERE user_id = u.id) AS post_count,
+               (SELECT COUNT(*) FROM relationships WHERE followed_id = u.id) AS follower_count
+        FROM users u
+        WHERE u.id IN (?)`;
+      db.query(followedUsersQuery, [followedUserIds, offset, pageSize], (err, followedUsers) => {
+        if (err) {
+          console.error('Error fetching followed user details:', err);
+          return res.status(500).json({ message: 'Error fetching followed user details' });
+        }
+
+        return res.status(200).json(followedUsers);
+      });
+    });
+  });
+};

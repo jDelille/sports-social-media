@@ -7,14 +7,15 @@ import "./profileheader.scss";
 
 type ProfileHeaderProps = {
   user: UserTypes;
+  setSelectedFeed: (val: string) => void;
 };
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, setSelectedFeed}) => {
   const { currentUser } = useContext(AuthContext);
 
   return (
     <div className="profile-header">
       <AvatarSection user={user} />
-      <UserDetails user={user} currentUser={currentUser} />
+      <UserDetails user={user} currentUser={currentUser} setSelectedFeed={setSelectedFeed}/>
     </div>
   );
 };

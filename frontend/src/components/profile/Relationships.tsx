@@ -4,16 +4,17 @@ import UserTypes from "../../types/User";
 
 type RelationshipsProps = {
   user: UserTypes;
+  setSelectedFeed: (val: string) => void;
 };
-const Relationships: React.FC<RelationshipsProps> = ({ user }) => {
+const Relationships: React.FC<RelationshipsProps> = ({ user, setSelectedFeed }) => {
   const { data: userRelationships } = useUserRelationships(user?.id);
 
   return (
     <div className="relationships">
-      <p>
+      <p onClick={() => setSelectedFeed("followers")}>
         <span>{userRelationships?.followerCount || 0} </span>Followers
       </p>
-      <p>
+      <p onClick={() => setSelectedFeed("following")}>
         <span>{userRelationships?.followingCount || 0}</span>Following
       </p>
       <p>

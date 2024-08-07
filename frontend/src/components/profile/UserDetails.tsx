@@ -4,9 +4,16 @@ import moment from "moment";
 import Relationships from "./Relationships";
 import ActionButtons from "./ActionButtons";
 
-const UserDetails: React.FC<{ user: UserTypes; currentUser: any }> = ({
+type UserDetailsProps = {
+  user: UserTypes;
+  currentUser: any;
+  setSelectedFeed: (val: string) => void;
+}
+
+const UserDetails: React.FC<UserDetailsProps> = ({
   user,
   currentUser,
+  setSelectedFeed
 }) => {
   const joinedDate = moment(user?.created_at).format("MMMM YYYY");
   const isUserProfile = currentUser?.id === user?.id;
@@ -29,7 +36,7 @@ const UserDetails: React.FC<{ user: UserTypes; currentUser: any }> = ({
       <p className="username">@{user?.username}</p>
       {user?.bio && <p className="bio">{user?.bio}</p>}
 
-      <Relationships user={user} />
+      <Relationships user={user} setSelectedFeed={setSelectedFeed}/>
 
       <p className="joined">
         <CalendarIcon size={15} color="#868393" /> Joined {joinedDate}

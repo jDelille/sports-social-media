@@ -330,8 +330,6 @@ export const getPostsByUsername = (req, res) => {
     ORDER BY COALESCE(reposted_at, created_at) DESC
   `;
 
-  
-
   // 
   // LIMIT ?, ?
 
