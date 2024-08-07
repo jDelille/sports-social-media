@@ -1,26 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import HomeFeed from "../components/feed/HomeFeed";
 import PageHeader from "../components/page-header/PageHeader";
 import CreatePost from "../components/create-post/CreatePost";
 import FeedSelector from "../components/feed-selector/FeedSelector";
-import './page.scss';
+import FollowingPosts from "../components/feed/FollowingPosts";
+import "./page.scss";
+import { AuthContext } from "../context/AuthContext";
 
 type HomeProps = {};
 const Home: React.FC<HomeProps> = () => {
   const [selectedFeed, setSelectedFeed] = useState("for you");
+  const { currentUser } = useContext(AuthContext) || {};
 
   const feeds = ["For You", "Following", "Bets"];
 
   return (
     <div className="page">
-      <PageHeader title="Home"/>
+      <PageHeader title="Home" />
       <CreatePost />
       <FeedSelector
         setSelectedFeed={setSelectedFeed}
         selectedFeed={selectedFeed}
         feeds={feeds}
       />
-      <HomeFeed />
+      {selectedFeed === "for you" && <HomeFeed />}
+
+      {selectedFeed === "following" && (
+        <FollowingPosts userId={currentUser?.id} />
+      )}
     </div>
   );
 };
