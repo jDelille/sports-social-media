@@ -6,10 +6,10 @@ SELECT
     p.created_at,
     p.user_id,
     JSON_OBJECT(
-      'id', u.id,
-      'name', u.name,
-      'username', u.username,
-      'avatar', u.avatar
+        'id', u.id,
+        'name', u.name,
+        'username', u.username,
+        'avatar', u.avatar
     ) AS user,
     p.bet AS bet,
     NULL AS reposter_username,
@@ -26,26 +26,26 @@ JOIN users u ON p.user_id = u.id
 
 export const forYouRepostsQuery = `
 SELECT
-  p.id,
-  p.body,
-  p.image,
-  p.created_at,
-  r.reposter_id AS user_id,
-  JSON_OBJECT(
-    'id', ou.id,
-    'name', ou.name,
-    'username', ou.username,
-    'avatar', ou.avatar
-  ) AS user,
-  p.bet AS bet,
-  r.reposter_username,
-  r.created_at AS reposted_at,
-  NULL AS original_post_body,
-  NULL AS quote_reposted_post_id,
-  NULL AS quote_reposted_quote_repost_id,
-  NULL AS original_post_user,
-  p.metadata,
-  'repost' AS type
+    p.id,
+    p.body,
+    p.image,
+    p.created_at,
+    r.reposter_id AS user_id,
+    JSON_OBJECT(
+        'id', ou.id,
+        'name', ou.name,
+        'username', ou.username,
+        'avatar', ou.avatar
+    ) AS user,
+    p.bet AS bet,
+    r.reposter_username,
+    r.created_at AS reposted_at,
+    NULL AS original_post_body,
+    NULL AS quote_reposted_post_id,
+    NULL AS quote_reposted_quote_repost_id,
+    NULL AS original_post_user,
+    p.metadata,
+    'repost' AS type
 FROM posts p
 JOIN reposts r ON p.id = r.reposted_post_id
 JOIN users ur ON r.reposter_id = ur.id
@@ -61,25 +61,25 @@ SELECT
     qr.created_at,
     qr.quote_reposter_id AS user_id,
     JSON_OBJECT(
-      'id', ur.id,
-      'name', ur.name,
-      'username', ur.username,
-      'avatar', ur.avatar
+        'id', ur.id,
+        'name', ur.name,
+        'username', ur.username,
+        'avatar', ur.avatar
     ) AS user,
     p1.bet AS bet,
     NULL AS reposter_username,
     qr.created_at AS reposted_at,
     CASE
-      WHEN qrr.id IS NOT NULL THEN qrr.body
-      ELSE p1.body
+        WHEN qrr.id IS NOT NULL THEN qrr.body
+        ELSE p1.body
     END AS original_post_body,
     qr.quote_reposted_post_id,
     qr.quote_reposted_quote_repost_id,
     JSON_OBJECT(
-      'id', ou.id,
-      'name', ou.name,
-      'username', ou.username,
-      'avatar', ou.avatar
+        'id', ou.id,
+        'name', ou.name,
+        'username', ou.username,
+        'avatar', ou.avatar
     ) AS original_post_user,
     p1.metadata,
     'quote_repost' AS type
@@ -98,25 +98,25 @@ SELECT
     qr.created_at,
     r.reposter_id AS user_id,
     JSON_OBJECT(
-      'id', ur.id,
-      'name', ur.name,
-      'username', ur.username,
-      'avatar', ur.avatar
+        'id', ur.id,
+        'name', ur.name,
+        'username', ur.username,
+        'avatar', ur.avatar
     ) AS user,
     p1.bet AS bet,
     ur.username AS reposter_username,
     r.created_at AS reposted_at,
     CASE
-      WHEN qrr.body IS NOT NULL THEN qrr.body
-      ELSE p1.body
+        WHEN qrr.body IS NOT NULL THEN qrr.body
+        ELSE p1.body
     END AS original_post_body,
     qr.quote_reposted_post_id,
     qr.quote_reposted_quote_repost_id,
     JSON_OBJECT(
-      'id', ou.id,
-      'name', ou.name,
-      'username', ou.username,
-      'avatar', ou.avatar
+        'id', ou.id,
+        'name', ou.name,
+        'username', ou.username,
+        'avatar', ou.avatar
     ) AS original_post_user,
     p1.metadata,
     'quote_repost_repost' AS type
