@@ -1,18 +1,21 @@
 import React from "react";
 import useUserRelationships from "../../hooks/relationships/userRelationships";
 import UserTypes from "../../types/User";
+import { observer } from "mobx-react";
 
 type RelationshipsProps = {
   user: UserTypes;
   setSelectedFeed: (val: string) => void;
 };
-const Relationships: React.FC<RelationshipsProps> = ({ user, setSelectedFeed }) => {
-  const { data: userRelationships } = useUserRelationships(user?.id);
+const Relationships: React.FC<RelationshipsProps> = observer(({ user, setSelectedFeed }) => {
+  const { data: userRelationships, count } = useUserRelationships(user?.id);
+ 
+
 
   return (
     <div className="relationships">
       <p onClick={() => setSelectedFeed("followers")}>
-        <span>{userRelationships?.followerCount || 0} </span>Followers
+        <span>{count.followerCount} </span>Followers
       </p>
       <p onClick={() => setSelectedFeed("following")}>
         <span>{userRelationships?.followingCount || 0}</span>Following
@@ -22,6 +25,6 @@ const Relationships: React.FC<RelationshipsProps> = ({ user, setSelectedFeed }) 
       </p>
     </div>
   );
-};
+});
 
 export default Relationships;

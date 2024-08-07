@@ -36,6 +36,34 @@ export const followUser = (req, res) => {
   });
 };
 
+export const unfollowUser = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  const followedUserId = req.params.userId;
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const followerId = userInfo.id;
+
+    // Delete the follow relationship from the relationships table
+    const unfollowQuery =
+      "DELETE FROM relationships WHERE follower_id = ? AND followed_id = ?";
+
+    db.query(unfollowQuery, [followerId, followedUserId], (err, result) => {
+      if (err) return res.status(500).json(err);
+      
+      // Check if any rows were affected (unfollowed successfully)
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "Follow relationship not found" });
+      }
+
+      return res.status(200).json({ message: "User unfollowed successfully" });
+    });
+  });
+};
+
 export const getUserRelationships = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");

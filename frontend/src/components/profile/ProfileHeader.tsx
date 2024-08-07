@@ -4,12 +4,13 @@ import { AuthContext } from "../../context/AuthContext";
 import AvatarSection from "./AvatarSection";
 import UserDetails from "./UserDetails";
 import "./profileheader.scss";
+import { observer } from "mobx-react";
 
 type ProfileHeaderProps = {
   user: UserTypes;
   setSelectedFeed: (val: string) => void;
 };
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, setSelectedFeed}) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = observer(({ user, setSelectedFeed}) => {
   const { currentUser } = useContext(AuthContext);
 
   return (
@@ -18,6 +19,6 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, setSelectedFeed}) =
       <UserDetails user={user} currentUser={currentUser} setSelectedFeed={setSelectedFeed}/>
     </div>
   );
-};
+});
 
 export default ProfileHeader;
