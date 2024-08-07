@@ -5,14 +5,14 @@ import { useAxios } from "../../hooks";
 import UserCard from "../user-card/UserCard";
 import "./feed.scss";
 
-type FollowingFeedProps = {
+type FollowersFeedProps = {
     userId: number;
 };
-const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
+const FollowersFeed: React.FC<FollowersFeedProps> = ({userId}) => {
   const { ref, inView } = useInView();
 
-  const fetchFollowingUsers = async (pageParam: number) => {
-    const res = await useAxios.get(`/relationships/find/following/${userId}?page=${pageParam}`);
+  const fetchFollowerUsers = async (pageParam: number) => {
+    const res = await useAxios.get(`/relationships/find/followers/${userId}?page=${pageParam}`);
     return res.data;
   };
 
@@ -23,8 +23,8 @@ const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
     isLoading,
     error,
   } = useInfiniteQuery({
-    queryKey: ["following", userId],
-    queryFn: ({ pageParam }) => fetchFollowingUsers(pageParam),
+    queryKey: ["followers", userId],
+    queryFn: ({ pageParam }) => fetchFollowerUsers(pageParam),
     staleTime: 5000,
     initialPageParam: 1 as any,
     getNextPageParam: (lastPage, allPages) => {
@@ -32,7 +32,7 @@ const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
       },
   });
 
-  const followingUsers = data ? data.pages.flatMap((page) => page) : [];
+  const followerUsers = data ? data.pages.flatMap((page) => page) : [];
 
 //   useEffect(() => {
 //     if (inView && hasNextPage) {
@@ -42,11 +42,11 @@ const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
 
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching following users.</p>;
+  if (error) return <p>Error fetching followers.</p>;
 
   return (
-    <div className="following-feed feed">
-      {followingUsers.map((user) => (
+    <div className="followers-feed feed">
+      {followerUsers.map((user) => (
         <UserCard key={user.id} user={user} /> 
       ))}
       <div ref={ref}></div> {/* This is the trigger for loading the next page */}
@@ -55,4 +55,4 @@ const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
   );
 };
 
-export default FollowingFeed;
+export default FollowersFeed;

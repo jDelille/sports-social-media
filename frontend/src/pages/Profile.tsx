@@ -8,6 +8,7 @@ import PostTypes from "../types/Post";
 import ProfileFeed from "../components/feed/ProfileFeed";
 import "./page.scss";
 import FollowingFeed from "../components/feed/FollowingFeed";
+import FollowersFeed from "../components/feed/FollowersFeed";
 
 type ProfileProps = {};
 
@@ -66,6 +67,9 @@ const Profile: React.FC<ProfileProps> = () => {
       )}
       {selectedFeed === "following" && (
         <FollowingFeed userId={userData?.id as number} key={userData?.id} />
+      )}
+      {selectedFeed === "followers" && (
+        <FollowersFeed userId={userData?.id as number} key={userData?.id}/>
       )}
     </div>
   );

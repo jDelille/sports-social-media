@@ -152,3 +152,55 @@ export const getFollowingUsers = (req, res) => {
     });
   });
 };
+
+export const getFollowerUsers = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 7;
+  const offset = (page - 1) * pageSize;
+
+  const userId = req.params.userId;
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    // Get follower user IDs
+    const followerIdsQuery = `
+      SELECT follower_id 
+      FROM relationships 
+      WHERE followed_id = ?`;
+    db.query(followerIdsQuery, [userId], (err, followers) => {
+      if (err) {
+        console.error('Error fetching follower user IDs:', err);
+        return res.status(500).json({ message: 'Error fetching follower user IDs' });
+      }
+
+      // If no users are followers
+      if (followers.length === 0) {
+        return res.status(200).json([]);
+      }
+
+      // Prepare an array of user IDs
+      const followerUserIds = followers.map(user => user.follower_id);
+
+      // Get details of followers with pagination
+      const followersQuery = `
+        SELECT u.id, u.username, u.name, u.avatar, u.created_at, 
+               (SELECT COUNT(*) FROM posts WHERE user_id = u.id) AS post_count,
+               (SELECT COUNT(*) FROM relationships WHERE followed_id = u.id) AS follower_count
+        FROM users u
+        WHERE u.id IN (?)
+        LIMIT ?, ?`;
+      db.query(followersQuery, [followerUserIds, offset, pageSize], (err, followerUsers) => {
+        if (err) {
+          console.error('Error fetching follower user details:', err);
+          return res.status(500).json({ message: 'Error fetching follower user details' });
+        }
+
+        return res.status(200).json(followerUsers);
+      });
+    });
+  });
+};
