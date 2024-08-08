@@ -21,7 +21,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = observer(({
   const navigate = useNavigate();
   const { followUser, unfollowUser, loading, error, success } = useFollowUser(user?.id);
   const loginReminder = useLoginReminder();
-  
+
   const isFollowing = userRelationshipsStore.userRelationships.isFollowing;
 
   const navigateToEditProfile = () => {
