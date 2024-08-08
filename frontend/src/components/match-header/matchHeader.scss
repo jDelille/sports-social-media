@@ -8,9 +8,11 @@
     .away {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 1rem;
       font-weight: 500;
       font-size: 16px;
+      flex: 1;
+      justify-content: center;
       .logo {
         width: 40px;
       }

@@ -1,7 +1,7 @@
 import React from "react";
 import BovadaMatchTypes from "../../types/BovadaMatch";
-import "./matchHeader.scss";
 import moment from "moment";
+import "./matchHeader.scss";
 
 type MatchHeaderProps = {
   match: BovadaMatchTypes | null;
@@ -17,6 +17,8 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({ match }) => {
   const status = match.espnMatch?.status;
 
   // make into reusable hook
+  const formattedTime = moment(status.type.detail, "ddd, MMMM Do [at] h:mm A z").format("h:mm A");
+
   const formattedDate = moment(match.date).format("MMMM D");
 
   return (
@@ -30,7 +32,7 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({ match }) => {
           </div>
         </div>
         <div className="status">
-          <p>{status.type.shortDetail}</p>
+          <p>{formattedTime} ET</p>
           <p>{formattedDate}</p>
         </div>
         <div className="away">

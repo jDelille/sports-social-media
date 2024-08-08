@@ -1,9 +1,10 @@
 import React from "react";
 import Modal from "../modal/Modal";
 import { useBetPostModal, useBetSlip } from "../../hooks";
-import { CloseIcon, TrashIcon } from "../../icons";
 import betslipStore from "../../store/betslipStore";
 import { observer } from "mobx-react";
+import BetSlipPick from "./BetSlipPick";
+import './betslip.scss';
 
 type BetSlipProps = {};
 const BetSlip: React.FC<BetSlipProps> = observer(() => {
@@ -12,10 +13,6 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
 
   const betstore = betslipStore;
   const picks = betstore.getPicks();
-
-  const handleRemovePick = (id: string) => {
-    betstore.removePick(id);
-  };
 
   const handleConfirmPicks = () => {
     betSlip.onClose();
@@ -30,32 +27,7 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
         {!hasPicks && <div>You have not added any picks yet.</div>}
         {hasPicks &&
           picks.map((pick) => (
-            <div className="bet-content">
-              <div className="info">
-                <div className="text">
-                  <div className="matchup">
-                    <p>{pick.matchup}</p>
-                  </div>
-                  <p className="type">
-                    {pick.type}
-                    {" -"}
-
-                    <span className="description">{pick.description}</span>
-                  </p>
-
-                  <span className="price">{pick.price}</span>
-                </div>
-              </div>
-              {!betstore.isParlay && (
-                <input type="text" placeholder="Enter wager" />
-              )}
-              <div
-                className="delete-pick"
-                onClick={() => handleRemovePick(pick.id)}
-              >
-                <CloseIcon size={16} color="#e2434b" />
-              </div>
-            </div>
+            <BetSlipPick pick={pick} />
           ))}
       </div>
 
@@ -78,7 +50,11 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
         </button>
       )}
 
-      <button className="confirm-btn" onClick={handleConfirmPicks} disabled={!hasPicks}>
+      <button
+        className="confirm-btn"
+        onClick={handleConfirmPicks}
+        disabled={!hasPicks}
+      >
         Confirm Picks
       </button>
     </div>

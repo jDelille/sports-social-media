@@ -29,6 +29,17 @@ const Match: React.FC<MatchProps> = () => {
     betSlip.onOpen();
   };
 
+  const teams = {
+    home: {
+      logo: match?.espnMatch.competitions[0].competitors[0].team.logo,
+      abbrv: match?.espnMatch.competitions[0].competitors[0].team.abbreviation
+    },
+    away: {
+      logo: match?.espnMatch.competitions[0].competitors[1].team.logo,
+      abbrv: match?.espnMatch.competitions[0].competitors[1].team.abbreviation
+    }
+  }
+
   return (
     <div className="page match-page">
       <PageHeader title={match?.espnMatch.shortName as string} hasBack />
@@ -45,7 +56,8 @@ const Match: React.FC<MatchProps> = () => {
         displayGroups={displayGroups}
         selectedCategory={selectedCategory}
         handleClick={handleClick}
-        matchup={match?.description as string}
+        matchup={match?.espnMatch.shortName as string}
+        teams={teams}
       />
 
       <BetslipButton />

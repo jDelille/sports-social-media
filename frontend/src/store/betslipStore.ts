@@ -1,11 +1,21 @@
 import { makeAutoObservable } from "mobx";
 
 export type Pick = {
-    id: string; // add id property 
-    type: string;
-    price: string;
-    description: string;
-    matchup: string;
+  id: string;
+  type: string;
+  price: string;
+  description: string;
+  matchup: string;
+  teams: {
+    home: {
+      logo: string | undefined;
+      abbrv: string | undefined;
+    },
+    away: {
+      logo: string | undefined;
+      abbrv: string | undefined;
+    }
+  };
 }
 
 export type Picks = {

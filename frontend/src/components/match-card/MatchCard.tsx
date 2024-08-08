@@ -31,7 +31,7 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
       <div className="status">
         <p>{status.type.shortDetail}</p>
       </div>
-      <div className="content">
+      <div className="match-content">
       <div className="teams">
         <div className="home">
           <img src={homeTeam?.team.logo} alt="" className="team-logo" />

@@ -40,9 +40,11 @@ const Matches: React.FC<MatchesProps> = () => {
     const fetchOdds = async () => {
       setLoading(true);
       try {
-        const bovadaResponse = await useAxios.get(`/odds/${sport}/${league}`);
+        const bovadaResponse = await useAxios.get(`/odds/${sport}/${league === 'nfl' ? 'nfl-preseason' : league}`);
         const espnResponse = await useAxios.get(`/espn/${sport}/${league}`);
         const bovadaData = bovadaResponse.data;
+        console.log('espn', espnResponse)
+        console.log('bovada', bovadaResponse)
         const espnData = espnResponse.data.events;
         const combinedData = combineData(bovadaData, espnData);
         setMatches(combinedData);
@@ -57,6 +59,7 @@ const Matches: React.FC<MatchesProps> = () => {
 
   const handleMatchClick = (match: BovadaMatchTypes) => {
     matchStore.setMatch(match);
+    console.log(match)
     navigate(`/match`);
   };
 
