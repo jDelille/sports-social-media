@@ -4,13 +4,15 @@ import { useBetPostModal, useBetSlip } from "../../hooks";
 import betslipStore from "../../store/betslipStore";
 import { observer } from "mobx-react";
 import BetSlipPick from "./BetSlipPick";
-import './betslip.scss';
+import BetAmount from "./BetAmount";
+import EmptyState from "./EmptyState";
 
-type BetSlipProps = {};
-const BetSlip: React.FC<BetSlipProps> = observer(() => {
+import './betslip.scss';
+import BetControls from "./BetControls";
+
+const BetSlip: React.FC = observer(() => {
   const betSlip = useBetSlip();
   const betPostModal = useBetPostModal();
-
   const betstore = betslipStore;
   const picks = betstore.getPicks();
 
@@ -19,58 +21,38 @@ const BetSlip: React.FC<BetSlipProps> = observer(() => {
     betPostModal.onOpen();
   };
 
-  const hasPicks = picks.length > 0;
+  const renderBodyContent = () => {
+    if (picks.length === 0) {
+      return <EmptyState />;
+    }
 
-  const bodyContent = (
-    <div className="bet-body">
+    return (
       <div className="bet-content-wrapper">
-        {!hasPicks && <div>You have not added any picks yet.</div>}
-        {hasPicks &&
-          picks.map((pick) => (
-            <BetSlipPick pick={pick} />
-          ))}
-      </div>
-
-      {betstore.isParlay && (
-        <div className="bet-amount">
-          <div className="wager-wrapper">
-            <label htmlFor="wager">Wager</label>
-            <input type="text" name="wager" placeholder="$0.00" />
-          </div>
-          <div className="payout-wrapper">
-            <label className="payout">Payout </label>
-            <p>$1000.75</p>
-          </div>
-        </div>
-      )}
-
-      {hasPicks && (
-        <button onClick={() => betstore.toggleParlay()} className="parlay-btn">
-          parlay {betstore.isParlay ? "on" : "off"}
+        {picks.map((pick) => (
+          <BetSlipPick key={pick.id} pick={pick} />
+        ))}
+        {betstore.isParlay && <BetAmount />}
+        <BetControls />
+    
+        <button
+          className="confirm-btn"
+          onClick={handleConfirmPicks}
+          disabled={picks.length === 0}
+        >
+          Confirm Picks
         </button>
-      )}
-
-      <button
-        className="confirm-btn"
-        onClick={handleConfirmPicks}
-        disabled={!hasPicks}
-      >
-        Confirm Picks
-      </button>
-    </div>
-  );
-
-  const handleClose = () => {
-    betSlip.onClose();
+     
+      </div>
+    );
   };
 
   return (
     <div className="bet-slip">
       <Modal
         title="Bet slip"
-        body={bodyContent}
+        body={renderBodyContent()}
         isOpen={betSlip.isOpen}
-        onClose={handleClose}
+        onClose={betSlip.onClose}
       />
     </div>
   );
