@@ -1,0 +1,46 @@
+@use '../../scss/variables' as *;
+@use '../../scss/mixins' as *;
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 2rem 0;
+    h1 {
+        font-size: 30px;
+    }
+    .description {
+        text-align: center;
+        font-size: 16px;
+        color: black;
+    }
+    .cta-button {
+        @include button_lg();
+    }
+    .cta-button,
+    .secondary-button
+    {
+        margin: 0;
+    }
+
+    .secondary-button {
+        background-color: white;
+        color: black;
+        border: 1px solid $buttonPrimaryColor;
+        &:hover {
+            background-color: darken(white, 2%);
+        }
+    }
+   
+    label {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 15px;
+        input {
+           
+        }
+    }
+}

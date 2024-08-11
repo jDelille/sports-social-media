@@ -26,6 +26,7 @@ import "./scss/app.scss";
 import AccountCreated from "./components/popup/AccountCreated";
 import CustomizeProfileModal from "./components/customize-profile-modal/CustomizeProfileModal";
 import BetPostModal from "./components/bet-post-modal/BetPostModal";
+import LeaderboardInfo from "./components/popup/LeaderboardInfo";
 
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
                 <AccountCreated />
                 <CustomizeProfileModal />
                 <BetPostModal />
+                <LeaderboardInfo />
               </div>
               <RightSidebar currentUser={currentUser} />
               <SignUpBar currentUser={currentUser} />
