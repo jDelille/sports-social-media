@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./suggestedUsers.scss";
 import UserTypes from "../../types/User";
 import { useAxios } from "../../hooks";
 import Avatar from "../avatar/Avatar";
+import "./suggestedUsers.scss";
 
 type SuggestedUsersProps = {};
 const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {

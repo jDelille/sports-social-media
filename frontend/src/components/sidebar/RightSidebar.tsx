@@ -1,7 +1,8 @@
 import React from "react";
-import "./sidebar.scss";
 import useSidebar from "../../hooks/useSidebar";
 import SuggestedUsers from "../suggested-users/SuggestedUsers";
+import LeaderboardWidget from "../leaderboard-widget/LeaderboardWidget";
+import "./sidebar.scss";
 
 type RightSidebarProps = {
   currentUser: any | null;
@@ -22,7 +23,10 @@ const RightSidebar: React.FC<RightSidebarProps> = ({currentUser}) => {
             <button className="sign-up-btn" onClick={handleOpenSignup}>Sign up</button>
           </div>
         ): (
+          <>
           <SuggestedUsers />
+          <LeaderboardWidget />
+          </>
         )}
       </div>
     </div>
