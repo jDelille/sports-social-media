@@ -9,7 +9,7 @@
   transition: all 200ms ease-in-out;
 
   &:hover {
-    background-color: darken(white, 2%);
+    background-color: darken(white, 1%);
     cursor: pointer;
 
   }
@@ -121,15 +121,15 @@
 
   }
 
-  .bet {
-    border: 1px solid rgb(240, 240, 240);
-    padding: 10px;
+  .bet,
+  .wagered-bet {
+
     font-size: 12px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 
     .pick {
       border: 1px solid rgb(240, 240, 240);
@@ -139,9 +139,26 @@
       display: flex;
       flex-direction: column;
       gap: 5px;
+      .description {
+        font-weight: 500;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
       .matchup {
         color: gray;
         font-weight: 500;
+        display: flex;
+        gap: 5px;
+        .team {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          img {
+            max-width: 15px;
+          }
+        }
       }
       .price {
         font-weight: 600;
@@ -159,6 +176,11 @@
       font-weight: 500;
     }
 
+  }
+
+  .wagered-bet {
+    border: 1px solid rgb(240, 240, 240);
+    padding: 10px;
   }
 
   .post-footer {

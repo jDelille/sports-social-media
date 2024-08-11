@@ -34,6 +34,16 @@ type PostTypes = {
             type: string;
             price: string;
             description: string;
+            teams: {
+                away: {
+                    abbrv: string;
+                    logo: string;
+                },
+                home: {
+                    abbrv: string;
+                    logo: string;
+                }
+            }
         }[],
         wager: string;
         payout: string;
