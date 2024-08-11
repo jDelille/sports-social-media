@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import betslipStore, { Pick } from "../../store/betslipStore";
 import { CloseIcon } from "../../icons";
+import { observer } from "mobx-react";
 
 // Separate components for different parts of the BetSlipPick
 type BetSlipPickProps = {
@@ -60,7 +61,7 @@ const BetContent: React.FC<{
 );
 
 // Component for displaying bet information
-const BetInfo: React.FC<{ pick: Pick }> = ({ pick }) => {
+const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
   const isParlay = betslipStore.isParlay;
   return (
     <div className="info">
@@ -68,14 +69,15 @@ const BetInfo: React.FC<{ pick: Pick }> = ({ pick }) => {
         <p className="type">
           {pick.type} {" -"}
           <span className="description">{pick.description}</span>
-          <span className="price">{pick.price}</span>
+          <span className="price">{betslipStore.decimalOdds ? parseFloat(pick.decimal).toFixed(2) : pick.price}</span>
+     
         </p>
         <MatchupInfo teams={pick.teams} />
         {!isParlay && <BetInput />}
       </div>
     </div>
   );
-};
+});
 
 // Component for displaying matchup information
 const MatchupInfo: React.FC<{ teams: Pick["teams"] }> = ({ teams }) => (

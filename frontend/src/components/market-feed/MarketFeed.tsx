@@ -16,7 +16,7 @@ export type Teams = {
 type MarketFeedProps = {
     displayGroups: DisplayGroup[] | undefined;
     selectedCategory: string;
-    handleClick: (description: string, price: string, type: string, matchup: string) => void;
+    handleClick: (description: string, price: string, type: string, matchup: string, decimal: string) => void;
     matchup: string;
     teams: Teams;
  }

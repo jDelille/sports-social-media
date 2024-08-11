@@ -7,6 +7,9 @@ import { COLOR_CONSTANTS } from "../../constants";
 type BetControlsProps = {};
 const BetControls: React.FC<BetControlsProps> = () => {
   const [checked, setChecked] = useState(betslipStore.isParlay);
+  const [decimalChecked, setDecimalChecked] = useState(
+    betslipStore.decimalOdds
+  );
 
   const betstore = betslipStore;
 
@@ -20,25 +23,48 @@ const BetControls: React.FC<BetControlsProps> = () => {
     betstore.toggleParlay(); // Update the store state
   };
 
+  const handleDecimalToggle = (nextChecked: boolean) => {
+    setDecimalChecked(nextChecked);
+    betstore.toggleDecimalOdds();
+  };
+
   return (
     <div className="bet-controls">
-      <div className="parlay">
-        <div className="text">
-        <p className="title">Parlay</p>
-        <span className="info">
-          Turning this on will remove individual bets
-        </span>
+      <div className="control">
+        <div className="parlay">
+          <div className="text">
+            <p className="title">Parlay</p>
+            <span className="info">
+              Turning this on will remove individual bets
+            </span>
+          </div>
+
+          <Switch
+            onChange={handleToggle}
+            checked={checked}
+            offColor="#868393"
+            onColor={COLOR_CONSTANTS.REPOST_COLOR}
+            uncheckedIcon={false}
+            checkedIcon={false}
+          />
         </div>
-   
-        <Switch
-          onChange={handleToggle}
-          checked={checked}
-          offColor="#868393"
-          onColor={COLOR_CONSTANTS.REPOST_COLOR}
-          uncheckedIcon={false}
-          checkedIcon={false}
-        />
-       
+        <div className="decimal">
+          <div className="text">
+            <p className="title">Decimal odds</p>
+            <span className="info">
+              Turning this on will you show decimal odds
+            </span>
+          </div>
+
+          <Switch
+            onChange={handleDecimalToggle}
+            checked={decimalChecked}
+            offColor="#868393"
+            onColor={COLOR_CONSTANTS.REPOST_COLOR}
+            uncheckedIcon={false}
+            checkedIcon={false}
+          />
+        </div>
       </div>
     </div>
   );

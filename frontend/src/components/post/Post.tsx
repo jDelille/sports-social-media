@@ -72,6 +72,8 @@ const Post: React.FC<PostProps> = ({ post }) => {
     return cleanedBody;
   };
 
+  console.log(post)
+
   return (
     <div className="post">
       {(type === "repost") && (

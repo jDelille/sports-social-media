@@ -4,6 +4,7 @@ export type Pick = {
   id: string;
   type: string;
   price: string;
+  decimal: string;
   description: string;
   matchup: string;
   teams: {
@@ -25,7 +26,9 @@ export type Picks = {
 class BetslipStore {
   picks: Pick[] = [];
   wager = 0;
+  payout = 0;
   isParlay = false;
+  decimalOdds = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -43,8 +46,20 @@ class BetslipStore {
     this.picks = this.picks.filter(pick => pick.id !== id);
   }
 
+  setWager(wager: number) {
+    this.wager = wager;
+  }
+
+  setPayout(payout: number) {
+    this.payout = payout;
+  }
+
   toggleParlay() {
     this.isParlay = !this.isParlay;
+  }
+
+  toggleDecimalOdds() {
+    this.decimalOdds = !this.decimalOdds
   }
 }
 

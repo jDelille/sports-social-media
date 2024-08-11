@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { ChevronDownIcon } from "../../icons";
 import { useBetSlip } from "../../hooks";
 import betslipStore, { Pick, Picks } from "../../store/betslipStore";
-import "./marketCard.scss";
 import { Teams } from "../market-feed/MarketFeed";
+import "./marketCard.scss";
 
 /**
  * Make market types
@@ -11,7 +11,7 @@ import { Teams } from "../market-feed/MarketFeed";
 
 type MarketCardProps = {
   market: any;
-  handleClick: (description: string, price: string, type: string, matchup: string) => void;
+  handleClick: (description: string, price: string, type: string, matchup: string, decimal: string) => void;
   matchup: string
   teams: Teams;
 };
@@ -41,6 +41,7 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup, t
                 id: `${outcome.description} ${market.description}`,
                 type: outcome.description, 
                 price: outcome.price.american,
+                decimal: outcome.price.decimal,
                 description: market.description,
                 matchup: matchup,
                 teams: teams

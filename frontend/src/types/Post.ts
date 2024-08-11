@@ -28,12 +28,17 @@ type PostTypes = {
         image: string;
     };
     bet: {
-        id: string;
-        matchup: string;
-        type: string;
-        price: string;
-        description: string;
-    }[]
+        picks: {
+            id: string;
+            matchup: string;
+            type: string;
+            price: string;
+            description: string;
+        }[],
+        wager: string;
+        payout: string;
+   
+    }
 }
 
 export default PostTypes;

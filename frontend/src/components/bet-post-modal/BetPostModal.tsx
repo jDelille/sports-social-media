@@ -35,7 +35,16 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
 
   const handlePostClick = async (e: any) => {
     e.preventDefault();
-    const bet = betstore.picks;
+    
+    const picks = betstore.picks;
+    const wager = betstore.wager;
+    const payout = betstore.payout;
+
+    const bet = {
+      picks,
+      wager,
+      payout
+    }
 
     try {
       mutate({ body, bet });

@@ -12,7 +12,7 @@ const Bet: React.FC<BetProps> = ({ post }) => {
 
   return (
     <div className="bet">
-      {post.bet?.map((pick) => (
+      {post.bet.picks?.map((pick) => (
         <div className="pick" id={pick.id}>
             <div className="matchup">
                 <p>{pick.matchup}</p>
@@ -23,8 +23,8 @@ const Bet: React.FC<BetProps> = ({ post }) => {
         </div>
       ))}
       <div className="payout">
-      <p>Wagered $100</p>
-      <p>Payout $540</p>
+      <p>Wagered ${post.bet.wager}</p>
+      <p>Payout ${parseInt(post.bet.payout).toFixed(2)}</p>
       </div>
     </div>
   );

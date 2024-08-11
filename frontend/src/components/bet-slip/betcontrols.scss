@@ -1,33 +1,37 @@
 .bet-controls {
-    padding: 1rem 0;
-    .parlay {
+  padding: 1rem 0;
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .parlay,
+    .decimal {
+      display: flex;
+      gap: 5px;
+      justify-content: space-between;
+      .text {
         display: flex;
-        gap: 5px;
-        justify-content: space-between;
-        .text {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            .title {
-                font-size: 15px;
-                font-weight: 500;
-            }
-            .info {
-                font-size: 12px;
-                font-style: italic;
-                color: gray;
-
-            }
+        flex-direction: column;
+        gap: 3px;
+        .title {
+          font-size: 15px;
+          font-weight: 500;
         }
-        .react-switch-bg {
-            width: 56px !important;
+        .info {
+          font-size: 12px;
+          font-style: italic;
+          color: gray;
         }
-        .react-switch-handle {
-            width: 20px !important;
-            height: 20px !important;
-            top: 3.5px !important;
-            left: 3px !important;
-        }
-     
+      }
+      .react-switch-bg {
+        width: 56px !important;
+      }
+      .react-switch-handle {
+        width: 20px !important;
+        height: 20px !important;
+        top: 4px !important;
+        left: 3px !important;
+      }
     }
+  }
 }
