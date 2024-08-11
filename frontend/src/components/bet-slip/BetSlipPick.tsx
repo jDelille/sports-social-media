@@ -27,7 +27,7 @@ const BetInput: React.FC<{}> = () => {
   const [payout, setPayout] = useState<number>(0.0);
   return (
     <div className="bet-input-container">
-      <div className="bet-wager">
+      {/* <div className="bet-wager">
         <input
           type="number"
           className="wager-input"
@@ -36,13 +36,13 @@ const BetInput: React.FC<{}> = () => {
         />
         <span className="dollar-sign">$</span>
         <label htmlFor="wager-input">Wager</label>
-      </div>
-      <div className="bet-wager">
+      </div> */}
+      {/* <div className="bet-wager">
         <div className="payout"><span>{payout || '0.00'}</span></div>
         <span className="dollar-sign">$</span>
         <label htmlFor="wager-input">Potential winnings</label>
       </div>
-      <div className="bet-payout"></div>
+      <div className="bet-payout"></div> */}
     </div>
   );
 };
@@ -64,15 +64,30 @@ const BetContent: React.FC<{
 const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
   const isParlay = betslipStore.isParlay;
   return (
-    <div className="info">
-      <div className="text">
-        <p className="type">
-          {pick.type} {" -"}
+    <div className="info-wrapper">
+      <div className="info">
+        <div className="type">
+          <p>{pick.type}</p>
           <span className="description">{pick.description}</span>
-          <span className="price">{betslipStore.decimalOdds ? parseFloat(pick.decimal).toFixed(2) : pick.price}</span>
-     
-        </p>
-        <MatchupInfo teams={pick.teams} />
+          <MatchupInfo teams={pick.teams} />
+        </div>
+        <div className="price-wrapper">
+          <p className="price">
+            {betslipStore.decimalOdds
+              ? parseFloat(pick.decimal).toFixed(2)
+              : pick.price}
+          </p>
+          {!betslipStore.isParlay && (
+            <>
+              <div className="input-wrapper">
+                <div className="symbol">$</div>
+                <input type="text" />
+              </div>
+              <p className="payout">Payout: $1000</p>
+            </>
+          )}
+        </div>
+
         {!isParlay && <BetInput />}
       </div>
     </div>

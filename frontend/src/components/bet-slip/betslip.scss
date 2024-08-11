@@ -1,166 +1,198 @@
-@use '../../scss/variables' as *;
+@use "../../scss/variables" as *;
 
-
-    .bet-content-wrapper {
-      max-height: 580px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      margin: 1rem 0;
-      padding: 1rem 0;
-      padding-bottom: 0;
+.bet-content-wrapper {
+  max-height: 580px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  padding-right: 0.75rem;
+}
+.bet-content {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgb(240, 240, 240);
+  padding: 10px 1rem;
+  border-radius: 8px;
+  position: relative;
+  max-height: 200px;
+  .info-wrapper {
+    // display: flex;
+    // align-items: center;
+    gap: 1rem;
+    width: 100%;
+    .info {
+      font-weight: 400;
+      gap: 10px;
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      position: relative;
-      padding-right: 0.75rem;
-     
-    }
-    .bet-content {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      font-weight: 500;
-      border: 1px solid rgb(240, 240, 240);
-      padding: 1rem 1rem;
-      border-radius: 8px;
-      position: relative;
-      max-height: 200px;
-      .info {
-        // display: flex;
-        // align-items: center;
-        gap: 1rem;
-        width: 100%;
-        .text {
-          font-weight: 400;
-          gap: 5px;      
-          display: flex;
-          flex-direction: column;    
-          .matchup {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 13px;
-            color: gray;
-            font-weight: 500;
-       
-            .team-logo {
-              max-width: 15px;
-              // max-height: 15px;
-            }
-          }
-          .type {
-            display: flex;
-            gap: 3px;
-            position: relative;
-            width: 100%;
-            width: 100%;
-            .description {
-              display: flex;
-              flex-direction: column;
-              gap: 5px;
-              font-weight: 600;
-            }
-            .price {
-                color: $accent;
-                font-weight: 600;
-                font-size: 14px;
-                display: flex;
-                align-items: center;
-                width: fit-content;
-                margin-left: auto;
-              }
-          }
-       
-        }
-        .bet-input-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-top: 5px;
-            .bet-wager {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-                flex: 1;
-                position: relative;
-               .wager-input,
-               .payout {
-                padding: 8px 5px;
-                height: 34px;
-                border-radius: 4px;
-                border: 1px solid lightgray;
-                padding-left: 22px;
-                color: rgb(54, 54, 54);
-                display: flex;
-                align-items: center;
-                &:focus {
-                    outline: 2px solid lighten($accent, 5%);
-                }
-               }
-               .payout {
-                    span {
-                        position: relative;
-                        top: 0px;
-                    }
-               }
-               .dollar-sign {
-                position: absolute;
-                left: 10px; 
-                top: 16px;
-                transform: translateY(-50%);
-                color: rgb(54, 54, 54);
-                pointer-events: none; 
-              }
-               label {
-                font-weight: 500;
-                font-size: 13px;
-                color: rgb(54, 54, 54);
-               }
-            }
-          
-        }
-      }
+      
 
-      .delete-pick {
-        cursor: pointer;
-        position: absolute;
-        right: -10px;
-        top: -10px;
-        background-color: lighten(#e23a42, 35%);
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
+      .matchup {
         display: flex;
         align-items: center;
-        justify-content: center;
-        &:hover {
-          background-color: lighten(#e23a42, 33%);
+        gap: 5px;
+        font-size: 13px;
+        color: black;
+        font-weight: 400;
+        .team-logo {
+          max-width: 15px;
+          // max-height: 15px;
+        }
+      }
+      .type {
+        display: flex;
+        gap: 5px;
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+        font-weight: 600;
+        justify-content: space-between;
+
+        .description {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          font-weight: 400;
+        }
+      }
+    }
+    .price-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      width: 100%;
+      .input-wrapper {
+        border: 1px solid lightgray;
+        display: flex;
+        width: fit-content;
+        max-width: 40%;
+        border-radius: 2px;
+
+        .symbol {
+          border-right: 1px solid lightgray;
+          width: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        input {
+          width: 100%;
+          border: none;
+          padding: 5px;
+          &:focus {
+            border: none;
+            outline: none
+          }
         }
         
       }
+      .payout {
+        font-size: 12px;
+      }
+      .price {
+        color: $accent;
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        margin-left: auto;
+      }
     }
+    .bet-input-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 5px;
+      .bet-wager {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        flex: 1;
+        position: relative;
+        .wager-input,
+        .payout {
+          padding: 8px 5px;
+          height: 34px;
+          border-radius: 4px;
+          border: 1px solid lightgray;
+          padding-left: 22px;
+          color: rgb(54, 54, 54);
+          display: flex;
+          align-items: center;
+          &:focus {
+            outline: 2px solid lighten($accent, 5%);
+          }
+        }
+        .payout {
+          span {
+            position: relative;
+            top: 0px;
+          }
+        }
+        .dollar-sign {
+          position: absolute;
+          left: 10px;
+          top: 16px;
+          transform: translateY(-50%);
+          color: rgb(54, 54, 54);
+          pointer-events: none;
+        }
+        label {
+          font-weight: 500;
+          font-size: 13px;
+          color: rgb(54, 54, 54);
+        }
+      }
+    }
+  }
 
-    .confirm-btn {
-      background-color: #6947ff;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 22px;
-      font-size: 14px;
-      color: white;
-      width: 100%;
-      // margin-top: 15px;
-      &:hover {
-        cursor: pointer;
-        background-color: lighten(#6947ff, 3%);
-      }
-      &:disabled {
-        background-color: lighten(#6947ff, 10%);
-        cursor: default;
-        pointer-events: none;
-      }
+  .delete-pick {
+    cursor: pointer;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    background-color: lighten(#e23a42, 35%);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      background-color: lighten(#e23a42, 33%);
     }
-    .parlay-btn {
-      width: fit-content;
-      padding: 5px;
-    }
-   
+  }
+}
+
+.confirm-btn {
+  background-color: #6947ff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 22px;
+  font-size: 14px;
+  color: white;
+  width: 100%;
+  // margin-top: 15px;
+  &:hover {
+    cursor: pointer;
+    background-color: lighten(#6947ff, 3%);
+  }
+  &:disabled {
+    background-color: lighten(#6947ff, 10%);
+    cursor: default;
+    pointer-events: none;
+  }
+}
+.parlay-btn {
+  width: fit-content;
+  padding: 5px;
+}
