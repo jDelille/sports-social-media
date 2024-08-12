@@ -5,13 +5,13 @@
     padding: 0 16px 14px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    
     border-bottom: 1px solid $lightBorderColor;
     .header {
         height: 50px;
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
         .profile-picture {
             width: 40px;
             height: 40px;

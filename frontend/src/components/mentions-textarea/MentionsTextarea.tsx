@@ -6,8 +6,9 @@ import { observer } from "mobx-react";
 import FileInput from "./FileInput";
 import { COLOR_CONSTANTS } from "../../constants";
 // import CreatePoll from "../create-poll/CreatePoll";
-import "./mentionsTextarea.scss";
 import { useAxios } from "../../hooks";
+import "./mentionsTextarea.scss";
+import useUrlMetadata from "../../hooks/post-hooks/useDetectUrls";
 
 type MentionsTextareaProps = {
   setBody: (body: string) => void;
@@ -22,9 +23,26 @@ type MentionsTextareaProps = {
 };
 
 const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
-  ({ setBody, setFile, handleClick, body, file, isComment, setUrlMetadata, isActive, placeholder = "What's on your mind?" }) => {
+  ({
+    setBody,
+    setFile,
+    handleClick,
+    body,
+    file,
+    isComment,
+    setUrlMetadata,
+    isActive,
+    placeholder = "What's on your mind?",
+  }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [openPoll, setOpenPoll] = useState(false);
+    const urlMetadata = useUrlMetadata(body);
+
+    useEffect(() => {
+      if (setUrlMetadata) {
+        setUrlMetadata(urlMetadata);
+      }
+    }, [urlMetadata, setUrlMetadata]);
 
     const onChange: OnChangeHandlerFunc = (
       _,
@@ -33,7 +51,6 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
       mentions
     ) => {
       let updatedValue = newPlainTextValue;
-
       mentions.forEach((mention) => {
         const mentionText = `@${mention.display}`;
         updatedValue = updatedValue.replace(
@@ -41,20 +58,7 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
           mentionText
         );
       });
-
       setBody(updatedValue);
-      detectUrls(updatedValue);
-
-    };
-
-    const detectUrls = (text: string) => {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      const urls = text.match(urlRegex);
-      if (urls && urls.length > 0) {
-        fetchUrlMetadata(urls[0]);
-      } else {
-        setUrlMetadata(null);
-      }
     };
 
     // Hard coded for now, in future get trending hashtags from db
@@ -105,12 +109,14 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
     };
 
     const handleOpenPoll = () => {
-      setOpenPoll(!openPoll)
-    }
+      setOpenPoll(!openPoll);
+    };
 
     const fetchUrlMetadata = async (url: string) => {
       try {
-        const response = await useAxios.get(`/metadata?url=${encodeURIComponent(url)}`);
+        const response = await useAxios.get(
+          `/metadata?url=${encodeURIComponent(url)}`
+        );
         setUrlMetadata(response.data.og);
       } catch (error) {
         console.error("Error fetching URL metadata:", error);
@@ -118,12 +124,12 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
     };
 
     const activatedTextarea = () => {
-      if(isActive) {
+      if (isActive) {
         return true;
       } else {
         return createPostStore.isActive;
       }
-    }
+    };
 
     return (
       <div
@@ -148,12 +154,12 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
         {file && (
           <div className="image-preview">
             <div className="remove-img" onClick={() => setFile(null)}>
-              x
+              <span>x</span>
             </div>
             <img src={URL.createObjectURL(file as any)} alt="" />
           </div>
         )}
-{/* 
+        {/* 
         {openPoll && (
           <CreatePoll close={handleOpenPoll} />
         )} */}
@@ -162,7 +168,11 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
           <div className="footer">
             <div className="icons">
               <FileInput handleChange={handleChange} />
-              <PollIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} onClick={handleOpenPoll} />
+              <PollIcon
+                size={20}
+                color={COLOR_CONSTANTS.LIGHTGRAY}
+                onClick={handleOpenPoll}
+              />
               <EmojiIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
             </div>
             <div className="controls">
@@ -184,7 +194,11 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
           <div className="footer">
             <div className="icons">
               <FileInput handleChange={handleChange} />
-              <PollIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} onClick={handleOpenPoll}  />
+              <PollIcon
+                size={20}
+                color={COLOR_CONSTANTS.LIGHTGRAY}
+                onClick={handleOpenPoll}
+              />
               <EmojiIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
             </div>
             <div className="controls">

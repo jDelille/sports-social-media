@@ -46,6 +46,12 @@
             line-height: 20px;
             font-weight: 600;
             cursor: pointer;
+            span {
+                position: relative;
+                top: -1px;
+                left: 1pxpx;
+                font-size: 18px;
+            }
             &:hover {
                 background-color: darken(white, 5%);
             }
