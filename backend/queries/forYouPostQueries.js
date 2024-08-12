@@ -9,7 +9,8 @@ SELECT
         'id', u.id,
         'name', u.name,
         'username', u.username,
-        'avatar', u.avatar
+        'avatar', u.avatar,
+        'isVerified', u.isVerified
     ) AS user,
     p.bet AS bet,
     NULL AS reposter_username,
@@ -35,7 +36,8 @@ SELECT
         'id', ou.id,
         'name', ou.name,
         'username', ou.username,
-        'avatar', ou.avatar
+        'avatar', ou.avatar,
+        'isVerified', ou.isVerified
     ) AS user,
     p.bet AS bet,
     r.reposter_username,
@@ -64,7 +66,8 @@ SELECT
         'id', ur.id,
         'name', ur.name,
         'username', ur.username,
-        'avatar', ur.avatar
+        'avatar', ur.avatar,
+        'isVerified', ur.isVerified
     ) AS user,
     p1.bet AS bet,
     NULL AS reposter_username,
@@ -79,7 +82,8 @@ SELECT
         'id', ou.id,
         'name', ou.name,
         'username', ou.username,
-        'avatar', ou.avatar
+        'avatar', ou.avatar,
+        'isVerified', ou.isVerified
     ) AS original_post_user,
     p1.metadata,
     'quote_repost' AS type
@@ -101,7 +105,8 @@ SELECT
         'id', ur.id,
         'name', ur.name,
         'username', ur.username,
-        'avatar', ur.avatar
+        'avatar', ur.avatar,
+        'isVerified', ur.isVerified
     ) AS user,
     p1.bet AS bet,
     ur.username AS reposter_username,
@@ -116,7 +121,8 @@ SELECT
         'id', ou.id,
         'name', ou.name,
         'username', ou.username,
-        'avatar', ou.avatar
+        'avatar', ou.avatar,
+        'isVerified', ou.isVerified
     ) AS original_post_user,
     p1.metadata,
     'quote_repost_repost' AS type

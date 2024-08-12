@@ -3,7 +3,7 @@ import UserTypes from "../../types/User";
 import PostTypes from "../../types/Post";
 import moment from "moment";
 import PostMenu from "./post-menu/PostMenu";
-import { MenuIcon } from "../../icons";
+import { CheckIcon, MenuIcon } from "../../icons";
 import { COLOR_CONSTANTS } from "../../constants";
 import Avatar from "../avatar/Avatar";
 
@@ -46,13 +46,17 @@ const PostHeader: React.FC<PostHeaderProps> = ({
     },
   });
 
+  const isVerified = user.isVerified === 1;
+
+  console.log(user)
+
   return (
     <div className="post-header">
       <div className="avatar">
-        <Avatar username={post.user.username} src={user.avatar} />
+        <Avatar username={post.user.username} src={user.avatar}  />
       </div>
       <div className={quoteReposted ? "qr_user" : "user"}>
-        <p className="name">{user.name}</p>
+        <p className="name">{user.name} {isVerified && <CheckIcon color="#ff4775" size={28} />}</p>
         <p className="username">
           @{user.username} ·{" "}
           <span className="date">{moment(post.created_at).fromNow()}</span>
