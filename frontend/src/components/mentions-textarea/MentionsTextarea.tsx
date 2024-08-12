@@ -9,6 +9,7 @@ import { COLOR_CONSTANTS } from "../../constants";
 import { useAxios } from "../../hooks";
 import "./mentionsTextarea.scss";
 import useUrlMetadata from "../../hooks/post-hooks/useDetectUrls";
+import useHashTagData from "../../hooks/post-hooks/useHashtagData";
 
 type MentionsTextareaProps = {
   setBody: (body: string) => void;
@@ -36,6 +37,8 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
   }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [openPoll, setOpenPoll] = useState(false);
+    const hashTagData = useHashTagData();
+
     const urlMetadata = useUrlMetadata(body);
 
     useEffect(() => {
@@ -61,20 +64,6 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
       setBody(updatedValue);
     };
 
-    // Hard coded for now, in future get trending hashtags from db
-
-    const hashTagData = [
-      { id: "nfltrades", display: "#NFLtrades" },
-      { id: "mlbseason", display: "#MLBseason" },
-      { id: "nhlplayoffs", display: "#NHLplayoffs" },
-      { id: "nbafinals", display: "#NBAfinals" },
-      { id: "worldseries", display: "#WorldSeries" },
-      { id: "superbowl", display: "#SuperBowl" },
-      { id: "olympics", display: "#Olympics" },
-      { id: "paralympics", display: "#Paralympics" },
-      { id: "usopen", display: "#USOpen" },
-      { id: "wimbledon", display: "#Wimbledon" },
-    ];
 
     // Hard coded for now, in future get top accounts
     const mentionedUserData = [{ id: "justin", display: "@jdeli" }];
