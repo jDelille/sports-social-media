@@ -17,7 +17,7 @@ const PartyIcon: React.FC<PartyIconProps> = ({ size, color }) => {
       stroke={'#ff4775'}
       strokeWidth="2"
       strokeLinecap="round"
-      stroke-linejoin="round"
+      strokeLinejoin="round"
       data-testid="svg-icon"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

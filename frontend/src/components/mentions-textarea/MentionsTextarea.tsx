@@ -1,15 +1,12 @@
-import React, { RefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MentionsInput, Mention, OnChangeHandlerFunc } from "react-mentions";
-import { EmojiIcon, ImgIcon, PollIcon, ProgressIndicator } from "../../icons";
 import createPostStore from "../../store/createPostStore";
 import { observer } from "mobx-react";
-import FileInput from "./FileInput";
-import { COLOR_CONSTANTS } from "../../constants";
 // import CreatePoll from "../create-poll/CreatePoll";
-import { useAxios } from "../../hooks";
+import ImagePreview from "./ImagePreview";
+import PostFooter from "./PostFooter";
+import { useClickOutside, useHashTagData, useUrlMetadata } from "../../hooks";
 import "./mentionsTextarea.scss";
-import useUrlMetadata from "../../hooks/post-hooks/useDetectUrls";
-import useHashTagData from "../../hooks/post-hooks/useHashtagData";
 
 type MentionsTextareaProps = {
   setBody: (body: string) => void;
@@ -38,7 +35,11 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [openPoll, setOpenPoll] = useState(false);
     const hashTagData = useHashTagData();
-
+    useClickOutside(
+      textareaRef,
+      () => createPostStore.setIsInactive(),
+      !isComment
+    );
     const urlMetadata = useUrlMetadata(body);
 
     useEffect(() => {
@@ -64,53 +65,8 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
       setBody(updatedValue);
     };
 
-
     // Hard coded for now, in future get top accounts
     const mentionedUserData = [{ id: "justin", display: "@jdeli" }];
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file) {
-        setFile(file);
-      }
-    };
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        textareaRef.current &&
-        !textareaRef.current.contains(e.target as Node)
-      ) {
-        createPostStore.setIsInactive();
-      }
-    };
-
-    useEffect(() => {
-      if (!isComment) {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-        };
-      }
-    }, []);
-
-    const isOverTextLimit = () => {
-      return body.length > 500;
-    };
-
-    const handleOpenPoll = () => {
-      setOpenPoll(!openPoll);
-    };
-
-    const fetchUrlMetadata = async (url: string) => {
-      try {
-        const response = await useAxios.get(
-          `/metadata?url=${encodeURIComponent(url)}`
-        );
-        setUrlMetadata(response.data.og);
-      } catch (error) {
-        console.error("Error fetching URL metadata:", error);
-      }
-    };
 
     const activatedTextarea = () => {
       if (isActive) {
@@ -118,6 +74,21 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
       } else {
         return createPostStore.isActive;
       }
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setFile(file);
+      }
+    };
+
+    const isOverTextLimit = () => {
+      return body.length > 500;
+    };
+
+    const handleOpenPoll = () => {
+      setOpenPoll(!openPoll);
     };
 
     return (
@@ -140,69 +111,31 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
           <Mention trigger="@" data={mentionedUserData} />
         </MentionsInput>
 
-        {file && (
-          <div className="image-preview">
-            <div className="remove-img" onClick={() => setFile(null)}>
-              <span>x</span>
-            </div>
-            <img src={URL.createObjectURL(file as any)} alt="" />
-          </div>
-        )}
+        {file && <ImagePreview setFile={setFile} file={file} />}
+
         {/* 
         {openPoll && (
           <CreatePoll close={handleOpenPoll} />
         )} */}
 
         {!isComment && activatedTextarea() && (
-          <div className="footer">
-            <div className="icons">
-              <FileInput handleChange={handleChange} />
-              <PollIcon
-                size={20}
-                color={COLOR_CONSTANTS.LIGHTGRAY}
-                onClick={handleOpenPoll}
-              />
-              <EmojiIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
-            </div>
-            <div className="controls">
-              <p className={isOverTextLimit() ? "error" : ""}>
-                {500 - body.length}
-              </p>
-              <ProgressIndicator
-                textCount={body.length}
-                className={isOverTextLimit() ? "progress-error" : ""}
-              />
-              <button onClick={handleClick} disabled={body.length === 0}>
-                Post
-              </button>
-            </div>
-          </div>
+          <PostFooter
+            handleOpenPoll={handleOpenPoll}
+            handleImageChange={handleImageChange}
+            bodyLength={body.length}
+            isOverTextLimit={isOverTextLimit()}
+            handleClick={handleClick}
+          />
         )}
 
         {isComment && (
-          <div className="footer">
-            <div className="icons">
-              <FileInput handleChange={handleChange} />
-              <PollIcon
-                size={20}
-                color={COLOR_CONSTANTS.LIGHTGRAY}
-                onClick={handleOpenPoll}
-              />
-              <EmojiIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
-            </div>
-            <div className="controls">
-              <p className={isOverTextLimit() ? "error" : ""}>
-                {500 - body.length}
-              </p>
-              <ProgressIndicator
-                textCount={body.length}
-                className={isOverTextLimit() ? "progress-error" : ""}
-              />
-              <button onClick={handleClick} disabled={body.length === 0}>
-                Post
-              </button>
-            </div>
-          </div>
+          <PostFooter
+            handleOpenPoll={handleOpenPoll}
+            handleImageChange={handleImageChange}
+            bodyLength={body.length}
+            isOverTextLimit={isOverTextLimit()}
+            handleClick={handleClick}
+          />
         )}
       </div>
     );

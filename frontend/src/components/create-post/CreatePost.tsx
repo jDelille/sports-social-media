@@ -33,12 +33,15 @@ const CreatePost: React.FC<CreatePostProps> = () => {
       queryClient.refetchQueries();
       setBody("");
       setUrlMetadata("");
+      setFile(null)
     },
     mutationKey: ["addPost"],
   });
 
   const handlePostClick = async (e: any) => {
     e.preventDefault();
+
+    console.log(file)
 
     try {
       mutate({ body, urlMetadata, file });

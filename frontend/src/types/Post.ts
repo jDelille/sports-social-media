@@ -8,6 +8,7 @@ type PostTypes = {
     name: string;
     username: string;
     user: UserTypes;
+    image: string;
     reposter_username: string;
     reposted_post_id: number;
     original_post_body: string;

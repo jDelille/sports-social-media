@@ -19,7 +19,7 @@ const ChervonDownIcon: React.FC<ChervonDownIconProps> = ({ size, color }) => {
         stroke={color}
         strokeWidth="2"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

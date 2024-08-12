@@ -68,7 +68,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
   
     // Remove URLs
-    let cleanedBody = body.replace(urlRegex, "");
+    let cleanedBody = body?.replace(urlRegex, "");
   
     return cleanedBody;
   };
@@ -88,6 +88,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
       <PostHeader user={post.user} post={post} />
 
       <p className="body">{hideUrlsInBody(post.body)}</p>
+      {post.image && <img src={post.image} />}
       <ArticleDisplay metadata={post.metadata} />
       
       <Bet post={post} />

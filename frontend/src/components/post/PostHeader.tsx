@@ -47,9 +47,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   });
 
   const isVerified = user.isVerified === 1;
-
-  console.log(user)
-
+  
   return (
     <div className="post-header">
       <div className="avatar">

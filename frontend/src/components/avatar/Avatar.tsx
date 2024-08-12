@@ -42,8 +42,6 @@ const Avatar: React.FC<AvatarProps> = ({
     }
   };
 
-  console.log('is verified', isVerified)
-
   return (
     <div className="profile-picture-container">
       <img

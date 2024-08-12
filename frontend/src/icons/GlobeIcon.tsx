@@ -19,7 +19,7 @@ const GlobeIcon: React.FC<GlobeIconProps> = ({ size, color }) => {
         stroke={color}
         strokeWidth="2"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

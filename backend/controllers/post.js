@@ -35,12 +35,14 @@ export const addPost = (req, res) => {
 
     const values = [
       req.body.body,
-      req.body.image,
+      req.body.file,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       userInfo.id,
       JSON.stringify(req.body.urlMetadata),
       JSON.stringify(req.body.bet),
     ];
+
+    console.log(req.body.file)
 
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);
