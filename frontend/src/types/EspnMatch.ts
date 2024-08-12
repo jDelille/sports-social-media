@@ -76,4 +76,5 @@ export type Team = {
     competitions: Competition[];
     status: Status;
     shortName: string;
+    id: string;
   };

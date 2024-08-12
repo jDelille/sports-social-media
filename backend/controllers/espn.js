@@ -6,7 +6,6 @@ export const getESPNData = async (req, res) => {
     try {
         const response = await axios.get(`https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/scoreboard`);
         res.json(response.data);
-        console.log(response.data)
     } catch (error) {
         console.error('Error fetching ESPN data:', error);
         res.status(500).send('Error fetching ESPN data');

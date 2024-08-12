@@ -11,3 +11,4 @@ export { default as espnRoutes } from './espn.js';
 export { default as metadataRoutes } from './metadata.js';
 export { default as imageUploadRoutes } from './imageUpload.js';
 export { default as relationshipRoutes} from './relationship.js';
+export { default as moneylineRoutes} from './bet-check/moneyline.js';

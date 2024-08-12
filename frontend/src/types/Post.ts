@@ -34,6 +34,9 @@ type PostTypes = {
             type: string;
             price: string;
             description: string;
+            sport: string;
+            league: string;
+            eventId: string;
             teams: {
                 away: {
                     abbrv: string;

@@ -16,6 +16,7 @@ import { COLOR_CONSTANTS } from "../../constants";
 import PostFooter from "./PostFooter";
 import ArticleDisplay from "../article-display/ArticleDisplay";
 import Bet from "./Bet";
+import useMoneylineCheck from "../../hooks/bet-check/useMoneylineCheck";
 
 type PostProps = {
   post: PostTypes;
@@ -71,8 +72,6 @@ const Post: React.FC<PostProps> = ({ post }) => {
   
     return cleanedBody;
   };
-
-  console.log(post)
 
   return (
     <div className="post">

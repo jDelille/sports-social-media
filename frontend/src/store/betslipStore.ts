@@ -7,6 +7,9 @@ export type Pick = {
   decimal: string;
   description: string;
   matchup: string;
+  eventId: string;
+  sport: string;
+  league: string;
   teams: {
     home: {
       logo: string | undefined;

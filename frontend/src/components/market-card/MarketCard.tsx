@@ -11,12 +11,14 @@ import "./marketCard.scss";
 
 type MarketCardProps = {
   market: any;
-  handleClick: (description: string, price: string, type: string, matchup: string, decimal: string) => void;
+  handleClick: (description: string, price: string, type: string, matchup: string, decimal: string, eventId: string) => void;
   matchup: string
   teams: Teams;
+  eventId: string | undefined;
 };
 
-const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup, teams}) => {
+
+const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup, teams, eventId}) => {
     const [hasClickedMarket, setHasClickedMarket] = useState(false);
     const betslip = useBetSlip();
     const betstore = betslipStore;
@@ -25,6 +27,9 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup, t
       betstore.addPick(bet)
       betslip.onOpen()
     }
+
+    console.log(market)
+
 
   return (
     <div className="market-card" onClick={() => setHasClickedMarket(!hasClickedMarket)}>
@@ -44,7 +49,11 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup, t
                 decimal: outcome.price.decimal,
                 description: market.description,
                 matchup: matchup,
-                teams: teams
+                teams: teams,
+                eventId: eventId as string,
+                sport: 'baseball',
+                league: 'mlb'
+                
               })}>
                 {outcome.description} 
                 <span className="handicap">{outcome.price.handicap}</span>

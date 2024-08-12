@@ -40,6 +40,8 @@ const Match: React.FC<MatchProps> = () => {
     }
   }
 
+  console.log(match?.espnMatch)
+
   return (
     <div className="page match-page">
       <PageHeader title={match?.espnMatch.shortName as string} hasBack />
@@ -58,6 +60,7 @@ const Match: React.FC<MatchProps> = () => {
         handleClick={handleClick}
         matchup={match?.espnMatch.shortName as string}
         teams={teams}
+        eventId={match?.espnMatch.id}
       />
 
       <BetslipButton />
