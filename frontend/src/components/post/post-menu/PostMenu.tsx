@@ -9,6 +9,7 @@ type PostMenuProps = {
   onClose: () => void;
   postId: number;
   type: string;
+  imagePath: string;
 };
 
 const PostMenu: React.FC<PostMenuProps> = ({
@@ -16,6 +17,7 @@ const PostMenu: React.FC<PostMenuProps> = ({
   onClose,
   postId,
   type,
+  imagePath
 }) => {
   const [error, setError] = useState<string | null>(null);
   const { menuRef, openUpwards } = useDynamicMenuPosition(isOpen, onClose);
@@ -27,7 +29,7 @@ const PostMenu: React.FC<PostMenuProps> = ({
 
   const handleDeletePost = async () => {
     try {
-      deletePopup.onOpen(postId, type);
+      deletePopup.onOpen(postId, type, imagePath);
     } catch (error) {
       setError("error muting post");
     }

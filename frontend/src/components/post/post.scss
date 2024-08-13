@@ -127,13 +127,16 @@
     white-space: pre-wrap;
   }
 
-  .post-image {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 5px;
-  }
+    .post-image {
+      width: 100%;
+      height: 350px;
+      border-radius: 12px;
+      margin-bottom: 5px;
+      object-position: center;
+      object-fit: cover;
+    }
+  
+  
 
   .bet,
   .wagered-bet {

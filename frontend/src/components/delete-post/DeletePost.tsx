@@ -3,6 +3,7 @@ import Popup from "../popup/Popup";
 import useDeletePopup from "../../hooks/useDeletePopup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios } from "../../hooks";
+import { deleteImage } from "../../utils/firebaseUtils";
 
 type DeletePostProps = {};
 const DeletePost: React.FC<DeletePostProps> = () => {
@@ -11,6 +12,7 @@ const DeletePost: React.FC<DeletePostProps> = () => {
 
   const postId = deletePopup.postId as number;
   const type = deletePopup.type;
+  const imagePath = deletePopup.imagePath
 
   const handleDeletePost = async (postId: number) => {
     try {
@@ -20,6 +22,10 @@ const DeletePost: React.FC<DeletePostProps> = () => {
           type: type,
         },
       });
+
+      if(imagePath) {
+        await deleteImage(imagePath)
+      }
       handleClose();
     } catch (error) {
       console.log(error);

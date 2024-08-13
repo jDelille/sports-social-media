@@ -43,13 +43,13 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
   const handleDeletePost = async (postId: number, type: string) => {
     try {
-      deletePopup.onOpen(postId, type);
+      deletePopup.onOpen(postId, type, post.image);
     } catch (error) {
       setError("error muting post");
     }
   };
 
-  console.log(post)
+  console.log(post);
 
   const handleQuoteRepost = async (
     postId: number,
@@ -63,21 +63,20 @@ const Post: React.FC<PostProps> = ({ post }) => {
     e.stopPropagation();
     navigate(`/profile/${post.user_id}`);
   };
-  
 
   const hideUrlsInBody = (body: string) => {
     // Regular expression to match URLs
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-  
+
     // Remove URLs
     let cleanedBody = body?.replace(urlRegex, "");
-  
+
     return cleanedBody;
   };
 
   return (
     <div className="post">
-      {(type === "repost") && (
+      {type === "repost" && (
         <p className="reposter">
           <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />
           Reposted by{" "}
@@ -90,14 +89,18 @@ const Post: React.FC<PostProps> = ({ post }) => {
       <PostHeader user={post.user} post={post} />
 
       <p className="body">{hideUrlsInBody(post.body)}</p>
-      {post.image && <img src={post.image} className="post-image" />}
+
+      {post.image && (
+                  <img src={post.image} className="post-image" loading="lazy" />
+
+      )}
+
       <ArticleDisplay metadata={post.metadata} />
-      
+
       <Bet post={post} />
 
       <PostFooter post={post} type={type} />
 
-   
       {/* <button
         onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
       >

@@ -1,4 +1,4 @@
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { storage } from "../firebase/firebaseConfig";
 
 export const uploadImage = async (file: File): Promise<string> => {
@@ -13,3 +13,14 @@ export const uploadImage = async (file: File): Promise<string> => {
     throw error;
   }
 };
+
+export const deleteImage = async (imagePath: string): Promise<void> => {
+  const imageRef = ref(storage, imagePath);
+  
+  try {
+    await deleteObject(imageRef);
+    console.log('Image successfully deleted.');
+  } catch (error) {
+    console.error('Error deleting image:', error);
+  }
+}

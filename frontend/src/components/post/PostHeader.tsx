@@ -71,6 +71,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
             onClose={handleMenuClose}
             postId={post.id}
             type={post.type}
+            imagePath={post.image}
           />
         </div>
       )}
