@@ -8,6 +8,7 @@ import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import { COLOR_CONSTANTS, TEXT_CONSTANTS } from "../../constants";
 import { ChevronDownIcon, GlobeIcon, PencilIcon } from "../../icons";
 import createPostStore from "../../store/createPostStore";
+import {uploadImage} from '../../utils/firebaseUtils';
 import "./createPost.scss";
 
 type CreatePostProps = {};
@@ -28,7 +29,19 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   };
 
   const { mutate } = useMutation({
-    mutationFn: (newPost: any) => handleSubmit(newPost),
+    mutationFn: async (newPost: any) => {
+      // Handle image upload if file is provided
+      if (file) {
+        try {
+          const imageUrl = await uploadImage(file);
+          newPost.image = imageUrl; // Attach the image URL to the new post data
+          console.log(imageUrl)
+        } catch (error) {
+          console.error('Failed to upload image:', error);
+        }
+      }
+      await handleSubmit(newPost);
+    },
     onSettled: async () => {
       queryClient.refetchQueries();
       setBody("");
