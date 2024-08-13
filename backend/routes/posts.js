@@ -1,7 +1,9 @@
 import express from 'express';
 import { addPost, deletePost, getAllPosts, getFollowingUsersPosts, getPostsByUsername } from '../controllers/post.js';
+import multer from 'multer';
 
 const router = express.Router();
+
 
 router.post('/', addPost);
 router.get('/', getAllPosts);

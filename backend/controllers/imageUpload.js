@@ -15,6 +15,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+
 /**
  * Upload profile picture
  */
@@ -33,8 +34,7 @@ export const postProfilePicture = (req, res) => {
 
     const filePath = `/uploads/${req.file.filename}`;
 
-    const query =
-      "UPDATE users SET avatar = ?, updated_at = ? WHERE id = ?";
+    const query = "UPDATE users SET avatar = ?, updated_at = ? WHERE id = ?";
     const values = [filePath, new Date(), userId];
 
     db.query(query, values, (err, result) => {

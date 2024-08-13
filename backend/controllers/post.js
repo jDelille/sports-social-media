@@ -23,6 +23,7 @@ import {
 
 dotenv.config();
 
+
 export const addPost = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");
@@ -31,18 +32,15 @@ export const addPost = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q =
-      "INSERT INTO posts (`body`, `image`, `created_at`, `user_id`, `metadata`, `bet`) VALUES (?)";
+      "INSERT INTO posts (`body`, `created_at`, `user_id`, `metadata`, `bet`) VALUES (?)";
 
     const values = [
-      req.body.body,
-      req.body.file,
+      req.body.body, // req.body will now be populated
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       userInfo.id,
-      JSON.stringify(req.body.urlMetadata),
-      JSON.stringify(req.body.bet),
+      req.body.urlMetadata ? JSON.stringify(req.body.urlMetadata) : null,
+      req.body.bet ? JSON.stringify(req.body.bet) : null,
     ];
-
-    console.log(req.body.file)
 
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);

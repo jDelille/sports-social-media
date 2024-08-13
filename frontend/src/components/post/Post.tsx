@@ -49,6 +49,11 @@ const Post: React.FC<PostProps> = ({ post }) => {
     }
   };
 
+  console.log(post)
+
+  const imageRoute = 'http://localhost:8800'
+
+
   const handleQuoteRepost = async (
     postId: number,
     type: string,
@@ -88,7 +93,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
       <PostHeader user={post.user} post={post} />
 
       <p className="body">{hideUrlsInBody(post.body)}</p>
-      {post.image && <img src={post.image} />}
+      {post.image && <img src={`${imageRoute}${post.image}`} className="post-image" />}
       <ArticleDisplay metadata={post.metadata} />
       
       <Bet post={post} />

@@ -41,8 +41,6 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   const handlePostClick = async (e: any) => {
     e.preventDefault();
 
-    console.log(file)
-
     try {
       mutate({ body, urlMetadata, file });
       setBody("");
