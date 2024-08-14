@@ -1,0 +1,15 @@
+.leaderboard-header {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .description {
+        font-size: 16px;
+    }
+    span {
+        font-size: 13px;
+        font-weight: 500;
+        font-style: italic;
+        padding: 10px 0;
+    }
+}

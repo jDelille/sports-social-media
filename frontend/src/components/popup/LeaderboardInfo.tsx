@@ -31,7 +31,7 @@ const LeaderboardInfo: React.FC<LeaderboardInfoProps> = () => {
 
     const redirectToSportbook = () => {
         closePopup();
-        navigate('/matches')
+        navigate('/leaderboard')
     }
 
     const bodyContent = (

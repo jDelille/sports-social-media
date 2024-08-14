@@ -4,3 +4,4 @@ export { default as Match } from "./Match";
 export { default as Matches } from "./Matches";
 export { default as Profile } from "./Profile";
 export { default as EditProfile } from './EditProfile';
+export { default as Leaderboard } from './Leaderboard';

@@ -1,0 +1,71 @@
+.labels {
+    margin-top: 20px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 13px;
+    font-weight: 500;
+    padding-bottom: 0;
+    .place {
+        width: 30px;
+    }
+    .player {
+        width: 25%;
+
+    }
+    .stats {
+        display: flex;
+        justify-content: space-between;
+        width: 70%;
+        .wins,
+        .loss,
+        .odds {
+            flex: 1;
+        }
+        .wagered {
+            flex: 1;
+        }
+        .profit {
+            flex: 1;
+
+        }
+      
+    }
+}
+
+.row {
+    border-top: 1px solid rgb(224, 224, 224);
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 14px;
+    &:nth-last-child(1) {
+        border-bottom: 1px solid rgb(224, 224, 224);
+    }
+    .place {
+        width: 30px;
+    }
+    .player {
+        width: 25%;
+    }
+    .stats {
+        display: flex;
+        justify-content: space-between;
+        width: 70%;
+        .wins,
+        .loss,
+        .odds {
+            flex: 1;
+        }
+        .wagered {
+            flex: 1;
+        }
+        .profit {
+            flex: 1;
+
+        }
+    }
+}

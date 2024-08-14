@@ -1,10 +1,12 @@
 import React from "react";
-import "./leaderboardWidget.scss";
 import useLeaderboardInfoPopup from "../../hooks/popups/useLeaderboardInfoPopup";
+import "./leaderboardWidget.scss";
 
 type LeaderboardWidgetProps = {};
 const LeaderboardWidget: React.FC<LeaderboardWidgetProps> = () => {
     const leaderboardInfo = useLeaderboardInfoPopup();
+
+
 
   return (
     <div className="leaderboard-widget">
