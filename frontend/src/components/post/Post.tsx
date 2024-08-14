@@ -11,7 +11,7 @@ import {
 } from "../../hooks";
 import "./post.scss";
 import { RepostIcon } from "../../icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { COLOR_CONSTANTS } from "../../constants";
 import PostFooter from "./PostFooter";
 import ArticleDisplay from "../article-display/ArticleDisplay";
@@ -20,9 +20,11 @@ import useMoneylineCheck from "../../hooks/bet-check/useMoneylineCheck";
 
 type PostProps = {
   post: PostTypes;
+  isHashtagPage?: boolean;
 };
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
+  const {hashtag} = useParams();
   const [error, setError] = useState<string | null>(null);
 
   const { currentUser } = useContext(AuthContext) || {};
@@ -81,9 +83,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
     const elements = parts.map((part, index) => {
       if (hashtagRegex.test(part)) {
         return (
-          <a href={`/hashtag/${part.substring(1)}`} className="hashtag" key={index}>
+          <Link to={`/discover/hashtag/${part.substring(1)}`} className={isHashtagPage && part.substring(1) === hashtag ? "hashtag-page-hashtag" : "hashtag"} key={index}>
             {part}
-          </a>
+          </Link>
         );
       } else {
         return <span key={index}>{part}</span>;

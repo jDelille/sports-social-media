@@ -94,6 +94,33 @@ export const getPostsByUsername = (req, res) => {
   });
 };
 
+export const getHashtagPosts = (req, res) => {
+  const searchTerm = req.params.hashtag.toLowerCase(); // Convert to lowercase for case-insensitivity
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 7;
+  const offset = (page - 1) * pageSize;
+
+  const q = `
+    SELECT * FROM (${forYouPostsQuery}) AS posts WHERE LOWER(posts.body) LIKE ? OR LOWER(posts.body) LIKE ?
+    UNION 
+    SELECT * FROM (${forYouRepostsQuery}) AS reposts WHERE LOWER(reposts.body) LIKE ? OR LOWER(reposts.body) LIKE ?
+    UNION 
+    SELECT * FROM (${forYouQuoteRepostsQuery}) AS quotes WHERE LOWER(quotes.body) LIKE ? OR LOWER(quotes.body) LIKE ?
+    UNION 
+    SELECT * FROM (${forYouQuoteRepostsRepostsQuery}) AS quoteReposts WHERE LOWER(quoteReposts.body) LIKE ? OR LOWER(quoteReposts.body) LIKE ?
+    ORDER BY COALESCE(reposted_at, created_at) DESC
+    LIMIT ?, ?
+  `;
+
+  const hashtagPattern = `%#${searchTerm}%`;
+  const wordPattern = `%${searchTerm}%`;
+
+  db.query(q, [hashtagPattern, wordPattern, hashtagPattern, wordPattern, hashtagPattern, wordPattern, hashtagPattern, wordPattern, offset, pageSize], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json(data);
+  });
+};
+
 export const getFollowingUsersPosts = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");

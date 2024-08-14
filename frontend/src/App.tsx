@@ -27,6 +27,7 @@ import AccountCreated from "./components/popup/AccountCreated";
 import CustomizeProfileModal from "./components/customize-profile-modal/CustomizeProfileModal";
 import BetPostModal from "./components/bet-post-modal/BetPostModal";
 import LeaderboardInfo from "./components/popup/LeaderboardInfo";
+import Discover from "./pages/Discover";
 
 
 function App() {
@@ -105,6 +106,10 @@ function App() {
         {
           path: "/leaderboard",
           element: <Leaderboard/>
+        },
+        {
+          path: "/discover/hashtag/:hashtag",
+          element: <Discover />
         }
       ],
     },

@@ -125,12 +125,16 @@
     color: rgb(8, 5, 27);
     word-wrap: break-word;
     white-space: pre-wrap;
-    .hashtag {
+    .hashtag,
+    .hashtag-page-hashtag {
       color: $accent;
       text-decoration: none;
       &:hover {
         color: darken($accent, 25%);
       }
+    }
+    .hashtag-page-hashtag {
+      font-weight: 700;
     }
   }
 
