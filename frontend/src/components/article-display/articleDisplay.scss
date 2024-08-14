@@ -9,7 +9,7 @@
     transition: all 200ms ease-in-out;
     overflow: hidden;
     height: fit-content;
-    height: 160px;
+    min-height: 160px;
     &:hover {
         background-color: darken(white, 3%);
     }
@@ -35,7 +35,7 @@
         align-items: center;
         gap: 10px;
         p {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 500;
             color: $darkgray;
         }
@@ -50,11 +50,11 @@
         p {
             color: black;
             font-size: 14px;
-            font-weight: 400;
+            font-weight: 500;
 
         }
         span {
-            font-size: 12px;
+            font-size: 13px;
             color: $darkgray;
             padding-top: 2px;
             line-height: 16px;

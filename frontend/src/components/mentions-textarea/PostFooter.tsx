@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { COLOR_CONSTANTS } from "../../constants";
 import { EmojiIcon, PollIcon, ProgressIndicator } from "../../icons";
 import FileInput from "./FileInput";
@@ -18,6 +18,12 @@ const PostFooter: React.FC<PostFooterProps> = ({
   handleClick
 }) => {
 
+  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
+
+  const handleEmojiClick = () => {
+    setOpenEmojiPicker(!openEmojiPicker);
+  }
+
   return (
     <div className="footer">
       <div className="icons">
@@ -27,7 +33,7 @@ const PostFooter: React.FC<PostFooterProps> = ({
           color={COLOR_CONSTANTS.LIGHTGRAY}
           onClick={handleOpenPoll}
         />
-        <EmojiIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} />
+        <EmojiIcon size={20} color={COLOR_CONSTANTS.LIGHTGRAY} onClick={handleEmojiClick}/>
       </div>
       <div className="controls">
         <p className={isOverTextLimit ? "error" : ""}>{500 - bodyLength}</p>
@@ -35,9 +41,13 @@ const PostFooter: React.FC<PostFooterProps> = ({
           textCount={bodyLength}
           className={isOverTextLimit ? "progress-error" : ""}
         />
-        <button onClick={handleClick} disabled={bodyLength === 0}>
+        <button onClick={handleClick} disabled={bodyLength === 0} className="create-post-btn">
           Post
         </button>
+
+        {/* {openEmojiPicker && (
+         
+        )} */}
       </div>
     </div>
   );

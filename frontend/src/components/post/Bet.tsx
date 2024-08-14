@@ -37,7 +37,6 @@ const Bet: React.FC<BetProps> = ({ post }) => {
                 <p>{pick.teams.away.abbrv}</p>
                 <img src={pick.teams.away.logo} alt="Away team logo" />
               </div>
-
               <div className="team">
                 <img src={pick.teams.home.logo} alt="Home team logo" />
                 <p>{pick.teams.home.abbrv}</p>

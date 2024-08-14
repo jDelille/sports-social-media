@@ -3,11 +3,12 @@ import React from 'react';
 type EmojiIconProps = {
     size: number;
     color: string;
+    onClick: () => void;
 }
 
-const EmojiIcon: React.FC<EmojiIconProps> = ({size, color}) => {
+const EmojiIcon: React.FC<EmojiIconProps> = ({size, color, onClick}) => {
   return (
-    <svg width={size} height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={size} height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={onClick}>
 <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" strokeLinecap="round"/>
 <circle cx="9" cy="10" r="1.25" fill={color} stroke={color} strokeWidth="0.5" strokeLinecap="round"/>
 <circle cx="15" cy="10" r="1.25" fill={color} stroke={color} strokeWidth="0.5" strokeLinecap="round"/>
