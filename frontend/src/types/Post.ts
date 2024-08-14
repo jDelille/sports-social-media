@@ -30,6 +30,7 @@ type PostTypes = {
     };
     bet: {
         betStatus: number;
+        isParlay: boolean;
         picks: {
             id: string;
             matchup: string;

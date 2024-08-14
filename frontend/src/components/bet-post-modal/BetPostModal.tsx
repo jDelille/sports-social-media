@@ -17,8 +17,8 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
   const queryClient = useQueryClient();
 
   const betstore = betslipStore;
-
   const isParlay = betstore.isParlay
+
 
   const handleSubmitBet = async (newPost: any) => {
     await useAxios.post("/posts", newPost)
@@ -43,7 +43,8 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
     const bet = {
       picks,
       wager,
-      payout
+      payout,
+      isParlay
     }
 
     try {

@@ -136,21 +136,39 @@
       object-fit: cover;
     }
   
-  
+
 
   .bet,
   .wagered-bet {
-
+    border: 1px solid rgb(240, 240, 240);
     font-size: 12px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     border-radius: 8px;
     margin-bottom: 15px;
+    padding: 10px;
+
+    .info {
+      padding: 10px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      .info-title {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .ratio {
+        display: flex;
+        align-items: center;
+        
+      }
+    }
 
     .pick,
     .winning-pick,
-    .losing-pick {
+    .losing-pick,
+    .in-progress {
       border: 1px solid rgb(240, 240, 240);
       padding: 10px;
       border-radius: 8px;
@@ -188,12 +206,17 @@
       }
     }
 
+    .in-progress {
+      border: 1px solid rgb(185, 184, 184);
+
+    }
+
     .winning-pick {
-      border: 1px solid #70d470;
+      border: 1px solid #96db96;
     }
 
     .losing-pick {
-      border: 1px solid rgb(240, 112, 112);
+      border: 1px solid rgb(255, 179, 179);
     }
 
     .payout {
