@@ -6,6 +6,9 @@ type BetProps = {
   league: string;
   eventId: string;
   type: string;
+  postId: number;
+  isUpdated: number;
+  pickId: number;
 };
 
 const useMoneylineCheck = (bet: BetProps) => {
@@ -14,10 +17,17 @@ const useMoneylineCheck = (bet: BetProps) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    if (bet.isUpdated === 1) {
+      console.log('Bet already updated, skipping check');
+      setLoading(false);  // Set loading to false since no request is made
+      return;
+    }
+
     const checkMoneyline = async () => {
       try {
         const response = await useAxios.post(
-          `/moneyline/check/${bet.sport}/${bet.league}/${bet.eventId}/${bet.type}`
+          `/moneyline/check/${bet.sport}/${bet.league}/${bet.eventId}/${bet.type}/${bet.postId}/${bet.pickId}`
         );
 
         setStatus(response.data.result); // Assuming response data contains the status

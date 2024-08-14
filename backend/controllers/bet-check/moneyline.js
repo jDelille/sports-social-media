@@ -1,8 +1,9 @@
 import axios from "axios";
+import { db } from "../../connect.js";
 
 export const checkMoneyline = async (req, res) => {
     try {
-        const { sport, league, eventId, type } = req.params;
+        const { sport, league, eventId, type, postId, pickId} = req.params;
         
         // Fetching data from ESPN API
         const response = await axios.get(`https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/scoreboard`);
@@ -36,7 +37,22 @@ export const checkMoneyline = async (req, res) => {
 
         const result = isHomeTeam ? isHomeMoneylineWinner : !isHomeMoneylineWinner;
 
-        return res.json({ result });
+        const betStatus = result ? 1 : 0;
+
+        const updateBetQuery = `
+        UPDATE posts 
+        SET bet = JSON_SET(bet, '$.picks[${pickId}].betStatus', ?) 
+        WHERE id = ?
+    `;
+
+        db.query(updateBetQuery, [betStatus, postId], (err, data) => {
+            if (err) {
+                console.error('Error updating bet status:', err);
+                return res.status(500).json({ error: 'Error updating bet status' });
+            }
+            // Send the result response after the database update
+            return res.status(200).json({ result });
+        });
 
     } catch (error) {
         console.error('Error fetching moneyline data:', error);

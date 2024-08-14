@@ -29,6 +29,7 @@ type PostTypes = {
         image: string;
     };
     bet: {
+        betStatus: number;
         picks: {
             id: string;
             matchup: string;
@@ -38,6 +39,8 @@ type PostTypes = {
             sport: string;
             league: string;
             eventId: string;
+            betStatus: number;
+
             teams: {
                 away: {
                     abbrv: string;

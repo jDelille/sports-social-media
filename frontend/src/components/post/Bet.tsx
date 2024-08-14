@@ -16,18 +16,26 @@ const Bet: React.FC<BetProps> = ({ post }) => {
   return (
     <div className={hasWager ? "wagered-bet" : "bet"}>
       {post.bet.picks?.map((pick, index) => {
-        const { eventId, type, teams, price, description, id, sport, league } =
-          pick;
+        // const { eventId, type, teams, price, description, id, sport, league } =
+        //   pick;
 
-        const { status, loading, error } = useMoneylineCheck({
-          sport,
-          league,
-          eventId,
-          type
-        });
+          post.bet.picks?.forEach((pick, index)=> {
+            const { eventId, type, sport, league } = pick;
+            useMoneylineCheck({
+              sport,
+              league,
+              eventId,
+              type,
+              postId: post.id,
+              pickId: index,
+              isUpdated: post.bet.betStatus
+            });
+          });
+
+        const isWinningBet = pick.betStatus === 1;
 
         return (
-          <div className="pick" id={pick.id}>
+          <div className={isWinningBet ? 'winning-pick' : 'losing-pick'} id={pick.id}>
             <p className="description">
               {pick.type} <p>&#8226;</p> <span>{pick.description}</span>
             </p>
@@ -48,7 +56,7 @@ const Bet: React.FC<BetProps> = ({ post }) => {
             {/* 
             {error && <p>Error: {error}</p>}
             {status && <p>Status: {status}</p>} */}
-            {<p>Status: {status ? "Win" : "Loss"}</p>}
+            {<p>Status: {isWinningBet ? "Win" : "Loss"}</p>}
             
           </div>
         );

@@ -148,7 +148,9 @@
     border-radius: 8px;
     margin-bottom: 15px;
 
-    .pick {
+    .pick,
+    .winning-pick,
+    .losing-pick {
       border: 1px solid rgb(240, 240, 240);
       padding: 10px;
       border-radius: 8px;
@@ -184,6 +186,14 @@
         top: 10px;
         color: $accent;
       }
+    }
+
+    .winning-pick {
+      border: 1px solid #70d470;
+    }
+
+    .losing-pick {
+      border: 1px solid rgb(240, 112, 112);
     }
 
     .payout {

@@ -49,8 +49,6 @@ const Post: React.FC<PostProps> = ({ post }) => {
     }
   };
 
-  console.log(post);
-
   const handleQuoteRepost = async (
     postId: number,
     type: string,
@@ -73,6 +71,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
     return cleanedBody;
   };
+
 
   return (
     <div className="post">
