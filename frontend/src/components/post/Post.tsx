@@ -63,13 +63,34 @@ const Post: React.FC<PostProps> = ({ post }) => {
   };
 
   const hideUrlsInBody = (body: string) => {
+    if (!body) return "";
+  
     // Regular expression to match URLs
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-
+  
+    // Regular expression to match hashtags
+    const hashtagRegex = /#(\w+)/g;
+  
     // Remove URLs
-    let cleanedBody = body?.replace(urlRegex, "");
-
-    return cleanedBody;
+    let cleanedBody = body.replace(urlRegex, "");
+  
+    // Split the cleanedBody into parts: text and hashtags
+    const parts = cleanedBody.split(/(#\w+)/g);
+  
+    // Map over the parts, wrapping hashtags in <a> elements
+    const elements = parts.map((part, index) => {
+      if (hashtagRegex.test(part)) {
+        return (
+          <a href={`/hashtag/${part.substring(1)}`} className="hashtag" key={index}>
+            {part}
+          </a>
+        );
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  
+    return elements;
   };
 
 
