@@ -7,6 +7,7 @@ import ImagePreview from "./ImagePreview";
 import PostFooter from "./PostFooter";
 import { useClickOutside, useHashTagData, useUrlMetadata } from "../../hooks";
 import "./mentionsTextarea.scss";
+import { mentionsInputStyle, mentionStyle } from "./mentionStyles";
 
 type MentionsTextareaProps = {
   setBody: (body: string) => void;
@@ -66,7 +67,7 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
     };
 
     // Hard coded for now, in future get top accounts
-    const mentionedUserData = [{ id: "justin", display: "@jdeli" }];
+    const mentionedUserData = [{ id: "justin", display: "@jdeli" }, { id: "justin", display: "@jdeli" }];
 
     const activatedTextarea = () => {
       if (isActive) {
@@ -106,9 +107,10 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
           onChange={onChange}
           placeholder={placeholder}
           className="mentions-textarea"
+          style={mentionsInputStyle} 
         >
-          <Mention trigger="#" data={hashTagData} />
-          <Mention trigger="@" data={mentionedUserData} />
+          <Mention trigger="#" data={hashTagData} style={mentionsInputStyle}  />
+          <Mention trigger="@" data={mentionedUserData}  />
         </MentionsInput>
 
         {file && <ImagePreview setFile={setFile} file={file} />}

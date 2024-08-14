@@ -27,7 +27,7 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({ match }) => {
         <div className="home">
           <img src={homeTeam.team.logo} alt="" className="logo" />
           <div className="name">
-            <p>{homeTeam.team.displayName}</p>
+            <p>{homeTeam.team.abbreviation} {homeTeam.team.shortDisplayName}</p>
             <span className="record">{homeTeam?.records[0].summary}</span>
           </div>
         </div>
@@ -37,7 +37,7 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({ match }) => {
         </div>
         <div className="away">
           <div className="name">
-            <p>{awayTeam.team.displayName}</p>
+            <p>{awayTeam.team.abbreviation} {awayTeam.team.shortDisplayName}</p>
             <span className="away-record">{awayTeam?.records[0].summary}</span>
           </div>
           <img src={awayTeam.team.logo} alt="" className="logo" />

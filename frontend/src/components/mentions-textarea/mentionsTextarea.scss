@@ -11,7 +11,7 @@
         font-size: 15px;
         position: relative;
         max-height: 300px;
-        overflow-y: auto !important;
+        // overflow-y: auto !important;
       
     }
     .footer {
@@ -36,6 +36,8 @@
     height: fit-content;
     .mentions-textarea  {
         margin-bottom: 20px;
+        position: relative;
+      
       
     }
     .image-preview {
