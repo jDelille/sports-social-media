@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import matchStore from "../store/matchStore";
-import { useBetSlip } from "../hooks";
 import MatchCategories from "../components/match-categories/MatchCategories";
 import { PageHeader } from "../components";
 import MatchHeader from "../components/match-header/MatchHeader";
@@ -16,31 +15,17 @@ const Match: React.FC<MatchProps> = () => {
 
   const match = matchStore.match;
   const displayGroups = match?.displayGroups;
-  const betSlip = useBetSlip();
-
-  const handleClick = (description: string, price: string, type: string, matchup: string) => {
-    const bet = {
-      description,
-      price,
-      type,
-      matchup
-    };
-
-    betSlip.onOpen();
-  };
 
   const teams = {
     home: {
       logo: match?.espnMatch.competitions[0].competitors[0].team.logo,
-      abbrv: match?.espnMatch.competitions[0].competitors[0].team.abbreviation
+      abbrv: match?.espnMatch.competitions[0].competitors[0].team.abbreviation,
     },
     away: {
       logo: match?.espnMatch.competitions[0].competitors[1].team.logo,
-      abbrv: match?.espnMatch.competitions[0].competitors[1].team.abbreviation
-    }
-  }
-
-  console.log(match?.espnMatch)
+      abbrv: match?.espnMatch.competitions[0].competitors[1].team.abbreviation,
+    },
+  };
 
   return (
     <div className="page match-page">
@@ -57,7 +42,6 @@ const Match: React.FC<MatchProps> = () => {
       <MarketFeed
         displayGroups={displayGroups}
         selectedCategory={selectedCategory}
-        handleClick={handleClick}
         matchup={match?.espnMatch.shortName as string}
         teams={teams}
         eventId={match?.espnMatch.id}
@@ -69,18 +53,3 @@ const Match: React.FC<MatchProps> = () => {
 };
 
 export default Match;
-
-{
-  /* <div
-            className="outcomes"
-            onClick={() =>
-              handleClick(
-                group?.markets[2]?.outcomes[0].description,
-                group.markets[2].outcomes[0].price.american
-              )
-            }
-          >
-            <p>{group.markets[2].outcomes[0].description}</p>
-            <p>{group.markets[2].outcomes[0].price.american}</p>
-          </div> */
-}

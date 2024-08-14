@@ -41,7 +41,7 @@ type PostTypes = {
             league: string;
             eventId: string;
             betStatus: number;
-
+            handicap: string | null;
             teams: {
                 away: {
                     abbrv: string;

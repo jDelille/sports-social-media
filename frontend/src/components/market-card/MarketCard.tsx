@@ -11,14 +11,13 @@ import "./marketCard.scss";
 
 type MarketCardProps = {
   market: any;
-  handleClick: (description: string, price: string, type: string, matchup: string, decimal: string, eventId: string) => void;
   matchup: string
   teams: Teams;
   eventId: string | undefined;
 };
 
 
-const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup, teams, eventId}) => {
+const MarketCard: React.FC<MarketCardProps> = ({ market, matchup, teams, eventId}) => {
     const [hasClickedMarket, setHasClickedMarket] = useState(false);
     const betslip = useBetSlip();
     const betstore = betslipStore;
@@ -28,7 +27,7 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup, t
       betslip.onOpen()
     }
 
-    console.log(market)
+  
 
 
   return (
@@ -47,12 +46,13 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, handleClick, matchup, t
                 type: outcome.description, 
                 price: outcome.price.american,
                 decimal: outcome.price.decimal,
-                description: market.description,
+                description: market.description, // this is the type of bet (moneyline, spread)
                 matchup: matchup,
                 teams: teams,
                 eventId: eventId as string,
                 sport: 'baseball',
-                league: 'mlb'
+                league: 'mlb',
+                handicap: market.description === 'Runline' ? outcome.price.handicap : null
                 
               })}>
                 {outcome.description} 

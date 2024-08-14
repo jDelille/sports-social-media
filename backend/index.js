@@ -1,7 +1,23 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import {  authRoutes, commentRoutes, espnRoutes, imageUploadRoutes, likeRoutes, metadataRoutes, moneylineRoutes, mutePostRoutes, oddsRoutes, postRoutes, quoteRepostRoutes, relationshipRoutes, repostRoutes, userRoutes } from "./routes/index.js";
+import {
+  authRoutes,
+  commentRoutes,
+  espnRoutes,
+  imageUploadRoutes,
+  likeRoutes,
+  metadataRoutes,
+  moneylineRoutes,
+  mutePostRoutes,
+  oddsRoutes,
+  postRoutes,
+  quoteRepostRoutes,
+  relationshipRoutes,
+  repostRoutes,
+  spreadRoutes,
+  userRoutes,
+} from "./routes/index.js";
 const app = express();
 
 // middlewares
@@ -22,11 +38,11 @@ app.use(cookieParser());
  * Post routes
  */
 app.use("/api/posts", postRoutes);
-app.use("/api/quote-reposts", quoteRepostRoutes)
+app.use("/api/quote-reposts", quoteRepostRoutes);
 app.use("/api/likes", likeRoutes);
-app.use("/api/comments", commentRoutes)
-app.use("/api/reposts", repostRoutes)
-app.use("/api/muted-posts", mutePostRoutes)
+app.use("/api/comments", commentRoutes);
+app.use("/api/reposts", repostRoutes);
+app.use("/api/muted-posts", mutePostRoutes);
 app.use("/api/metadata", metadataRoutes);
 app.use("/api/image-upload", imageUploadRoutes);
 
@@ -41,12 +57,13 @@ app.use("/api/relationships", relationshipRoutes);
  * Sport routes
  */
 app.use("/api/odds", oddsRoutes);
-app.use("/api/espn", espnRoutes)
+app.use("/api/espn", espnRoutes);
 
 /**
  * Bet checking routes
  */
 app.use("/api/moneyline", moneylineRoutes);
+app.use("/api/spread", spreadRoutes);
 
 app.listen(8800, () => {
   console.log("backend working.");

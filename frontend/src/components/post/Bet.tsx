@@ -1,6 +1,6 @@
 import React from "react";
 import PostTypes from "../../types/Post";
-import useMoneylineCheck from "../../hooks/bet-check/useMoneylineCheck";
+import useBetCheck from "../../hooks/bet-check/useBetCheck";
 
 type BetProps = {
   post: PostTypes;
@@ -21,6 +21,7 @@ const Bet: React.FC<BetProps> = ({ post }) => {
   const inProgressCount =
     post.bet.picks?.filter((pick) => pick.betStatus === undefined).length || 0;
 
+
   return (
     <div className={hasWager ? "wagered-bet" : "bet"}>
       <div className="info">
@@ -32,18 +33,19 @@ const Bet: React.FC<BetProps> = ({ post }) => {
         )}
         <div className="ratio">
           {winCount > 0 && <p>{winCount} wins</p>}
-          {lossCount > 0 && <p>, {lossCount} loss</p>}
-          {inProgressCount > 0 && <p>, {inProgressCount} in-progress</p>}
+          {lossCount > 0 && <p> {lossCount} loss</p>}
+          {inProgressCount > 0 && <p> {inProgressCount} in-progress</p>}
         </div>
       </div>
 
-      {post.bet.picks?.map((pick, index) => {
+      {post.bet.picks?.map((pick) => {
         // const { eventId, type, teams, price, description, id, sport, league } =
         //   pick;
 
         post.bet.picks?.forEach((pick, index) => {
-          const { eventId, type, sport, league } = pick;
-          useMoneylineCheck({
+          const { eventId, type, sport, league} = pick;
+
+          useBetCheck({
             sport,
             league,
             eventId,
@@ -51,7 +53,9 @@ const Bet: React.FC<BetProps> = ({ post }) => {
             postId: post.id,
             pickId: index,
             isUpdated: post.bet.betStatus,
-          });
+            description: pick.description,
+            handicap: pick.handicap
+          })
         });
 
         const isWinningBet = pick.betStatus === 1;

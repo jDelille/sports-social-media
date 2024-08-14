@@ -10,6 +10,7 @@ export type Pick = {
   eventId: string;
   sport: string;
   league: string;
+  handicap: string | null;
   teams: {
     home: {
       logo: string | undefined;

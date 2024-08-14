@@ -12,3 +12,4 @@ export { default as metadataRoutes } from './metadata.js';
 export { default as imageUploadRoutes } from './imageUpload.js';
 export { default as relationshipRoutes} from './relationship.js';
 export { default as moneylineRoutes} from './bet-check/moneyline.js';
+export { default as spreadRoutes } from './bet-check/spread.js';
