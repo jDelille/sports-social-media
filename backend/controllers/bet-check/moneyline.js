@@ -3,7 +3,9 @@ import { db } from "../../connect.js";
 
 export const checkMoneyline = async (req, res) => {
     try {
-        const { sport, league, eventId, type, postId, pickId} = req.params;
+        const { sport, league, eventId, type, postId, pickId, team} = req.params;
+
+        console.log(req.params)
         
         // Fetching data from ESPN API
         const response = await axios.get(`https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/scoreboard`);
@@ -31,7 +33,7 @@ export const checkMoneyline = async (req, res) => {
         const homeScore = parseInt(homeTeam.score);
         const awayScore = parseInt(awayTeam.score);
 
-        const isHomeTeam = type === homeTeam.team.displayName;
+        const isHomeTeam = team === homeTeam.team.displayName;
         
         const isHomeMoneylineWinner = homeScore > awayScore;
 

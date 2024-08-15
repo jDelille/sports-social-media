@@ -67,9 +67,9 @@ const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
     <div className="info-wrapper">
       <div className="info">
         <div className="type">
-          <p>{pick.type}</p>
-          <span className="description">{pick.description}</span>
-          <MatchupInfo teams={pick.teams} />
+          <p>{pick.type} </p>
+          <span className="team">{pick.team} {pick.handicap} </span>
+          <MatchupInfo teams={pick.teams}  />
         </div>
         <div className="price-wrapper">
           <p className="price">

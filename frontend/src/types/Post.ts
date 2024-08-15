@@ -36,7 +36,7 @@ type PostTypes = {
             matchup: string;
             type: string;
             price: string;
-            description: string;
+            team: string;
             sport: string;
             league: string;
             eventId: string;

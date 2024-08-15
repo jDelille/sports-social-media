@@ -2,10 +2,10 @@ import { makeAutoObservable } from "mobx";
 
 export type Pick = {
   id: string;
-  type: string;
+  team: string;
   price: string;
   decimal: string;
-  description: string;
+  type: string;
   matchup: string;
   eventId: string;
   sport: string;

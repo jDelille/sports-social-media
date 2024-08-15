@@ -39,22 +39,21 @@ const Bet: React.FC<BetProps> = ({ post }) => {
       </div>
 
       {post.bet.picks?.map((pick) => {
-        // const { eventId, type, teams, price, description, id, sport, league } =
-        //   pick;
 
         post.bet.picks?.forEach((pick, index) => {
-          const { eventId, type, sport, league} = pick;
+          const { eventId, type, sport, league, team} = pick;
 
           useBetCheck({
             sport,
             league,
             eventId,
+            team,
             type,
             postId: post.id,
             pickId: index,
             isUpdated: post.bet.betStatus,
-            description: pick.description,
             handicap: pick.handicap
+            
           })
         });
 
@@ -74,7 +73,7 @@ const Bet: React.FC<BetProps> = ({ post }) => {
               id={pick.id}
             >
               <p className="description">
-                {pick.type} <p>&#8226;</p> <span>{pick.description}</span>
+                {pick.type} <p>&#8226;</p> <span>{pick.team} {pick.handicap}</span>
               </p>
 
               <div className="matchup">

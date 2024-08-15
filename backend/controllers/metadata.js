@@ -5,7 +5,6 @@ const { parse } = pkg;
 export const fetchMetadata = async (url) => {
     try {
         const metadata = await parse(url);
-        console.log(metadata); // Check if metadata is logged correctly
         return metadata; // Return the parsed metadata
     } catch (error) {
         console.error('Error fetching or parsing metadata:', error);

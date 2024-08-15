@@ -10,6 +10,7 @@ type BetProps = {
   isUpdated: number;
   pickId: number;
   handicap: string; 
+  team: string;
 };
 
 const useSpreadCheck = (bet: BetProps) => {
@@ -27,7 +28,7 @@ const useSpreadCheck = (bet: BetProps) => {
     const checkSpread = async () => {
       try {
         const response = await useAxios.post(
-          `/spread/check/${bet.sport}/${bet.league}/${bet.eventId}/${bet.type}/${bet.postId}/${bet.pickId}/${parseFloat(bet.handicap)}`
+          `/spread/check/${bet.sport}/${bet.league}/${bet.eventId}/${bet.type}/${bet.postId}/${bet.pickId}/${parseFloat(bet.handicap)}/${bet.team}`
         );
 
         setStatus(response.data.result); // Assuming response data contains the status

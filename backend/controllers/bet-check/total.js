@@ -1,9 +1,9 @@
 import axios from "axios";
 import { db } from "../../connect.js";
 
-export const checkSpread = async (req, res) => {
+export const checkTotal = async (req, res) => {
   try {
-    const { sport, league, eventId, type, postId, pickId, handicap, team } =
+    const { sport, league, eventId, type, postId, pickId, total, handicap } =
       req.params;
 
     // Fetching data from ESPN API
@@ -14,7 +14,7 @@ export const checkSpread = async (req, res) => {
 
     // Find the game by eventId
     const game = games.find((game) => game.id === eventId);
-
+    
     // If game not found, return 404
     if (!game) {
       return res.status(404).json({ error: "Game not found." });
@@ -33,24 +33,21 @@ export const checkSpread = async (req, res) => {
     const [homeTeam, awayTeam] = competitors;
     const homeScore = parseInt(homeTeam.score);
     const awayScore = parseInt(awayTeam.score);
+    const totalScore = homeScore + awayScore;
 
-    const isHomeTeam = team === homeTeam.team.displayName;
-
-    const handicapInt = parseFloat(handicap);
+    const totalInt = parseFloat(handicap);
 
     let score;
     let result;
 
-    if (isHomeTeam) {
-      score = homeScore + handicapInt;
-      if (score > awayScore) {
+    if (total === "Over") {
+      if (totalScore > totalInt) {
         result = 1;
       } else {
         result = 0;
       }
     } else {
-      score = awayScore + handicapInt;
-      if (score > homeScore) {
+      if (totalScore < totalInt) {
         result = 1;
       } else {
         result = 0;
@@ -74,7 +71,7 @@ export const checkSpread = async (req, res) => {
       return res.status(200).json({ result });
     });
   } catch (error) {
-    console.error("Error fetching spread data:", error);
-    return res.status(500).json({ error: "Error fetching spread data" });
+    console.error("Error fetching total (over / under) data:", error);
+    return res.status(500).json({ error: "Error fetching total (over / under) data" });
   }
 };

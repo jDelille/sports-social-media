@@ -66,7 +66,7 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
           <div className="pick">
             <p>{pick.matchup}</p>
             <p>{pick.type}</p>
-            <p>{pick.description} </p>
+            <p>{pick.team} </p>
             <span>{pick.price}</span>
           </div>
         ))}

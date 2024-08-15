@@ -16,6 +16,7 @@ import {
   relationshipRoutes,
   repostRoutes,
   spreadRoutes,
+  totalRoutes,
   userRoutes,
 } from "./routes/index.js";
 const app = express();
@@ -64,6 +65,7 @@ app.use("/api/espn", espnRoutes);
  */
 app.use("/api/moneyline", moneylineRoutes);
 app.use("/api/spread", spreadRoutes);
+app.use("/api/total", totalRoutes);
 
 app.listen(8800, () => {
   console.log("backend working.");
