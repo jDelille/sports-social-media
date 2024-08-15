@@ -4,6 +4,7 @@ import { useBetSlip } from "../../hooks";
 import betslipStore, { Pick, Picks } from "../../store/betslipStore";
 import { Teams } from "../market-feed/MarketFeed";
 import "./marketCard.scss";
+import { useParams } from "react-router-dom";
 
 /**
  * Make market types
@@ -26,6 +27,10 @@ const MarketCard: React.FC<MarketCardProps> = ({
   const betslip = useBetSlip();
   const betstore = betslipStore;
 
+  const {sport, league} = useParams();
+
+  console.log(sport, league)
+
   const handleOutcomeClick = (bet: Pick) => {
     betstore.addPick(bet);
     betslip.onOpen();
@@ -45,6 +50,7 @@ const MarketCard: React.FC<MarketCardProps> = ({
         {hasClickedMarket && (
           <div className="market1">
             {market.outcomes.map((outcome: any) => {
+              console.log(market)
               return (
                 <p
                   className="outcome"
@@ -59,8 +65,8 @@ const MarketCard: React.FC<MarketCardProps> = ({
                       matchup: matchup,
                       teams: teams,
                       eventId: eventId as string,
-                      sport: "baseball",
-                      league: "mlb",
+                      sport: sport as string,
+                      league: league as string,
                       handicap:
                         market.description === "Runline" ||
                         market.description === "Total"

@@ -60,7 +60,7 @@ const Matches: React.FC<MatchesProps> = () => {
   const handleMatchClick = (match: BovadaMatchTypes) => {
     matchStore.setMatch(match);
     console.log(match)
-    navigate(`/match`);
+    navigate(`/match/${sport}/${league}`);
   };
 
   const handleChooseSport = (selectedSport: Sport) => {

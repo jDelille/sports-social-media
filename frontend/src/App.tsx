@@ -92,7 +92,7 @@ function App() {
           element: <Matches />,
         },
         {
-          path: "/match",
+          path: "/match/:sport/:league",
           element: <Match />,
         },
         {
