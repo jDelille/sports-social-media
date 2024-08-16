@@ -13,6 +13,7 @@ import {
   oddsRoutes,
   postRoutes,
   quoteRepostRoutes,
+  recordRoutes,
   relationshipRoutes,
   repostRoutes,
   spreadRoutes,
@@ -63,6 +64,7 @@ app.use("/api/espn", espnRoutes);
 /**
  * Bet checking routes
  */
+app.use("/api/bet-record", recordRoutes);
 app.use("/api/moneyline", moneylineRoutes);
 app.use("/api/spread", spreadRoutes);
 app.use("/api/total", totalRoutes);
