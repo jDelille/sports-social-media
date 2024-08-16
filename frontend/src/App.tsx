@@ -28,6 +28,7 @@ import CustomizeProfileModal from "./components/customize-profile-modal/Customiz
 import BetPostModal from "./components/bet-post-modal/BetPostModal";
 import LeaderboardInfo from "./components/popup/LeaderboardInfo";
 import Discover from "./pages/Discover";
+import GamePreview from "./components/game-preview/GamePreview";
 
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
                 <CustomizeProfileModal />
                 <BetPostModal />
                 <LeaderboardInfo />
+                <GamePreview />
               </div>
               <RightSidebar currentUser={currentUser} />
               <SignUpBar currentUser={currentUser} />

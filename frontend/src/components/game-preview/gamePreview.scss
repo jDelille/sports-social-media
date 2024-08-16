@@ -1,0 +1,49 @@
+@use '../../scss/variables' as *;
+
+.overlay {
+    background-color: rgb(211, 210, 216, 0.9);
+    backdrop-filter: blur(8px);
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    top: 0;
+    .game-preview {
+        background-color: white;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        width: 52rem;
+        height: fit-content;
+        border-radius: 22px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+        .game-header {
+            height: 100px;
+            position: relative;
+            .close {
+                position: absolute;
+                right: 0;
+                cursor: pointer;
+                padding: 0.25rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+        
+                border-radius: 50%;
+                &:hover {
+                  background-color: darken(white, 3%);
+                }
+              }
+        }
+        .game-info {
+            height: 300px;
+        }
+    }
+}

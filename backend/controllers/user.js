@@ -20,7 +20,6 @@ export const getSuggestedUsers = (req, res) => {
     const q = `
         SELECT * 
         FROM users 
-        ORDER BY follower_count DESC 
         LIMIT 3
     `;
 

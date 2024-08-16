@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import './modal.scss';
 import { COLOR_CONSTANTS } from '../../constants';
 import { BackIcon, CloseIcon } from '../../icons';
+import './modal.scss';
 
 type ModalProps = {
     isOpen: boolean;

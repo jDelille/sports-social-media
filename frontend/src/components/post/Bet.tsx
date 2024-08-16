@@ -1,6 +1,7 @@
 import React from "react";
 import PostTypes from "../../types/Post";
 import useBetCheck from "../../hooks/bet-check/useBetCheck";
+import { useGamePreview } from "../../hooks";
 
 type BetProps = {
   post: PostTypes;
@@ -10,6 +11,8 @@ const Bet: React.FC<BetProps> = ({ post }) => {
   if (!post.bet) {
     return null;
   }
+
+  const gamePreview = useGamePreview();
 
   const hasWager = parseInt(post.bet.wager) > 0;
   const isParlay = post.bet.isParlay;
@@ -21,6 +24,10 @@ const Bet: React.FC<BetProps> = ({ post }) => {
   const inProgressCount =
     post.bet.picks?.filter((pick) => pick.betStatus === undefined).length || 0;
 
+  const onGameClick = () => {
+    gamePreview.onOpen();
+    console.log(gamePreview);
+  };
 
   return (
     <div className={hasWager ? "wagered-bet" : "bet"}>
@@ -39,9 +46,8 @@ const Bet: React.FC<BetProps> = ({ post }) => {
       </div>
 
       {post.bet.picks?.map((pick) => {
-
         post.bet.picks?.forEach((pick, index) => {
-          const { eventId, type, sport, league, team} = pick;
+          const { eventId, type, sport, league, team } = pick;
 
           useBetCheck({
             sport,
@@ -52,9 +58,8 @@ const Bet: React.FC<BetProps> = ({ post }) => {
             postId: post.id,
             pickId: index,
             isUpdated: post.bet.betStatus,
-            handicap: pick.handicap
-            
-          })
+            handicap: pick.handicap,
+          });
         });
 
         const isWinningBet = pick.betStatus === 1;
@@ -71,9 +76,13 @@ const Bet: React.FC<BetProps> = ({ post }) => {
                   : "losing-pick"
               }
               id={pick.id}
+              onClick={onGameClick}
             >
               <p className="description">
-                {pick.type} <p>&#8226;</p> <span>{pick.team} {pick.handicap}</span>
+                {pick.type} <p>&#8226;</p>{" "}
+                <span>
+                  {pick.team} {pick.handicap}
+                </span>
               </p>
 
               <div className="matchup">
