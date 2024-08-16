@@ -45,7 +45,11 @@
           border: 2px solid #cccaca;
         }
       }
-      .follow-btn {
+     
+    }
+    .action-buttons {
+      .follow-btn,
+      .edit-profile-btn {
         border: none;
         padding: 0.5rem 1rem;
         border-radius: 22px;
@@ -115,4 +119,6 @@
       }
     }
   }
+
+  
 }
