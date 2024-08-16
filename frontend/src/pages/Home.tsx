@@ -6,6 +6,7 @@ import FeedSelector from "../components/feed-selector/FeedSelector";
 import FollowingPosts from "../components/feed/FollowingPosts";
 import "./page.scss";
 import { AuthContext } from "../context/AuthContext";
+import BetFeed from "../components/feed/BetFeed";
 
 type HomeProps = {};
 const Home: React.FC<HomeProps> = () => {
@@ -27,6 +28,10 @@ const Home: React.FC<HomeProps> = () => {
 
       {selectedFeed === "following" && (
         <FollowingPosts userId={currentUser?.id} />
+      )}
+
+      {selectedFeed === "bets" && (
+        <BetFeed />
       )}
     </div>
   );

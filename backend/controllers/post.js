@@ -20,9 +20,9 @@ import {
   forYouQuoteRepostsRepostsQuery,
   forYouRepostsQuery,
 } from "../queries/forYouPostQueries.js";
+import { betPostsQuery, betQuoteRepostsQuery, betQuoteRepostsRepostsQuery, betRepostsQuery } from "../queries/betPostQueries.js";
 
 dotenv.config();
-
 
 export const addPost = (req, res) => {
   const token = req.cookies.accessToken;
@@ -112,10 +112,25 @@ export const getHashtagPosts = (req, res) => {
   const hashtagPattern = `%#${searchTerm}%`;
   const wordPattern = `%${searchTerm}%`;
 
-  db.query(q, [hashtagPattern, wordPattern, hashtagPattern, wordPattern, hashtagPattern, wordPattern, hashtagPattern, wordPattern, offset, pageSize], (err, data) => {
-    if (err) return res.status(500).json(err);
-    return res.status(200).json(data);
-  });
+  db.query(
+    q,
+    [
+      hashtagPattern,
+      wordPattern,
+      hashtagPattern,
+      wordPattern,
+      hashtagPattern,
+      wordPattern,
+      hashtagPattern,
+      wordPattern,
+      offset,
+      pageSize,
+    ],
+    (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(data);
+    }
+  );
 };
 
 export const getFollowingUsersPosts = (req, res) => {
@@ -167,6 +182,39 @@ export const getFollowingUsersPosts = (req, res) => {
           return res.status(200).json(data);
         }
       );
+    });
+  });
+};
+
+export const getBetPosts = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 7;
+  const offset = (page - 1) * pageSize;
+
+  jwt.verify(token, process.env.SECRET_KEY, (err) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    // Query to get posts with non-empty bet field
+    const combinedQuery = `
+    ${betPostsQuery} 
+    UNION ${betRepostsQuery} 
+    UNION ${betQuoteRepostsQuery} 
+    UNION ${betQuoteRepostsRepostsQuery}
+    ORDER BY COALESCE(reposted_at, created_at) DESC
+    LIMIT ?, ?
+  `;
+
+    db.query(combinedQuery, [offset, pageSize], (err, data) => {
+      if (err) {
+        console.error("Error fetching posts with bets:", err);
+        return res
+          .status(500)
+          .json({ message: "Error fetching posts with bets" });
+      }
+      return res.status(200).json(data);
     });
   });
 };
