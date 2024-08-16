@@ -79,12 +79,9 @@ export const getPostsByUsername = (req, res) => {
 
   const q = `
     ${profilePostsQuery}
-    UNION ALL
-    ${profileRepostsQuery}
-    UNION ALL
-    ${profileQuoteRepostsQuery}
-    UNION ALL
-    ${profileQuoteRepostsRepostsQuery}
+    UNION ${profileRepostsQuery}
+    UNION ${profileQuoteRepostsQuery}
+    UNION ${profileQuoteRepostsRepostsQuery}
     ORDER BY COALESCE(reposted_at, created_at) DESC
   `;
 
