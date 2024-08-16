@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAxios, useLoginReminder } from "../../hooks";
 import UserTypes from "../../types/User";
 import { COLOR_CONSTANTS } from "../../constants";
 import UserPlus from "../../icons/UserPlusIcon";
 import { observer } from "mobx-react";
-import { userRelationshipsStore } from "../../hooks/relationships/useRelationships";
+import { userRelationshipsStore } from "../../store/userRelationshipStore";
 
 type ActionButtonsProps = {
   user: UserTypes;
@@ -18,6 +18,21 @@ const ActionButtons: React.FC<ActionButtonsProps> = observer(({ isUserProfile, u
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   const loginReminder = useLoginReminder();
+
+  useEffect(() => {
+    const fetchFollowStatus = async () => {
+      if (currentUser) {
+        try {
+          const response = await useAxios.get(`/relationships/${user?.id}/follow-status`);
+          setIsFollowing(response.data.isFollowing);
+        } catch (error) {
+          console.error("Error fetching follow status:", error);
+        }
+      }
+    };
+
+    fetchFollowStatus();
+  }, [currentUser, user?.id]);
 
   const handleFollowClick = async () => {
     if (!currentUser) {
@@ -35,6 +50,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = observer(({ isUserProfile, u
     // Optimistically update UI
     setIsFollowing(newIsFollowing);
     userRelationshipsStore.setFollowerCount(newFollowerCount);
+
+   
 
     try {
       if (newIsFollowing) {

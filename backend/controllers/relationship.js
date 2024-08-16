@@ -71,6 +71,38 @@ export const unfollowUser = (req, res) => {
   });
 };
 
+export const getFollowStatus = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  const userId = req.params.userId;
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const currentUserId = userInfo.id;
+
+    // Check if the current user is following the target user
+    const followStatusQuery = `
+      SELECT EXISTS (
+        SELECT 1 
+        FROM relationships 
+        WHERE follower_id = ? AND followed_id = ?
+      ) AS isFollowing
+    `;
+
+    db.query(followStatusQuery, [currentUserId, userId], (err, result) => {
+      if (err) {
+        console.error('Error fetching follow status:', err);
+        return res.status(500).json({ message: 'Error fetching follow status' });
+      }
+
+      const isFollowing = result[0].isFollowing === 1;
+      return res.status(200).json({ isFollowing });
+    });
+  });
+};
+
 export const getUserRelationships = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");

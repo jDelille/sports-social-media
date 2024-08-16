@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react";
 import { useAxios } from "../../hooks";
-import { userRelationshipsStore } from "../../hooks/relationships/useRelationships";
+import { userRelationshipsStore } from "../../store/userRelationshipStore";
 
 type RelationshipsProps = {
   userId: number;
