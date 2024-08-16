@@ -36,9 +36,9 @@ const UserDetails: React.FC<UserDetailsProps> = ({
       <p className="username">@{user?.username}</p>
       {user?.bio && <p className="bio">{user?.bio}</p>}
 
-      <Relationships user={user} setSelectedFeed={setSelectedFeed} />
+      <Relationships userId={user?.id} setSelectedFeed={setSelectedFeed} currentUserId={currentUser?.id} />
 
-      <p className="joined">
+      <div className="joined">
         <CalendarIcon size={15} color="#868393" /> Joined {joinedDate}
         {user?.location && (
           <div className="location">
@@ -46,7 +46,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
             <span>{user?.location}</span>
           </div>
         )}
-      </p>
+      </div>
     </div>
   );
 };

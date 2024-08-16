@@ -4,6 +4,7 @@ import moment from "moment/moment.js";
 
 export const followUser = (req, res) => {
   const token = req.cookies.accessToken;
+
   if (!token) return res.status(401).json("Not logged in.");
 
   const followedUserId = req.params.userId;
@@ -15,22 +16,28 @@ export const followUser = (req, res) => {
 
     // Check if the followed user exists
     const checkUserQuery = "SELECT * FROM users WHERE id = ?";
-
-    const createdAt = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
-    const values = [followerId, followedUserId, createdAt];
-
     db.query(checkUserQuery, [followedUserId], (err, data) => {
       if (err) return res.status(500).json(err);
-      if (!data || !data[0]) {
+      if (data.length === 0) {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Insert the follow relationship into the relationships table
-      const followQuery =
-        "INSERT INTO relationships (follower_id, followed_id, created_at) VALUES (?, ?, ?)";
-      db.query(followQuery, values, (err, result) => {
+      // Check if the relationship already exists
+      const checkFollowQuery = "SELECT * FROM relationships WHERE follower_id = ? AND followed_id = ?";
+      db.query(checkFollowQuery, [followerId, followedUserId], (err, result) => {
         if (err) return res.status(500).json(err);
-        return res.status(200).json({ message: "User followed successfully" });
+        if (result.length > 0) {
+          return res.status(400).json({ message: "You are already following this user" });
+        }
+
+        // Insert the follow relationship into the relationships table
+        const createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
+        const followQuery =
+          "INSERT INTO relationships (follower_id, followed_id, created_at) VALUES (?, ?, ?)";
+        db.query(followQuery, [followerId, followedUserId, createdAt], (err, result) => {
+          if (err) return res.status(500).json(err);
+          return res.status(200).json({ message: "User followed successfully" });
+        });
       });
     });
   });
@@ -228,6 +235,29 @@ export const getFollowerUsers = (req, res) => {
         }
 
         return res.status(200).json(followerUsers);
+      });
+    });
+  });
+};
+
+export const getUserCounts = (req, res) => {
+  const userId = req.params.userId;
+
+  // Get follower count
+  const followerCountQuery =
+    "SELECT COUNT(*) AS follower_count FROM relationships WHERE followed_id = ?";
+  db.query(followerCountQuery, [userId], (err, followerData) => {
+    if (err) return res.status(500).json({ error: 'Error fetching follower count' });
+
+    // Get following count
+    const followingCountQuery =
+      "SELECT COUNT(*) AS following_count FROM relationships WHERE follower_id = ?";
+    db.query(followingCountQuery, [userId], (err, followingData) => {
+      if (err) return res.status(500).json({ error: 'Error fetching following count' });
+
+      return res.status(200).json({
+        followerCount: followerData[0].follower_count,
+        followingCount: followingData[0].following_count,
       });
     });
   });

@@ -4,11 +4,10 @@ import { useAxios } from "../hooks";
 import { PageHeader, ProfileHeader } from "../components";
 import UserTypes from "../types/User";
 import FeedSelector from "../components/feed-selector/FeedSelector";
-import PostTypes from "../types/Post";
 import ProfileFeed from "../components/feed/ProfileFeed";
-import "./page.scss";
 import FollowingFeed from "../components/feed/FollowingFeed";
 import FollowersFeed from "../components/feed/FollowersFeed";
+import "./page.scss";
 
 type ProfileProps = {};
 
@@ -17,12 +16,11 @@ const Profile: React.FC<ProfileProps> = () => {
   const [selectedFeed, setSelectedFeed] = useState("posts");
 
   const [userData, setUserData] = useState<UserTypes | null>(null);
-  const [posts, setPosts] = useState<PostTypes[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const feeds = ["Posts", "Posts & Replies", "Bets"];
+  const feeds = ["posts", "posts & replies", "bets"];
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -30,12 +28,8 @@ const Profile: React.FC<ProfileProps> = () => {
       try {
         // Fetch user data
         const response = await useAxios.get(`users/find/${username}`);
-        const user = response.data;
-        setUserData(user);
-
-        // Fetch posts using the fetched user data
-        const postsResponse = await useAxios.get(`posts/user/${username}`);
-        setPosts(postsResponse.data);
+        setUserData(response.data);
+        console.log(userData)
       } catch (err) {
         setError("Failed to fetch user data");
       } finally {
@@ -50,7 +44,7 @@ const Profile: React.FC<ProfileProps> = () => {
 
   return (
     <div className="page">
-      <PageHeader title={username as string} hasBack />
+      <PageHeader title={username || "Profile"} hasBack />
       <div className="profile-content">
         <ProfileHeader
           user={userData as UserTypes}
@@ -63,14 +57,16 @@ const Profile: React.FC<ProfileProps> = () => {
         feeds={feeds}
       />
       {selectedFeed === "posts" && (
-        <ProfileFeed username={username as string} />
+        <ProfileFeed key={selectedFeed} username={username || ""} selectedFeed={selectedFeed}/>
       )}
       {selectedFeed === "following" && (
-        <FollowingFeed userId={userData?.id as number} key={userData?.id} />
+        <FollowingFeed userId={userData?.id || 0} />
       )}
       {selectedFeed === "followers" && (
-        <FollowersFeed userId={userData?.id as number} key={userData?.id}/>
+        <FollowersFeed userId={userData?.id || 0} />
       )}
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
     </div>
   );
 };

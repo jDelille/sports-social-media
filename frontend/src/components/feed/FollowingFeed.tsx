@@ -12,7 +12,7 @@ const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
   const { ref, inView } = useInView();
 
   const fetchFollowingUsers = async (pageParam: number) => {
-    const res = await useAxios.get(`/relationships/find/following/${userId}?page=${pageParam}`);
+    const res = await useAxios.get(`/relationships/${userId}/following?page=${pageParam}`);
     return res.data;
   };
 

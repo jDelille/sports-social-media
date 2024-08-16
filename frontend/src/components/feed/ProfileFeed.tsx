@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Post from "../post/Post";
 import QuoteRepost from "../post/QuoteRepost";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -6,10 +6,13 @@ import { useAxios } from "../../hooks";
 import "./feed.scss";
 
 type ProfileFeedProps = {
-    username: string;
+  username: string;
+  selectedFeed: string;
 };
-const ProfileFeed: React.FC<ProfileFeedProps> = ({username}) => {
-
+const ProfileFeed: React.FC<ProfileFeedProps> = ({
+  username,
+  selectedFeed,
+}) => {
   const getUserPosts = async (pageParam: number) => {
     let res;
     res = await useAxios.get(`posts/user/${username}?page=${pageParam}`);

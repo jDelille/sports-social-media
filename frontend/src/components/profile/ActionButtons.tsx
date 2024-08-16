@@ -1,32 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useFollowUser from "../../hooks/relationships/followUser";
-import { useLoginReminder } from "../../hooks";
+import { useAxios, useLoginReminder } from "../../hooks";
 import UserTypes from "../../types/User";
 import { COLOR_CONSTANTS } from "../../constants";
 import UserPlus from "../../icons/UserPlusIcon";
 import { observer } from "mobx-react";
-import userRelationshipsStore from "../../store/userRelationshipStore";
+import { userRelationshipsStore } from "../../hooks/relationships/useRelationships";
 
 type ActionButtonsProps = {
   user: UserTypes;
   currentUser: any;
   isUserProfile: boolean;
 };
-const ActionButtons: React.FC<ActionButtonsProps> = observer(({
-  isUserProfile,
-  user,
-  currentUser,
-}) => {
+
+const ActionButtons: React.FC<ActionButtonsProps> = observer(({ isUserProfile, user, currentUser }) => {
   const navigate = useNavigate();
-  const { followUser, unfollowUser, loading, error, success } = useFollowUser(user?.id);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
+
   const loginReminder = useLoginReminder();
-
-  const isFollowing = userRelationshipsStore.userRelationships.isFollowing;
-
-  const navigateToEditProfile = () => {
-    navigate("/settings/profile");
-  };
 
   const handleFollowClick = async () => {
     if (!currentUser) {
@@ -37,33 +28,39 @@ const ActionButtons: React.FC<ActionButtonsProps> = observer(({
       );
       return;
     }
+
+    const newIsFollowing = !isFollowing;
+    const newFollowerCount = userRelationshipsStore.followerCount + (newIsFollowing ? 1 : -1);
+
+    // Optimistically update UI
+    setIsFollowing(newIsFollowing);
+    userRelationshipsStore.setFollowerCount(newFollowerCount);
+
     try {
-      if (isFollowing) {
-        await unfollowUser();
+      if (newIsFollowing) {
+        await useAxios.post(`/relationships/${user.id}/follow`);
       } else {
-        await followUser();
+        await useAxios.delete(`/relationships/${user.id}/unfollow`);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error updating follow status:", error);
+      // Revert optimistic update if there's an error
+      setIsFollowing(isFollowing);
+      userRelationshipsStore.setFollowerCount(userRelationshipsStore.followerCount);
     }
   };
 
   return (
     <div className="action-buttons">
       {isUserProfile ? (
-        <button className="follow-btn" onClick={navigateToEditProfile}>
-          Edit profile
-        </button>
-      ) : isFollowing ? (
-        <button className="follow-btn" onClick={handleFollowClick} disabled={loading}>
-          Unfollow
+        <button className="edit-profile-btn" onClick={() => navigate("/settings/profile")}>
+          Edit Profile
         </button>
       ) : (
-        <button className="follow-btn" onClick={handleFollowClick} disabled={loading}>
-          Follow
+        <button className="follow-btn" onClick={handleFollowClick}>
+          {isFollowing ? "Unfollow" : "Follow"}
         </button>
       )}
-      {error && <p>{error}</p>}
     </div>
   );
 });

@@ -1,30 +1,48 @@
-import React from "react";
-import useUserRelationships from "../../hooks/relationships/userRelationships";
-import UserTypes from "../../types/User";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react";
+import { useAxios } from "../../hooks";
+import { userRelationshipsStore } from "../../hooks/relationships/useRelationships";
 
 type RelationshipsProps = {
-  user: UserTypes;
+  userId: number;
   setSelectedFeed: (val: string) => void;
+  currentUserId: number;
 };
-const Relationships: React.FC<RelationshipsProps> = observer(({ user, setSelectedFeed }) => {
-  const { data: userRelationships, count } = useUserRelationships(user?.id);
- 
+const Relationships: React.FC<RelationshipsProps> = observer(
+  ({ userId, setSelectedFeed, currentUserId }) => {
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const countsResponse = await useAxios.get(
+            `/relationships/${userId}/counts`
+          );
+          userRelationshipsStore.setFollowerCount(
+            countsResponse.data.followerCount
+          );
+          userRelationshipsStore.setFollowingCount(
+            countsResponse.data.followingCount
+          );
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }, [userId, currentUserId]);
 
-
-  return (
-    <div className="relationships">
-      <p onClick={() => setSelectedFeed("followers")}>
-        <span>{count.followerCount} </span>Followers
-      </p>
-      <p onClick={() => setSelectedFeed("following")}>
-        <span>{userRelationships?.followingCount || 0}</span>Following
-      </p>
-      <p>
-        <span>0</span>Bets
-      </p>
-    </div>
-  );
-});
+    return (
+      <div className="relationships">
+        <p onClick={() => setSelectedFeed("followers")}>
+          <span>{userRelationshipsStore.followerCount} </span>Followers
+        </p>
+        <p onClick={() => setSelectedFeed("following")}>
+          <span>{userRelationshipsStore.followingCount}</span>Following
+        </p>
+        <p>
+          <span>0</span>Bets
+        </p>
+      </div>
+    );
+  }
+);
 
 export default Relationships;
