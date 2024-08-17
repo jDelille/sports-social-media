@@ -203,16 +203,17 @@
           align-items: center;
           gap: 3px;
           img {
-            max-width: 14px;
+            max-width: 13px;
           }
         }
       }
       .price {
-        font-weight: 600;
+        font-weight: 400;
         position: absolute;
         right: 10px;
         top: 10px;
-        color: $accent;
+        // color: $accent;
+        color: gray;
       }
     }
 

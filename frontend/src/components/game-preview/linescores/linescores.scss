@@ -1,0 +1,25 @@
+.linescores {
+    display: flex;
+    flex-direction: column;
+    min-width: 40%;
+    margin-top: 10px;
+    .line-indices {
+        font-size: 16px;
+        height: 30px;
+        display: flex;
+        .index {
+            flex: 1;
+            font-weight: 500;
+        }
+    }
+    .scores {
+        font-size: 16px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        .score {
+            flex: 1;
+            color: #9DACC4;
+        }
+    }
+}

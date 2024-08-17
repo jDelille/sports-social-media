@@ -20,16 +20,17 @@
         width: 52rem;
         height: fit-content;
         border-radius: 22px;
-        padding: 24px;
+        padding: 24px 0;
         display: flex;
         flex-direction: column;
         gap: 0px;
         .game-header {
-            height: 100px;
             position: relative;
+            padding-top: 20px;
             .close {
                 position: absolute;
-                right: 0;
+                right: 10px;
+                top: -15px;
                 cursor: pointer;
                 padding: 0.25rem;
                 display: flex;
@@ -43,7 +44,13 @@
               }
         }
         .game-info {
-            height: 300px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-top: 20px;
+          h3 {
+            font-weight: 400;
+          }
         }
     }
 }

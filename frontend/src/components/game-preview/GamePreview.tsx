@@ -2,30 +2,27 @@ import React, { useEffect, useState } from "react";
 import { CloseIcon } from "../../icons";
 import { COLOR_CONSTANTS } from "../../constants";
 import { useAxios, useGamePreview } from "../../hooks";
-import "./gamePreview.scss";
-import { GameTypes } from "../../types/GameTypes";
 import GamePreviewHeader from "./GamePreviewHeader";
+import BoxScore from "./box-score/BoxScore";
+import CategorySelector from "./category-selector/CategorySelector";
+import "./gamePreview.scss";
 
 type GamePreviewProps = {};
 
 const GamePreview: React.FC<GamePreviewProps> = () => {
   const [loading, setLoading] = useState(false);
-  const [game, setGame] = useState<GameTypes>();
+  const [game, setGame] = useState<any>();
 
-  // Custom hooks should be called at the top level
   const gamePreview = useGamePreview();
   const { isOpen, onClose } = gamePreview;
 
- const league = gamePreview.league;
- const gameId = gamePreview.gameId;
-
- console.log('League:', league, 'Game ID:', gameId);
-
+  const league = gamePreview.league;
+  const gameId = gamePreview.gameId;
 
   const fetchGameData = async () => {
     setLoading(true);
     try {
-      const espnResponse = await useAxios.get(`/espn/game/${league}/${gameId}`); // Use axios directly here
+      const espnResponse = await useAxios.get(`/espn/game/${league}/${gameId}`);
       setGame(espnResponse.data.gamepackageJSON);
     } catch (error) {
       console.error("Error fetching game data:", error);
@@ -34,19 +31,20 @@ const GamePreview: React.FC<GamePreviewProps> = () => {
     }
   };
 
-  const boxScore = game?.boxscore
-
-  console.log(game)
-
   useEffect(() => {
     if (isOpen) {
       fetchGameData();
     }
-  }, [isOpen, league, gameId]); // Add dependencies that affect the data fetching
+  }, [isOpen, league, gameId]);
 
   if (!isOpen) {
     return null;
   }
+
+  console.log(game)
+
+  const homeTeam = game?.boxscore.teams[1].team;
+  const awayTeam = game?.boxscore.teams[0].team;
 
   return (
     <div className="overlay">
@@ -57,8 +55,10 @@ const GamePreview: React.FC<GamePreviewProps> = () => {
           </div>
           <GamePreviewHeader game={game} />
         </div>
+        {/* <CategorySelector homeTeam={homeTeam} awayTeam={awayTeam} /> */}
         <div className="game-info">
-          {/* Render game data here */}
+          {/* <BoxScore boxscore={game?.boxscore} /> */}
+          <h3>Feature coming soon.</h3>
         </div>
       </div>
     </div>

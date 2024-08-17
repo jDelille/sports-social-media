@@ -1,18 +1,68 @@
 .game-preview-header {
-    .teams {
+    .content {
         display: flex;
-        gap: 1rem;
-        justify-content: center;
-        align-items: center;
-        font-size: 20px;
-        .team {
+        flex-direction: column;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;        border-radius: 8px;
+        padding: 10px 0;
+        margin: 0 24px;
+        .team-content {
+            display: flex;
+            width: 100%;
+         
+            font-size: 20px;
+    
+            .teams{
+                display: flex;
+                margin-top: 40px;
+                flex-direction: column;
+                flex: 1;
+                .team {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    height: 30px;
+    
+                    .color {
+                        width: 8px;
+                        height: 30px;
+                    }
+                    img {
+                        max-width: 23px;
+                    }
+                    .display-name {
+                        font-size: 16px;
+                    }
+                }
+             
+            }
+    
+        }
+        .status {
+            border-top: 1px solid lightgray;
+            font-size: 16px;
             display: flex;
             align-items: center;
+            padding-top: 8px;
             gap: 10px;
-            font-size: 20px;
-            img {
-                max-width: 30px;
+            color: gray;
+            font-weight: 300;
+            padding-bottom: 5px;
+            padding-left: 10px;
+            margin: 10px 25px;
+            margin-bottom: 0;
+
+            .live {
+                background-color: #f01313;
+                color: white;
+                padding: 5px;
+                border-radius: 5px;
+                font-size: 13px;
+            }
+            .final {
+                font-size: 13px;
             }
         }
     }
+ 
+ 
 }
