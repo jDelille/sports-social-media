@@ -1,10 +1,9 @@
 import axios from "axios";
-import { db } from "../../connect.js";
+import { updateWinLossRecord } from "../../utils/betUtils.js";
 
 export const checkTotal = async (req, res) => {
   try {
-    const { sport, league, eventId, type, postId, pickId, total, handicap } =
-      req.params;
+    const { sport, league, eventId, type, postId, pickId, total, handicap, userId } = req.params;
 
     // Fetching data from ESPN API
     const response = await axios.get(
@@ -14,7 +13,7 @@ export const checkTotal = async (req, res) => {
 
     // Find the game by eventId
     const game = games.find((game) => game.id === eventId);
-    
+
     // If game not found, return 404
     if (!game) {
       return res.status(404).json({ error: "Game not found." });
@@ -37,41 +36,18 @@ export const checkTotal = async (req, res) => {
 
     const totalInt = parseFloat(handicap);
 
-    let score;
     let result;
 
     if (total === "Over") {
-      if (totalScore > totalInt) {
-        result = 1;
-      } else {
-        result = 0;
-      }
+      result = totalScore > totalInt ? 1 : 0;
     } else {
-      if (totalScore < totalInt) {
-        result = 1;
-      } else {
-        result = 0;
-      }
+      result = totalScore < totalInt ? 1 : 0;
     }
 
-    const betStatus = result;
-
-    const updateBetQuery = `
-    UPDATE posts 
-    SET bet = JSON_SET(bet, '$.picks[${pickId}].betStatus', ?) 
-    WHERE id = ?
-`;
-
-    db.query(updateBetQuery, [betStatus, postId], (err, data) => {
-      if (err) {
-        console.error("Error updating bet status:", err);
-        return res.status(500).json({ error: "Error updating bet status" });
-      }
-      // Send the result response after the database update
-      return res.status(200).json({ result });
-    });
+    // Use the reusable function to handle win/loss updates
+    updateWinLossRecord(userId, result, pickId, postId, res);
   } catch (error) {
-    console.error("Error fetching total (over / under) data:", error);
-    return res.status(500).json({ error: "Error fetching total (over / under) data" });
+    console.error("Error fetching total (over/under) data:", error);
+    return res.status(500).json({ error: "Error fetching total (over/under) data" });
   }
 };
