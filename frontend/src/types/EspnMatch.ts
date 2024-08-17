@@ -77,4 +77,5 @@ export type Team = {
     status: Status;
     shortName: string;
     id: string;
+    boxscore: any;
   };

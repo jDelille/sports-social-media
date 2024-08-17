@@ -3,9 +3,7 @@ import { db } from "../../connect.js";
 
 export const checkMoneyline = async (req, res) => {
   try {
-    const { sport, league, eventId, type, postId, pickId, team } = req.params;
-
-    console.log(req.params);
+    const { sport, league, eventId, type, postId, pickId, team, userId } = req.params;
 
     // Fetching data from ESPN API
     const response = await axios.get(

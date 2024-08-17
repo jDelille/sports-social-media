@@ -1,0 +1,18 @@
+.game-preview-header {
+    .teams {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            img {
+                max-width: 30px;
+            }
+        }
+    }
+}

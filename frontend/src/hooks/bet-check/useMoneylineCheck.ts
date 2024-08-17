@@ -10,6 +10,7 @@ type BetProps = {
   isUpdated: number;
   pickId: number;
   team: string;
+  userId: number;
 };
 
 const useMoneylineCheck = (bet: BetProps) => {
@@ -28,7 +29,7 @@ const useMoneylineCheck = (bet: BetProps) => {
     const checkMoneyline = async () => {
       try {
         const response = await useAxios.post(
-          `/moneyline/check/${bet.sport}/${bet.league}/${bet.eventId}/${bet.type}/${bet.postId}/${bet.pickId}/${bet.team}`
+          `/moneyline/check/${bet.sport}/${bet.league}/${bet.eventId}/${bet.type}/${bet.postId}/${bet.pickId}/${bet.team}/${bet.userId}`
         );
 
         setStatus(response.data.result); // Assuming response data contains the status

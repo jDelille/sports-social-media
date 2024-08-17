@@ -2,14 +2,20 @@ import { create } from "zustand";
 
 type GamePreviewPopupStore = {
   isOpen: boolean;
-  onOpen: () => void;
+  league: string | null;
+  gameId: string | null;
+  onOpen: (league: string, gameId: string) => void;
   onClose: () => void;
 };
 
+
 const useGamePreviewPopup = create<GamePreviewPopupStore>((set) => ({
+  
   isOpen: false,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
+  league: null,
+  gameId: null,
+  onOpen: (league, gameId) => set({ isOpen: true, league, gameId }),
+  onClose: () => set({ isOpen: false, league: null, gameId: null }),
 }));
 
 export default useGamePreviewPopup;

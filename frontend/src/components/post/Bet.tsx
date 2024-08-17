@@ -24,9 +24,10 @@ const Bet: React.FC<BetProps> = ({ post }) => {
   const inProgressCount =
     post.bet.picks?.filter((pick) => pick.betStatus === undefined).length || 0;
 
-  const onGameClick = () => {
-    gamePreview.onOpen();
-    console.log(gamePreview);
+  const onGameClick = (league: string, gameId: string) => {
+    console.log(league, gameId)
+    gamePreview.onOpen(league, gameId);
+    
   };
 
   return (
@@ -59,6 +60,7 @@ const Bet: React.FC<BetProps> = ({ post }) => {
             pickId: index,
             isUpdated: post.bet.betStatus,
             handicap: pick.handicap,
+            userId: post.user_id
           });
         });
 
@@ -76,7 +78,7 @@ const Bet: React.FC<BetProps> = ({ post }) => {
                   : "losing-pick"
               }
               id={pick.id}
-              onClick={onGameClick}
+              onClick={() => onGameClick(pick.league, pick.eventId)}
             >
               <p className="description">
                 {pick.type} <p>&#8226;</p>{" "}
