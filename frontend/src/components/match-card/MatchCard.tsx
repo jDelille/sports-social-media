@@ -26,6 +26,8 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
     return null;
   }
 
+  console.log(match)
+
   return (
     <div className="match-card" onClick={() => onClick(match)}>
       <div className="status">
