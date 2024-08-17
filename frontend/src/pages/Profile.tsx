@@ -29,7 +29,6 @@ const Profile: React.FC<ProfileProps> = () => {
         // Fetch user data
         const response = await useAxios.get(`users/find/${username}`);
         setUserData(response.data);
-        console.log(userData)
       } catch (err) {
         setError("Failed to fetch user data");
       } finally {

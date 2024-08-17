@@ -26,8 +26,6 @@ const HashtagPosts: React.FC<HashtagPostsProps> = ({ hashtag }) => {
 
   const posts = data ? data.pages.flatMap((page) => page) : [];
 
-  console.log(posts)
-
   return <div className="feed hashtag-feed">
        {!error &&
         posts.map((post) => {

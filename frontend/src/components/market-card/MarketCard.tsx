@@ -29,8 +29,6 @@ const MarketCard: React.FC<MarketCardProps> = ({
 
   const {sport, league} = useParams();
 
-  console.log(sport, league)
-
   const handleOutcomeClick = (bet: Pick) => {
     betstore.addPick(bet);
     betslip.onOpen();
@@ -50,7 +48,6 @@ const MarketCard: React.FC<MarketCardProps> = ({
         {hasClickedMarket && (
           <div className="market1">
             {market.outcomes.map((outcome: any) => {
-              console.log(market)
               return (
                 <p
                   className="outcome"

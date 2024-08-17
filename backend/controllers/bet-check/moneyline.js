@@ -14,7 +14,7 @@ export const checkMoneyline = async (req, res) => {
     const game = games.find((game) => game.id === eventId);
 
     if (!game) {
-      return res.status(404).json({ error: "Game not found." });
+      return;
     }
 
     const status = game.status.type;

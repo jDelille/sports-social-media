@@ -17,7 +17,7 @@ export const checkSpread = async (req, res) => {
 
     // If game not found, return 404
     if (!game) {
-      return res.status(404).json({ error: "Game not found." });
+      return;
     }
 
     // Get game status

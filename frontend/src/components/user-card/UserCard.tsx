@@ -20,8 +20,6 @@ const UserCard: React.FC<UserCardProps> = observer(({ user }) => {
 
   const { name, username, avatar } = user;
 
-  console.log(currentUser)
-
   useEffect(() => {
     const fetchFollowStatus = async () => {
       if (currentUser) {

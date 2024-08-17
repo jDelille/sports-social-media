@@ -41,8 +41,6 @@ const GamePreview: React.FC<GamePreviewProps> = () => {
     return null;
   }
 
-  console.log(game)
-
   const homeTeam = game?.boxscore.teams[1].team;
   const awayTeam = game?.boxscore.teams[0].team;
 

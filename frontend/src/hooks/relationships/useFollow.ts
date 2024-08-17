@@ -14,7 +14,6 @@ const useFollow = (userId: number, currentUserId: string) => {
         const response = await useAxios.get(`/relationships/${currentUserId}/relationships`);
         const followingIds = response.data.following;
         setIsFollowing(followingIds.includes(userId));
-        console.log(isFollowing)
       } catch (error) {
         console.error("Error fetching follow status:", error);
         setError("Error fetching follow status");

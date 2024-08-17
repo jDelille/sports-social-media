@@ -25,7 +25,6 @@ const Bet: React.FC<BetProps> = ({ post }) => {
     post.bet.picks?.filter((pick) => pick.betStatus === undefined).length || 0;
 
   const onGameClick = (league: string, gameId: string) => {
-    console.log(league, gameId)
     gamePreview.onOpen(league, gameId);
     
   };
