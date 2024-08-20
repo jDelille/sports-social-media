@@ -20,7 +20,13 @@ import {
   forYouQuoteRepostsRepostsQuery,
   forYouRepostsQuery,
 } from "../queries/forYouPostQueries.js";
-import { betPostsQuery, betQuoteRepostsQuery, betQuoteRepostsRepostsQuery, betRepostsQuery } from "../queries/betPostQueries.js";
+import {
+  betPostsQuery,
+  betQuoteRepostsQuery,
+  betQuoteRepostsRepostsQuery,
+  betRepostsQuery,
+} from "../queries/betPostQueries.js";
+import { postDetailsQuery } from "../queries/postDetailsQuery.js";
 
 dotenv.config();
 
@@ -88,6 +94,26 @@ export const getPostsByUsername = (req, res) => {
   db.query(q, [...Array(4).fill(username), offset, pageSize], (err, data) => {
     if (err) return res.status(500).json(err);
     return res.status(200).json(data);
+  });
+};
+
+export const getPostByPostId = (req, res) => {
+  const postId = req.params.postId;
+
+  const q = `
+  ${postDetailsQuery}
+  `;
+
+  db.query(q, [postId], (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: "Database query error" });
+    }
+
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    return res.status(200).json(data[0]);
   });
 };
 

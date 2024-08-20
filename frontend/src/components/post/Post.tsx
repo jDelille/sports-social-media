@@ -24,6 +24,10 @@ type PostProps = {
 };
 
 const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
+
+  if(!post) {
+    return;
+  }
   const { hashtag } = useParams();
   const [error, setError] = useState<string | null>(null);
 
@@ -32,8 +36,8 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
   const deletePopup = useDeletePopup();
   const navigate = useNavigate();
 
-  const postId = post.id;
-  const type = post.type;
+  const postId = post?.id;
+  const type = post?.type;
 
   const { muted } = useFetchMutedPosts(postId, type);
 
@@ -63,6 +67,11 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
     e.stopPropagation();
     navigate(`/profile/${post.user_id}`);
   };
+
+  const navigateToPost = (e: any) => {
+    e.stopPropagation();
+    navigate(`/post/${post.id}`);
+  }
 
   const hideUrlsInBody = (body: string) => {
     if (!body) return "";
@@ -104,7 +113,7 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
   };
 
   return (
-    <div className="post">
+    <div className="post" onClick={navigateToPost}>
       {type === "repost" && (
         <div className="reposter">
           <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />

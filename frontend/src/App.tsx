@@ -31,6 +31,7 @@ import Discover from "./pages/Discover";
 import GamePreview from "./components/game-preview/GamePreview";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PostPage from "./pages/PostPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -115,6 +116,10 @@ function App() {
         {
           path: "/discover/hashtag/:hashtag",
           element: <Discover />
+        },
+        {
+          path: "/post/:postId",
+          element: <PostPage />
         }
       ],
     },
