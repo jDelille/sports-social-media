@@ -40,6 +40,8 @@ const LeaderboardInfo: React.FC<LeaderboardInfoProps> = () => {
             <p className='description'>
                 Ready to make your mark? The leaderboard is your chance to show off your betting skills. Jump in whenever you like—no pressure. Enter your picks, and if you’re feeling confident, throw down a wager to up the stakes. It’s all about fun, but with the right moves, you could rise to the top!
             </p>
+
+            <p>Currently, the leaderboard only tracks moneyline, spread, and total bets. Don't worry, more tracked bets will be added in the future!</p>
            
             <button className="cta-button" onClick={redirectToSportbook}>I’m In!</button>
             <button className="secondary-button" onClick={closePopup}>Maybe Later</button>

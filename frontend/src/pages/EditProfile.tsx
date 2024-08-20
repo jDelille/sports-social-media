@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import Input from "../components/input/Input";
 import "./page.scss";
 import "./editprofile.scss";
-import { uploadProfilePicture } from "../utils/firebaseUtils";
+import { uploadHeaderImage, uploadProfilePicture } from "../utils/firebaseUtils";
 
 type EditProfileProps = {};
 
@@ -33,7 +33,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
       }
 
       if (headerImage) {
-        const headerImageUrl = await uploadProfilePicture(headerImage, currentUser.id);
+        const headerImageUrl = await uploadHeaderImage(headerImage, currentUser.id);
         payload.header_img = headerImageUrl;
       }
 

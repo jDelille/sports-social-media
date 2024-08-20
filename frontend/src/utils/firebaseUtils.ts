@@ -38,6 +38,19 @@ export const uploadProfilePicture = async (file: File, userId: string): Promise<
   }
 };
 
+export const uploadHeaderImage = async (file: File, userId: string): Promise<string> => {
+  const storageRef = ref(storage, `header-images/${userId}/${file.name}`);
+  try {
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    console.log('Header image available at', url);
+    return url;
+  } catch (error) {
+    console.error('Header image upload failed', error);
+    throw error;
+  }
+};
+
 export const deleteProfilePicture = async (userId: string, fileName: string): Promise<void> => {
   const imagePath = `profile-pictures/${userId}/${fileName}`;
   const imageRef = ref(storage, imagePath);
