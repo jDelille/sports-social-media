@@ -45,6 +45,37 @@ export type Team = {
       }
     }[]
   }
+
+  export type TeamOdds = {
+    favorite: boolean;
+    underdog: boolean;
+    close: {
+      pointSpread: {
+        american: string;
+      }
+    }
+  }
+
+  export type OddValues = {
+    value: number;
+    american: string;
+    decimal: number;
+  }
+
+  export type OddLines = {
+    over: OddValues;
+    total: OddValues;
+    under: OddValues;
+  }
+
+  export type Odds = {
+    awayTeamOdds: TeamOdds;
+    homeTeamOdds: TeamOdds;
+    overUnder: number;
+    spread: number;
+    current: OddLines;
+    open: OddLines;
+  }
   
   export type Competition = {
     attendance: number;
@@ -54,7 +85,8 @@ export type Team = {
     date: string;
     format: { regulation: any }; 
     geoBroadcasts: any[]; 
-    headlines: Headlines[]
+    headlines: Headlines[];
+    odds: Odds[];
   };
 
   export type Status = {

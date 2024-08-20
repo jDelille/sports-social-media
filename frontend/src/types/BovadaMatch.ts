@@ -8,6 +8,9 @@ type Market = {
     marketTypeId: string;
     notes: string;
     outcomes: Outcome[];
+    period: {
+        description: string;
+    }
 };
 
 type Outcome = {

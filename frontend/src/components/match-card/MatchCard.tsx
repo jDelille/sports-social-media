@@ -2,6 +2,7 @@ import React from "react";
 import BovadaMatchTypes from "../../types/BovadaMatch";
 import moment from "moment";
 import "./matchCard.scss";
+import { RightArrowSkinny } from "../../icons";
 
 type MatchCardProps = {
   match: BovadaMatchTypes;
@@ -11,6 +12,9 @@ type MatchCardProps = {
 const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
   const homeTeam = match.espnMatch?.competitions[0].competitors[0];
   const awayTeam = match.espnMatch?.competitions[0].competitors[1];
+
+  const odds = match.displayGroups[0].markets
+
 
   const status = match.espnMatch?.status;
 
@@ -30,28 +34,56 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
 
   return (
     <div className="match-card" onClick={() => onClick(match)}>
-      <div className="status">
-        <p>{status.type.shortDetail}</p>
-      </div>
+
       <div className="match-content">
       <div className="teams">
         <div className="home">
+          <div className="team">
           <img src={homeTeam?.team.logo} alt="" className="team-logo" />
           <p className="name">
-            {homeTeam?.team.shortDisplayName}{" "}
+            {homeTeam?.team.displayName}{" "}
             <span className="record">{homeTeam?.records[0].summary}</span>
           </p>
+          </div>
+          <div className="odds">
+          {odds.map((odd) => {
+            if(odd.period.description === "Game") {
+              return (
+                <div className="odd">
+                  <p>{odd.outcomes[1].price.handicap}</p>
+                  <p className="price">{odd.outcomes[1].price.american}</p>
+                </div>
+              )
+            }
+          })}
+          </div>
         </div>
         <div className="away">
-          <img src={awayTeam?.team.logo} alt="" className="team-logo" />
+        <div className="team">
+        <img src={awayTeam?.team.logo} alt="" className="team-logo" />
           <p className="name">
-            {awayTeam?.team.shortDisplayName}{" "}
+            {awayTeam?.team.displayName}{" "}
             <span className="record">{awayTeam?.records[0].summary}</span>
           </p>
         </div>
+        <div className="odds">
+        {odds.map((odd) => {
+            if(odd.period.description === "Game") {
+              return (
+                <div className="odd">
+                  <p>{odd.outcomes[0].price.handicap}</p>
+                  <p className="price">{odd.outcomes[0].price.american}</p>
+                </div>
+              )
+            }
+          })}
+        </div>
+        </div>
       </div>
 
-      <div className="data">
+
+
+      {/* <div className="data">
         {status?.type.state === "pre" ? (
           <p className="time">{formattedTime}</p>
         ) : (
@@ -60,7 +92,15 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
             <p>{awayTeam?.score}</p>
           </>
         )}
+      </div> */}
       </div>
+
+      <div className="status">
+        <p>{status.type.shortDetail}</p>
+        <div className="more" >
+        <p>More wagers</p>
+        <RightArrowSkinny size={20} color="black"/>
+        </div>
       </div>
    
     </div>

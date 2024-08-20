@@ -22,3 +22,4 @@ export { default as MenuDotsIcon } from './MenuDotsIcon';
 export { default as LocationIcon } from './LocationIcon';
 export { default as UserPlusIcon } from './UserPlusIcon';
 export { default as SyncIcon} from './SyncIcon';
+export { default as RightArrowSkinny } from './RightArrowSkinny';

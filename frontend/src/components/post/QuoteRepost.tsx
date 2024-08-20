@@ -10,6 +10,7 @@ import { COLOR_CONSTANTS } from "../../constants";
 import { useNavigate } from "react-router-dom";
 import ArticleDisplay from "../article-display/ArticleDisplay";
 import "./post.scss";
+import Bet from "./post-bet/Bet";
 
 type QuoteRepostProps = {
   post: PostTypes;
@@ -88,6 +89,8 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
               quoteReposted
             />
             <p className="qr_body">{hideUrlsInBody(post.original_post_body)}</p>
+            <Bet post={post} />
+
             <ArticleDisplay metadata={post.metadata} />
           </>
         )}
