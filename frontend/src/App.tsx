@@ -29,7 +29,8 @@ import BetPostModal from "./components/bet-post-modal/BetPostModal";
 import LeaderboardInfo from "./components/popup/LeaderboardInfo";
 import Discover from "./pages/Discover";
 import GamePreview from "./components/game-preview/GamePreview";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const queryClient = new QueryClient();
@@ -70,6 +71,8 @@ function App() {
                 <BetPostModal />
                 <LeaderboardInfo />
                 <GamePreview />
+                <ToastContainer />
+
               </div>
               <RightSidebar currentUser={currentUser} />
               <SignUpBar currentUser={currentUser} />

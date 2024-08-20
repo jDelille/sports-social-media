@@ -5,6 +5,8 @@ import Input from "../components/input/Input";
 import "./page.scss";
 import "./editprofile.scss";
 import { uploadHeaderImage, uploadProfilePicture } from "../utils/firebaseUtils";
+import { toast } from 'react-toastify';
+import { showSuccessToast } from "../utils/toastUtils";
 
 type EditProfileProps = {};
 
@@ -39,6 +41,8 @@ const EditProfile: React.FC<EditProfileProps> = () => {
 
       await updateProfile(payload);
       console.log("Profile successfully updated");
+      showSuccessToast("Profile successfully updated");
+
     } catch (error) {
       console.error("Error editing profile", error);
     }
