@@ -1,7 +1,8 @@
 import React from "react";
-import PostTypes from "../../types/Post";
-import useBetCheck from "../../hooks/bet-check/useBetCheck";
-import { useGamePreview } from "../../hooks";
+import PostTypes from "../../../types/Post";
+import useBetCheck from "../../../hooks/bet-check/useBetCheck";
+import { useGamePreview } from "../../../hooks";
+import './bet.scss';
 
 type BetProps = {
   post: PostTypes;
@@ -18,11 +19,11 @@ const Bet: React.FC<BetProps> = ({ post }) => {
   const isParlay = post.bet.isParlay;
 
   const winCount =
-    post.bet.picks?.filter((pick) => pick.betStatus === 1).length || 0;
+    post.bet.picks?.filter((pick) => pick.isWinner).length || 0;
   const lossCount =
-    post.bet.picks?.filter((pick) => pick.betStatus === 0).length || 0;
+    post.bet.picks?.filter((pick) => !pick.isWinner).length || 0;
   const inProgressCount =
-    post.bet.picks?.filter((pick) => pick.betStatus === undefined).length || 0;
+    post.bet.picks?.filter((pick) => pick.isWinner === undefined).length || 0;
 
   const onGameClick = (league: string, gameId: string) => {
     gamePreview.onOpen(league, gameId);
@@ -57,14 +58,14 @@ const Bet: React.FC<BetProps> = ({ post }) => {
             type,
             postId: post.id,
             pickId: index,
-            isUpdated: post.bet.betStatus,
+            isUpdated: post.bet.isWinner,
             handicap: pick.handicap,
             userId: post.user_id
           });
         });
 
-        const isWinningBet = pick.betStatus === 1;
-        const isInProgress = pick.betStatus === undefined;
+        const isWinningBet = pick.isWinner === true;
+        const isInProgress = pick.isWinner === undefined;
 
         return (
           <div className="bet-container">
@@ -90,18 +91,17 @@ const Bet: React.FC<BetProps> = ({ post }) => {
                 <div className="team">
                   <p>{pick.teams.away.abbrv}</p>
                   <img src={pick.teams.away.logo} alt="Away team logo" />
+                  <p>{pick.awayScore}</p>
                 </div>
+                -
                 <div className="team">
+                  <p>{pick.homeScore}</p>
                   <img src={pick.teams.home.logo} alt="Home team logo" />
                   <p>{pick.teams.home.abbrv}</p>
                 </div>
               </div>
 
               <p className="price">{pick.price}</p>
-              {/* Display status, loading, or error for each pick */}
-              {/* 
-            {error && <p>Error: {error}</p>}
-            {status && <p>Status: {status}</p>} */}
             </div>
           </div>
         );

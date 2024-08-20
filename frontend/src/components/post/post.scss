@@ -19,7 +19,11 @@
     padding-bottom: 10px;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
+    font-weight: 500;
+    svg {
+      margin-right: 5px;
+    }
     span {
       &:hover {
         text-decoration: underline;
@@ -73,6 +77,8 @@
       flex-direction: column;
       position: relative;
       z-index: 1;
+      padding-left: 3px;
+
       .name {
         font-size: 14px;
         font-weight: 600;
@@ -148,100 +154,6 @@
   
 
 
-  .bet,
-  .wagered-bet {
-    border: 1px solid rgb(240, 240, 240);
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    padding: 10px;
-
-    .info {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      .info-title {
-        font-size: 14px;
-        font-weight: 500;
-      }
-      .ratio {
-        display: flex;
-        align-items: center;
-        
-      }
-    }
-
-    .pick,
-    .winning-pick,
-    .losing-pick,
-    .in-progress {
-      border: 1px solid rgb(240, 240, 240);
-      padding: 10px;
-      border-radius: 8px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      .description {
-        font-weight: 500;
-        font-size: 13px;
-        display: flex;
-        align-items: center;
-        gap: 3px;
-      }
-      .matchup {
-        color: gray;
-        font-weight: 500;
-        display: flex;
-        gap: 5px;
-        .team {
-          display: flex;
-          align-items: center;
-          gap: 3px;
-          img {
-            max-width: 13px;
-          }
-        }
-      }
-      .price {
-        font-weight: 400;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        // color: $accent;
-        color: gray;
-      }
-    }
-
-    .in-progress {
-      border: 1px solid rgb(185, 184, 184);
-
-    }
-
-    .winning-pick {
-      border: 1px solid #96db96;
-    }
-
-    .losing-pick {
-      border: 1px solid rgb(255, 179, 179);
-    }
-
-    .payout {
-      padding: 0 5px;
-      display: flex;
-      justify-content: space-between;
-      font-weight: 500;
-    }
-
-  }
-
-  .wagered-bet {
-    border: 1px solid rgb(240, 240, 240);
-    padding: 10px;
-  }
 
   .post-footer {
     display: flex;

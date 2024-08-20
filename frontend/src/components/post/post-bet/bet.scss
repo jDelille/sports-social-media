@@ -1,0 +1,96 @@
+@use "../../../scss/variables" as *;
+
+.bet,
+.wagered-bet {
+  border: 1px solid rgb(240, 240, 240);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 10px;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .info-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .ratio {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .pick,
+  .winning-pick,
+  .losing-pick,
+  .in-progress {
+    border: 1px solid rgb(240, 240, 240);
+    padding: 10px;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .description {
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .matchup {
+      color: gray;
+      font-weight: 400;
+      display: flex;
+      gap: 5px;
+      color: rgb(115, 125, 143);
+      font-size: 14px;
+      .team {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        
+        img {
+          max-width: 15px;
+        }
+      }
+    }
+    .price {
+      font-weight: 400;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      // color: $accent;
+      color: gray;
+    }
+  }
+
+  .in-progress {
+    border: 1px solid rgb(185, 184, 184);
+  }
+
+  .winning-pick {
+    border: 1px solid #00D14A;
+  }
+
+  .losing-pick {
+    border: 1px solid #F32034
+  }
+
+  .payout {
+    padding: 0 5px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+  }
+}
+
+.wagered-bet {
+  border: 1px solid rgb(240, 240, 240);
+  padding: 10px;
+}

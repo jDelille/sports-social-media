@@ -15,7 +15,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { COLOR_CONSTANTS } from "../../constants";
 import PostFooter from "./PostFooter";
 import ArticleDisplay from "../article-display/ArticleDisplay";
-import Bet from "./Bet";
+import Bet from "./post-bet/Bet";
 import useMoneylineCheck from "../../hooks/bet-check/useMoneylineCheck";
 
 type PostProps = {
@@ -24,7 +24,7 @@ type PostProps = {
 };
 
 const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
-  const {hashtag} = useParams();
+  const { hashtag } = useParams();
   const [error, setError] = useState<string | null>(null);
 
   const { currentUser } = useContext(AuthContext) || {};
@@ -66,24 +66,32 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
 
   const hideUrlsInBody = (body: string) => {
     if (!body) return "";
-  
+
     // Regular expression to match URLs
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-  
+
     // Regular expression to match hashtags
     const hashtagRegex = /#(\w+)/g;
-  
+
     // Remove URLs
     let cleanedBody = body.replace(urlRegex, "");
-  
+
     // Split the cleanedBody into parts: text and hashtags
     const parts = cleanedBody.split(/(#\w+)/g);
-  
+
     // Map over the parts, wrapping hashtags in <a> elements
     const elements = parts.map((part, index) => {
       if (hashtagRegex.test(part)) {
         return (
-          <Link to={`/discover/hashtag/${part.substring(1)}`} className={isHashtagPage && part.substring(1) === hashtag ? "hashtag-page-hashtag" : "hashtag"} key={index}>
+          <Link
+            to={`/discover/hashtag/${part.substring(1)}`}
+            className={
+              isHashtagPage && part.substring(1) === hashtag
+                ? "hashtag-page-hashtag"
+                : "hashtag"
+            }
+            key={index}
+          >
             {part}
           </Link>
         );
@@ -91,21 +99,20 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
         return <span key={index}>{part}</span>;
       }
     });
-  
+
     return elements;
   };
-
 
   return (
     <div className="post">
       {type === "repost" && (
-        <p className="reposter">
+        <div className="reposter">
           <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />
-          Reposted by{" "}
+          Reposted by
           <span onClick={(e) => navigateToProfile(e)}>
-            @{post.reposter_username}
+            {post.reposter_username}
           </span>
-        </p>
+        </div>
       )}
 
       <PostHeader user={post.user} post={post} />
@@ -113,8 +120,7 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
       <p className="body">{hideUrlsInBody(post.body)}</p>
 
       {post.image && (
-                  <img src={post.image} className="post-image" loading="lazy" />
-
+        <img src={post.image} className="post-image" loading="lazy" />
       )}
 
       <ArticleDisplay metadata={post.metadata} />

@@ -8,7 +8,7 @@ type BetProps = {
   eventId: string;
   type: string;
   postId: number;
-  isUpdated: number;
+  isUpdated: boolean;
   pickId: number;
   handicap: string | null;
   team: string;

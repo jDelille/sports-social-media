@@ -57,15 +57,15 @@ export const checkSpread = async (req, res) => {
       }
     }
 
-    const betStatus = result;
+    const isWinner = result;
 
     const updateBetQuery = `
     UPDATE posts 
-    SET bet = JSON_SET(bet, '$.picks[${pickId}].betStatus', ?) 
+    SET bet = JSON_SET(bet, '$.picks[${pickId}].isWinner', ?) 
     WHERE id = ?
 `;
 
-    db.query(updateBetQuery, [betStatus, postId], (err, data) => {
+    db.query(updateBetQuery, [isWinner, postId], (err, data) => {
       if (err) {
         console.error("Error updating bet status:", err);
         return res.status(500).json({ error: "Error updating bet status" });

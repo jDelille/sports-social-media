@@ -29,7 +29,7 @@ type PostTypes = {
         image: string;
     };
     bet: {
-        betStatus: number;
+        isWinner: boolean;
         isParlay: boolean;
         picks: {
             id: string;
@@ -40,8 +40,10 @@ type PostTypes = {
             sport: string;
             league: string;
             eventId: string;
-            betStatus: number;
+            isWinner: boolean;
             handicap: string | null;
+            homeScore: number;
+            awayScore: number;
             teams: {
                 away: {
                     abbrv: string;

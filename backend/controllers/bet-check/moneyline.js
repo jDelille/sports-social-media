@@ -33,7 +33,7 @@ export const checkMoneyline = async (req, res) => {
     const result = isHomeTeam ? isHomeMoneylineWinner : !isHomeMoneylineWinner;
 
     // Use the reusable function to handle win/loss updates
-    updateWinLossRecord(userId, result, pickId, postId, res);
+    updateWinLossRecord(userId, result, pickId, postId, homeScore, awayScore, res);
   } catch (error) {
     console.error("Error fetching moneyline data:", error);
     return res.status(500).json({ error: "Error fetching moneyline data" });
