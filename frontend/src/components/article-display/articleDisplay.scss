@@ -1,20 +1,20 @@
-@use '../../scss/variables' as *;
+@use "../../scss/variables" as *;
 
 .article-data-container {
-    width: 100%;
-    border: 1px solid darken($lightBorderColor, 0%);
-    display: flex;
-    border-radius: 12px;
-    margin-bottom: 14px;
-    transition: all 200ms ease-in-out;
-    overflow: hidden;
-    height: fit-content;
-    min-height: 160px;
-    &:hover {
-        background-color: darken(white, 3%);
-    }
-    text-decoration: none;
-   .img {
+  width: 100%;
+  border: 1px solid darken($lightBorderColor, 0%);
+  display: flex;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  transition: all 200ms ease-in-out;
+  overflow: hidden;
+  height: fit-content;
+  min-height: 160px;
+  &:hover {
+    background-color: darken(white, 3%);
+  }
+  text-decoration: none;
+  .img {
     background-position: 50%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -22,43 +22,43 @@
     -o-object-fit: contain;
     object-fit: contain;
     min-width: 217px;
-    
-   } 
-   .content {
+  }
+  .content {
     padding: 10px;
     display: flex;
     flex-direction: column;
     height: 100%;
     // justify-content: center;
     .url {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        p {
-            font-size: 13px;
-            font-weight: 500;
-            color: $darkgray;
-        }
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      p {
+        font-weight: 500;
+        color: $darkgray;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+      }
     }
     .description {
-        padding-left: 28px;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        height: 100%;
-        padding-top: 5px;
-        p {
-            color: black;
-            font-size: 14px;
-            font-weight: 500;
-
-        }
-        span {
-            font-size: 13px;
-            color: $darkgray;
-            padding-top: 2px;
-            line-height: 16px;
-        }
+      padding-left: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      height: 100%;
+      padding-top: 5px;
+      p {
+        color: black;
+        font-weight: 500;
+        line-height: 1.25rem;
+        font-size: 0.9375rem;
+      }
+      span {
+        color: $darkgray;
+        padding-top: 2px;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+      }
     }
-   }
+  }
 }
