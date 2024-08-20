@@ -5,7 +5,7 @@ import { useCreateQuoteRepostModal } from "../../hooks";
 import "./repostPopup.scss";
 
 type RepostPopupProps = {
-  handleRepostClick: (postId: number) => void;
+  handleRepostClick: (postId: number, e: any) => void;
   postId: number;
   hasReposted: boolean;
   originalPostUserId: number;
@@ -22,7 +22,8 @@ const RepostPopup: React.FC<RepostPopupProps> = ({
 }) => {
     const createQuoteRepost = useCreateQuoteRepostModal();
 
-    const handleOpenQuoteRepost = () => {
+    const handleOpenQuoteRepost = (e: any) => {
+      e.stopPropagation();
       if(!currentUserId) {
         return;
       }
@@ -32,7 +33,7 @@ const RepostPopup: React.FC<RepostPopupProps> = ({
   return (
     <div className="repost-popup">
       <ul className="popup-options">
-        <li onClick={() => handleRepostClick(postId)} className="option">
+        <li onClick={(e) => handleRepostClick(postId, e)} className="option">
           <RepostIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} />
           {hasReposted ? "Unrepost" : "Repost"}
         </li>

@@ -41,6 +41,7 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         commentsCount={comments?.length}
         currentUserId={currentUser?.id}
         postUsername={post.user.username}
+        post={post}
 
       />
       <RepostButton

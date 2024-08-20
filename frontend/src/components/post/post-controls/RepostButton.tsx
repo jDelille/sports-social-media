@@ -66,7 +66,8 @@ const RepostButton: React.FC<RepostButtonProps> = ({
     mutationKey: ["addLike"],
   });
 
-  const handleRepostClick = async (postId: number) => {
+  const handleRepostClick = async (postId: number, e: any) => {
+    e.stopPropagation();
     if (!currentUserId) {
       return;
     }
@@ -77,7 +78,8 @@ const RepostButton: React.FC<RepostButtonProps> = ({
     }
   };
 
-  const handleOpenRepostPopup = () => {
+  const handleOpenRepostPopup = (e?: any) => {
+   e.stopPropagation();
     if (!currentUserId) {
       loginReminder.onOpen(
         <RepostIcon size={50} color={COLOR_CONSTANTS.REPOST_COLOR} />,
@@ -92,14 +94,14 @@ const RepostButton: React.FC<RepostButtonProps> = ({
   return (
     <div className="icon-container">
       {hasReposted ? (
-        <div className="icon repost-icon" onClick={handleOpenRepostPopup}>
+        <div className="icon repost-icon" onClick={(e) => handleOpenRepostPopup(e)}>
           <RepostIcon size={18} color={COLOR_CONSTANTS.REPOST_COLOR} />
           <span style={{ color: COLOR_CONSTANTS.REPOST_COLOR }}>
             {repostCount}
           </span>
         </div>
       ) : (
-        <div className="icon repost-icon" onClick={handleOpenRepostPopup}>
+        <div className="icon repost-icon" onClick={(e) => handleOpenRepostPopup(e)}>
           <RepostIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} />
           <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>
             {repostCount}

@@ -140,7 +140,7 @@ const Post: React.FC<PostProps> = ({
       {isPostDetailsPage && (
         <div className="post-details-info">
           <p><span>{likes?.length | 0}</span> Likes</p>
-          <p><span>{comments | 0}</span> Comments</p>
+          <p><span>{comments?.length | 0}</span> Comments</p>
           <p className="formatted-date">{formattedDate}</p>
         </div>
       )}

@@ -3,6 +3,7 @@ import useCreateCommentModal from "../../../hooks/useCreateCommentModal";
 import { CommentIcon } from "../../../icons";
 import { COLOR_CONSTANTS } from "../../../constants";
 import { useLoginReminder } from "../../../hooks";
+import PostTypes from "../../../types/Post";
 
 type CommentButtonProps = {
   commentsCount: number;
@@ -10,18 +11,21 @@ type CommentButtonProps = {
   type: string;
   currentUserId: number | undefined;
   postUsername: string;
+  post: PostTypes
 };
 const CommentButton: React.FC<CommentButtonProps> = ({
   commentsCount,
   postId,
   type,
   currentUserId,
-  postUsername
+  postUsername,
+  post
 }) => {
   const createCommentModal = useCreateCommentModal();
   const loginReminder = useLoginReminder();
 
-  const handleComment = () => {
+  const handleComment = (e: any) => {
+    e.stopPropagation();
     if(!currentUserId) {
       loginReminder.onOpen(
         <CommentIcon size={50} color={COLOR_CONSTANTS.ACCENT} />,
@@ -30,11 +34,11 @@ const CommentButton: React.FC<CommentButtonProps> = ({
       );
       return;
     }
-    createCommentModal.onOpen(postId, type);
+    createCommentModal.onOpen(postId, type, post);
   };
 
   return (
-    <div className="icon comment-icon"  onClick={handleComment}>
+    <div className="icon comment-icon"  onClick={(e) => handleComment(e)}>
       <CommentIcon
         size={18}
         color={COLOR_CONSTANTS.LIGHTGRAY}

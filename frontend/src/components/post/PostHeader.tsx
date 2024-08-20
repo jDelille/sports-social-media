@@ -11,12 +11,14 @@ type PostHeaderProps = {
   user: UserTypes;
   post: PostTypes;
   quoteReposted?: boolean;
+  hideMenu?: boolean;
 };
 
 const PostHeader: React.FC<PostHeaderProps> = ({
   user,
   post,
   quoteReposted,
+  hideMenu
 }) => {
   
   const [openMenu, setOpenMenu] = useState(false);
@@ -61,20 +63,23 @@ const PostHeader: React.FC<PostHeaderProps> = ({
         </p>
       </div>
 
-      {!quoteReposted && (
-        <div className="menu">
-          <p onClick={() => setOpenMenu(!openMenu)}>
-            <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
-          </p>
-          <PostMenu
-            isOpen={openMenu}
-            onClose={handleMenuClose}
-            postId={post.id}
-            type={post.type}
-            imagePath={post.image}
-          />
-        </div>
+      {!hideMenu && (
+   !quoteReposted && (
+    <div className="menu">
+      <p onClick={() => setOpenMenu(!openMenu)}>
+        <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
+      </p>
+      <PostMenu
+        isOpen={openMenu}
+        onClose={handleMenuClose}
+        postId={post.id}
+        type={post.type}
+        imagePath={post.image}
+      />
+    </div>
+  )
       )}
+   
     </div>
   );
 };

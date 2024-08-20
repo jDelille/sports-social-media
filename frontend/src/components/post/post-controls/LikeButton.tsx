@@ -46,7 +46,9 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     mutationKey: ["addLike"],
   });
 
-  const handleLikeClick = async (postId: number) => {
+  const handleLikeClick = async (postId: number, e: any) => {
+    e.stopPropagation();
+
     if (!currentUserId) {
       loginReminder.onOpen(
         <LikedIcon size={50} color={COLOR_CONSTANTS.LIKE_COLOR} />,
@@ -63,12 +65,12 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   };
 
   return hasLiked ? (
-    <div className="icon like-icon" onClick={() => handleLikeClick(postId)}>
+    <div className="icon like-icon" onClick={(e) => handleLikeClick(postId, e)}>
       <LikedIcon size={18} color={COLOR_CONSTANTS.LIKE_COLOR} />
       <span style={{ color: COLOR_CONSTANTS.LIKE_COLOR }}>{likesCount}</span>
     </div>
   ) : (
-    <div className="icon like-icon" onClick={() => handleLikeClick(postId)}>
+    <div className="icon like-icon" onClick={(e) => handleLikeClick(postId, e)}>
       <LikeIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} />
       <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{likesCount}</span>
     </div>

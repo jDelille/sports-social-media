@@ -1,0 +1,132 @@
+@use "../../scss/variables" as *;
+
+.create-comment {
+  .og-post {
+    background-color: darken(white, 4%);
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    .url-link {
+      font-size: 12px;
+      color: $accent;
+      padding: 0 5px;
+    }
+    .post-header {
+      display: flex;
+      align-items: center;
+      position: relative;
+      .menu {
+        position: absolute;
+        right: 0;
+        top: 0;
+        p {
+          width: fit-content;
+          margin-left: auto;
+          cursor: pointer;
+          &:hover {
+            svg {
+              circle {
+                stroke: $darkgray;
+              }
+            }
+          }
+        }
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        position: relative;
+        transition: all 200ms ease-in-out;
+        &:hover {
+          img {
+            filter: brightness(95%);
+          }
+        }
+        img {
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+      .user,
+      .qr_user {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+        padding-left: 3px;
+
+        .name {
+          font-size: 14px;
+          font-weight: 600;
+          color: rgb(8, 5, 27);
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          position: relative;
+          svg {
+            width: 18px;
+            position: relative;
+            top: 1px;
+            left: -2px;
+            height: 20px;
+          }
+        }
+        .username {
+          color: $darkgray;
+          font-size: 13px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-weight: 400;
+          .date {
+            font-size: 12px;
+            color: $darkgray;
+            display: flex;
+            align-items: center;
+            position: relative;
+            top: 1px;
+          }
+        }
+      }
+      .qr_user {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        position: relative;
+        left: -13px;
+        bottom: 4px;
+        .username {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .body {
+      font-size: 14px;
+      color: rgb(8, 5, 27);
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      height: fit-content;
+      flex-direction: row;
+      padding-bottom: 0;
+      .hashtag,
+      .hashtag-page-hashtag {
+        color: $accent;
+        text-decoration: none;
+        &:hover {
+          color: darken($accent, 25%);
+        }
+      }
+      .hashtag-page-hashtag {
+        font-weight: 700;
+      }
+    }
+  }
+}
