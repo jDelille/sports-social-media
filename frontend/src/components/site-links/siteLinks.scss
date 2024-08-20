@@ -1,0 +1,25 @@
+.site-links {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 10px;
+    font-size: 13px;
+    color: #737d8f;
+    font-weight: 500;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    .link {
+        color: #737d8f;
+        text-decoration: none;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+            color: darken(#737d8f, 25%);
+        }
+    }
+    span {
+        font-weight: 400;
+        margin-top: 10px;
+    }
+}

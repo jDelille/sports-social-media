@@ -3,6 +3,7 @@ import useSidebar from "../../hooks/useSidebar";
 import SuggestedUsers from "../suggested-users/SuggestedUsers";
 import LeaderboardWidget from "../leaderboard-widget/LeaderboardWidget";
 import "./sidebar.scss";
+import SiteLinks from "../site-links/SiteLinks";
 
 type RightSidebarProps = {
   currentUser: any | null;
@@ -26,6 +27,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({currentUser}) => {
           <>
           <SuggestedUsers />
           <LeaderboardWidget />
+          <SiteLinks />
           </>
         )}
       </div>
