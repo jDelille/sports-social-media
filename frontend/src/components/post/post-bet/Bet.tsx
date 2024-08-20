@@ -3,6 +3,7 @@ import PostTypes from "../../../types/Post";
 import useBetCheck from "../../../hooks/bet-check/useBetCheck";
 import { useGamePreview } from "../../../hooks";
 import './bet.scss';
+import { SyncIcon } from "../../../icons";
 
 type BetProps = {
   post: PostTypes;
@@ -46,6 +47,8 @@ const Bet: React.FC<BetProps> = ({ post }) => {
         </div>
       </div>
 
+      
+
       {post.bet.picks?.map((pick) => {
         post.bet.picks?.forEach((pick, index) => {
           const { eventId, type, sport, league, team } = pick;
@@ -69,6 +72,11 @@ const Bet: React.FC<BetProps> = ({ post }) => {
 
         return (
           <div className="bet-container">
+            {/* {!isInProgress && (
+              <div className="sync">
+                <SyncIcon color="#0066FF" size={20}/>
+              </div>
+            )} */}
             <div
               className={
                 isWinningBet

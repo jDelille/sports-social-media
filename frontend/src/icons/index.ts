@@ -21,3 +21,4 @@ export { default as TrashIcon } from './TrashIcon';
 export { default as MenuDotsIcon } from './MenuDotsIcon';
 export { default as LocationIcon } from './LocationIcon';
 export { default as UserPlusIcon } from './UserPlusIcon';
+export { default as SyncIcon} from './SyncIcon';
