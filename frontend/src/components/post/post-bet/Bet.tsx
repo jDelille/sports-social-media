@@ -40,11 +40,11 @@ const Bet: React.FC<BetProps> = ({ post }) => {
         {!isParlay && (
           <p className="info-title">{post.bet.picks.length}-Pick Entry</p>
         )}
-        <div className="ratio">
+        {/* <div className="ratio">
           {winCount > 0 && <p>{winCount} wins</p>}
           {lossCount > 0 && <p> {lossCount} loss</p>}
           {inProgressCount > 0 && <p> {inProgressCount} in-progress</p>}
-        </div>
+        </div> */}
       </div>
 
       

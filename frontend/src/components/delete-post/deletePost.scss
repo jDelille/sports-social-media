@@ -1,0 +1,35 @@
+@use '../../scss/mixins' as *;
+
+.delete-post {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 20px;
+    .message {
+        text-align: center;
+        font-size: 18px;
+    }
+    .action-btn-list {
+        display: flex;
+        position: relative;
+        width: 100%;
+        gap: 1rem;
+        li {
+            flex: 1
+        }
+        .delete-btn,
+        .cancel-btn {
+            @include button_lg();
+            width: 100% !important;
+            margin: 0;
+        }
+        .cancel-btn {
+            background-color: white;
+            border: 1px solid gray;
+            color: gray;
+            &:hover {
+                background-color: darken(white, 5%);
+            }
+        }
+    }
+}

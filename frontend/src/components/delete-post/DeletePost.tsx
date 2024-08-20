@@ -4,6 +4,7 @@ import useDeletePopup from "../../hooks/useDeletePopup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios } from "../../hooks";
 import { deleteImage } from "../../utils/firebaseUtils";
+import './deletePost.scss';
 
 type DeletePostProps = {};
 const DeletePost: React.FC<DeletePostProps> = () => {
@@ -53,14 +54,14 @@ const DeletePost: React.FC<DeletePostProps> = () => {
   }
 
   const bodyContent = (
-    <div>
-      <p>Are you sure you want to delete your post?</p>
-      <ul>
+    <div className="delete-post">
+      <p className="message">Are you sure you want to delete your post?</p>
+      <ul className="action-btn-list">
         <li>
-          <button onClick={() => handleDeleteClick(postId)}>Delete</button>
+          <button onClick={() => handleDeleteClick(postId)} className="delete-btn">Delete</button>
         </li>
         <li>
-          <button onClick={deletePopup.onClose}>Cancel</button>
+          <button onClick={deletePopup.onClose} className="cancel-btn">Cancel</button>
         </li>
       </ul>
     </div>
@@ -71,11 +72,12 @@ const DeletePost: React.FC<DeletePostProps> = () => {
 
 
   return (
-    <div className="delete-post">
+    <div >
       <Popup
         body={bodyContent}
         isOpen={deletePopup.isOpen}
         onClose={handleClose}
+        hideHeader
       />
     </div>
   );
