@@ -1,0 +1,24 @@
+@use '../../../scss/variables' as *;
+
+.post-details-footer {
+    border-bottom: 1px solid $lightBorderColor;
+    height: 50px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+    color: #737d8f;
+    .icon {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        &:hover {
+            color: darken(#737d8f, 15%);
+        }
+    }
+
+}

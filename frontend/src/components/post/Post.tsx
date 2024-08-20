@@ -5,27 +5,30 @@ import PostHeader from "./PostHeader";
 import {
   useFetchComments,
   useFetchLikes,
-  useDeletePopup,
   useCreateQuoteRepostModal,
   useFetchMutedPosts,
 } from "../../hooks";
-import "./post.scss";
 import { RepostIcon } from "../../icons";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { COLOR_CONSTANTS } from "../../constants";
 import PostFooter from "./PostFooter";
 import ArticleDisplay from "../article-display/ArticleDisplay";
 import Bet from "./post-bet/Bet";
-import useMoneylineCheck from "../../hooks/bet-check/useMoneylineCheck";
+import "./post.scss";
+import moment from "moment";
 
 type PostProps = {
   post: PostTypes;
   isHashtagPage?: boolean;
+  isPostDetailsPage?: boolean;
 };
 
-const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
-
-  if(!post) {
+const Post: React.FC<PostProps> = ({
+  post,
+  isHashtagPage,
+  isPostDetailsPage,
+}) => {
+  if (!post) {
     return;
   }
   const { hashtag } = useParams();
@@ -33,8 +36,10 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
 
   const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
-  const deletePopup = useDeletePopup();
   const navigate = useNavigate();
+
+  const { likes } = useFetchLikes(post.id, post.type);
+  const { comments } = useFetchComments(post.id, post.type);
 
   const postId = post?.id;
   const type = post?.type;
@@ -43,17 +48,11 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
 
   const hasMuted = muted?.includes(postId);
 
+  const formattedDate = moment(post.created_at).format("MMM D, YYYY, h:mm A");
+
   // if(hasMuted) {
   //   return null;
   // }
-
-  const handleDeletePost = async (postId: number, type: string) => {
-    try {
-      deletePopup.onOpen(postId, type, post.image);
-    } catch (error) {
-      setError("error muting post");
-    }
-  };
 
   const handleQuoteRepost = async (
     postId: number,
@@ -71,7 +70,7 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
   const navigateToPost = (e: any) => {
     e.stopPropagation();
     navigate(`/post/${post.id}`);
-  }
+  };
 
   const hideUrlsInBody = (body: string) => {
     if (!body) return "";
@@ -136,7 +135,15 @@ const Post: React.FC<PostProps> = ({ post, isHashtagPage }) => {
 
       <Bet post={post} />
 
-      <PostFooter post={post} type={type} />
+      {!isPostDetailsPage && <PostFooter post={post} type={type} />}
+
+      {isPostDetailsPage && (
+        <div className="post-details-info">
+          <p><span>{likes?.length | 0}</span> Likes</p>
+          <p><span>{comments | 0}</span> Comments</p>
+          <p className="formatted-date">{formattedDate}</p>
+        </div>
+      )}
 
       {/* <button
         onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
