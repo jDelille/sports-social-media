@@ -4,7 +4,9 @@ import Avatar from "../avatar/Avatar";
 import { observer } from "mobx-react";
 import { AuthContext } from "../../context/AuthContext";
 import { useAxios } from "../../hooks";
+import { CheckIcon } from "../../icons";
 import "./userCard.scss";
+import { useNavigate } from "react-router-dom";
 
 type UserCardProps = {
   user: UserTypes;
@@ -19,6 +21,21 @@ const UserCard: React.FC<UserCardProps> = observer(({ user }) => {
   }
 
   const { name, username, avatar } = user;
+
+  const isVerified = user.isVerified === 1;
+
+  const navigate = useNavigate();
+
+  const navigateToProfile = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    // if (disabled) {
+    //   return null;
+    // }
+    navigate(`/profile/${username}`);
+  };
+
 
   useEffect(() => {
     const fetchFollowStatus = async () => {
@@ -55,10 +72,10 @@ const UserCard: React.FC<UserCardProps> = observer(({ user }) => {
   };
 
   return (
-    <div className="user-card">
+    <div className="user-card" onClick={navigateToProfile}>
       <Avatar src={avatar} username={username} />
       <div className="text">
-        <p className="name">{name}</p>
+        <p className="name">{name} {isVerified && <CheckIcon color="#ff4775" size={34} />}</p>
         <p className="username">@{username}</p>
       </div>
       {currentUser.id !== user.id && (

@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 class UserRelationshipsStore {
   followerCount = 0;
   followingCount = 0;
+  betCount = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -14,6 +15,10 @@ class UserRelationshipsStore {
 
   setFollowingCount(count: number) {
     this.followingCount = count;
+  }
+
+  setBetCount(count: number) {
+    this.betCount = count;
   }
 }
 

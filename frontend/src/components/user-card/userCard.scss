@@ -6,12 +6,28 @@
     border-bottom: 1px solid $lightBorderColor;
     display: flex;
     align-items: center;
-    gap: 10px;;
+    gap: 8px;
+    &:hover {
+        background-color: darken(white, 3%);
+        cursor: pointer;
+    }
     .text {
         .name {
-            font-weight: 500;
             font-size: 14px;
-        }
+            font-weight: 600;
+            color: rgb(8, 5, 27);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            position: relative;
+            svg {
+              width: 18px;
+              position: relative;
+              top: 1px;
+              left: -2px;
+              height: 20px;
+            }
+          }
         .username {
             font-size: 13px;
             color: gray;

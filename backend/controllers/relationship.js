@@ -203,7 +203,7 @@ export const getFollowingUsers = (req, res) => {
 
       // Get details of followed users
       const followedUsersQuery = `
-        SELECT u.id, u.username, u.name, u.avatar, u.created_at, 
+        SELECT u.id, u.username, u.name, u.avatar, u.created_at, u.isVerified, 
                (SELECT COUNT(*) FROM posts WHERE user_id = u.id) AS post_count,
                (SELECT COUNT(*) FROM relationships WHERE followed_id = u.id) AS follower_count
         FROM users u
@@ -254,7 +254,7 @@ export const getFollowerUsers = (req, res) => {
 
       // Get details of followers with pagination
       const followersQuery = `
-        SELECT u.id, u.username, u.name, u.avatar, u.created_at, 
+        SELECT u.id, u.username, u.name, u.avatar, u.created_at, u.isVerified,
                (SELECT COUNT(*) FROM posts WHERE user_id = u.id) AS post_count,
                (SELECT COUNT(*) FROM relationships WHERE followed_id = u.id) AS follower_count
         FROM users u
@@ -292,5 +292,26 @@ export const getUserCounts = (req, res) => {
         followingCount: followingData[0].following_count,
       });
     });
+  });
+};
+
+export const getUserPostsWithBetCount = (req, res) => {
+  const userId = req.params.userId;
+
+  // Query to count the number of posts with a 'bet' field
+  const countBetPostsQuery = `
+    SELECT COUNT(*) AS bet_post_count
+    FROM posts
+    WHERE user_id = ? AND bet IS NOT NULL
+  `;
+
+  db.query(countBetPostsQuery, [userId], (err, result) => {
+    if (err) {
+      console.error('Error fetching post count with bet field:', err);
+      return res.status(500).json({ message: 'Error fetching post count with bet field' });
+    }
+
+    const betPostCount = result[0].bet_post_count;
+    return res.status(200).json({ betPostCount });
   });
 };

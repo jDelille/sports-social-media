@@ -98,7 +98,7 @@ export const logout = (req, res) => {
 
 export const editProfile = (req, res) => {
   const userId = req.body.id;
-  const { name, username, location, bio, avatar, header_img} = req.body;
+  const { name, username, location, bio, avatar, header_img, website} = req.body;
 
   let query = "UPDATE users SET ";
   const values = [];
@@ -131,6 +131,11 @@ export const editProfile = (req, res) => {
   if(header_img) {
     query += "header_img = ?, ";
     values.push(header_img);
+  }
+
+  if(website) {
+    query += "website = ?, ";
+    values.push(website);
   }
 
   query += "updated_at = ? "; 

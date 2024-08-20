@@ -9,6 +9,7 @@
     isVerified: number;
     location: string;
     follower_count: number;
+    website: string;
 }
 
 export default UserTypes;

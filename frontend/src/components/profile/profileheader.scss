@@ -103,6 +103,22 @@
         }
       }
     }
+
+    .website {
+   
+      padding-top: 10px;
+      a {
+        font-size: 13px;
+        color: #737d8f;
+        font-weight: 500;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+          color: darken(#737d8f, 15%);
+        }
+      }
+  
+    }
     .joined {
       color: $lightgray;
       font-weight: 500;

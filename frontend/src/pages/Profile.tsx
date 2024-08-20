@@ -41,6 +41,10 @@ const Profile: React.FC<ProfileProps> = () => {
     }
   }, [username]);
 
+  useEffect(() => {
+    setSelectedFeed("posts");
+  }, [username])
+
   return (
     <div className="page">
       <PageHeader title={username || "Profile"} hasBack />

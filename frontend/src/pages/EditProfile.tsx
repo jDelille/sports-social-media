@@ -2,11 +2,10 @@ import React, { useContext, useState } from "react";
 import { Avatar, PageHeader } from "../components";
 import { AuthContext } from "../context/AuthContext";
 import Input from "../components/input/Input";
+import { uploadHeaderImage, uploadProfilePicture } from "../utils/firebaseUtils";
+import { showErrorToast, showSuccessToast } from "../utils/toastUtils";
 import "./page.scss";
 import "./editprofile.scss";
-import { uploadHeaderImage, uploadProfilePicture } from "../utils/firebaseUtils";
-import { toast } from 'react-toastify';
-import { showErrorToast, showSuccessToast } from "../utils/toastUtils";
 
 type EditProfileProps = {};
 
@@ -15,6 +14,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   const [name, setName] = useState(currentUser.name || "");
   const [username, setUsername] = useState(currentUser.username || "");
   const [location, setLocation] = useState(currentUser.location || "");
+  const [website, setWebsite] = useState(currentUser.website || "");
   const [bio, setBio] = useState(currentUser.bio || "");
   const [avatarImage, setAvatarImage] = useState<File | null>(null);
   const [headerImage, setHeaderImage] = useState<File | null>(null);
@@ -26,6 +26,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
       username,
       location,
       bio,
+      website
     };
 
     try {
@@ -122,7 +123,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
           placeholder={currentUser.location}
           onChange={(e) => setLocation(e.target.value)}
         />
-        <Input label="Website" type="text" onChange={(e) => console.log(e)} />
+        <Input label="Website" type="text" onChange={(e) => setWebsite(e.target.value)} />
         <label htmlFor="bio">Bio</label>
         <textarea
           placeholder="Tell us about yourself."

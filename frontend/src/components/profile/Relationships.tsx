@@ -10,17 +10,26 @@ type RelationshipsProps = {
 };
 const Relationships: React.FC<RelationshipsProps> = observer(
   ({ userId, setSelectedFeed, currentUserId }) => {
+
+    
+
     useEffect(() => {
       const fetchData = async () => {
         try {
           const countsResponse = await useAxios.get(
             `/relationships/${userId}/counts`
           );
+          const betCountResponse = await useAxios.get(
+            `/relationships/${userId}/bet-post-count`
+          )
           userRelationshipsStore.setFollowerCount(
             countsResponse.data.followerCount
           );
           userRelationshipsStore.setFollowingCount(
             countsResponse.data.followingCount
+          );
+          userRelationshipsStore.setBetCount(
+            betCountResponse.data.betPostCount
           );
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -38,7 +47,7 @@ const Relationships: React.FC<RelationshipsProps> = observer(
           <span>{userRelationshipsStore.followingCount}</span>Following
         </p>
         <p>
-          <span>0</span>Bets
+          <span>{userRelationshipsStore.betCount}</span>Bets
         </p>
       </div>
     );
