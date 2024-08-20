@@ -6,6 +6,7 @@ import { COLOR_CONSTANTS } from "../../constants";
 import UserPlus from "../../icons/UserPlusIcon";
 import { observer } from "mobx-react";
 import { userRelationshipsStore } from "../../store/userRelationshipStore";
+import { showErrorToast, showSuccessToast } from "../../utils/toastUtils";
 
 type ActionButtonsProps = {
   user: UserTypes;
@@ -56,8 +57,10 @@ const ActionButtons: React.FC<ActionButtonsProps> = observer(({ isUserProfile, u
     try {
       if (newIsFollowing) {
         await useAxios.post(`/relationships/${user.id}/follow`);
+        showSuccessToast(`You are following @${user.username}`);
       } else {
         await useAxios.delete(`/relationships/${user.id}/unfollow`);
+        showSuccessToast(`You unfollowed @${user.username}`)
       }
     } catch (error) {
       console.error("Error updating follow status:", error);
