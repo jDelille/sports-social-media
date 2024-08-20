@@ -43,7 +43,8 @@ const useBetCheck = (props: BetProps) => {
         pickId,
         isUpdated,
         handicap: handicap ?? "",
-        team
+        team,
+        userId
       });
       case "Total":
       return useTotalCheck({

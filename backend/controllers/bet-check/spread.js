@@ -1,9 +1,10 @@
 import axios from "axios";
 import { db } from "../../connect.js";
+import { updateWinLossRecord } from "../../utils/betUtils.js";
 
 export const checkSpread = async (req, res) => {
   try {
-    const { sport, league, eventId, type, postId, pickId, handicap, team } =
+    const { sport, league, eventId, type, postId, pickId, handicap, team, userId } =
       req.params;
 
     // Fetching data from ESPN API
@@ -44,35 +45,21 @@ export const checkSpread = async (req, res) => {
     if (isHomeTeam) {
       score = homeScore + handicapInt;
       if (score > awayScore) {
-        result = 1;
+        result = true;
       } else {
-        result = 0;
+        result = false;
       }
     } else {
       score = awayScore + handicapInt;
       if (score > homeScore) {
-        result = 1;
+        result = true;
       } else {
-        result = 0;
+        result = false;
       }
     }
+     // Use the reusable function to handle win/loss updates
+    updateWinLossRecord(userId, result, pickId, postId, homeScore, awayScore, res);
 
-    const isWinner = result;
-
-    const updateBetQuery = `
-    UPDATE posts 
-    SET bet = JSON_SET(bet, '$.picks[${pickId}].isWinner', ?) 
-    WHERE id = ?
-`;
-
-    db.query(updateBetQuery, [isWinner, postId], (err, data) => {
-      if (err) {
-        console.error("Error updating bet status:", err);
-        return res.status(500).json({ error: "Error updating bet status" });
-      }
-      // Send the result response after the database update
-      return res.status(200).json({ result });
-    });
   } catch (error) {
     console.error("Error fetching spread data:", error);
     return res.status(500).json({ error: "Error fetching spread data" });

@@ -39,13 +39,13 @@ export const checkTotal = async (req, res) => {
     let result;
 
     if (total === "Over") {
-      result = totalScore > totalInt ? 1 : 0;
+      result = totalScore > totalInt ? true : false;
     } else {
-      result = totalScore < totalInt ? 1 : 0;
+      result = totalScore < totalInt ? true : false;
     }
 
     // Use the reusable function to handle win/loss updates
-    updateWinLossRecord(userId, result, pickId, postId, res);
+    updateWinLossRecord(userId, result, pickId, postId, homeScore, awayScore, res);
   } catch (error) {
     console.error("Error fetching total (over/under) data:", error);
     return res.status(500).json({ error: "Error fetching total (over/under) data" });
