@@ -4,6 +4,7 @@ import { useAxios, useCustomizeProfile } from "../../hooks";
 import Input from "../input/Input";
 import { AuthContext } from "../../context/AuthContext";
 import ProfileImgUpload from "../profile-img-upload/ProfileImgUpload";
+import { uploadProfilePicture } from "../../utils/firebaseUtils";
 import "./customizeProfileModal.scss";
 
 type CustomizeProfileModalProps = {};
@@ -34,6 +35,7 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
 
       const uploadImage = async (file: File | null, type: string) => {
         if (file) {
+          const imageUrl = await uploadProfilePicture(file, currentUser.id);
           const formData = new FormData();
           formData.append(type, file);
           formData.append("id", currentUser.id);
@@ -43,8 +45,6 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
         }
       };
 
-      await uploadImage(profilePicture, "profilePicture");
-      await uploadImage(profileHeader, "profileHeader");
     } catch (error) {
       console.error("Error editing profile", error);
     }

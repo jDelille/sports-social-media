@@ -98,7 +98,7 @@ export const logout = (req, res) => {
 
 export const editProfile = (req, res) => {
   const userId = req.body.id;
-  const { name, username, location, bio } = req.body;
+  const { name, username, location, bio, avatar} = req.body;
 
   let query = "UPDATE users SET ";
   const values = [];
@@ -121,6 +121,11 @@ export const editProfile = (req, res) => {
   if (bio) {
     query += "bio = ?, ";
     values.push(bio);
+  }
+
+  if(avatar) {
+    query += "avatar = ?, ";
+    values.push(avatar)
   }
 
   query += "updated_at = ? "; 

@@ -34,8 +34,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
       if (file) {
         try {
           const imageUrl = await uploadImage(file);
-          newPost.image = imageUrl; // Attach the image URL to the new post data
-          console.log(imageUrl)
+          newPost.image = imageUrl; 
         } catch (error) {
           console.error('Failed to upload image:', error);
         }
