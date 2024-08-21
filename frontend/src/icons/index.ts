@@ -31,3 +31,4 @@ export { default as GroupIcon} from './GroupIcon';
 export { default as ProfileIcon} from './ProfileIcon';
 export { default as SettingsIcon} from './SettingsIcon'; 
 export { default as LogoutIcon} from './LogoutIcon';
+export { default as AddUserIcon} from './AddUserIcon';

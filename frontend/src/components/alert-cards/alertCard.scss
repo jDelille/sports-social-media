@@ -1,0 +1,54 @@
+@use '../../scss/variables' as *;
+@use '../../scss/mixins' as *;
+.alert-card {
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    border-bottom: 1px solid $lightBorderColor;
+    .alert-type {
+        font-size: 12px;
+        display: flex;
+        gap: 4px;
+        margin-left: 23px;
+        align-items: center;
+        .alerter-username {
+            font-weight: 600;
+            padding-left: 2px;
+        }
+    }
+    .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .text {
+            .name {
+                font-size: 14px;
+                font-weight: 600;
+                color: rgb(8, 5, 27);
+                display: flex;
+                align-items: center;
+                gap: 3px;
+                position: relative;
+            }
+            .username {
+                color: $darkgray;
+                font-size: 13px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                font-weight: 400;
+            }
+        }
+    }
+    .btn {
+        position: absolute;
+        right: 15px;
+        bottom: 10px;
+        .follow-btn {
+            @include button_sm();
+            margin: 0;
+        }
+    }
+}

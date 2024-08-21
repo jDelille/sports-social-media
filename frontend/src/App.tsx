@@ -32,6 +32,7 @@ import GamePreview from "./components/game-preview/GamePreview";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PostPage from "./pages/PostPage";
+import Alerts from "./pages/Alerts";
 
 function App() {
   const queryClient = new QueryClient();
@@ -112,6 +113,10 @@ function App() {
         {
           path: "/leaderboard",
           element: <Leaderboard/>
+        },
+        {
+          path: "/alerts",
+          element: <Alerts />
         },
         {
           path: "/discover/hashtag/:hashtag",

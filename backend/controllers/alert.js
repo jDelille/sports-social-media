@@ -13,10 +13,11 @@ export const addAlert = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q =
-      "INSERT INTO alerts (`user_id`, `body`, `alerter_id`, `created_at`) VALUES (?, ?, ?, ?)";
+      "INSERT INTO alerts (`user_id`, `type`, `alerter_id`, `created_at`, `msg`) VALUES (?, ?, ?, ?)";
     const values = [
       userInfo.id,
-      req.body.body,
+      req.body.type,
+      req.body.msg,
       req.body.alerter_id,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
     ];
@@ -38,13 +39,15 @@ export const getAlerts = (req, res) => {
       const q = `
         SELECT
           a.id,
-          a.body,
+          a.type,
+          a.msg,
           a.created_at,
           JSON_OBJECT(
             'id', u.id,
             'username', u.username,
             'name', u.name,
-            'avatar', u.avatar
+            'avatar', u.avatar,
+            'isVerified', u.isVerified
           ) AS alerter
         FROM alerts a
         LEFT JOIN users u ON a.alerter_id = u.id
