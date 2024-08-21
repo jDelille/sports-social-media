@@ -1,6 +1,16 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { NavLink } from "react-router-dom";
-import { LogoIcon } from "../../icons";
+import {
+  BellIcon,
+  CompassIcon,
+  GroupIcon,
+  HomeIcon,
+  LogoIcon,
+  LogoutIcon,
+  ProfileIcon,
+  SettingsIcon,
+  TrophyIcon,
+} from "../../icons";
 import SearchBar from "../search-bar/SearchBar";
 import useSidebar from "../../hooks/useSidebar";
 import "./sidebar.scss";
@@ -16,14 +26,20 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
     handleLogout,
   } = useSidebar();
 
-
-  const MenuItem: React.FC<{ to: string; label: string }> = ({ to, label }) => (
-      <NavLink
-        to={to}
-        className={({ isActive }) => (isActive ? "active menu-item" : "menu-item")}
-      >
-        {label}
-      </NavLink>
+  const MenuItem: React.FC<{
+    to: string;
+    label: string;
+    icon: ReactElement;
+  }> = ({ to, label, icon }) => (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        isActive ? "active menu-item" : "menu-item"
+      }
+    >
+      {icon}
+      {label}
+    </NavLink>
   );
 
   return (
@@ -32,19 +48,48 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
         <div className="title">
           <LogoIcon size={100} color="black" />
         </div>
-      
+
         <ul className="sidebar-links">
           {currentUser ? (
             <>
               <SearchBar />
-              <MenuItem to="/home" label="Home" />
-              <MenuItem to="/matches" label="Discover" />
-              <MenuItem to="/alerts" label="Alerts" />
-              <MenuItem to="/matches" label="Matches" />
-              <MenuItem to="/groups" label="Groups" />
-              <MenuItem to={`/profile/${currentUser.username}`} label="Profile" />
-              <MenuItem to="/settings" label="Settings" />
+              <MenuItem
+                to="/home"
+                label="Home"
+                icon={<HomeIcon size={20} color="#888595" />}
+              />
+              <MenuItem
+                to="/matches"
+                label="Discover"
+                icon={<CompassIcon size={20} color="#888595" />}
+              />
+              <MenuItem
+                to="/alerts"
+                label="Alerts"
+                icon={<BellIcon size={20} color="#888595" />}
+              />
+              <MenuItem
+                to="/matches"
+                label="Matches"
+                icon={<TrophyIcon size={20} color="#888595" />}
+              />
+              <MenuItem
+                to="/groups"
+                label="Groups"
+                icon={<GroupIcon size={20} color="#888595" />}
+              />
+              <MenuItem
+                to={`/profile/${currentUser.username}`}
+                label="Profile"
+                icon={<ProfileIcon size={20} color="#888595" />}
+              />
+              <MenuItem
+                to="/settings"
+                label="Settings"
+                icon={<SettingsIcon size={20} color="#888595" />}
+              />
               <li onClick={handleLogout} className="menu-item">
+                <LogoutIcon size={20} color="#888595" />
                 <a>Logout</a>
               </li>
               <button className="post-btn" onClick={handleOpenCreatePost}>
@@ -53,8 +98,16 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
             </>
           ) : (
             <>
-              <MenuItem to="/home" label="Home" />
-              <MenuItem to="/matches" label="Discover" />
+              <MenuItem
+                to="/home"
+                label="Home"
+                icon={<HomeIcon size={20} color="#888595" />}
+              />
+              <MenuItem
+                to="/matches"
+                label="Discover"
+                icon={<CompassIcon size={20} color="#888595" />}
+              />
               <li onClick={handleOpenLogin} className="menu-item">
                 <a>Login</a>
               </li>

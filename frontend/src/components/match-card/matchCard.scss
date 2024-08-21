@@ -59,13 +59,15 @@
                         }
                     }
                 }
-                .odds {
+                .odds,
+                .scores {
                     display: flex;
                     height: 40px;
                     width: 50%;
                     margin-left: auto;
                     gap: 5px;
-                    .odd {
+                    .odd
+                     {
                         flex: 1;
                         display: flex;
                         align-items: center;
@@ -81,6 +83,13 @@
                             font-weight: 500;
                             font-size: 12px;
                         }
+                    }
+                    .score {
+                        flex: 1;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        
                     }
                 }
              
