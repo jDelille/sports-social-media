@@ -50,6 +50,10 @@ const EditProfile: React.FC<EditProfileProps> = () => {
     }
   };
 
+  const clear = () => {
+    setAvatarImage(null);
+  }
+
   return (
     <div className="page edit-profile">
       <PageHeader title="Edit profile" hasBack />
@@ -81,7 +85,6 @@ const EditProfile: React.FC<EditProfileProps> = () => {
                   }
                 }}
               />
-              <span>{headerImage ? headerImage.name : "No file chosen"}</span>
             </div>
           </div>
           <div className="avatar-input">
@@ -98,7 +101,6 @@ const EditProfile: React.FC<EditProfileProps> = () => {
                   }
                 }}
               />
-              <span>{avatarImage ? avatarImage.name : "No file chosen"}</span>
             </div>
           </div>
         </div>
@@ -123,15 +125,15 @@ const EditProfile: React.FC<EditProfileProps> = () => {
           placeholder={currentUser.location}
           onChange={(e) => setLocation(e.target.value)}
         />
-        <Input label="Website" type="text" onChange={(e) => setWebsite(e.target.value)} />
+        <Input label="Website" type="text" onChange={(e) => setWebsite(e.target.value)} placeholder={currentUser.website}/>
         <label htmlFor="bio">Bio</label>
         <textarea
-          placeholder="Tell us about yourself."
+          placeholder={currentUser.bio || "Tell us about yourself."}
           onChange={(e) => setBio(e.target.value)}
         />
       </div>
       <div className="action-btns">
-        <button>Cancel</button>
+        <button onClick={clear}>Cancel</button>
         <button onClick={handleSave}>Save</button>
       </div>
     </div>

@@ -56,6 +56,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/relationships", relationshipRoutes);
 
 /**
+ * Alert routes
+ */
+app.use("/api/alerts", alertRoutes);
+
+/**
  * Sport routes
  */
 app.use("/api/odds", oddsRoutes);
