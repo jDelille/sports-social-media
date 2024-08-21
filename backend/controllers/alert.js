@@ -42,6 +42,7 @@ export const getAlerts = (req, res) => {
           a.type,
           a.msg,
           a.created_at,
+          a.post_id,
           JSON_OBJECT(
             'id', u.id,
             'username', u.username,

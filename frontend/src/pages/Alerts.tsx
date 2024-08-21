@@ -11,6 +11,7 @@ export type Alert = {
   alerter_id: number | null;
   created_at: string;
   msg: string;
+  post_id: number;
   alerter: {
     id: number;
     name: string;

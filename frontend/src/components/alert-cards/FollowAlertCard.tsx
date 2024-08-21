@@ -18,7 +18,7 @@ const FollowAlertCard: React.FC<FollowAlertCardProps> = ({ alert }) => {
         <p className="alerter-username">{alerter.username}</p>
         <span>{alert.msg}</span>
       </div>
-      <div className="user">
+      <div className="user-wrapper">
         <Avatar src={alerter.avatar} username={alerter.username} />
         <div className="text">
           <p className="name">

@@ -18,7 +18,7 @@
             padding-left: 2px;
         }
     }
-    .user {
+    .user-wrapper {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -50,5 +50,12 @@
             @include button_sm();
             margin: 0;
         }
+    }
+    .post {
+        border-bottom: none;
+        padding: 0;
+        position: relative;
+        bottom: 5px;
+        min-height: fit-content;
     }
 }
