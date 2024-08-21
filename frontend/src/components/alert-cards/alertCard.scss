@@ -45,10 +45,11 @@
     .btn {
         position: absolute;
         right: 15px;
-        bottom: 10px;
+        bottom: 11px;
         .follow-btn {
             @include button_sm();
             margin: 0;
+            font-size: 12px;
         }
     }
     .post {

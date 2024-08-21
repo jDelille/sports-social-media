@@ -4,6 +4,7 @@ import SuggestedUsers from "../suggested-users/SuggestedUsers";
 import LeaderboardWidget from "../leaderboard-widget/LeaderboardWidget";
 import "./sidebar.scss";
 import SiteLinks from "../site-links/SiteLinks";
+import SuggestedGroups from "../suggested-groups/SuggestedGroups";
 
 type RightSidebarProps = {
   currentUser: any | null;
@@ -26,6 +27,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({currentUser}) => {
         ): (
           <>
           <SuggestedUsers />
+          <SuggestedGroups />
           <LeaderboardWidget />
           <SiteLinks />
           </>

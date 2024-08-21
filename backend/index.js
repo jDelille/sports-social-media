@@ -6,6 +6,7 @@ import {
   authRoutes,
   commentRoutes,
   espnRoutes,
+  groupRoutes,
   imageUploadRoutes,
   likeRoutes,
   metadataRoutes,
@@ -55,6 +56,11 @@ app.use("/api/image-upload", imageUploadRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/relationships", relationshipRoutes);
+
+/**
+ * Group routes 
+ */
+app.use('/api/group', groupRoutes);
 
 /**
  * Alert routes

@@ -16,3 +16,4 @@ export { default as spreadRoutes } from "./bet-check/spread.js";
 export { default as totalRoutes } from "./bet-check/total.js";
 export { default as recordRoutes } from "./bet-check/record.js";
 export { default as alertRoutes} from './alert.js';
+export { default as groupRoutes } from './group.js';

@@ -1,0 +1,22 @@
+@use '../../scss/variables' as *;
+
+.suggested-groups {
+    border: 1px solid rgb(239, 243, 244);
+    padding: 10px;
+    border-radius: 12px;
+    margin-top: 10px;
+    .title {
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .show-more {
+      font-size: 14px;
+      color: $accent;
+      padding-bottom: 5px;
+      cursor: pointer;
+      width: fit-content;
+      &:hover {
+          text-decoration: underline;
+      }
+    }
+  }
