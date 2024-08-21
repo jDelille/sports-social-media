@@ -6,14 +6,14 @@ import { useAxios } from "../../hooks";
 import PostHeader from "../post/PostHeader";
 import UserTypes from "../../types/User";
 import PostTypes from "../../types/Post";
-import ArticleDisplay from "../article-display/ArticleDisplay";
 import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
+import { Link, useNavigate } from "react-router-dom";
 import "./createComment.scss";
-import { Link } from "react-router-dom";
 
 type CreateCommentProps = {};
 const CreateComment: React.FC<CreateCommentProps> = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const [commentBody, setCommentBody] = useState("");
   const [file, setFile] = useState(null);
@@ -24,6 +24,8 @@ const CreateComment: React.FC<CreateCommentProps> = () => {
   const postId = createCommentModal.postId;
   const type = createCommentModal.type;
   const post = createCommentModal.post;
+
+  console.log(postId, type)
 
   const handleSubmit = async (body: string) => {
     try {
@@ -54,6 +56,7 @@ const CreateComment: React.FC<CreateCommentProps> = () => {
     try {
       mutate(commentBody);
       setCommentBody("");
+      navigate(`/post/${post?.id}`)
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +91,9 @@ const CreateComment: React.FC<CreateCommentProps> = () => {
           hideMenu
         />
         <p className="body">{hideUrlsInBody(post?.body as string)}</p>
+        {post?.metadata && (
         <Link to={post?.metadata.url as string} target="_blank" className="url-link">{post?.metadata.url}</Link>
+        )}
       </div>
 
       <div className="content">

@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { PageHeader } from "../components";
 import { useParams } from "react-router-dom";
 import "./page.scss";
-import { useAxios, useFetchLikes } from "../hooks";
+import { useAxios, useFetchComments, useFetchLikes } from "../hooks";
 import Post from "../components/post/Post";
 import PostDetailsFooter from "../components/post/post-details-footer/PostDetailsFooter";
 import { AuthContext } from "../context/AuthContext";
+import { CommentTypes } from "../types/CommentTypes";
+import CommentCard from "../components/comment-card/CommentCard";
 
 type PostPageProps = {};
 
@@ -35,11 +37,12 @@ const PostPage: React.FC<PostPageProps> = () => {
     fetchPost();
   }, [postId]);
 
+  const { comments } = useFetchComments(post?.id, post?.type);
+
   const { likes } = useFetchLikes(post?.id, post?.type);
 
   const hasLiked = likes?.includes(currentUser?.id);
 
-  console.log(post);
 
   return (
     <div className="post-page page">
@@ -52,6 +55,9 @@ const PostPage: React.FC<PostPageProps> = () => {
         currentUserId={currentUser?.id}
         hasLiked={hasLiked}
       />
+      {comments?.map((comment: CommentTypes) => (
+        <CommentCard key={comment.id} comment={comment} username={post.user.username} />
+      ))}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import "./avatar.scss";
 
 type AvatarProps = {
   src?: string;
-  username: string;
+  username?: string;
   isVerified?: boolean;
   disabled?: boolean;
 };

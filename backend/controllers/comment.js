@@ -16,21 +16,57 @@ export const getComments = (req, res) => {
     let values;
 
     if (req.query.type === "post" || req.query.type === "repost") {
-      q = "SELECT user_id FROM comments WHERE post_id = ?";
+      q = `
+        SELECT
+          c.user_id,
+          c.body,
+          c.image,
+          c.created_at,
+          c.updated_at,
+        JSON_OBJECT(
+          'id', u.id,
+          'name', u.name,
+          'username', u.username,
+          'avatar', u.avatar,
+          'isVerified', u.isVerified
+        ) AS user
+        FROM comments c
+        JOIN users u ON c.user_id = u.id
+        WHERE c.post_id = ?
+        ORDER BY c.created_at DESC
+      `;
       values = [req.query.postId];
     } else if (
       req.query.type === "quote_repost" ||
       req.query.type === "quote_repost_repost"
     ) {
-      q = "SELECT user_id FROM comments WHERE quote_repost_id = ?";
+      q = `
+        SELECT
+          c.user_id,
+          c.body,
+          c.image,
+          c.created_at,
+          c.updated_at,
+         JSON_OBJECT(
+          'id', u.id,
+          'name', u.name,
+          'username', u.username,
+          'avatar', u.avatar,
+          'isVerified', u.isVerified
+        ) AS user
+        FROM comments c
+        JOIN users u ON c.user_id = u.id
+        WHERE c.quote_repost_id = ?
+        ORDER BY c.created_at DESC
+      `;
       values = [req.query.postId];
     } else {
-      return res.status(400).json("Invalid like type");
+      return res.status(400).json("Invalid type");
     }
 
     db.query(q, values, (err, data) => {
       if (err) return res.status(500).json(err);
-      return res.status(200).json(data.map((like) => like.user_id));
+      return res.status(200).json(data);
     });
   });
 };
@@ -47,19 +83,26 @@ export const addComment = (req, res) => {
 
     if (req.body.type === "post" || req.body.type === "repost") {
       q =
-        "INSERT INTO comments (`user_id`, `post_id`, `body`, `image`) VALUES (?, ?, ?, ?)";
-      values = [userInfo.id, req.body.postId, req.body.body, req.body.image];
+        "INSERT INTO comments (`user_id`, `post_id`, `body`, `image`, `created_at`) VALUES (?, ?, ?, ?, ?)";
+      values = [
+        userInfo.id,
+        req.body.postId,
+        req.body.body,
+        req.body.image || null, // Provide a value for `image`, even if it's `null`
+        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+      ];
     } else if (
       req.body.type === "quote_repost" ||
       req.body.type === "quote_repost_repost"
     ) {
       q =
-        "INSERT INTO comments (`user_id`, `quote_repost_id`, `body`, `image`) VALUES (?, ?, ?, ?)";
+        "INSERT INTO comments (`user_id`, `quote_repost_id`, `body`, `image`, `created_at`) VALUES (?, ?, ?, ?, ?)";
       values = [
         userInfo.id,
         req.body.postId,
         req.body.body,
-        req.body.image,
+        req.body.image || null, // Provide a value for `image`, even if it's `null`
+        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       ];
     } else {
       return res.status(400).json("Invalid like type");
