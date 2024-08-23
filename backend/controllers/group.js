@@ -25,6 +25,32 @@ export const getGroups = (req, res) => {
   });
 };
 
+export const getSuggestedGroups = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const q = `
+    SELECT g.id, g.name, g.description, g.avatar, g.header_img, g.privacy, g.admin_id, g.created_at, COUNT(gm.user_id) AS member_count
+    FROM \`Groups\` g
+    LEFT JOIN group_members gm ON g.id = gm.group_id
+    LEFT JOIN group_members  user_gm ON g.id = user_gm.group_id AND user_gm.user_id = ?
+    WHERE user_gm.user_id IS NULL
+    GROUP BY g.id
+    ORDER BY member_count DESC;
+  `;
+
+    const values = [userInfo.id];
+
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(data);
+    });
+  });
+};
+
 export const createGroup = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");

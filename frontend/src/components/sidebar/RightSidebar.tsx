@@ -1,10 +1,10 @@
 import React from "react";
 import useSidebar from "../../hooks/useSidebar";
 import SiteLinks from "../site-links/SiteLinks";
-import SuggestedGroups from "../suggested-groups/SuggestedGroups";
 import {
   CreateGroupWidget,
   LeaderboardWidget,
+  SuggestedGroupsWidget,
   SuggestedUsersWidget,
 } from "../widgets";
 import "./sidebar.scss";
@@ -39,7 +39,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({ currentUser }) => {
                 <LeaderboardWidget />
               </>
             )}
-            <SuggestedGroups />
+            <SuggestedGroupsWidget />
             <SiteLinks />
           </>
         )}

@@ -84,4 +84,47 @@
       text-decoration: underline;
     }
   }
+  .groups {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    padding-bottom: 5px;
+    .group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      &:hover {
+        cursor: pointer;
+      }
+      img {
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      .text {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+        .name {
+          font-weight: 500;
+          font-size: 14px;
+        }
+        .info {
+          display: flex;
+          color: gray;
+          gap: 5px;
+          font-size: 12px;
+          position: relative;
+          left: -2px;
+          .privacy {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+          }
+        }
+      }
+    }
+  }
 }
