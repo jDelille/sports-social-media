@@ -35,6 +35,7 @@ import PostPage from "./pages/PostPage";
 import Alerts from "./pages/Alerts";
 import GroupsPage from "./pages/Groups";
 import CreateGroupModal from "./components/create-group-modal/CreateGroupModal";
+import GroupPage from "./pages/GroupPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -132,6 +133,10 @@ function App() {
         {
           path: "/post/:postId",
           element: <PostPage />
+        },
+        {
+          path: "/group/:groupId",
+          element: <GroupPage />
         }
       ],
     },

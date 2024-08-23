@@ -1,13 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./groupCard.scss";
-import { WorldIcon } from "../../icons";
 
 type GroupCardProps = {
   group: any;
 };
 const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
+
+  const navigate = useNavigate();
+
+  const handleGroupClick = () => {
+    navigate(`/group/${group.id}`)
+  }
+
+
   return (
-    <div className="group-card">
+    <div className="group-card" onClick={handleGroupClick}>
       <div className="avatar">
         <img src={group.avatar} alt="" />
       </div>
