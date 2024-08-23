@@ -34,6 +34,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PostPage from "./pages/PostPage";
 import Alerts from "./pages/Alerts";
 import GroupsPage from "./pages/Groups";
+import CreateGroupModal from "./components/create-group-modal/CreateGroupModal";
 
 function App() {
   const queryClient = new QueryClient();
@@ -75,6 +76,7 @@ function App() {
                 <LeaderboardInfo />
                 <GamePreview />
                 <ToastContainer />
+                <CreateGroupModal />
 
               </div>
               <RightSidebar currentUser={currentUser} />

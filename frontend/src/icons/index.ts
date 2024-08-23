@@ -32,3 +32,4 @@ export { default as ProfileIcon} from './ProfileIcon';
 export { default as SettingsIcon} from './SettingsIcon'; 
 export { default as LogoutIcon} from './LogoutIcon';
 export { default as AddUserIcon} from './AddUserIcon';
+export { default as CheckMarkIcon} from './CheckMarkIcon';

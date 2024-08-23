@@ -5,7 +5,7 @@ import './modal.scss';
 
 type ModalProps = {
     isOpen: boolean;
-    body: ReactElement;
+    body: ReactElement | null;
     onClose: () => void;
     title: string;
     previousModal?: () => void;

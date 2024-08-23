@@ -15,3 +15,4 @@ export { default as useClickOutside} from './actions/useHandleClickOutside';
 export { default as useHashTagData} from './post-hooks/useHashtagData';
 export { default as useUrlMetadata} from './post-hooks/useDetectUrls';
 export { default as useGamePreview } from './game-preview/useGamePreview';
+export { default as useCreateGroupModal} from './useCreateGroupModal';

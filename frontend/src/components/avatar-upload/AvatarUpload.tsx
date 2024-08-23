@@ -3,8 +3,8 @@ import { CloseIcon, ImgIcon } from "../../icons";
 
 type AvatarUploadProps = {
   profilePicture: File | null;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setProfilePicture: Dispatch<SetStateAction<File | null>>;
+  handleFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setProfilePicture?: Dispatch<SetStateAction<File | null>>;
 };
 
 const AvatarUpload: React.FC<AvatarUploadProps> = ({
@@ -26,14 +26,17 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
       ) : (
         <ImgIcon size={24} color="white" />
       )}
-      <input
-        id="avatarFileInput"
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        className="file-input"
-      />
-      {profilePicture && (
+      {handleFileChange && (
+        <input
+          id="avatarFileInput"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="file-input"
+        />
+      )}
+
+      {profilePicture && setProfilePicture && (
         <div className="remove-img" onClick={() => setProfilePicture(null)}>
           <CloseIcon color="white" size={15} />
         </div>

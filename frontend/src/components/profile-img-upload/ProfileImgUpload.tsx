@@ -6,10 +6,10 @@ import './profileImgUpload.scss';
 type ProfileImgUploadProps = {
   profilePicture: File | null;
   headerImage: File | null;
-  handleAvatarChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleHeaderChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setProfilePicture: Dispatch<SetStateAction<File | null>>;
-  setHeaderImage: Dispatch<SetStateAction<File | null>>;
+  handleAvatarChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleHeaderChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setProfilePicture?: Dispatch<SetStateAction<File | null>>;
+  setHeaderImage?: Dispatch<SetStateAction<File | null>>;
 };
 
 const ProfileImgUpload: React.FC<ProfileImgUploadProps> = ({

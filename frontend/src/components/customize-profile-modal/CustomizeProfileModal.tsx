@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
 import Modal from "../modal/Modal";
-import { useAxios, useCustomizeProfile } from "../../hooks";
+import { useCustomizeProfile } from "../../hooks";
 import Input from "../input/Input";
 import { AuthContext } from "../../context/AuthContext";
 import ProfileImgUpload from "../profile-img-upload/ProfileImgUpload";
-import { uploadProfilePicture } from "../../utils/firebaseUtils";
 import "./customizeProfileModal.scss";
 
 type CustomizeProfileModalProps = {};
@@ -32,18 +31,6 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
     try {
       await updateProfile(payload);
       console.log("Profile successfully updated");
-
-      const uploadImage = async (file: File | null, type: string) => {
-        if (file) {
-          const imageUrl = await uploadProfilePicture(file, currentUser.id);
-          const formData = new FormData();
-          formData.append(type, file);
-          formData.append("id", currentUser.id);
-
-          await useAxios.post(`/image-upload/upload/${type}`, formData);
-          console.log(`${type} uploaded successfully`);
-        }
-      };
 
     } catch (error) {
       console.error("Error editing profile", error);

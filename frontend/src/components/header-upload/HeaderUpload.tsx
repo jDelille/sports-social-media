@@ -3,8 +3,8 @@ import { CloseIcon, ImgIcon } from "../../icons";
 
 type HeaderUploadProps = {
   headerImage: File | null;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setHeaderImage: Dispatch<SetStateAction<File | null>>;
+  handleFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setHeaderImage?: Dispatch<SetStateAction<File | null>>;
 };
 
 const HeaderUpload: React.FC<HeaderUploadProps> = ({
@@ -26,14 +26,17 @@ const HeaderUpload: React.FC<HeaderUploadProps> = ({
       ) : (
         <ImgIcon size={24} color="white" />
       )}
-      <input
+      {handleFileChange && (
+        <input
         id="headerFileInput"
         type="file"
         accept="image/*"
         onChange={handleFileChange}
         className="file-input"
       />
-      {headerImage && (
+      )}
+      
+      {headerImage && setHeaderImage && (
         <div className="remove-img" onClick={() => setHeaderImage(null)}>
           <CloseIcon color="white" size={15} />
         </div>

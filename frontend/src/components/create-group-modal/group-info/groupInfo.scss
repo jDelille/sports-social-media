@@ -1,0 +1,28 @@
+.group-info {
+   margin-top: 3rem;
+    .description {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        label {
+            font-weight: 500;
+            font-size: 14px;
+            padding-bottom: 5px;
+        }
+        span {
+            color: gray;
+            font-size: 12px;
+            padding-bottom: 5px;
+    
+        }
+        textarea {
+            border: 2px solid rgb(236, 236, 236);
+            border-radius: .375rem;
+            padding: 10px;
+            min-height: 120px;
+            resize: none;
+            font-size: .875rem;
+
+        }
+    }
+}

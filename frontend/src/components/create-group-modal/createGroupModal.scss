@@ -1,0 +1,21 @@
+@use '../../scss/variables' as *;
+@use '../../scss/mixins' as *;
+
+.create-group-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+
+
+
+    .next-btn {
+        @include button_sm();
+        padding: 12px 18px;
+        margin: 0;
+        background-color: $accent;
+        &:hover {
+            background-color: lighten($accent, 5%);
+        }
+    }
+}
