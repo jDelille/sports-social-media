@@ -1,19 +1,47 @@
-@use '../../scss/variables' as *;
+@use "../../scss/mixins" as *;
+@use "../../scss/variables" as *;
 
-.suggested-users {
+.widget {
   border: 1px solid rgb(239, 243, 244);
   padding: 10px;
   border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
   .title {
     font-weight: 700;
     font-size: 18px;
   }
+  .description {
+    color: #656175;
+    font-size: 14px;
+    span {
+      color: $accent;
+      font-weight: 500;
+    }
+  }
+  button {
+    @include button_sm();
+    margin: 0;
+    width: fit-content;
+    margin-top: 5px;
+    font-size: 12px;
+    width: 100%;
+    padding: 11px 20px;
+    font-size: 14px;
+    color: #5448ee;
+    background-color: #e0e7ff;
+    &:hover {
+      background-color: lighten(#e0e7ff, 1%);
+    }
+  }
   .users {
-    padding: 20px 0;
     display: flex;
     flex-direction: column;
     gap: 15px;
     justify-content: center;
+    padding-bottom: 5px;
     .user {
       display: flex;
       gap: 5px;
@@ -36,18 +64,13 @@
         }
       }
       button {
-        background-color: #ff4775;
         border: none;
-        padding: 0.2rem 0.4rem;
+        padding: 0.5rem 0.4rem;
         border-radius: 22px;
         font-size: 12px;
-        color: white;
         width: 70px;
         margin-left: auto;
-        &:hover {
-          cursor: pointer;
-          background-color: lighten(#ff4775, 3%);
-        }
+        margin-top: 0;
       }
     }
   }
@@ -58,7 +81,7 @@
     cursor: pointer;
     width: fit-content;
     &:hover {
-        text-decoration: underline;
+      text-decoration: underline;
     }
   }
 }

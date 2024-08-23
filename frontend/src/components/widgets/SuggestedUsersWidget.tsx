@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserTypes from "../../types/User";
 import { useAxios } from "../../hooks";
 import Avatar from "../avatar/Avatar";
-import "./suggestedUsers.scss";
+import './widget.scss';
 
 type SuggestedUsersProps = {};
 const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
@@ -26,7 +26,7 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
   }, []);
 
   return (
-    <div className="suggested-users">
+    <div className="widget">
       <p className="title">Who to follow</p>
       <div className="users">
         {users.map((user) => (
@@ -38,7 +38,7 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
                     <p className="name">{user.name}</p>
                     <p className="username">@{user.username}</p>
                 </div>
-                <button>Follow</button>
+                <button className="follow-btn">Follow</button>
                 
             </div>
         ))}
