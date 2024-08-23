@@ -13,34 +13,34 @@ const HeaderUpload: React.FC<HeaderUploadProps> = ({
   setHeaderImage,
 }) => {
   return (
-    <div
-      className="header-upload"
-      onClick={() => document.getElementById("headerFileInput")?.click()}
-    >
-      {headerImage ? (
-        <img
-          src={URL.createObjectURL(headerImage)}
-          alt="Header Preview"
-          className="header-preview"
-        />
-      ) : (
-        <ImgIcon size={24} color="white" />
-      )}
-      {handleFileChange && (
-        <input
+    <div className="header-upload">
+      <input
         id="headerFileInput"
         type="file"
         accept="image/*"
         onChange={handleFileChange}
         className="file-input"
+        style={{ display: 'none' }} // Hide the file input
       />
-      )}
-      
-      {headerImage && setHeaderImage && (
-        <div className="remove-img" onClick={() => setHeaderImage(null)}>
-          <CloseIcon color="white" size={15} />
-        </div>
-      )}
+      <div
+        className="upload-area"
+        onClick={() => document.getElementById("headerFileInput")?.click()}
+      >
+        {headerImage ? (
+          <img
+            src={URL.createObjectURL(headerImage)}
+            alt="Header Preview"
+            className="header-preview"
+          />
+        ) : (
+          <ImgIcon size={24} color="white" />
+        )}
+        {headerImage && setHeaderImage && (
+          <div className="remove-img" onClick={() => setHeaderImage(null)}>
+            <CloseIcon color="white" size={15} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

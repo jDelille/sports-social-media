@@ -3,8 +3,9 @@ import Modal from "../modal/Modal";
 import { useAxios, useCreateGroupModal } from "../../hooks";
 import ProfileImgUpload from "../profile-img-upload/ProfileImgUpload";
 import GroupSettings from "./group-settings/GroupSettings";
-import "./createGroupModal.scss";
 import GroupInfo from "./group-info/GroupInfo";
+import "./createGroupModal.scss";
+import { uploadGroupHeaderImage, uploadGroupProfilePicture } from "../../utils/firebaseUtils";
 
 type CreateGroupModalProps = {};
 const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
@@ -15,7 +16,6 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
   const [profileHeader, setProfileHeader] = useState<File | null>(null);
   const [groupName, setGroupName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-
 
   const handleNext = () => {
     setStep((prevStep) => prevStep + 1);
@@ -31,13 +31,47 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
         privacy,
         name: groupName,
         description,
-        
-      }
+      };
 
       const response = await useAxios.post("/group", newGroup);
+      const groupId = response.data.groupId;
 
-      console.log(response.data);
-      createGroupModal.onClose(); // Close modal after submission
+      let avatarImageUrl: string | undefined;
+      let headerImageUrl: string | undefined;
+
+      try {
+        if (profilePicture) {
+          avatarImageUrl = await uploadGroupProfilePicture(
+            profilePicture,
+            groupId
+          );
+        }
+      } catch (error) {
+        console.error("Failed to upload profile picture:", error);
+      }
+
+      try {
+        if (profileHeader) {
+          headerImageUrl = await uploadGroupHeaderImage(profileHeader, groupId);
+        }
+      } catch (error) {
+        console.error('Failed to upload header image:', error);
+      }
+
+      const updateData: { avatar?: string; header?: string } = {};
+      if (avatarImageUrl) updateData.avatar = avatarImageUrl;
+      if (headerImageUrl) updateData.header = headerImageUrl;
+
+      if (Object.keys(updateData).length > 0) {
+        try {
+          await useAxios.patch(`/group/${groupId}`, updateData);
+        } catch (error) {
+          console.error('Failed to update group with image URLs:', error);
+          // Optionally, notify the user of the update failure
+        }
+      }
+
+      createGroupModal.onClose();
     } catch (error) {
       console.error("Error creating group:", error);
     }

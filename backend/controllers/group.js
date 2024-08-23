@@ -108,3 +108,71 @@ export const getMyGroups = (req, res) => {
     });
   });
 };
+
+export const updateGroup = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const { groupId } = req.params;
+    const { name, description, avatar, header_img, privacy } = req.body;
+
+    // Validate input if necessary
+    // if (description && typeof description !== "string") {
+    //   return res.status(400).json("Invalid description format.");
+    // }
+
+    const updatedAt = moment().format("YYYY-MM-DD HH:mm:ss");
+
+    // Build the SQL query dynamically based on provided fields
+    let setClause = [];
+    let values = [];
+    
+    if (name) {
+      setClause.push("`name` = ?");
+      values.push(name);
+    }
+    if (description) {
+      setClause.push("`description` = ?");
+      values.push(description);
+    }
+    if (avatar) {
+      setClause.push("`avatar` = ?");
+      values.push(avatar);
+    }
+    if (header_img) {
+      setClause.push("`header_img` = ?");
+      values.push(header_img);
+    }
+    if (privacy) {
+      setClause.push("`privacy` = ?");
+      values.push(privacy);
+    }
+
+    // Ensure there is something to update
+    if (setClause.length === 0) {
+      return res.status(400).json("No fields to update.");
+    }
+
+    // Add the updated timestamp and group ID to the values
+    setClause.push("`updated_at` = ?");
+    values.push(updatedAt);
+    values.push(groupId);
+
+    const q = `UPDATE \`groups\` SET ${setClause.join(", ")} WHERE \`id\` = ?`;
+
+    db.query(q, values, (err, result) => {
+      if (err) return res.status(500).json(err);
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json("Group not found.");
+      }
+
+      return res.status(200).json({
+        message: "Group updated successfully.",
+      });
+    });
+  });
+};

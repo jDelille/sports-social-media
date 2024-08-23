@@ -38,6 +38,19 @@ export const uploadProfilePicture = async (file: File, userId: string): Promise<
   }
 };
 
+export const uploadGroupProfilePicture = async (file: File, userId: string): Promise<string> => {
+  const storageRef = ref(storage, `group-profile-pictures/${userId}/${file.name}`);
+  try {
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    console.log('Group profile picture available at', url);
+    return url;
+  } catch (error) {
+    console.error('Group profile picture upload failed', error);
+    throw error;
+  }
+};
+
 export const uploadHeaderImage = async (file: File, userId: string): Promise<string> => {
   const storageRef = ref(storage, `header-images/${userId}/${file.name}`);
   try {
@@ -47,6 +60,19 @@ export const uploadHeaderImage = async (file: File, userId: string): Promise<str
     return url;
   } catch (error) {
     console.error('Header image upload failed', error);
+    throw error;
+  }
+};
+
+export const uploadGroupHeaderImage = async (file: File, userId: string): Promise<string> => {
+  const storageRef = ref(storage, `group-header-images/${userId}/${file.name}`);
+  try {
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    console.log('Group header image available at', url);
+    return url;
+  } catch (error) {
+    console.error('Group header image upload failed', error);
     throw error;
   }
 };
