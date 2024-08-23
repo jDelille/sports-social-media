@@ -12,7 +12,6 @@ import { EditProfile, Home, LandingPage, Leaderboard, Match, Matches, Profile } 
 import {
   BetSlip,
   CreateComment,
-  CreatePostModal,
   CreateQuoteRepost,
   DeletePost,
   LeftSidebar,
@@ -24,8 +23,6 @@ import {
 } from "./components";
 import "./scss/app.scss";
 import AccountCreated from "./components/popup/AccountCreated";
-import CustomizeProfileModal from "./components/customize-profile-modal/CustomizeProfileModal";
-import BetPostModal from "./components/bet-post-modal/BetPostModal";
 import LeaderboardInfo from "./components/popup/LeaderboardInfo";
 import Discover from "./pages/Discover";
 import GamePreview from "./components/game-preview/GamePreview";
@@ -36,6 +33,7 @@ import Alerts from "./pages/Alerts";
 import GroupsPage from "./pages/Groups";
 import CreateGroupModal from "./components/create-group-modal/CreateGroupModal";
 import GroupPage from "./pages/GroupPage";
+import { BetPostModal, CreatePostModal, CustomizeProfileModal } from "./components/modals";
 
 function App() {
   const queryClient = new QueryClient();

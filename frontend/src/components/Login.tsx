@@ -1,10 +1,10 @@
 import React, { ChangeEvent, MouseEvent, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import Modal from "./modal/Modal";
 import useLoginModal from "../hooks/useLoginModal";
 import { useNavigate } from "react-router-dom";
 import Input from "./input/Input";
 import useRegisterModal from "../hooks/useRegisterModal";
+import Modal from "./modals/modal/Modal";
 
 type LoginProps = {};
 const Login: React.FC<LoginProps> = () => {

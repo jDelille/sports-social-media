@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import Modal from "../modal/Modal";
-import { useCustomizeProfile } from "../../hooks";
-import Input from "../input/Input";
-import { AuthContext } from "../../context/AuthContext";
-import ProfileImgUpload from "../profile-img-upload/ProfileImgUpload";
+import { useCustomizeProfile } from "../../../hooks";
+import Input from "../../input/Input";
+import { AuthContext } from "../../../context/AuthContext";
+import ProfileImgUpload from "../../profile-img-upload/ProfileImgUpload";
 import "./customizeProfileModal.scss";
 
 type CustomizeProfileModalProps = {};

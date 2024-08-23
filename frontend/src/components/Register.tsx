@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { ChangeEvent, MouseEvent, useContext, useState } from "react";
 import { APP_CONSTANTS } from "../constants";
-import Modal from "./modal/Modal";
 import useRegisterModal from "../hooks/useRegisterModal";
 import useLoginModal from "../hooks/useLoginModal";
 import Input from "./input/Input";
 import { useAccountCreated} from "../hooks";
 import { AuthContext } from "../context/AuthContext";
+import Modal from "./modals/modal/Modal";
 
 type RegisterProps = {};
 const Register: React.FC<RegisterProps> = () => {

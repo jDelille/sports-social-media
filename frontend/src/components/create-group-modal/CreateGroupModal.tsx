@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Modal from "../modal/Modal";
 import { useAxios, useCreateGroupModal } from "../../hooks";
 import ProfileImgUpload from "../profile-img-upload/ProfileImgUpload";
 import GroupSettings from "./group-settings/GroupSettings";
 import GroupInfo from "./group-info/GroupInfo";
 import "./createGroupModal.scss";
 import { uploadGroupHeaderImage, uploadGroupProfilePicture } from "../../utils/firebaseUtils";
+import Modal from "../modals/modal/Modal";
 
 type CreateGroupModalProps = {};
 const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {

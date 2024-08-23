@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Modal from "../modal/Modal";
 import useCreateQuoteRepostModal from "../../hooks/useCreateQuoteRepost";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios } from "../../hooks";
+import Modal from "../modals/modal/Modal";
 
 type CreateQuoteRepostProps = {};
 const CreateQuoteRepost: React.FC<CreateQuoteRepostProps> = () => {

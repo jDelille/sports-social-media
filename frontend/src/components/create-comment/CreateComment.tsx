@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Modal from "../modal/Modal";
 import useCreateCommentModal from "../../hooks/useCreateCommentModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios } from "../../hooks";
@@ -9,6 +8,7 @@ import PostTypes from "../../types/Post";
 import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import { Link, useNavigate } from "react-router-dom";
 import "./createComment.scss";
+import Modal from "../modals/modal/Modal";
 
 type CreateCommentProps = {};
 const CreateComment: React.FC<CreateCommentProps> = () => {

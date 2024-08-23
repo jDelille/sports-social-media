@@ -1,5 +1,4 @@
 import React from "react";
-import Modal from "../modal/Modal";
 import { useBetPostModal, useBetSlip } from "../../hooks";
 import betslipStore from "../../store/betslipStore";
 import { observer } from "mobx-react";
@@ -9,6 +8,7 @@ import EmptyState from "./EmptyState";
 
 import './betslip.scss';
 import BetControls from "./BetControls";
+import Modal from "../modals/modal/Modal";
 
 const BetSlip: React.FC = observer(() => {
   const betSlip = useBetSlip();

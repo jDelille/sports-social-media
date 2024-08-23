@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import useCreatePostModal from "../../hooks/useCreatePostModal";
+import useCreatePostModal from "../../../hooks/useCreatePostModal";
 import Modal from "../modal/Modal";
-import { useAxios } from "../../hooks";
+import { useAxios } from "../../../hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
+import MentionsTextarea from "../../mentions-textarea/MentionsTextarea";
 import "./createPostModal.scss";
 
 type CreatePostModalProps = {};

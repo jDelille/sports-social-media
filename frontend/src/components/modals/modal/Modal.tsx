@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { COLOR_CONSTANTS } from '../../constants';
-import { BackIcon, CloseIcon } from '../../icons';
+import { BackIcon, CloseIcon } from '../../../icons';
+import { COLOR_CONSTANTS } from '../../../constants';
 import './modal.scss';
 
 type ModalProps = {

@@ -7,7 +7,6 @@ export { default as CreateComment } from './create-comment/CreateComment';
 export { default as DeletePost } from './delete-post/DeletePost';
 export { default as LoginReminder } from './login-reminder/LoginReminder';
 export { default as BetSlip } from './bet-slip/BetSlip';
-export { default as CreatePostModal } from './create-post-modal/CreatePostModal';
 export { default as SignUpBar } from './sign-up-bar/SignUpBar';
 export { default as Avatar } from './avatar/Avatar';
 export { default as PageHeader } from './page-header/PageHeader';
