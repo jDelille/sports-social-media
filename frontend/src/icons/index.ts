@@ -33,3 +33,5 @@ export { default as SettingsIcon} from './SettingsIcon';
 export { default as LogoutIcon} from './LogoutIcon';
 export { default as AddUserIcon} from './AddUserIcon';
 export { default as CheckMarkIcon} from './CheckMarkIcon';
+export { default as WorldIcon} from './WorldIcon';
+export { default as UserIcon} from './UserIcon';

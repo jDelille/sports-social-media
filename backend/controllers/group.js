@@ -72,10 +72,7 @@ export const getMyGroups = (req, res) => {
   jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid");
 
-    const q = `
-      SELECT * FROM groups
-      WHERE admin_id = ?
-    `;
+    const q = "SELECT * FROM `groups` WHERE admin_id = ?";
 
     const values = [userInfo.id];
 
