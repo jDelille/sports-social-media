@@ -6,7 +6,8 @@ import {
   getSuggestedGroups,
   updateGroup,
   getGroupById,
-  deleteGroup
+  deleteGroup,
+  checkPendingInvite
 } from "../controllers/group.js";
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.get("/suggested", getSuggestedGroups);
 router.patch("/:groupId", updateGroup);
 router.get("/:groupId", getGroupById);
 router.delete("/:groupId", deleteGroup);
+router.get('/:groupId/pending-invite', checkPendingInvite);
 
 export default router;

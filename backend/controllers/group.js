@@ -227,3 +227,24 @@ export const deleteGroup = (req, res) => {
     });
   });
 };
+
+// Function to check pending invites
+export const checkPendingInvite = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const q = `
+      SELECT * FROM invites
+      WHERE user_id = ? AND group_id = ? AND status = 'pending'
+    `;
+    const values = [userInfo.id, req.params.groupId];
+
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(data.length > 0);
+    });
+  });
+};

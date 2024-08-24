@@ -8,6 +8,7 @@ import {
   espnRoutes,
   groupRoutes,
   imageUploadRoutes,
+  inviteRoutes,
   likeRoutes,
   metadataRoutes,
   moneylineRoutes,
@@ -72,6 +73,11 @@ app.use("/api/alerts", alertRoutes);
  */
 app.use("/api/odds", oddsRoutes);
 app.use("/api/espn", espnRoutes);
+
+/**
+ * Invite routes  
+ */
+app.use("/api/invites", inviteRoutes);
 
 /**
  * Bet checking routes
