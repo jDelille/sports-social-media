@@ -69,20 +69,35 @@ const InviteToGroupModal: React.FC<InviteToGroupModalProps> = () => {
 
   const handleClick = async (inviteeId: number) => {
     try {
-      const response = await useAxios.post('/alerts', {
+      // Send the alert to notify the user of the invitation
+      const alertResponse = await useAxios.post('/alerts', {
         user_id: inviteeId,
         type: 'group-invite',
         alerter_id: currentUser.id,
         link: `/group/${groupId}`, 
-        msg: `invited to join the group "${groupName}".`,
+        msg: `You've been invited to join the group "${groupName}".`,
         group_id: groupId
       });
   
-      if (response.data.success) {
-        console.log('User invited and alert sent.');
+      if (alertResponse.data.success) {
+        console.log('Alert sent successfully.');
+  
+        // Optional: Send invite to the group (if you have an API for this)
+        const inviteResponse = await useAxios.post('/invites', {
+          user_id: inviteeId,
+          group_id: groupId
+        });
+  
+        if (inviteResponse.data.success) {
+          console.log('User invited to the group.');
+        } else {
+          console.error('Error sending group invite:', inviteResponse.data.message);
+        }
+      } else {
+        console.error('Error sending alert:', alertResponse.data.message);
       }
     } catch (error) {
-      console.error('Error sending alert:', error);
+      console.error('Error:', error);
     }
   };
 

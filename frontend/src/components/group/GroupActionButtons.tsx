@@ -1,38 +1,47 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Group } from "../../types/GroupTypes";
-import "./group.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { BellIcon, MenuDotsIcon } from "../../icons";
 import { useNavigate } from "react-router-dom";
 import GroupMenu from "./GroupMenu";
+import "./group.scss";
 
 type GroupActionButtonsProps = {
   group: Group;
+  currentUserId: number;
 };
-const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({ group }) => {
+const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({ group, currentUserId}) => {
   const { currentUser } = useContext(AuthContext) || {};
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const isAdmin = currentUser.id === group.admin_id;
+
+  const isAdmin = currentUserId === group.admin_id;
 
   const handleManageGroupClick = () => {
     navigate(`/group/manage/${group.id}`);
   };
+
+  const handleJoinGroupClick = () => {};
+
+
+
+
+ 
 
   return (
     <div className="action-btns">
       {isAdmin ? (
         // Render buttons for admin
         <>
-          <button
-            className="small-btn"
-            
-          >
+          <button className="small-btn">
             <BellIcon size={20} color="black" />
           </button>
           <div className="dropdown-menu">
-            <button className="small-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button
+              className="small-btn"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
               <MenuDotsIcon size={20} color="black" />
               {isMenuOpen && (
                 <GroupMenu groupId={group.id} groupName={group.name} />
@@ -47,9 +56,24 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({ group }) => {
       ) : (
         // Render buttons for regular members
         <>
-          <button className="join-group-btn">Join Group</button>
-          <button className="leave-group-btn">Leave Group</button>
-          <button className="invite-members-btn">Invite Members</button>
+          <button className="small-btn">
+            <BellIcon size={20} color="black" />
+          </button>
+          <div className="dropdown-menu">
+            <button
+              className="small-btn"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <MenuDotsIcon size={20} color="black" />
+              {isMenuOpen && (
+                <GroupMenu groupId={group.id} groupName={group.name} />
+              )}
+            </button>
+          </div>
+
+          <button className="large-btn" onClick={handleJoinGroupClick}>
+            Join Group
+          </button>
         </>
       )}
     </div>

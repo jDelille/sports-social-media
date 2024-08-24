@@ -1,3 +1,9 @@
+import { db } from "../connect.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 export const sendInvite = (req, res) => {
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json("Not logged in.");
@@ -32,16 +38,13 @@ export const getPendingInvites = (req, res) => {
       if (err) return res.status(403).json("Token is not valid");
   
       const q = `
-        SELECT
-          i.id,
-          i.group_id,
-          i.alerter_id,
-          g.name AS group_name,
-          g.avatar AS group_avatar
-        FROM invites i
-        JOIN groups g ON i.group_id = g.id
-        WHERE i.user_id = ? AND i.status = 'pending'
-      `;
+      SELECT
+        i.id,
+        i.group_id,
+        i.user_id
+      FROM invites i
+      WHERE i.user_id = ? AND i.status = 'pending'
+    `;
       const values = [userInfo.id];
   
       db.query(q, values, (err, invites) => {
