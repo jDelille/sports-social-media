@@ -7,7 +7,9 @@ import {
   updateGroup,
   getGroupById,
   deleteGroup,
-  checkPendingInvite
+  checkPendingInvite,
+  getMemberCount,
+  isMember
 } from "../controllers/group.js";
 
 const router = express.Router();
@@ -20,5 +22,7 @@ router.patch("/:groupId", updateGroup);
 router.get("/:groupId", getGroupById);
 router.delete("/:groupId", deleteGroup);
 router.get('/:groupId/pending-invite', checkPendingInvite);
+router.get('/member-count/:groupId', getMemberCount);
+router.get('/is-member/:groupId/:userId', isMember);
 
 export default router;

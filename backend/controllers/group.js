@@ -249,3 +249,49 @@ export const checkPendingInvite = (req, res) => {
   });
 };
 
+export const getMemberCount = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const groupId = req.params.groupId; // Get groupId from URL parameters
+
+    // SQL query to count members in the specified group
+    const q = `
+      SELECT COUNT(*) AS memberCount
+      FROM group_members
+      WHERE group_id = ?
+    `;
+
+    db.query(q, [groupId], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(data[0].memberCount); // Return the count of members
+    });
+  });
+};
+
+export const isMember = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const { userId, groupId } = req.params;
+
+    const q = `
+        SELECT 1 FROM group_members 
+        WHERE group_id = ? AND user_id = ?
+      `;
+
+    const values = [groupId, userId];
+
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+      // If a record is found, data will be an array with at least one element
+      return res.status(200).json({ isMember: data.length > 0 });
+    });
+  });
+};

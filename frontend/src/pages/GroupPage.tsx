@@ -16,6 +16,9 @@ const GroupPage: React.FC<GroupPageProps> = () => {
   const [selectedFeed, setSelectedFeed] = useState("All");
   const [pendingInvites, setPendingInvites] = useState<any[]>([]);
   const [inviteId, setInviteId] = useState<number | null>(null);
+  const [memberCount, setMemberCount] = useState<number | null>(null);
+  const [isMember, setIsMember] = useState<boolean>(false);
+
   const { currentUser } = useContext(AuthContext) || {};
 
   const { groupId } = useParams();
@@ -55,12 +58,31 @@ const GroupPage: React.FC<GroupPageProps> = () => {
       }
     };
 
+    const fetchMemberCount = async () => {
+      try {
+        const response = await useAxios.get(`/group/member-count/${groupId}`);
+        setMemberCount(response.data);
+      } catch (error) {
+        console.error("Error fetching member count:", error);
+      }
+    };
+
+    const fetchIsMember = async () => {
+      try {
+        const response = await useAxios.get(`/group/is-member/${groupId}/${currentUser.id}`);
+        setIsMember(response.data.isMember);
+      } catch (error) {
+        console.error("Error checking membership:", error);
+      }
+    };
+
     if (currentUser && groupId) {
       fetchPendingInvites();
+      fetchIsMember();
     }
-  }, [currentUser, groupId]);
 
-  console.log(pendingInvites)
+    fetchMemberCount();
+  }, [currentUser, groupId]);
 
   const isPendingInvite = pendingInvites.some(
     (invite) =>
@@ -78,6 +100,8 @@ const GroupPage: React.FC<GroupPageProps> = () => {
         currentUserId={currentUser.id}
         isPendingInvite={isPendingInvite}
         inviteId={inviteId}
+        memberCount={memberCount}
+        isMember={isMember}
       />
       <FeedSelector
         feeds={feeds}

@@ -9,12 +9,16 @@ import "./group.scss";
 type GroupActionButtonsProps = {
   group: Group;
   currentUserId: number;
+  isMember: boolean;
 };
-const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({ group, currentUserId}) => {
+const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
+  group,
+  currentUserId,
+  isMember,
+}) => {
   const { currentUser } = useContext(AuthContext) || {};
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
 
   const isAdmin = currentUserId === group.admin_id;
 
@@ -24,10 +28,7 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({ group, currentU
 
   const handleJoinGroupClick = () => {};
 
-
-
-
- 
+  const handleLeaveGroupClick = () => {};
 
   return (
     <div className="action-btns">
@@ -71,9 +72,15 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({ group, currentU
             </button>
           </div>
 
-          <button className="large-btn" onClick={handleJoinGroupClick}>
-            Join Group
-          </button>
+          {isMember ? (
+            <button className="large-btn" onClick={handleLeaveGroupClick}>
+              Leave Group
+            </button>
+          ) : (
+            <button className="large-btn" onClick={handleJoinGroupClick}>
+              Join Group
+            </button>
+          )}
         </>
       )}
     </div>

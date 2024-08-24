@@ -1,25 +1,27 @@
 import React from "react";
 import { Group } from "../../types/GroupTypes";
-import "./group.scss";
 import GroupActionButtons from "./GroupActionButtons";
 import { WorldIcon } from "../../icons";
 import { capitalizeFirstLetter } from "../../utils/capitalize";
 import { useAxios } from "../../hooks";
+import "./group.scss";
 
 type GroupHeaderProps = {
   group: Group | undefined;
   currentUserId: number;
   isPendingInvite: boolean;
   inviteId: number | null;
+  memberCount: number | null;
+  isMember: boolean;
 };
 const GroupHeader: React.FC<GroupHeaderProps> = ({
   group,
   currentUserId,
   isPendingInvite,
   inviteId,
+  memberCount,
+  isMember
 }) => {
-
-  console.log(inviteId)
 
   if (!group) {
     return;
@@ -69,11 +71,11 @@ const GroupHeader: React.FC<GroupHeaderProps> = ({
             <WorldIcon size={20} color="gray" />
             {capitalizeFirstLetter(group.privacy)}
           </p>
-          <p className="members">208k Members</p>
+          <p className="members">{memberCount} Members</p>
         </div>
         <p className="description">{group.description}</p>
       </div>
-      <GroupActionButtons group={group} currentUserId={currentUserId} />
+      <GroupActionButtons group={group} currentUserId={currentUserId} isMember={isMember} />
     </div>
   );
 };
