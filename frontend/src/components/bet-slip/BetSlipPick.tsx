@@ -27,22 +27,7 @@ const BetInput: React.FC<{}> = () => {
   const [payout, setPayout] = useState<number>(0.0);
   return (
     <div className="bet-input-container">
-      {/* <div className="bet-wager">
-        <input
-          type="number"
-          className="wager-input"
-          placeholder="0.00"
-          onChange={(e) => setPayout(parseInt(e.target.value))}
-        />
-        <span className="dollar-sign">$</span>
-        <label htmlFor="wager-input">Wager</label>
-      </div> */}
-      {/* <div className="bet-wager">
-        <div className="payout"><span>{payout || '0.00'}</span></div>
-        <span className="dollar-sign">$</span>
-        <label htmlFor="wager-input">Potential winnings</label>
-      </div>
-      <div className="bet-payout"></div> */}
+
     </div>
   );
 };
@@ -62,13 +47,14 @@ const BetContent: React.FC<{
 
 // Component for displaying bet information
 const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
+  console.log(pick)
   const isParlay = betslipStore.isParlay;
   return (
     <div className="info-wrapper">
       <div className="info">
         <div className="type">
           <p>{pick.type} </p>
-          <span className="team">{pick.team} {pick.handicap} </span>
+          <span className="team">{pick.team} {pick.handicap}  </span>
           <MatchupInfo teams={pick.teams}  />
         </div>
         <div className="price-wrapper">

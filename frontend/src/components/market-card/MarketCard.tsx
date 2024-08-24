@@ -65,10 +65,9 @@ const MarketCard: React.FC<MarketCardProps> = ({
                       sport: sport as string,
                       league: league as string,
                       handicap:
-                        market.description === "Runline" ||
-                        market.description === "Total"
-                          ? outcome.price.handicap
-                          : null,
+                      (market.description === "Runline" || market.description === "Point Spread" || market.description === "Total")
+                        ? outcome.price.handicap
+                        : null,
                     })
                   }
                 >

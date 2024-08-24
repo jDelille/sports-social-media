@@ -1,0 +1,18 @@
+@use '../../scss/variables' as *;
+
+.toggle,
+.selected-toggle {
+  border: 2px solid $accent;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.selected-toggle {
+  background-color: $accent;
+}

@@ -26,23 +26,23 @@ const BetAmount: React.FC = () => {
   const handleWagerChange = (value: string) => {
     const wagerValue = parseFloat(value);
     setWager(wagerValue);
-    betslip.setWager(wagerValue); 
+    betslip.setWager(wagerValue);
   };
 
   return (
     <div className="bet-amount">
       <div className="wager-wrapper">
+        <label htmlFor="wager">Wager</label>
         <input
           type="text"
           name="wager"
           placeholder="$0.00"
           onChange={(e) => handleWagerChange(e.target.value)}
         />
-        <label htmlFor="wager">Wager</label>
       </div>
       <div className="payout-wrapper">
-        <p className="payout">${payout.toFixed(2) || "0.00"}</p>
         <label>Potential winnings</label>
+        <p className="payout">${payout.toFixed(2) || "0.00"}</p>
       </div>
     </div>
   );
