@@ -11,6 +11,9 @@ const InviteToGroupModal: React.FC<InviteToGroupModalProps> = () => {
   const inviteModal = useInviteModal();
   const { currentUser } = useContext(AuthContext) || {};
 
+  const groupName = inviteModal.groupName;
+  const groupId = inviteModal.groupId;
+
   const userId = currentUser.id;
 
   const [combinedUsers, setCombinedUsers] = useState<UserTypes[]>([]);
@@ -64,9 +67,24 @@ const InviteToGroupModal: React.FC<InviteToGroupModalProps> = () => {
     loadUsers();
   }, [userId]);
 
-  const handleClick = () => {
-    console.log("invited");
-  }
+  const handleClick = async (inviteeId: number) => {
+    try {
+      const response = await useAxios.post('/alerts', {
+        user_id: inviteeId,
+        type: 'group-invite',
+        alerter_id: currentUser.id,
+        link: `/group/${groupId}`, 
+        msg: `invited to join the group "${groupName}".`,
+        group_id: groupId
+      });
+  
+      if (response.data.success) {
+        console.log('User invited and alert sent.');
+      }
+    } catch (error) {
+      console.error('Error sending alert:', error);
+    }
+  };
 
   const bodyContent = (
     <div className="invite-modal">
@@ -74,7 +92,7 @@ const InviteToGroupModal: React.FC<InviteToGroupModalProps> = () => {
         <ul>
           {combinedUsers.map((user) => (
             <li key={user.id}>
-                <UserCard user={user} actionButtonLabel={'Invite'} handleClick={handleClick}/>
+                <UserCard user={user} actionButtonLabel={'Invite'} handleClick={() => handleClick(user.id)}/>
             </li>
           ))}
         </ul>

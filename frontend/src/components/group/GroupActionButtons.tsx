@@ -35,7 +35,7 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({ group }) => {
             <button className="small-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               <MenuDotsIcon size={20} color="black" />
               {isMenuOpen && (
-                <GroupMenu />
+                <GroupMenu groupId={group.id} groupName={group.name} />
               )}
             </button>
           </div>

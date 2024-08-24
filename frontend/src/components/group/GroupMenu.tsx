@@ -1,12 +1,16 @@
 import React from "react";
 import { useInviteModal } from "../../hooks";
 
-type GroupMenuProps = {};
-const GroupMenu: React.FC<GroupMenuProps> = () => {
+type GroupMenuProps = {
+  groupName: string;
+  groupId: number;
+
+};
+const GroupMenu: React.FC<GroupMenuProps> = ({groupId, groupName}) => {
   const inviteModal = useInviteModal();
 
   const handleInviteClick = () => {
-    inviteModal.onOpen();
+    inviteModal.onOpen(groupName, groupId);
   }
 
   return (
