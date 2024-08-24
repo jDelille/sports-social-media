@@ -6,6 +6,7 @@ import {
   authRoutes,
   commentRoutes,
   espnRoutes,
+  groupMembersRoutes,
   groupRoutes,
   imageUploadRoutes,
   inviteRoutes,
@@ -62,6 +63,7 @@ app.use("/api/relationships", relationshipRoutes);
  * Group routes 
  */
 app.use('/api/group', groupRoutes);
+app.use('/api/group-members', groupMembersRoutes);
 
 /**
  * Alert routes

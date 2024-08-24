@@ -18,6 +18,9 @@ const GroupHeader: React.FC<GroupHeaderProps> = ({
   isPendingInvite,
   inviteId,
 }) => {
+
+  console.log(inviteId)
+
   if (!group) {
     return;
   }
@@ -25,6 +28,12 @@ const GroupHeader: React.FC<GroupHeaderProps> = ({
   const acceptInvite = async () => {
     try {
       await useAxios.patch(`/invites/${inviteId}`, { status: "accepted" });
+
+      await useAxios.post('/group-members/add', {
+        groupId: group.id,
+        userId: currentUserId,
+        role: "member"
+      });
     } catch (error) {
       console.error("Error accepting invite:", error);
     }

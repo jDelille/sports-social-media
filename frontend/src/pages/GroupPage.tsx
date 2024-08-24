@@ -40,26 +40,22 @@ const GroupPage: React.FC<GroupPageProps> = () => {
       try {
         const response = await useAxios.get("/invites/pending");
         const invites = response.data;
-  
-        // Find the pending invite for the current user and group
+        setPendingInvites(response.data);
         const currentInvite = invites.find(
-          (invite: any) => invite.user_id === currentUser.id && invite.group_id === groupId
+          (invite: any) =>
+            invite.user_id === currentUser.id &&
+            Number(invite.group_id) === Number(groupId)
         );
-  
-        setPendingInvites(invites);
-        if (currentInvite) {
-          setInviteId(currentInvite.id);
-        } else {
-          setInviteId(null); // Clear invite ID if no invite is found
-        }
+
+        setInviteId(currentInvite.id);
       } catch (error) {
         console.error("Error fetching pending invites:", error);
       } finally {
         setLoading(false);
       }
     };
-  
-    if (currentUser) {
+
+    if (currentUser && groupId) {
       fetchPendingInvites();
     }
   }, [currentUser, groupId]);
@@ -68,12 +64,11 @@ const GroupPage: React.FC<GroupPageProps> = () => {
 
   const isPendingInvite = pendingInvites.some(
     (invite) =>
-      invite.user_id === currentUser.id && invite.group_id === group?.id
+      invite.user_id === currentUser.id && Number(invite.group_id) === Number(group?.id)
   );
+  
 
   const feeds = ["All", "Bets", "Members"];
-
-  console.log(inviteId)
 
   return (
     <div className="page group-page">
