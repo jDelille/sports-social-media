@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { Group } from "../../types/GroupTypes";
 import { AuthContext } from "../../context/AuthContext";
 import { BellIcon, MenuDotsIcon } from "../../icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GroupMenu from "./GroupMenu";
 import "./group.scss";
+import { useAxios } from "../../hooks";
 
 type GroupActionButtonsProps = {
   group: Group;
@@ -16,9 +17,13 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
   currentUserId,
   isMember,
 }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const { groupId } = useParams();
   const { currentUser } = useContext(AuthContext) || {};
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isAdmin = currentUserId === group.admin_id;
 
@@ -26,9 +31,39 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
     navigate(`/group/manage/${group.id}`);
   };
 
-  const handleJoinGroupClick = () => {};
+  const handleJoinGroupClick = async () => {
+    try {
+      await useAxios.post("/group-members/add", {
+        groupId: group.id,
+        userId: currentUserId,
+        role: "member",
+      });
+    } catch (error) {
+      console.error("Error joining group:", error);
+    }
+  };
 
-  const handleLeaveGroupClick = () => {};
+  const handleLeaveGroupClick = async () => {
+    if (!group.id || !currentUser) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      await useAxios.delete(`/group-members/remove`, {
+        data: {
+          groupId,
+          userId: currentUser.id,
+        },
+      });
+      console.log("Successfully left the group");
+    } catch (error) {
+      setError("Failed to leave the group");
+      console.error("Error leaving group:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="action-btns">

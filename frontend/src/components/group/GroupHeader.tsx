@@ -71,7 +71,7 @@ const GroupHeader: React.FC<GroupHeaderProps> = ({
             <WorldIcon size={20} color="gray" />
             {capitalizeFirstLetter(group.privacy)}
           </p>
-          <p className="members">{memberCount} Members</p>
+          <p className="members">{memberCount as number + 1} Members</p>
         </div>
         <p className="description">{group.description}</p>
       </div>
