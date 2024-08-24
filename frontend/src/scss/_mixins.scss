@@ -7,25 +7,28 @@
     color: white;
     width: 100%;
     margin: 2rem 0;
+    color: #5448ee;
+    background-color: #e0e7ff;
     &:hover {
         cursor: pointer;
-        background-color: darken($buttonPrimaryColor, 5%);
+        background-color: darken(#e0e7ff, 5%);
     }
     &:disabled {
         cursor: default;
-        background-color: lighten($buttonPrimaryColor, 5%);
+        background-color: lighten(#e0e7ff, 5%);
     }
 }
 
 @mixin button_sm() {
     @include button();
-    background-color: $buttonPrimaryColor;
+    // background-color: $buttonPrimaryColor;
     padding: 0.6rem 1rem;
+    
 }
 
 @mixin button_lg() {
     @include button();
-    background-color: $buttonPrimaryColor;
+    // background-color: $buttonPrimaryColor;
     padding: 0.9rem 1.5rem;
 
 }

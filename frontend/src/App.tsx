@@ -34,6 +34,7 @@ import GroupsPage from "./pages/Groups";
 import GroupPage from "./pages/GroupPage";
 import { BetPostModal, CreateGroupModal, CreatePostModal, CustomizeProfileModal } from "./components/modals";
 import ManageGroup from "./pages/ManageGroup";
+import InviteToGroupModal from "./components/modals/invite-to-group-modal/InviteToGroupModal";
 
 function App() {
   const queryClient = new QueryClient();
@@ -76,6 +77,7 @@ function App() {
                 <GamePreview />
                 <ToastContainer />
                 <CreateGroupModal />
+                <InviteToGroupModal />
 
               </div>
               <RightSidebar currentUser={currentUser} />

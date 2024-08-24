@@ -41,6 +41,8 @@ const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
 //   }, [inView, fetchNextPage, hasNextPage]);
 
 
+
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching following users.</p>;
 

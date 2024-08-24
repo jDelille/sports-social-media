@@ -13,12 +13,13 @@ export const addAlert = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q =
-      "INSERT INTO alerts (`user_id`, `type`, `alerter_id`, `created_at`, `msg`) VALUES (?, ?, ?, ?)";
+      "INSERT INTO alerts (`user_id`, `type`, `alerter_id`, `link`, `created_at`, `msg`) VALUES (?, ?, ?, ?)";
     const values = [
       userInfo.id,
       req.body.type,
       req.body.msg,
       req.body.alerter_id,
+      req.body.link,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
     ];
 
@@ -43,6 +44,7 @@ export const getAlerts = (req, res) => {
           a.msg,
           a.created_at,
           a.post_id,
+          a.link,
           JSON_OBJECT(
             'id', u.id,
             'username', u.username,
