@@ -7,7 +7,7 @@ type BetProps = {
   eventId: string;
   type: string;
   postId: number;
-  isUpdated: boolean;
+  isWinner: boolean;
   pickId: number;
   team: string;
   userId: number;
@@ -20,9 +20,9 @@ const useMoneylineCheck = (bet: BetProps) => {
 
   useEffect(() => {
 
-    if (bet.isUpdated) {
-      console.log('Bet already updated, skipping check');
-      setLoading(false);  // Set loading to false since no request is made
+    if (bet.isWinner !== null) {
+      console.log("Bet result already determined, skipping check");
+      setLoading(false); // Set loading to false since no request is made
       return;
     }
 

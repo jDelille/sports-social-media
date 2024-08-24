@@ -1,5 +1,6 @@
 import { Alert } from "../../pages/Alerts";
 import FollowAlertCard from "./FollowAlertCard";
+import GroupAlertCard from "./GroupAlertCard";
 import PostAlertCard from "./PostAlertCard";
 
 const AlertCard: React.FC<{ alert: Alert }> = ({ alert }) => {
@@ -8,6 +9,8 @@ const AlertCard: React.FC<{ alert: Alert }> = ({ alert }) => {
       return <FollowAlertCard alert={alert} />;
     case 'post':
       return <PostAlertCard alert={alert} />
+    case 'group-invite':
+      return <GroupAlertCard alert={alert} />
     default:
       return <div>Unknown alert type</div>;
   }
