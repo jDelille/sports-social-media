@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction } from "react";
+import ProfileImgUpload from "../../../profile-img-upload/ProfileImgUpload";
+import Input from "../../../input/Input";
 import "./groupInfo.scss";
-import ProfileImgUpload from "../../profile-img-upload/ProfileImgUpload";
-import Input from "../../input/Input";
+
 
 type GroupInfoProps = {
   setProfilePicture: Dispatch<SetStateAction<File | null>>;

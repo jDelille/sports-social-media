@@ -31,9 +31,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import PostPage from "./pages/PostPage";
 import Alerts from "./pages/Alerts";
 import GroupsPage from "./pages/Groups";
-import CreateGroupModal from "./components/create-group-modal/CreateGroupModal";
 import GroupPage from "./pages/GroupPage";
-import { BetPostModal, CreatePostModal, CustomizeProfileModal } from "./components/modals";
+import { BetPostModal, CreateGroupModal, CreatePostModal, CustomizeProfileModal } from "./components/modals";
 
 function App() {
   const queryClient = new QueryClient();

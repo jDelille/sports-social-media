@@ -1,6 +1,6 @@
 import React from "react";
-import { CheckMarkIcon, GroupIcon } from "../../../icons";
-import { COLOR_CONSTANTS } from "../../../constants";
+import { COLOR_CONSTANTS } from "../../../../constants";
+import { CheckMarkIcon, GroupIcon } from "../../../../icons";
 import './groupSettings.scss';
 
 type GroupSettingsProps = {

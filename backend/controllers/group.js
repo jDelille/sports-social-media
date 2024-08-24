@@ -109,6 +109,32 @@ export const getMyGroups = (req, res) => {
   });
 };
 
+export const getGroupById = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const { groupId } = req.params;
+
+    const q = `SELECT * FROM \`groups\` WHERE \`id\` = ?`;
+
+    const values = [groupId];
+
+    db.query(q, values, (err, result) => {
+      if (err) return res.status(500).json(err);
+
+      if (result.length === 0) {
+        return res.status(404).json("Group not found.");
+      }
+
+      // Assuming result is an array with one object (since `id` is unique)
+      return res.status(200).json(result[0]);
+    });
+  });
+}
+
 export const updateGroup = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");
