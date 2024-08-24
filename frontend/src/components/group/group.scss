@@ -1,0 +1,113 @@
+@use '../../scss/variables' as *;
+
+.group-header-container {
+    height: fit-content;
+    max-height: 420px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .header-img {
+        height: 192px;
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+            max-height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        .avatar {
+            width: 96px;
+            height: 96px;
+            position: absolute;
+            bottom: -45px;
+            border-radius: 50%;
+            outline: 4px solid white;
+        }
+       
+    }
+    .group-info {
+        height: fit-content;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        padding-top: 1rem;
+        .name {
+            font-size: 22px;
+            font-weight: 600;
+            color: rgb(8, 5, 27);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            position: relative;
+        }
+        .description {
+            color: $darkgray;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 400;
+        }
+        .stats {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: $darkgray;
+            font-size: 14px;
+            font-weight: 600;
+            .privacy {
+                display: flex;
+                align-items: center;
+                gap: 3px;
+            }
+        }
+    }
+    .action-btns {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        .small-btn {
+            padding-left: .625rem;
+            padding-right: .625rem;
+            border: 2px solid #ededef;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+                border-color: darken(#ededef, 10%);
+                cursor: pointer;
+            }
+        }
+        .large-btn {
+            padding-bottom: .5rem;
+            padding-top: .5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border: 2px solid #ededef;
+            border-radius: 22px;
+            background-color: white;
+            height: 44px;
+            width: 134px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+                border-color: darken(#ededef, 10%);
+                cursor: pointer;
+            }
+
+        }
+    }
+}

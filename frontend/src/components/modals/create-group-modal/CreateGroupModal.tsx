@@ -58,9 +58,9 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
         console.error('Failed to upload header image:', error);
       }
 
-      const updateData: { avatar?: string; header?: string } = {};
+      const updateData: { avatar?: string; header_img?: string } = {};
       if (avatarImageUrl) updateData.avatar = avatarImageUrl;
-      if (headerImageUrl) updateData.header = headerImageUrl;
+      if (headerImageUrl) updateData.header_img = headerImageUrl;
 
       if (Object.keys(updateData).length > 0) {
         try {
