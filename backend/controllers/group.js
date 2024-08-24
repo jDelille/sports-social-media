@@ -133,7 +133,7 @@ export const getGroupById = (req, res) => {
       return res.status(200).json(result[0]);
     });
   });
-}
+};
 
 export const updateGroup = (req, res) => {
   const token = req.cookies.accessToken;
@@ -155,7 +155,7 @@ export const updateGroup = (req, res) => {
     // Build the SQL query dynamically based on provided fields
     let setClause = [];
     let values = [];
-    
+
     if (name) {
       setClause.push("`name` = ?");
       values.push(name);
@@ -199,6 +199,31 @@ export const updateGroup = (req, res) => {
       return res.status(200).json({
         message: "Group updated successfully.",
       });
+    });
+  });
+};
+
+export const deleteGroup = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    let q;
+    let values;
+
+    q = "DELETE FROM `groups` WHERE id = ? AND admin_id = ?";
+    values = [req.body.groupId, userInfo.id];
+
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+      if (data.affectedRows === 0) {
+        return res
+          .status(400)
+          .json("Group not found or you don't have permission to delete it.");
+      }
+      return res.status(200).json("Group has been deleted.");
     });
   });
 };

@@ -33,6 +33,7 @@ import Alerts from "./pages/Alerts";
 import GroupsPage from "./pages/Groups";
 import GroupPage from "./pages/GroupPage";
 import { BetPostModal, CreateGroupModal, CreatePostModal, CustomizeProfileModal } from "./components/modals";
+import ManageGroup from "./pages/ManageGroup";
 
 function App() {
   const queryClient = new QueryClient();
@@ -134,6 +135,10 @@ function App() {
         {
           path: "/group/:groupId",
           element: <GroupPage />
+        },
+        {
+          path: "/group/manage/:groupId",
+          element: <ManageGroup />
         }
       ],
     },

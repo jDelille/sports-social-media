@@ -2,7 +2,7 @@
 
 .group-header-container {
     height: fit-content;
-    max-height: 420px;
+    max-height: 440px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -52,6 +52,8 @@
             align-items: center;
             gap: 4px;
             font-weight: 400;
+            text-align: center;
+            padding: 0 20px;
         }
         .stats {
             display: flex;

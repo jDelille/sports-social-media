@@ -3,6 +3,7 @@ import { Group } from '../../types/GroupTypes';
 import './group.scss';
 import { AuthContext } from '../../context/AuthContext';
 import { BellIcon, MenuDotsIcon } from '../../icons';
+import { useNavigate } from 'react-router-dom';
 
 type GroupActionButtonsProps = {
     group: Group;
@@ -10,8 +11,14 @@ type GroupActionButtonsProps = {
 const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({group}) => {
 
     const {currentUser} = useContext(AuthContext) || {};
+    const navigate = useNavigate();
 
     const isAdmin = currentUser.id === group.admin_id;
+
+    const handleManageGroupClick = () => {
+        navigate(`/group/manage/${group.id}`)
+    }
+    
 
 
   return (
@@ -25,7 +32,7 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({group}) => {
           <button className="small-btn">
             <MenuDotsIcon size={20} color='black'/>
           </button>
-          <button className="large-btn">Manage Group</button>
+          <button className="large-btn" onClick={handleManageGroupClick}>Manage Group</button>
         </>
       ) : (
         // Render buttons for regular members
