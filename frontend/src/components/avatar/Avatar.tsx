@@ -5,9 +5,10 @@ import "./avatar.scss";
 
 type AvatarProps = {
   src?: string;
-  username?: string;
+  username?: string | number;
   isVerified?: boolean;
   disabled?: boolean;
+  isGroup?: boolean;
 };
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -15,6 +16,7 @@ const Avatar: React.FC<AvatarProps> = ({
   username,
   isVerified,
   disabled,
+  isGroup
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -27,7 +29,13 @@ const Avatar: React.FC<AvatarProps> = ({
     if (disabled) {
       return null;
     }
-    navigate(`/profile/${username}`);
+    if(isGroup) {
+      navigate(`/group/${username}`);
+
+    } else {
+      navigate(`/profile/${username}`);
+
+    }
   };
 
   const handleMouseEnter = () => {

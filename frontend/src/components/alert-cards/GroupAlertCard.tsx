@@ -1,33 +1,40 @@
 import React from 'react';
 import { Alert } from '../../pages/Alerts';
-import { AddUserIcon, CheckIcon } from '../../icons';
+import { GroupAddIcon } from '../../icons';
 import Avatar from '../avatar/Avatar';
+import { Link, useNavigate } from 'react-router-dom';
+import { COLOR_CONSTANTS } from '../../constants';
 
 type GroupAlertCardProps = {
     alert: Alert
  }
 const GroupAlertCard: React.FC<GroupAlertCardProps> = ({alert}) => {
+  const navigate = useNavigate();
     const alerter = alert.alerter;
+    const group = alert.group_info;
+
+    const handleClick = () => {
+      navigate(alert.link)
+    }
 
   return (
     <div className="alert-card follow-alert">
     <div className="alert-type">
-      <AddUserIcon color="#5448ee" size={16} />
-      <p className="alerter-username">{alerter.username}</p>
+      <GroupAddIcon color={COLOR_CONSTANTS.REPOST_COLOR} size={16} />
+      <Link to={`/profile/${alerter.username}`} className="alerter-username">{alerter.username}</Link>
       <span>{alert.msg}</span>
     </div>
-    <div className="user-wrapper">
-      <Avatar src={alerter.avatar} username={alerter.username} />
+    <div className="group-wrapper">
+      <Avatar src={group.avatar} username={group.id} isGroup />
       <div className="text">
         <p className="name">
-          {alerter.name}
-          {alerter.isVerified && <CheckIcon size={20} color="#ff4775" />}
+          {group.name}
         </p>
-        <p className="username">@{alerter.username}</p>
+        <p className="username">{group.description}</p>
       </div>
     </div>
     <div className="btn">
-      <button className='follow-btn'>Open</button>
+      <button className='follow-btn' onClick={handleClick}>Open</button>
     </div>
 
   </div>

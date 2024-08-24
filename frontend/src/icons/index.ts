@@ -35,3 +35,4 @@ export { default as AddUserIcon} from './AddUserIcon';
 export { default as CheckMarkIcon} from './CheckMarkIcon';
 export { default as WorldIcon} from './WorldIcon';
 export { default as UserIcon} from './UserIcon';
+export { default as GroupAddIcon} from './GroupAddIcon';

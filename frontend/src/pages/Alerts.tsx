@@ -12,12 +12,20 @@ export type Alert = {
   created_at: string;
   msg: string;
   post_id: number;
+  link: string;
   alerter: {
     id: number;
     name: string;
     username: string;
     avatar: string;
     isVerified: boolean;
+  };
+  group_info: {
+    avatar: string;
+    description: string;
+    id: number;
+    name: string;
+    link: string;
   }
 };
 
