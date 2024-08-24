@@ -1,38 +1,48 @@
-import React, { useContext } from 'react';
-import { Group } from '../../types/GroupTypes';
-import './group.scss';
-import { AuthContext } from '../../context/AuthContext';
-import { BellIcon, MenuDotsIcon } from '../../icons';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { Group } from "../../types/GroupTypes";
+import "./group.scss";
+import { AuthContext } from "../../context/AuthContext";
+import { BellIcon, MenuDotsIcon } from "../../icons";
+import { useNavigate } from "react-router-dom";
+import GroupMenu from "./GroupMenu";
 
 type GroupActionButtonsProps = {
-    group: Group;
- }
-const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({group}) => {
+  group: Group;
+};
+const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({ group }) => {
+  const { currentUser } = useContext(AuthContext) || {};
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const {currentUser} = useContext(AuthContext) || {};
-    const navigate = useNavigate();
+  const isAdmin = currentUser.id === group.admin_id;
 
-    const isAdmin = currentUser.id === group.admin_id;
-
-    const handleManageGroupClick = () => {
-        navigate(`/group/manage/${group.id}`)
-    }
-    
-
+  const handleManageGroupClick = () => {
+    navigate(`/group/manage/${group.id}`);
+  };
 
   return (
     <div className="action-btns">
-         {isAdmin ? (
+      {isAdmin ? (
         // Render buttons for admin
         <>
-          <button className="small-btn">
-            <BellIcon size={20} color='black'/>
+          <button
+            className="small-btn"
+            
+          >
+            <BellIcon size={20} color="black" />
           </button>
-          <button className="small-btn">
-            <MenuDotsIcon size={20} color='black'/>
+          <div className="dropdown-menu">
+            <button className="small-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <MenuDotsIcon size={20} color="black" />
+              {isMenuOpen && (
+                <GroupMenu />
+              )}
+            </button>
+          </div>
+
+          <button className="large-btn" onClick={handleManageGroupClick}>
+            Manage Group
           </button>
-          <button className="large-btn" onClick={handleManageGroupClick}>Manage Group</button>
         </>
       ) : (
         // Render buttons for regular members

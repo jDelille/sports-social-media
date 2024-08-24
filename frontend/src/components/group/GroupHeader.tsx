@@ -9,6 +9,8 @@ type GroupHeaderProps = {
   group: Group | undefined;
 };
 const GroupHeader: React.FC<GroupHeaderProps> = ({ group }) => {
+
+
   if (!group) {
     return;
   }
