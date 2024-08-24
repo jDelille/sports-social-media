@@ -9,14 +9,22 @@ export const getGroupMembers = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");
 
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 7;
+  const offset = (page - 1) * pageSize;
+
   jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const { groupId } = req.params;
 
     const q = `
-          SELECT * FROM group_members WHERE group_id = ?
-        `;
+      SELECT u.id, u.username, u.name, u.avatar, u.created_at, u.isVerified
+      FROM group_members gm
+      JOIN users u ON gm.user_id = u.id
+      WHERE gm.group_id = ?
+      LIMIT ${pageSize} OFFSET ${offset}
+    `;
 
     const values = [groupId];
 

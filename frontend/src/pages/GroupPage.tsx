@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import FeedSelector from "../components/feed-selector/FeedSelector";
 import { AuthContext } from "../context/AuthContext";
 import "./page.scss";
+import GroupMemberFeed from "../components/feed/GroupMemberFeed";
 
 type GroupPageProps = {};
 const GroupPage: React.FC<GroupPageProps> = () => {
@@ -108,6 +109,9 @@ const GroupPage: React.FC<GroupPageProps> = () => {
         selectedFeed={selectedFeed}
         setSelectedFeed={setSelectedFeed}
       />
+      {selectedFeed === "members" && (
+        <GroupMemberFeed groupId={group?.id}/>
+      )}
     </div>
   );
 };
