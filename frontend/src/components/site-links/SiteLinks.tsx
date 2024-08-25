@@ -8,7 +8,7 @@ const SiteLinks: React.FC<SiteLinksProps> = () => {
     <div className="site-links">
       <Link to={'/blocks'} className="link">Blocks </Link>
       <p>&#8226;</p>
-      <Link to={'/blocks'} className="link">Mutes</Link>
+      <Link to={'/mutes'} className="link">Mutes</Link>
       <p>&#8226;</p>
       <Link to={'/blocks'} className="link">Help Center</Link>
       <p>&#8226;</p>
