@@ -75,7 +75,7 @@ const InviteToGroupModal: React.FC<InviteToGroupModalProps> = () => {
         type: 'group-invite',
         alerter_id: currentUser.id,
         link: `/group/${groupId}`, 
-        msg: `You've been invited to join the group "${groupName}".`,
+        msg: `invited to join the group "${groupName}".`,
         group_id: groupId
       });
   

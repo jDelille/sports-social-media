@@ -34,6 +34,7 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         setError={setError}
         currentUserId={currentUser?.id}
         postUsername={post.user.username}
+        userId={post.user_id}
       />
       <CommentButton
         postId={postId}

@@ -12,6 +12,7 @@ type LikeButtonProps = {
   likesCount: number;
   currentUserId: number | undefined;
   postUsername: string;
+  userId: number;
 };
 
 const LikeButton: React.FC<LikeButtonProps> = ({
@@ -22,6 +23,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   likesCount,
   currentUserId,
   postUsername,
+  userId
 }) => {
   const queryClient = useQueryClient();
   const loginReminder = useLoginReminder();
@@ -30,6 +32,15 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     try {
       if (!hasLiked) {
         await useAxios.post("/likes", { postId, type });
+        await useAxios.post("/alerts", {
+          user_id: userId,
+          type: 'post',
+          alerter_id: currentUserId,
+          link: `/post/${postId}`,
+          msg: "liked your post",
+          group_id: null,
+          post_id: postId
+        })
       } else {
         await useAxios.delete("/likes", { data: { postId, type } });
       }

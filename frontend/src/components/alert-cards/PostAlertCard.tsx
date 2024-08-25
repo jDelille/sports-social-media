@@ -34,6 +34,8 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
     fetchPost();
   }, [alert.post_id]);
 
+  console.log(post)
+
   const getIcon = (message: string) => {
     switch (message) {
       case "liked your post":
@@ -58,7 +60,7 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
         <p className="alerter-username">{alerter.username}</p>
         <span>{alert.msg}</span>
       </div>
-
+      
       <Post post={post} />
     </div>
   );

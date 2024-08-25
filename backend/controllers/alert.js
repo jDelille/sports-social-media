@@ -13,13 +13,14 @@ export const addAlert = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q =
-      "INSERT INTO alerts (`user_id`, `type`, `msg`, `alerter_id`, `link`, `group_id`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO alerts (`user_id`, `type`, `msg`, `alerter_id`, `link`, `post_id`, `group_id`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
       req.body.user_id,   // The ID of the user being invited
       req.body.type,      // The type of alert, e.g., 'group-invite'
       req.body.msg,       // The message for the alert
       userInfo.id,        // The ID of the user sending the invite
       req.body.link,      // The link to the group page
+      req.body.post_id,
       req.body.group_id,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"), // The created_at timestamp
     ];
