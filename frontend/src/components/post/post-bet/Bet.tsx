@@ -26,7 +26,8 @@ const Bet: React.FC<BetProps> = ({ post }) => {
   const inProgressCount =
     post.bet.picks?.filter((pick) => pick.isWinner === undefined).length || 0;
 
-  const onGameClick = (league: string, gameId: string) => {
+  const onGameClick = (e: any, league: string, gameId: string) => {
+    e.stopPropagation();
     gamePreview.onOpen(league, gameId);
     
   };
@@ -72,11 +73,6 @@ const Bet: React.FC<BetProps> = ({ post }) => {
 
         return (
           <div className="bet-container">
-            {/* {!isInProgress && (
-              <div className="sync">
-                <SyncIcon color="#0066FF" size={20}/>
-              </div>
-            )} */}
             <div
               className={
                 isWinningBet
@@ -86,7 +82,7 @@ const Bet: React.FC<BetProps> = ({ post }) => {
                   : "losing-pick"
               }
               id={pick.id}
-              onClick={() => onGameClick(pick.league, pick.eventId)}
+              onClick={(e) => onGameClick(e, pick.league, pick.eventId)}
             >
               <p className="description">
                 {pick.type} <p>&#8226;</p>{" "}
