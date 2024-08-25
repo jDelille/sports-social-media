@@ -72,6 +72,11 @@ const Post: React.FC<PostProps> = ({
     navigate(`/post/${post.id}`);
   };
 
+  const handleHashtagClick = (hashtag: string, e: any) => {
+    e.stopPropagation();
+    navigate(`/discover/hashtag/${hashtag}`)
+  }
+
   const hideUrlsInBody = (body: string) => {
     if (!body) return "";
 
@@ -91,8 +96,8 @@ const Post: React.FC<PostProps> = ({
     const elements = parts.map((part, index) => {
       if (hashtagRegex.test(part)) {
         return (
-          <Link
-            to={`/discover/hashtag/${part.substring(1)}`}
+          <p
+            onClick={(e) => handleHashtagClick(part.substring(1), e)}
             className={
               isHashtagPage && part.substring(1) === hashtag
                 ? "hashtag-page-hashtag"
@@ -101,7 +106,7 @@ const Post: React.FC<PostProps> = ({
             key={index}
           >
             {part}
-          </Link>
+          </p>
         );
       } else {
         return <span key={index}>{part}</span>;
