@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Popup from './Popup';
 import useLeaderboardInfoPopup from '../../hooks/popups/useLeaderboardInfoPopup';
 import { useNavigate } from 'react-router-dom';
 import './leaderboardInfo.scss';
+import { AuthContext } from '../../context/AuthContext';
+import { useAxios } from '../../hooks';
 
 type LeaderboardInfoProps = {};
 
@@ -10,6 +12,8 @@ const LeaderboardInfo: React.FC<LeaderboardInfoProps> = () => {
     const leaderboardInfo = useLeaderboardInfoPopup();
     const [dontShowAgain, setDontShowAgain] = useState(false);
     const navigate = useNavigate();
+
+    const {currentUser} = useContext(AuthContext) || {};
 
     const closePopup = () => {
         leaderboardInfo.onClose();
@@ -29,9 +33,28 @@ const LeaderboardInfo: React.FC<LeaderboardInfoProps> = () => {
         closePopup();
     }
 
-    const redirectToSportbook = () => {
+    const redirectToSportbook = async () => {
         closePopup();
+       
+        
+        try {
+            const newUser = {
+                userId: currentUser.id,
+                wins: 0,
+                losses: 0,
+                amount_wagered: 0,
+                amount_won: 0,
+                average_odds: 0
+            }
+
+            await useAxios.post(`/leaderboard/add/${currentUser.id}`, newUser);
+        } catch (error) {
+            console.error("Failed to add user to leaderboard.", error)
+        }
+
         navigate('/leaderboard')
+
+
     }
 
     const bodyContent = (
