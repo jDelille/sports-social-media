@@ -7,7 +7,7 @@ type BetProps = {
   eventId: string;
   type: string;
   postId: number;
-  isUpdated: boolean;
+  isWinner: boolean;
   pickId: number;
   handicap: string; 
   team: string;
@@ -20,7 +20,7 @@ const useSpreadCheck = (bet: BetProps) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (bet.isUpdated) {
+    if (bet.isWinner) {
       console.log("Bet already updated, skipping check");
       setLoading(false);
       return;

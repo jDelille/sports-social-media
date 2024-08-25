@@ -51,7 +51,7 @@ const SuggestedGroups: React.FC<SuggestedGroupsProps> = () => {
               <p className="name">{group.name}</p>
               <div className="info">
               <p className="privacy">
-                <WorldIcon size={17} color="gray" />
+                <WorldIcon size={15} color="gray" />
                 {capitalizeFirstLetter(group.privacy)}
               </p>
               <p>•</p>

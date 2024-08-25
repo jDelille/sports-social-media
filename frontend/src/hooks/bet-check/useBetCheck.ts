@@ -8,7 +8,7 @@ type BetProps = {
   eventId: string;
   type: string;
   postId: number;
-  isUpdated: boolean;
+  isWinner: boolean;
   pickId: number;
   handicap: string | null;
   team: string;
@@ -16,7 +16,7 @@ type BetProps = {
 };
 
 const useBetCheck = (props: BetProps) => {
-  const { sport, league, eventId, type, postId, pickId, isUpdated, handicap, team, userId } =
+  const { sport, league, eventId, type, postId, pickId, isWinner, handicap, team, userId } =
     props;
 
   // Determine which hook to call based on the bet type
@@ -29,7 +29,7 @@ const useBetCheck = (props: BetProps) => {
         type,
         postId,
         pickId,
-        isUpdated,
+        isWinner,
         team,
         userId
       });
@@ -41,7 +41,7 @@ const useBetCheck = (props: BetProps) => {
         type,
         postId,
         pickId,
-        isUpdated,
+        isWinner,
         handicap: handicap ?? "",
         team,
         userId
@@ -54,7 +54,7 @@ const useBetCheck = (props: BetProps) => {
         type,
         postId,
         pickId,
-        isUpdated,
+        isWinner,
         handicap: handicap ?? "",
         team
 

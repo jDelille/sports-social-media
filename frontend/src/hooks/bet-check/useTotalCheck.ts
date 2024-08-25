@@ -7,7 +7,7 @@ type BetProps = {
   eventId: string;
   type: string;
   postId: number;
-  isUpdated: boolean;
+  isWinner: boolean;
   pickId: number;
   handicap: string;
   team: string;
@@ -20,7 +20,7 @@ const useTotalCheck = (bet: BetProps) => {
   
     useEffect(() => {
   
-      if (bet.isUpdated) {
+      if (bet.isWinner) {
         console.log('Bet already updated, skipping check');
         setLoading(false);  // Set loading to false since no request is made
         return;
