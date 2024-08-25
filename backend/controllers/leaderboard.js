@@ -14,11 +14,11 @@ export const getLeaderboardUsers = (req, res) => {
         if (err) return res.status(403).json("Token is not valid");
 
         const q = `
-            SELECT lu.*, u.username, u.email 
-            FROM leaderboard_users lu
-            JOIN users u ON lu.user_id = u.id
-            ORDER BY lu.wins DESC;  // Example: Sorting by number of wins
-        `;
+        SELECT lu.*, u.username, u.email 
+        FROM \`leaderboard_users\` lu
+        JOIN \`users\` u ON lu.user_id = u.id
+        ORDER BY lu.wins DESC;
+    `;
 
         db.query(q, (err, data) => {
             if (err) return res.status(500).json({ error: "Database query failed", details: err });
