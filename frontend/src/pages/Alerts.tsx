@@ -13,6 +13,7 @@ export type Alert = {
   msg: string;
   post_id: number;
   link: string;
+  comment_id: number;
   alerter: {
     id: number;
     name: string;

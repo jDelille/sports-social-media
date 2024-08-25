@@ -5,24 +5,29 @@ import { useAxios } from "../../hooks";
 import Post from "../post/Post";
 import "./alertCard.scss";
 import { COLOR_CONSTANTS } from "../../constants";
+import { CommentTypes } from "../../types/CommentTypes";
+import CommentCard from "../comment-card/CommentCard";
 
 type PostAlertCardProps = {
   alert: Alert;
 };
 const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
   const alerter = alert.alerter;
-  const [post, setPost] = useState<any>(null); // Adjust type based on your post structure
+  const [post, setPost] = useState<any>(null);
+  const [comment, setComment] = useState<CommentTypes>()
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  console.log(post)
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const response = await useAxios.get(`posts/${alert.post_id}`);
-        if (!response) {
+        if (!response || response.status !== 200) {
           throw new Error("Failed to fetch post");
         }
-        const data = await response.data;
+        const data = response.data;  // No need for `await` here
         setPost(data);
         setLoading(false);
       } catch (err: any) {
@@ -30,11 +35,32 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
         setLoading(false);
       }
     };
+  
+    const fetchComment = async () => {
+      try {
+        const response = await useAxios.get(`comments/${alert?.comment_id}`);
+        if (!response || response.status !== 200) {
+          throw new Error("Failed to fetch comment");
+        }
+        const data = response.data;  // No need for `await` here
+        setComment(data);
+        setLoading(false);
+      } catch (err: any) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+  
+    // Check if alert is defined before accessing its properties
+    if (alert) {
+      if (alert.msg === "liked your post") {
+        fetchPost();
+      } else if (alert.msg === "commented on your post") {
+        fetchComment();
+      }
+    }
+  }, [alert]);
 
-    fetchPost();
-  }, [alert.post_id]);
-
-  console.log(post)
 
   const getIcon = (message: string) => {
     switch (message) {
@@ -62,6 +88,7 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
       </div>
       
       <Post post={post} />
+      <CommentCard comment={comment} username={alert.alerter.username} />
     </div>
   );
 };

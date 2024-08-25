@@ -14,7 +14,7 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
   const { currentUser } = useContext(AuthContext) || {};
 
   const currentUserId = currentUser?.id;
-  const postId = post.id;
+  const postId = post?.id;
 
   const { likes } = useFetchLikes(postId, type);
   const { comments } = useFetchComments(postId, type);
@@ -33,15 +33,15 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         likesCount={likes?.length}
         setError={setError}
         currentUserId={currentUser?.id}
-        postUsername={post.user.username}
-        userId={post.user_id}
+        postUsername={post?.user.username}
+        userId={post?.user_id}
       />
       <CommentButton
         postId={postId}
         type={type}
         commentsCount={comments?.length}
         currentUserId={currentUser?.id}
-        postUsername={post.user.username}
+        postUsername={post?.user.username}
         post={post}
 
       />
@@ -52,9 +52,9 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         setError={setError}
         hasReposted={hasReposted}
         repostCount={repostCount}
-        originalPostUserId={post.user_id}
+        originalPostUserId={post?.user_id}
         currentUserId={currentUser?.id}
-        postUsername={post.user.username}
+        postUsername={post?.user.username}
 
       />
     </div>

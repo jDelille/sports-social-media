@@ -78,39 +78,91 @@ export const addComment = (req, res) => {
   jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid");
 
+    const now = moment(Date.now()).format("YYYY-MM-DD HH:mm:ss");
     let q;
     let values;
 
     if (req.body.type === "post" || req.body.type === "repost") {
-      q =
-        "INSERT INTO comments (`user_id`, `post_id`, `body`, `image`, `created_at`) VALUES (?, ?, ?, ?, ?)";
+      q = `
+        INSERT INTO comments (user_id, post_id, body, image, created_at)
+        VALUES (?, ?, ?, ?, ?);
+      `;
       values = [
         userInfo.id,
         req.body.postId,
         req.body.body,
-        req.body.image || null, // Provide a value for `image`, even if it's `null`
-        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+        req.body.image || null,
+        now
       ];
     } else if (
       req.body.type === "quote_repost" ||
       req.body.type === "quote_repost_repost"
     ) {
-      q =
-        "INSERT INTO comments (`user_id`, `quote_repost_id`, `body`, `image`, `created_at`) VALUES (?, ?, ?, ?, ?)";
+      q = `
+        INSERT INTO comments (user_id, quote_repost_id, body, image, created_at)
+        VALUES (?, ?, ?, ?, ?);
+      `;
       values = [
         userInfo.id,
         req.body.postId,
         req.body.body,
-        req.body.image || null, // Provide a value for `image`, even if it's `null`
-        moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+        req.body.image || null,
+        now
       ];
     } else {
-      return res.status(400).json("Invalid like type");
+      return res.status(400).json("Invalid comment type");
     }
 
-    db.query(q, values, (err, data) => {
+    // Insert the comment and get the last inserted ID
+    db.query(q, values, (err) => {
       if (err) return res.status(500).json(err);
-      return res.status(200).json("Comment successful.");
+
+      // Query to get the last inserted ID
+      db.query('SELECT LAST_INSERT_ID() AS id', (err, result) => {
+        if (err) return res.status(500).json(err);
+
+        const commentId = result[0].id;
+        return res.status(200).json({ id: commentId });
+      });
+    });
+  });
+};
+
+export const getCommentById = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in.");
+
+  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    // Get the comment ID from the query parameters
+    const commentId = req.params.commentId;
+    if (!commentId) return res.status(400).json("Comment ID is required.");
+
+    const q = `
+      SELECT
+        c.user_id,
+        c.body,
+        c.image,
+        c.created_at,
+        c.updated_at,
+        JSON_OBJECT(
+          'id', u.id,
+          'name', u.name,
+          'username', u.username,
+          'avatar', u.avatar,
+          'isVerified', u.isVerified
+        ) AS user
+      FROM comments c
+      JOIN users u ON c.user_id = u.id
+      WHERE c.id = ?
+      LIMIT 1;
+    `;
+
+    db.query(q, [commentId], (err, data) => {
+      if (err) return res.status(500).json(err);
+      if (data.length === 0) return res.status(404).json("Comment not found.");
+      return res.status(200).json(data[0]);
     });
   });
 };

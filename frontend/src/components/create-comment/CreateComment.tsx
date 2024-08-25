@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import useCreateCommentModal from "../../hooks/useCreateCommentModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios } from "../../hooks";
@@ -9,6 +9,7 @@ import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import { Link, useNavigate } from "react-router-dom";
 import "./createComment.scss";
 import Modal from "../modals/modal/Modal";
+import { AuthContext } from "../../context/AuthContext";
 
 type CreateCommentProps = {};
 const CreateComment: React.FC<CreateCommentProps> = () => {
@@ -19,22 +20,34 @@ const CreateComment: React.FC<CreateCommentProps> = () => {
   const [file, setFile] = useState(null);
   const [urlMetadata, setUrlMetadata] = useState<any>(null);
 
+  const {currentUser} = useContext(AuthContext) || {};
+
   const createCommentModal = useCreateCommentModal();
 
   const postId = createCommentModal.postId;
   const type = createCommentModal.type;
   const post = createCommentModal.post;
 
-  console.log(postId, type)
-
   const handleSubmit = async (body: string) => {
     try {
-      await useAxios.post("/comments", {
+      const response = await useAxios.post("/comments", {
         postId: postId,
         body,
-        image: null,
         type: type,
       });
+
+      console.log(response.data.id)
+
+      const commentId = response.data.id
+
+      await useAxios.post("/alerts", {
+        user_id: post?.user_id,
+        type: "post",
+        alerter_id: currentUser.id,
+        like: `/post/${post?.id}`,
+        msg: "commented on your post",
+        comment_id: commentId
+      })
 
       createCommentModal.onClose();
     } catch (error) {

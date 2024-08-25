@@ -8,7 +8,7 @@ import { COLOR_CONSTANTS } from "../../constants";
 import Avatar from "../avatar/Avatar";
 
 type PostHeaderProps = {
-  user: UserTypes;
+  user: UserTypes | undefined;
   post: PostTypes;
   quoteReposted?: boolean;
   hideMenu?: boolean;
@@ -48,18 +48,18 @@ const PostHeader: React.FC<PostHeaderProps> = ({
     },
   });
 
-  const isVerified = user.isVerified === 1;
+  const isVerified = user?.isVerified === 1;
   
   return (
     <div className="post-header">
       <div className="avatar">
-        <Avatar username={post.user.username} src={user.avatar}  />
+        <Avatar username={post?.user.username} src={user?.avatar}  />
       </div>
       <div className={quoteReposted ? "qr_user" : "user"}>
-        <p className="name">{user.name} {isVerified && <CheckIcon color="#ff4775" size={34} />}</p>
+        <p className="name">{user?.name} {isVerified && <CheckIcon color="#ff4775" size={34} />}</p>
         <p className="username">
-          @{user.username} ·{" "}
-          <span className="date">{moment(post.created_at).fromNow()}</span>
+          @{user?.username} ·{" "}
+          <span className="date">{moment(post?.created_at).fromNow()}</span>
         </p>
       </div>
 
@@ -72,9 +72,9 @@ const PostHeader: React.FC<PostHeaderProps> = ({
       <PostMenu
         isOpen={openMenu}
         onClose={handleMenuClose}
-        postId={post.id}
-        type={post.type}
-        imagePath={post.image}
+        postId={post?.id}
+        type={post?.type}
+        imagePath={post?.image}
       />
     </div>
   )

@@ -38,8 +38,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
           alerter_id: currentUserId,
           link: `/post/${postId}`,
           msg: "liked your post",
-          group_id: null,
-          post_id: postId
+          post_id: postId,
         })
       } else {
         await useAxios.delete("/likes", { data: { postId, type } });
