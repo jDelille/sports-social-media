@@ -64,7 +64,7 @@ const Post: React.FC<PostProps> = ({
 
   const navigateToProfile = (e: any) => {
     e.stopPropagation();
-    navigate(`/profile/${post.user_id}`);
+    navigate(`/profile/${post.reposter_username}`);
   };
 
   const navigateToPost = (e: any) => {
