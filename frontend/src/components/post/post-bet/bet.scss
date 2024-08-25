@@ -2,7 +2,7 @@
 
 .bet,
 .wagered-bet {
-  // border: 1px solid #E3E6ED;
+  border: 1px solid $lightBorderColor;
   font-size: 12px;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@
   margin-bottom: 15px;
   position: relative;
   padding: 10px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  // box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   .sync {
     width: fit-content;
     position: absolute;
