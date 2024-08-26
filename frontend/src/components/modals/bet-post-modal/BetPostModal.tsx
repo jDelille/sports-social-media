@@ -42,8 +42,8 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
 
     const bet = {
       picks,
-      wager,
-      payout,
+      amount_wagered: wager,
+      amount_won: payout,
       isParlay
     }
 
