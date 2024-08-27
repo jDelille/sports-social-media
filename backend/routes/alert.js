@@ -1,10 +1,12 @@
 import express from 'express';
-import { addAlert, getAlerts } from '../controllers/alert.js';
+import { addAlert, getAlertCount, getAlerts, markAlertsAsRead } from '../controllers/alert.js';
 
 const router = express.Router();
 
 router.get('/', getAlerts);
-router.post('/', addAlert );
+router.post('/', addAlert);
+router.get('/count', getAlertCount);
+router.put('/mark-as-read', markAlertsAsRead);
 
 
 export default router;

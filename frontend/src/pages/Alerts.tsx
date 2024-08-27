@@ -38,6 +38,7 @@ const Alerts: React.FC = () => {
       try {
         const response = await useAxios.get("/alerts");
         setAlerts(response.data);
+        await useAxios.put("/alerts/mark-as-read");
       } catch (error) {
         console.error("Failed to fetch alerts", error);
       }
@@ -46,16 +47,24 @@ const Alerts: React.FC = () => {
     fetchAlerts();
   }, []);
 
-  console.log(alerts)
-
   return (
     <div className="alerts-page page">
       <PageHeader title="Alerts" hasBack />
-      <ul>
-        {alerts.map((alert) => (
-         <AlertCard alert={alert} />
-        ))}
-      </ul>
+      {alerts && (
+ <ul>
+ {alerts.map((alert, index) => (
+  <AlertCard key={alert.id + index} alert={alert} />
+ ))}
+</ul>
+      )}
+
+      {alerts.length === 0 && (
+        <div className="empty">
+          <p>You don't have any notifications yet. When other people interact with you, you will see it here.</p>
+          <p></p>
+        </div>
+      )}
+     
     </div>
   );
 };

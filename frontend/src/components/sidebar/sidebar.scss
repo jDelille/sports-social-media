@@ -1,6 +1,6 @@
 @use "../../scss/breakpoints" as *;
 @use "../../scss/variables" as *;
-@use '../../scss/mixins' as *;
+@use "../../scss/mixins" as *;
 
 .sidebar-container {
   padding-right: 2rem;
@@ -45,16 +45,28 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        position: relative;
         &:hover {
           background-color: darken(white, 3%);
           cursor: pointer;
           color: black;
-          svg {
-            path {
-              // stroke: black;
-              // fill: black;
-            }
-          }
+        }
+        .circle {
+          background-color: #e0e7ff;
+          color: #5448ee;
+          min-width: 17px;
+          min-height: 17px;
+          border-radius: 50%;
+          position: absolute;
+          left: 30px;
+          top: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11px;
+          border: 1px solid #5448ee;
+          font-weight: 700;
+          padding: 1px
         }
       }
     }
@@ -105,7 +117,7 @@
 .right-sidebar-container {
   padding-left: 2rem;
   padding-right: 0rem;
-  
+
   @include breakpoint(md) {
     display: none;
   }

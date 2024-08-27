@@ -3,10 +3,10 @@ import { Alert } from "../../pages/Alerts";
 import { CommentIcon, LikeIcon, RepostIcon } from "../../icons";
 import { useAxios } from "../../hooks";
 import Post from "../post/Post";
-import "./alertCard.scss";
 import { COLOR_CONSTANTS } from "../../constants";
 import { CommentTypes } from "../../types/CommentTypes";
 import CommentCard from "../comment-card/CommentCard";
+import "./alertCard.scss";
 
 type PostAlertCardProps = {
   alert: Alert;
@@ -17,8 +17,6 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
   const [comment, setComment] = useState<CommentTypes>()
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  console.log(post)
 
   useEffect(() => {
     const fetchPost = async () => {

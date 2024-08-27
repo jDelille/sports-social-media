@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   BellIcon,
@@ -14,17 +14,35 @@ import {
 import SearchBar from "../search-bar/SearchBar";
 import useSidebar from "../../hooks/useSidebar";
 import "./sidebar.scss";
+import { getAlertCount } from "../../hooks/alerts/useAlertCount";
 
 type LeftSidebarProps = {
   currentUser: any | null;
 };
 const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
+  const [alertCount, setAlertCount] = useState<number | null>(null);
+  const [hasAlert, setHasAlert] = useState(false);
+
   const {
     handleOpenLogin,
     handleOpenSignup,
     handleOpenCreatePost,
     handleLogout,
   } = useSidebar();
+
+  useEffect(() => {
+    const fetchAlertCount = async () => {
+      try {
+        const count = await getAlertCount();
+        setAlertCount(count);
+        setHasAlert(count > 0);
+      } catch (err) {
+        console.error("Failed to fetch alert count", err);
+      }
+    };
+
+    fetchAlertCount();
+  }, []);
 
   const MenuItem: React.FC<{
     to: string;
@@ -38,6 +56,9 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
       }
     >
       {icon}
+      {hasAlert && label === "Alerts" && (
+        <div className="circle">{alertCount}</div>
+      )}
       {label}
     </NavLink>
   );
