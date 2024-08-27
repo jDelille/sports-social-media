@@ -3,24 +3,28 @@
 .group-card {
   width: 100%;
   height: fit-content;
-  border-bottom: 1px solid $lightBorderColor;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   display: flex;
   align-items: center;
   padding: 20px 15px;
   gap: 15px;
+  border-radius: 12px;
   &:hover {
     cursor: pointer;
-    background-color: darken(white, 3%);
+    background-color: darken(white, 1%);
   }
   .avatar {
     display: flex;
     align-items: center;
+    position: relative;
     img {
       width: 50px;
       height: 50px;
       object-fit: cover;
       border-radius: 4px;
     }
+    
   }
   .group-card-info {
     display: flex;
@@ -35,8 +39,19 @@
         align-items: center;
         gap: 3px;
         position: relative;
+        .promoted {
+          background-color: #e0e7ff;
+          color: #5448ee;
+          border: 1px solid #5448ee;
+          font-weight: 500;
+          font-size: 12px;
+          padding: 2px 4px;
+          border-radius: 4px;
+          margin-left: 0.5rem;
+        }
       }
-      .description {
+      .members,
+      .invite {
         color: $darkgray;
         font-size: 14px;
         display: flex;
@@ -44,17 +59,32 @@
         gap: 4px;
         font-weight: 400;
       }
+      .invite {
+        color: $accent;
+        font-size: 12px;
+        font-weight: 500;
+        padding-top: 3px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
     .group-stats {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        display: flex;
-        align-items: flex-start;
-        gap: 4px;
-        font-weight: 400;
-        flex-direction: column;
-     
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      font-weight: 400;
+      flex-direction: column;
+      &:hover {
+        svg {
+          circle {
+            stroke: darken(gray, 50%);
+          }
+        }
+      }
     }
   }
 }

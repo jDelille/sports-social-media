@@ -14,7 +14,7 @@ const InviteToGroupModal: React.FC<InviteToGroupModalProps> = () => {
   const groupName = inviteModal.groupName;
   const groupId = inviteModal.groupId;
 
-  const userId = currentUser.id;
+  const userId = currentUser?.id;
 
   const [combinedUsers, setCombinedUsers] = useState<UserTypes[]>([]);
 
