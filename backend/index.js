@@ -23,7 +23,8 @@ import {
   spreadRoutes,
   totalRoutes,
   userRoutes,
-  leaderboardRoutes
+  leaderboardRoutes,
+  singleBetRoutes
 } from "./routes/index.js";
 const app = express();
 
@@ -86,6 +87,11 @@ app.use("/api/invites", inviteRoutes);
  * Leaderboard routes
  */
 app.use("/api/leaderboard", leaderboardRoutes);
+
+/**
+ * Bet routes
+ */
+app.use("/api/single-bet", singleBetRoutes);
 
 /**
  * Bet checking routes

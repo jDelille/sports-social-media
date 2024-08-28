@@ -16,14 +16,12 @@ export type Teams = {
 type MarketFeedProps = {
   displayGroups: DisplayGroup[] | undefined;
   selectedCategory: string;
-  matchup: string;
   teams: Teams;
   eventId: string | undefined;
 };
 const MarketFeed: React.FC<MarketFeedProps> = ({
   displayGroups,
   selectedCategory,
-  matchup,
   teams,
   eventId,
 }) => {
@@ -41,7 +39,6 @@ const MarketFeed: React.FC<MarketFeedProps> = ({
                 {group.markets.map((market) => (
                   <MarketCard
                     market={market}
-                    matchup={matchup}
                     teams={teams}
                     eventId={eventId}
                   />

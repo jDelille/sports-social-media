@@ -47,22 +47,22 @@ const BetContent: React.FC<{
 
 // Component for displaying bet information
 const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
-  console.log(pick)
+  // console.log(pick)
   const isParlay = betslipStore.isParlay;
   return (
     <div className="info-wrapper">
       <div className="info">
         <div className="type">
-          <p>{pick.type} </p>
-          <span className="team">{pick.team} {pick.handicap}  </span>
-          <MatchupInfo teams={pick.teams}  />
+          {/* <p>{pick.type} </p> */}
+          {/* <span className="team">{pick.team} {pick.handicap}  </span>
+          <MatchupInfo teams={pick.teams}  /> */}
         </div>
         <div className="price-wrapper">
-          <p className="price">
+          {/* <p className="price">
             {betslipStore.decimalOdds
               ? parseFloat(pick.decimal).toFixed(2)
               : pick.price}
-          </p>
+          </p> */}
           {!betslipStore.isParlay && (
             <>
               <div className="input-wrapper">
@@ -81,14 +81,14 @@ const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
 });
 
 // Component for displaying matchup information
-const MatchupInfo: React.FC<{ teams: Pick["teams"] }> = ({ teams }) => (
-  <div className="matchup">
-    <p>{teams.away.abbrv}</p>
-    <img src={teams.away.logo} alt="Away Team Logo" className="team-logo" />
-    <span>-</span>
-    <img src={teams.home.logo} alt="Home Team Logo" className="team-logo" />
-    <p>{teams.home.abbrv}</p>
-  </div>
-);
+// const MatchupInfo: React.FC<{ teams: Pick["teams"] }> = ({ teams }) => (
+//   <div className="matchup">
+//     <p>{teams.away.abbrv}</p>
+//     <img src={teams.away.logo} alt="Away Team Logo" className="team-logo" />
+//     <span>-</span>
+//     <img src={teams.home.logo} alt="Home Team Logo" className="team-logo" />
+//     <p>{teams.home.abbrv}</p>
+//   </div>
+// );
 
 export default BetSlipPick;

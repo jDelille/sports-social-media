@@ -10,10 +10,10 @@ type MatchCardProps = {
 };
 
 const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
-  const homeTeam = match.espnMatch?.competitions[0].competitors[0];
-  const awayTeam = match.espnMatch?.competitions[0].competitors[1];
+  const homeTeam = match.espnMatch?.competitions?.[0].competitors?.[0];
+  const awayTeam = match.espnMatch?.competitions?.[0].competitors?.[1];
 
-  const odds = match.displayGroups[0].markets;
+  const odds = match.displayGroups?.[0].markets;
 
   const status = match.espnMatch?.status;
 
@@ -29,8 +29,6 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
     return null;
   }
 
-  console.log(match);
-
   const isCompleted = status.type.completed;
 
   return (
@@ -42,7 +40,7 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
               <img src={homeTeam?.team.logo} alt="" className="team-logo" />
               <p className="name">
                 {homeTeam?.team.displayName}{" "}
-                <span className="record">{homeTeam?.records[0].summary}</span>
+                <span className="record">{homeTeam?.records?.[0].summary}</span>
               </p>
             </div>
             {!isCompleted ? (
@@ -71,7 +69,7 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
               <img src={awayTeam?.team.logo} alt="" className="team-logo" />
               <p className="name">
                 {awayTeam?.team.displayName}{" "}
-                <span className="record">{awayTeam?.records[0].summary}</span>
+                <span className="record">{awayTeam?.records?.[0].summary}</span>
               </p>
             </div>
             {!isCompleted ? (

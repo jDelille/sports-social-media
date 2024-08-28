@@ -12,7 +12,6 @@ JSON_OBJECT(
   'avatar', u.avatar,
   'isVerified', u.isVerified
 ) AS user,
-p.bet AS bet,
 NULL AS reposter_username,
 NULL AS reposted_at,
 NULL AS original_post_body,

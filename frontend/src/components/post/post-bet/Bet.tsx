@@ -62,7 +62,7 @@ const Bet: React.FC<BetProps> = ({ post }) => {
             type,
             postId: post.id,
             pickId: index,
-            isUpdated: post.bet.isWinner,
+            isWinner: post.bet.isWinner,
             handicap: pick.handicap,
             userId: post.user_id
           });

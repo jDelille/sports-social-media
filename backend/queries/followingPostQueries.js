@@ -11,7 +11,6 @@ export const originalPostsQuery = `
       'username', u.username,
       'avatar', u.avatar
     ) AS user,
-    p.bet AS bet,
     NULL AS reposter_username,
     NULL AS reposted_at,
     NULL AS original_post_body,
@@ -37,7 +36,6 @@ export const repostsQuery = `
       'username', ou.username,
       'avatar', ou.avatar
     ) AS user,
-    p.bet AS bet,
     r.reposter_username,
     r.created_at AS reposted_at,
     NULL AS original_post_body,
@@ -66,7 +64,6 @@ export const quoteRepostsRepostsQuery = `
       'username', ur.username,
       'avatar', ur.avatar
     ) AS user,
-    p1.bet AS bet,
     ur.username AS reposter_username,
     r.created_at AS reposted_at,
     CASE
@@ -104,7 +101,6 @@ export const quoteRepostsRepostsQuery = `
       'username', ur.username,
       'avatar', ur.avatar
     ) AS user,
-    p1.bet AS bet,
     NULL AS reposter_username,
     qr.created_at AS reposted_at,
     CASE

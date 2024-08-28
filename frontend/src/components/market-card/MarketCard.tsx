@@ -12,24 +12,19 @@ import { useParams } from "react-router-dom";
 
 type MarketCardProps = {
   market: any;
-  matchup: string;
   teams: Teams;
   eventId: string | undefined;
 };
 
-const MarketCard: React.FC<MarketCardProps> = ({
-  market,
-  matchup,
-  teams,
-  eventId,
-}) => {
+const MarketCard: React.FC<MarketCardProps> = ({ market, teams, eventId }) => {
   const [hasClickedMarket, setHasClickedMarket] = useState(false);
   const betslip = useBetSlip();
   const betstore = betslipStore;
 
-  const {sport, league} = useParams();
+  const { sport, league } = useParams();
 
   const handleOutcomeClick = (bet: Pick) => {
+    console.log(bet)
     betstore.addPick(bet);
     betslip.onOpen();
   };
@@ -48,6 +43,8 @@ const MarketCard: React.FC<MarketCardProps> = ({
         {hasClickedMarket && (
           <div className="market1">
             {market.outcomes.map((outcome: any) => {
+              console.log("outcome", outcome);
+              console.log("market", market);
               return (
                 <p
                   className="outcome"
@@ -55,19 +52,21 @@ const MarketCard: React.FC<MarketCardProps> = ({
                   onClick={() =>
                     handleOutcomeClick({
                       id: `${outcome.description} ${market.description}`,
-                      team: outcome.description,
-                      price: outcome.price.american,
-                      decimal: outcome.price.decimal,
-                      type: market.description, // this is the type of bet (moneyline, spread)
-                      matchup: matchup,
-                      teams: teams,
-                      eventId: eventId as string,
-                      sport: sport as string,
-                      league: league as string,
+                      betType: market.description,
                       handicap:
-                      (market.description === "Runline" || market.description === "Point Spread" || market.description === "Total")
-                        ? outcome.price.handicap
-                        : null,
+                        market.description === "Runline" ||
+                        market.description === "Point Spread" ||
+                        market.description === "Total"
+                          ? outcome.price.handicap
+                          : null,
+                      sport,
+                      league,
+                      home_abbreviation: teams.home.abbrv,
+                      home_logo: teams.home.logo,
+                      away_abbreviation: teams.away.abbrv,
+                      away_logo: teams.away.logo,
+                      match_id: '401570449',
+                      decimal_odds: '2.0'
                     })
                   }
                 >

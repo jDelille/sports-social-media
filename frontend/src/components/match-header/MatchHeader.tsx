@@ -11,8 +11,8 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({ match }) => {
     return;
   }
 
-  const homeTeam = match.espnMatch?.competitions[0].competitors[0];
-  const awayTeam = match.espnMatch?.competitions[0].competitors[1];
+  const homeTeam = match.espnMatch?.competitions?.[0].competitors?.[0];
+  const awayTeam = match.espnMatch?.competitions?.[0].competitors?.[1];
 
   const status = match.espnMatch?.status;
 
@@ -28,7 +28,7 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({ match }) => {
           <img src={homeTeam.team.logo} alt="" className="logo" />
           <div className="name">
             <p>{homeTeam.team.abbreviation} {homeTeam.team.shortDisplayName}</p>
-            <span className="record">{homeTeam?.records[0].summary}</span>
+            <span className="record">{homeTeam?.records?.[0].summary}</span>
           </div>
         </div>
         <div className="status">
@@ -38,7 +38,7 @@ const MatchHeader: React.FC<MatchHeaderProps> = ({ match }) => {
         <div className="away">
           <div className="name">
             <p>{awayTeam.team.abbreviation} {awayTeam.team.shortDisplayName}</p>
-            <span className="away-record">{awayTeam?.records[0].summary}</span>
+            <span className="away-record">{awayTeam?.records?.[0].summary}</span>
           </div>
           <img src={awayTeam.team.logo} alt="" className="logo" />
         </div>

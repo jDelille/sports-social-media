@@ -13,7 +13,7 @@ const BetAmount: React.FC = () => {
   useEffect(() => {
     if (betslip.picks.length > 0 && wager > 0) {
       const decimalOdds: number[] = betslip.picks.map((pick) =>
-        parseFloat(pick.decimal)
+        parseFloat(pick.decimal_odds)
       );
       const calculatedPayout = calculateParlayPayout(decimalOdds, wager);
       betslip.setPayout(calculatedPayout); // Save payout to the store

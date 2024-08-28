@@ -42,7 +42,6 @@ const Match: React.FC<MatchProps> = () => {
       <MarketFeed
         displayGroups={displayGroups}
         selectedCategory={selectedCategory}
-        matchup={match?.espnMatch.shortName as string}
         teams={teams}
         eventId={match?.espnMatch.id}
       />

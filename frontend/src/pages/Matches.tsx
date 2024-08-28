@@ -40,7 +40,7 @@ const Matches: React.FC<MatchesProps> = () => {
     const fetchOdds = async () => {
       setLoading(true);
       try {
-        const bovadaResponse = await useAxios.get(`/odds/${sport}/${league === 'nfl' ? 'nfl-preseason' : league}`);
+        const bovadaResponse = await useAxios.get(`/odds/${sport}/${league}`);
         const espnResponse = await useAxios.get(`/espn/${sport}/${league}`);
         const bovadaData = bovadaResponse.data;
         const espnData = espnResponse.data.events;

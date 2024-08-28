@@ -20,3 +20,4 @@ export { default as groupRoutes } from './group.js';
 export { default as inviteRoutes} from './invite.js';
 export { default as groupMembersRoutes} from './groupMembers.js';
 export { default as leaderboardRoutes } from './leaderboard.js';
+export { default as singleBetRoutes } from './bet/singleBet.js';
