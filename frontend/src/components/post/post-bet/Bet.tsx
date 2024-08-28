@@ -3,28 +3,30 @@ import PostTypes from "../../../types/Post";
 import useBetCheck from "../../../hooks/bet-check/useBetCheck";
 import { useGamePreview } from "../../../hooks";
 import './bet.scss';
-import { SyncIcon } from "../../../icons";
+import { Pick } from "../../../store/betslipStore";
+import { BoostIcon } from "../../../icons";
 
 type BetProps = {
-  post: PostTypes;
+  // post: PostTypes;
+  bets: any;
 };
 
-const Bet: React.FC<BetProps> = ({ post }) => {
-  if (!post.bet) {
+const Bet: React.FC<BetProps> = ({ bets }) => {
+  if (bets.length === 0) {
     return null;
   }
 
   const gamePreview = useGamePreview();
 
-  const hasWager = parseInt(post.bet.wager) > 0;
-  const isParlay = post.bet.isParlay;
+  const hasWager = true;
+  const isParlay = false
 
-  const winCount =
-    post.bet.picks?.filter((pick) => pick.isWinner).length || 0;
-  const lossCount =
-    post.bet.picks?.filter((pick) => !pick.isWinner).length || 0;
-  const inProgressCount =
-    post.bet.picks?.filter((pick) => pick.isWinner === undefined).length || 0;
+  // const winCount =
+  //   post.bet.picks?.filter((pick) => pick.isWinner).length || 0;
+  // const lossCount =
+  //   post.bet.picks?.filter((pick) => !pick.isWinner).length || 0;
+  // const inProgressCount =
+  //   post.bet.picks?.filter((pick) => pick.isWinner === undefined).length || 0;
 
   const onGameClick = (e: any, league: string, gameId: string) => {
     e.stopPropagation();
@@ -36,10 +38,10 @@ const Bet: React.FC<BetProps> = ({ post }) => {
     <div className={hasWager ? "wagered-bet" : "bet"}>
       <div className="info">
         {isParlay && (
-          <p className="info-title">{post.bet.picks.length}-Leg Parlay</p>
+          <p className="info-title">{bets.length}-Leg Parlay</p>
         )}
         {!isParlay && (
-          <p className="info-title">{post.bet.picks.length}-Pick Entry</p>
+          <p className="info-title">{bets.length}-Pick Entry</p>
         )}
         {/* <div className="ratio">
           {winCount > 0 && <p>{winCount} wins</p>}
@@ -50,26 +52,26 @@ const Bet: React.FC<BetProps> = ({ post }) => {
 
       
 
-      {post.bet.picks?.map((pick) => {
-        post.bet.picks?.forEach((pick, index) => {
-          const { eventId, type, sport, league, team } = pick;
+      {bets.map((bet: Pick) => {
+        // post.bet.picks?.forEach((pick, index) => {
+          // const { eventId, type, sport, league, team } = pick;
 
-          useBetCheck({
-            sport,
-            league,
-            eventId,
-            team,
-            type,
-            postId: post.id,
-            pickId: index,
-            isWinner: post.bet.isWinner,
-            handicap: pick.handicap,
-            userId: post.user_id
-          });
-        });
+          // useBetCheck({
+          //   sport,
+          //   league,
+          //   eventId,
+          //   team,
+          //   type,
+          //   postId: post.id,
+          //   pickId: index,
+          //   isWinner: post.bet.isWinner,
+          //   handicap: pick.handicap,
+          //   userId: post.user_id
+          // });
+        // });
 
-        const isWinningBet = pick.isWinner === true;
-        const isInProgress = pick.isWinner === undefined;
+        const isWinningBet = bet.is_winner === true;
+        const isInProgress = bet.status === 'pending';
 
         return (
           <div className="bet-container">
@@ -81,41 +83,47 @@ const Bet: React.FC<BetProps> = ({ post }) => {
                   ? "in-progress"
                   : "losing-pick"
               }
-              id={pick.id}
-              onClick={(e) => onGameClick(e, pick.league, pick.eventId)}
+              id={bet.id}
+              onClick={(e) => onGameClick(e, bet.league, bet.event_id)}
             >
+              
               <p className="description">
-                {pick.type} <p>&#8226;</p>{" "}
+                {bet.bet_type} <p>&#8226;</p>{" "}
                 <span>
-                  {pick.team} {pick.handicap}
+                  {bet.chosen_team} {bet.handicap} 
                 </span>
+                {bet.is_boosted === 1 && (
+                <div className="boosted">
+                  <BoostIcon size={19} color="#055160"/> Boosted
+                </div>
+              )}
               </p>
 
               <div className="matchup">
                 <div className="team">
-                  <p>{pick.teams.away.abbrv}</p>
-                  <img src={pick.teams.away.logo} alt="Away team logo" />
-                  <p>{pick.awayScore}</p>
+                  <p>{bet.away_abbreviation}</p>
+                  <img src={bet.away_logo} alt="Away team logo" />
+                  {/* <p>{pick.awayScore}</p> */}
                 </div>
                 -
                 <div className="team">
-                  <p>{pick.homeScore}</p>
-                  <img src={pick.teams.home.logo} alt="Home team logo" />
-                  <p>{pick.teams.home.abbrv}</p>
+                  {/* <p>{pick.homeScore}</p> */}
+                  <img src={bet.home_logo} alt="Home team logo" />
+                  <p>{bet.home_abbreviation}</p>
                 </div>
               </div>
 
-              <p className="price">{pick.price}</p>
+              <p className="price">{bet.price}</p>
             </div>
           </div>
         );
       })}
-      {hasWager && (
+      {/* {hasWager && (
         <div className="payout">
           <p>Wagered ${post.bet.wager}</p>
           <p>Payout ${parseInt(post.bet.payout).toFixed(2)}</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

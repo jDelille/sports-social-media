@@ -2,16 +2,23 @@ import { makeAutoObservable } from "mobx";
 
 export type Pick = {
   id: string;
-  betType: string;
+  bet_type: string;
   handicap: string;
-  sport: string | undefined;
-  league: string | undefined;
-  home_abbreviation: string | undefined;
-  home_logo: string | undefined;
-  away_abbreviation: string | undefined;
-  away_logo: string | undefined;
-  match_id: string;
+  sport: string;
+  league: string;
+  home_abbreviation: string;
+  home_logo: string;
+  away_abbreviation: string;
+  away_logo: string;
+  chosen_team: string;
   decimal_odds: string;
+  status: string;
+  wager: number;
+  payout: number;
+  price: string;
+  is_winner: boolean;
+  is_boosted: number;
+  event_id: string;
 }
 
 export type Picks = {

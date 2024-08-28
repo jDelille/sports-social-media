@@ -24,7 +24,6 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, teams, eventId }) => {
   const { sport, league } = useParams();
 
   const handleOutcomeClick = (bet: Pick) => {
-    console.log(bet)
     betstore.addPick(bet);
     betslip.onOpen();
   };
@@ -52,21 +51,28 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, teams, eventId }) => {
                   onClick={() =>
                     handleOutcomeClick({
                       id: `${outcome.description} ${market.description}`,
-                      betType: market.description,
+                      bet_type: market.description,
                       handicap:
                         market.description === "Runline" ||
                         market.description === "Point Spread" ||
                         market.description === "Total"
                           ? outcome.price.handicap
                           : null,
-                      sport,
-                      league,
-                      home_abbreviation: teams.home.abbrv,
-                      home_logo: teams.home.logo,
-                      away_abbreviation: teams.away.abbrv,
-                      away_logo: teams.away.logo,
-                      match_id: '401570449',
-                      decimal_odds: '2.0'
+                      sport: sport as string,
+                      league: league as string,
+                      home_abbreviation: teams.home.abbrv as string,
+                      home_logo: teams.home.logo as string,
+                      away_abbreviation: teams.away.abbrv as string,
+                      away_logo: teams.away.logo as string,
+                      chosen_team: outcome.description,
+                      event_id: '401570449',
+                      decimal_odds: '2.0',
+                      status: 'pending',
+                      wager: betstore.wager,
+                      payout: betstore.payout,
+                      price: outcome.price.american,
+                      is_winner: false,
+                      is_boosted: 0
                     })
                   }
                 >

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PostTypes from "../../types/Post";
 import { AuthContext } from "../../context/AuthContext";
 import PostHeader from "./PostHeader";
@@ -7,6 +7,7 @@ import {
   useFetchLikes,
   useCreateQuoteRepostModal,
   useFetchMutedPosts,
+  useAxios,
 } from "../../hooks";
 import { RepostIcon } from "../../icons";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -33,6 +34,7 @@ const Post: React.FC<PostProps> = ({
   }
   const { hashtag } = useParams();
   const [error, setError] = useState<string | null>(null);
+  const [bets, setBets] = useState([]);
 
   const { currentUser } = useContext(AuthContext) || {};
   const createQuoteRepostModal = useCreateQuoteRepostModal();
@@ -44,6 +46,21 @@ const Post: React.FC<PostProps> = ({
   const postId = post?.id;
   const type = post?.type;
 
+  useEffect(() => {
+    const fetchBet = async () => {
+      try {
+        const res = await useAxios.get(`/single-bet/bet/${post.id}`);
+        setBets(res.data);
+      } catch (err) {
+        setError("Failed to fetch bet information");
+      }
+    };
+
+    if (post.id) {
+      fetchBet();
+    }
+  }, [post.id]);
+
   const { muted } = useFetchMutedPosts(postId, type);
 
   const hasMuted = muted?.includes(postId);
@@ -53,6 +70,8 @@ const Post: React.FC<PostProps> = ({
   // if(hasMuted) {
   //   return null;
   // }
+
+  console.log(bets)
 
   const handleQuoteRepost = async (
     postId: number,
@@ -138,7 +157,7 @@ const Post: React.FC<PostProps> = ({
 
       <ArticleDisplay metadata={post.metadata} />
 
-      <Bet post={post} />
+      <Bet bets={bets} />
 
       {!isPostDetailsPage && <PostFooter post={post} type={type} />}
 

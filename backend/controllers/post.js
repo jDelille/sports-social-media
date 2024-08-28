@@ -41,7 +41,7 @@ export const addPost = (req, res) => {
       "INSERT INTO posts (`body`, `image`, `created_at`, `user_id`, `metadata`) VALUES (?)";
 
     const values = [
-      req.body.body, // req.body will now be populated
+      req.body.body,
       req.body.image,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       userInfo.id,
@@ -50,7 +50,7 @@ export const addPost = (req, res) => {
 
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);
-      return res.status(200).json("Post has been created.");
+      return res.status(200).json({ message: "Post has been created.", postId: data.insertId });
     });
   });
 };
