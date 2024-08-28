@@ -3,6 +3,8 @@
 
 .group-section {
   padding: 10px 15px;
+  height: fit-content;
+  padding-top: 2rem;
   .title {
     display: flex;
     align-items: center;
@@ -14,6 +16,22 @@
       font-size: 14px;
       color: $accent;
       font-weight: 500;
+    }
+  }
+  .section-content {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    margin-top: 1rem;
+    .left,
+    .right {
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        cursor: pointer;
+      }
     }
   }
 }
