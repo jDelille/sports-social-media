@@ -22,7 +22,7 @@ const useMoneylineCheck = (bet: BetProps) => {
 
   useEffect(() => {
 
-    if (bet.isWinner) {
+    if (bet.status === 'completed') {
       console.log("Bet result already determined, skipping check");
       setLoading(false); // Set loading to false since no request is made
       return;

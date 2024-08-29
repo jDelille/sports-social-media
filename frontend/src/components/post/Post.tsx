@@ -76,8 +76,6 @@ const Post: React.FC<PostProps> = ({
   //   return null;
   // }
 
-  console.log(bets)
-
   const handleQuoteRepost = async (
     postId: number,
     type: string,

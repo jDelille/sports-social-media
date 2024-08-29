@@ -27,6 +27,34 @@ export const getLeaderboardUsers = (req, res) => {
     });
 }
 
+export const isParticipant = (req, res) => {
+    const token = req.cookies.accessToken;
+    if (!token) return res.status(401).json("Not logged in.");
+
+    jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
+        if (err) return res.status(403).json("Token is not valid");
+
+        const { id: userId } = userInfo;
+
+        const q = `
+            SELECT 1 
+            FROM leaderboard_users lu
+            WHERE lu.user_id = ?
+        `;
+
+        db.query(q, [userId], (err, data) => {
+            if (err) return res.status(500).json({ error: "Database query failed", details: err });
+            
+            // If data is returned, the user is a participant
+            if (data.length > 0) {
+                return res.status(200).json({ isParticipant: true });
+            } else {
+                return res.status(200).json({ isParticipant: false });
+            }
+        });
+    });
+};
+
 export const addUser = (req, res) => {
     const token = req.cookies.accessToken;
     if (!token) return res.status(401).json("Not logged in.");
