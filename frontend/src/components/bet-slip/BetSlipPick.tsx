@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import betslipStore, { Pick } from "../../store/betslipStore";
 import { CloseIcon } from "../../icons";
 import { observer } from "mobx-react";
+import useSinglePayout from "../../hooks/bet-payout/useSinglePayout";
 
 // Separate components for different parts of the BetSlipPick
 type BetSlipPickProps = {
@@ -14,6 +15,8 @@ const BetSlipPick: React.FC<BetSlipPickProps> = ({ pick }) => {
   const handleRemovePick = (id: string) => {
     betstore.removePick(id);
   };
+
+
 
   return (
     <div className="betslip-pick">
@@ -47,15 +50,34 @@ const BetContent: React.FC<{
 
 // Component for displaying bet information
 const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
-  // console.log(pick)
+
+  const {calculatePayout} = useSinglePayout();
+
+  const handleWagerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const wager = parseFloat(e.target.value);
+    betslipStore.setWager(wager);
+  };
+
   const isParlay = betslipStore.isParlay;
+  const wager = betslipStore.wager;
+  const payout = calculatePayout(parseFloat(pick.decimal_odds), wager);
+
+  betslipStore.setPayout(payout);
+
   return (
     <div className="info-wrapper">
       <div className="info">
         <div className="type">
-          {/* <p>{pick.type} </p> */}
-          {/* <span className="team">{pick.team} {pick.handicap}  </span>
-          <MatchupInfo teams={pick.teams}  /> */}
+          <p>{pick.bet_type} </p>
+          <span className="team">{pick.chosen_team} {pick.handicap}  </span>
+          {/* <MatchupInfo teams={pick.teams}  /> */}
+          <div className="matchup">
+            <p>{pick.home_abbreviation}</p>
+            <img src={pick.home_logo} alt="" className="team-logo" />
+            <span>-</span>
+            <img src={pick.away_logo} alt="" className="team-logo" />
+            <p>{pick.away_abbreviation}</p>
+          </div>
         </div>
         <div className="price-wrapper">
           {/* <p className="price">
@@ -67,9 +89,15 @@ const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
             <>
               <div className="input-wrapper">
                 <div className="symbol">$</div>
-                <input type="text" />
+                 <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  onChange={handleWagerChange}
+                  placeholder="Enter wager"
+                />
               </div>
-              <p className="payout">Payout: $1000</p>
+              <p className="payout">Payout: ${payout.toFixed(2)}</p>
             </>
           )}
         </div>
@@ -79,16 +107,5 @@ const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
     </div>
   );
 });
-
-// Component for displaying matchup information
-// const MatchupInfo: React.FC<{ teams: Pick["teams"] }> = ({ teams }) => (
-//   <div className="matchup">
-//     <p>{teams.away.abbrv}</p>
-//     <img src={teams.away.logo} alt="Away Team Logo" className="team-logo" />
-//     <span>-</span>
-//     <img src={teams.home.logo} alt="Home Team Logo" className="team-logo" />
-//     <p>{teams.home.abbrv}</p>
-//   </div>
-// );
 
 export default BetSlipPick;

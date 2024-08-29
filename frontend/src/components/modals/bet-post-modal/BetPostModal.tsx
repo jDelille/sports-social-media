@@ -57,7 +57,7 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
         status: "pending",
         wager: wager,
         payout: payout,
-        price: pick.price,
+        decimal_odds: pick.decimal_odds,
         is_winner: null,
         is_boosted: false,
         created_at: new Date().toISOString(),

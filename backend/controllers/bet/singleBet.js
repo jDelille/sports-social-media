@@ -28,6 +28,7 @@ export const addSingleBet = (req, res) => {
       status = "pending", // Default status to 'pending' if not provided
       wager,
       payout,
+      decimal_odds,
       price,
       is_winner = null, // Default to null if not provided
       is_boosted = false, // Default to false if not provided
@@ -50,12 +51,13 @@ export const addSingleBet = (req, res) => {
         status,
         wager,
         payout,
+        decimal_odds,
         price,
         is_winner,
         is_boosted,
         created_at,
         updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const values = [
@@ -74,6 +76,7 @@ export const addSingleBet = (req, res) => {
       status,
       wager,
       payout,
+      decimal_odds,
       price,
       is_winner,
       is_boosted,

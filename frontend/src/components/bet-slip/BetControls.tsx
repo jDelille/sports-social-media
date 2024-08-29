@@ -9,6 +9,7 @@ const BetControls: React.FC<BetControlsProps> = () => {
   const [decimalChecked, setDecimalChecked] = useState(
     betslipStore.decimalOdds
   );
+  const [participantChecked, setParticipantChecked] = useState(true);
 
   const betstore = betslipStore;
 
@@ -26,6 +27,10 @@ const BetControls: React.FC<BetControlsProps> = () => {
     betstore.toggleDecimalOdds();
   };
 
+  const handleParticipantToggle = () => {
+    setParticipantChecked(!participantChecked);
+  }
+
   return (
     <div className="bet-controls">
       <div className="control">
@@ -33,24 +38,37 @@ const BetControls: React.FC<BetControlsProps> = () => {
           <div className="text">
             <p className="title">Parlay</p>
             <span className="info">
-              Turning this on will remove individual bets
+              Turning this on will remove individual bets.
             </span>
           </div>
           <Toggle handleToggle={handleParlayToggle} isToggled={parlayChecked} />
+        </div>
+        <div className="participating-bet">
+          <div className="text">
+            <p className="title">Participating bet</p>
+            <span className="info">
+              Turning this on will add your bet to the leaderboard. This is toggled by default.
+            </span>
+          </div>
+
+          <Toggle
+            handleToggle={handleParticipantToggle}
+            isToggled={participantChecked}
+          />
         </div>
         <div className="decimal">
           <div className="text">
             <p className="title">Decimal odds</p>
             <span className="info">
-              Turning this on will you show decimal odds
+              Turning this on will you show decimal odds.
             </span>
           </div>
-
           <Toggle
             handleToggle={handleDecimalToggle}
             isToggled={decimalChecked}
           />
         </div>
+       
       </div>
     </div>
   );
