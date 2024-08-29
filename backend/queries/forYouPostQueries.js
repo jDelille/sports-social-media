@@ -19,6 +19,7 @@ SELECT
     NULL AS quote_reposted_quote_repost_id,
     NULL AS original_post_user,
     p.metadata,
+    p.bet_id,
     'post' AS type
 FROM posts p
 JOIN users u ON p.user_id = u.id
@@ -45,6 +46,7 @@ SELECT
     NULL AS quote_reposted_quote_repost_id,
     NULL AS original_post_user,
     p.metadata,
+        p.bet_id,
     'repost' AS type
 FROM posts p
 JOIN reposts r ON p.id = r.reposted_post_id
@@ -83,6 +85,7 @@ SELECT
         'isVerified', ou.isVerified
     ) AS original_post_user,
     p1.metadata,
+    p1.bet_id,
     'quote_repost' AS type
 FROM quote_reposts qr
 LEFT JOIN posts p1 ON qr.quote_reposted_post_id = p1.id
@@ -121,6 +124,7 @@ SELECT
         'isVerified', ou.isVerified
     ) AS original_post_user,
     p1.metadata,
+    p1.bet_id,
     'quote_repost_repost' AS type
 FROM quote_reposts qr
 JOIN reposts r ON qr.id = r.reposted_quote_repost_id

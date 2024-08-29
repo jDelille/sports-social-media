@@ -2,6 +2,8 @@ import { makeAutoObservable } from "mobx";
 
 export type Pick = {
   id: string;
+  post_id: number;
+  user_id: number;
   bet_type: string;
   handicap: string;
   sport: string;
@@ -10,13 +12,15 @@ export type Pick = {
   home_logo: string;
   away_abbreviation: string;
   away_logo: string;
+  home_score: number;
+  away_score: number;
   chosen_team: string;
   decimal_odds: string;
   status: string;
   wager: number;
   payout: number;
   price: string;
-  is_winner: boolean;
+  is_winner: number;
   is_boosted: number;
   event_id: string;
 }

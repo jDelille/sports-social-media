@@ -52,6 +52,8 @@ const BetPostModal: React.FC<BetPostModalProps> = () => {
         chosen_team: pick.chosen_team,
         handicap: pick.handicap,
         event_id: pick.event_id,
+        sport: pick.sport,
+        league: pick.league,
         status: "pending",
         wager: wager,
         payout: payout,

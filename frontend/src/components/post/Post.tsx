@@ -47,6 +47,11 @@ const Post: React.FC<PostProps> = ({
   const type = post?.type;
 
   useEffect(() => {
+
+    if(!post.bet_id) {
+      return;
+    }
+
     const fetchBet = async () => {
       try {
         const res = await useAxios.get(`/single-bet/bet/${post.id}`);
@@ -157,7 +162,7 @@ const Post: React.FC<PostProps> = ({
 
       <ArticleDisplay metadata={post.metadata} />
 
-      <Bet bets={bets} />
+      <Bet bets={bets} betId={post.bet_id} />
 
       {!isPostDetailsPage && <PostFooter post={post} type={type} />}
 

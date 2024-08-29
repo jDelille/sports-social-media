@@ -3,12 +3,23 @@ import { updateWinLossRecord } from "../../utils/betUtils.js";
 
 export const checkMoneyline = async (req, res) => {
   try {
-    const { sport, league, eventId, type, postId, pickId, team, userId } = req.params;
+    const {
+      sport,
+      league,
+      eventId,
+      type,
+      postId,
+      pickId,
+      team,
+      userId,
+      betId,
+    } = req.body;
 
     // Fetching data from ESPN API
     const response = await axios.get(
       `https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/scoreboard`
     );
+
     const games = response.data.events;
 
     const game = games.find((game) => game.id === eventId);
@@ -32,10 +43,14 @@ export const checkMoneyline = async (req, res) => {
     const isHomeMoneylineWinner = homeScore > awayScore;
     const result = isHomeTeam ? isHomeMoneylineWinner : !isHomeMoneylineWinner;
 
+    console.log(result);
+
     // Use the reusable function to handle win/loss updates
-    updateWinLossRecord(userId, result, pickId, postId, homeScore, awayScore, res);
+    updateWinLossRecord(userId, result, pickId, postId, homeScore, awayScore, res, betId);
   } catch (error) {
     console.error("Error fetching moneyline data:", error);
-    return res.status(500).json({ error: "Error fetching moneyline data" });
+    return res
+      .status(500)
+      .json({ error: "Error fetching moneyline data", error });
   }
 };

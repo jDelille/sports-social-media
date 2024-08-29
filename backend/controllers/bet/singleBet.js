@@ -23,6 +23,8 @@ export const addSingleBet = (req, res) => {
       chosen_team,
       handicap,
       event_id,
+      sport,
+      league,
       status = "pending", // Default status to 'pending' if not provided
       wager,
       payout,
@@ -43,6 +45,8 @@ export const addSingleBet = (req, res) => {
         chosen_team,
         handicap,
         event_id,
+        sport,
+        league,
         status,
         wager,
         payout,
@@ -51,7 +55,7 @@ export const addSingleBet = (req, res) => {
         is_boosted,
         created_at,
         updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const values = [
@@ -65,6 +69,8 @@ export const addSingleBet = (req, res) => {
       chosen_team,
       handicap,
       event_id,
+      sport,
+      league,
       status,
       wager,
       payout,
