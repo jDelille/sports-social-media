@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useContext } from "react";
-import { Blocks, EditProfile, Home, LandingPage, Leaderboard, Match, Matches, Mutes, Profile } from "./pages";
+import { BetHistory, Blocks, EditProfile, Home, LandingPage, Leaderboard, Match, Matches, Mutes, Profile } from "./pages";
 import {
   BetSlip,
   CreateComment,
@@ -149,6 +149,10 @@ function App() {
         {
           path: "/mutes",
           element: <Mutes />
+        },
+        {
+          path: "/bet-history",
+          element: <BetHistory />
         }
       ],
     },

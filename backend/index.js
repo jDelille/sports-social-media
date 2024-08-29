@@ -24,7 +24,8 @@ import {
   totalRoutes,
   userRoutes,
   leaderboardRoutes,
-  singleBetRoutes
+  singleBetRoutes,
+  betStatsRoutes
 } from "./routes/index.js";
 const app = express();
 
@@ -92,6 +93,7 @@ app.use("/api/leaderboard", leaderboardRoutes);
  * Bet routes
  */
 app.use("/api/single-bet", singleBetRoutes);
+app.use("/api/bet-stats", betStatsRoutes);
 
 /**
  * Bet checking routes

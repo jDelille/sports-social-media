@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   BellIcon,
+  ChartIcon,
   CompassIcon,
   GroupIcon,
   HomeIcon,
@@ -103,6 +104,11 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
                 to={`/profile/${currentUser.username}`}
                 label="Profile"
                 icon={<ProfileIcon size={20} color="#888595" />}
+              />
+              <MenuItem
+                to="/bet-history"
+                label="Bet History"
+                icon={<ChartIcon size={20} color="#888595" />}
               />
               <MenuItem
                 to="/settings"
