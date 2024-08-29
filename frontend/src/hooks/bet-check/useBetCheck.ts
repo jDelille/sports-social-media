@@ -14,11 +14,16 @@ type BetProps = {
   team: string;
   userId: number;
   betId: number;
+  status: string;
 };
 
 const useBetCheck = (props: BetProps) => {
-  const { sport, league, eventId, type, postId, pickId, isWinner, handicap, team, userId, betId } =
+  const { sport, league, eventId, type, postId, pickId, isWinner, handicap, team, userId, betId, status } =
     props;
+
+    if(status === 'completed') {
+      return;
+    }
 
   // Determine which hook to call based on the bet type
   switch (props.type) {
@@ -33,7 +38,8 @@ const useBetCheck = (props: BetProps) => {
         isWinner,
         team,
         userId,
-        betId
+        betId,
+        status
       });
     case "Runline":
       return useSpreadCheck({

@@ -33,8 +33,6 @@ const Bet: React.FC<BetProps> = ({ bets, betId}) => {
     gamePreview.onOpen(league, gameId);
   };
 
-  console.log(bets);
-
   return (
     <div className={hasWager ? "wagered-bet" : "bet"}>
       <div className="info">
@@ -59,7 +57,8 @@ const Bet: React.FC<BetProps> = ({ bets, betId}) => {
           isWinner: bet.is_winner,
           handicap: bet.handicap,
           userId: bet.user_id,
-          betId: betId
+          betId: betId,
+          status: bet.status
         });
 
         const isWinningBet = bet.is_winner === 1

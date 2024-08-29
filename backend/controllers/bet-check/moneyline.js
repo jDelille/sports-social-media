@@ -43,8 +43,6 @@ export const checkMoneyline = async (req, res) => {
     const isHomeMoneylineWinner = homeScore > awayScore;
     const result = isHomeTeam ? isHomeMoneylineWinner : !isHomeMoneylineWinner;
 
-    console.log(result);
-
     // Use the reusable function to handle win/loss updates
     updateWinLossRecord(userId, result, pickId, postId, homeScore, awayScore, res, betId);
   } catch (error) {

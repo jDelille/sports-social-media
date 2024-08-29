@@ -16,12 +16,11 @@ export const updateWinLossRecord = (userId, result, pickId, postId, homeScore, a
     }
     
     const {is_winner} = results[0];
-    console.log(results[0]);
 
     if(is_winner === null) {
       const updateBetQuery = `
         UPDATE single_bets
-        SET is_winner = ?, home_score = ?, away_score = ?
+        SET is_winner = ?, home_score = ?, away_score = ?, status = 'completed'
         WHERE id = ?
       `;
 

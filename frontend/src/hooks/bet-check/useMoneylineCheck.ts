@@ -12,6 +12,7 @@ type BetProps = {
   team: string;
   userId: number;
   betId: number;
+  status: string;
 };
 
 const useMoneylineCheck = (bet: BetProps) => {
