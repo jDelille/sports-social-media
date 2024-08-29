@@ -17,7 +17,7 @@ const BetHistory: React.FC<BetHistoryProps> = () => {
       <PageHeader title='Bet History' hasBack/>
       <div>Total Bets: {totalCount}</div>
       <div>Record {winCount} / {lossCount} </div>
-      <div>You have a win percentage of {winPercentage}%</div>
+      <div>You have a win percentage of {winPercentage.toFixed(0)}%</div>
     </div>
   );
 };

@@ -66,7 +66,7 @@ export const addUser = (req, res) => {
         const { wins, losses, amount_wagered, amount_won, average_odds } = req.body;
 
         // SQL query to insert or update user leaderboard data
-        const q = `
+        const leaderboardQuery = `
             INSERT INTO leaderboard_users (user_id, wins, losses, amount_wagered, amount_won, average_odds)
             VALUES (?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
@@ -77,11 +77,25 @@ export const addUser = (req, res) => {
                 average_odds = VALUES(average_odds);
         `;
 
-        const values = [userId, wins, losses, amount_wagered, amount_won, average_odds];
+        const leaderboardValues = [userId, wins, losses, amount_wagered, amount_won, average_odds];
 
-        db.query(q, values, (err, result) => {
+        // Query to add funds for the user
+        const fundsQuery = `
+            UPDATE users
+            SET funds = IFNULL(funds, 0) + 500
+            WHERE id = ?;
+        `;
+
+        const fundsValues = [userId];
+
+        db.query(leaderboardQuery, leaderboardValues, (err, result) => {
             if (err) return res.status(500).json({ error: "Database query failed", details: err });
-            return res.status(200).json({ message: "User data added/updated successfully", result });
+
+            // Update the funds field in the users table
+            db.query(fundsQuery, fundsValues, (err, result) => {
+                if (err) return res.status(500).json({ error: "Database query failed", details: err });
+                return res.status(200).json({ message: "User data and funds updated successfully", result });
+            });
         });
     });
 };
