@@ -27,7 +27,8 @@ const PostMenu: React.FC<PostMenuProps> = ({
 
   const hasMuted = muted?.includes(postId);
 
-  const handleDeletePost = async () => {
+  const handleDeletePost = async (e: any) => {
+    e.stopPropagation();
     try {
       deletePopup.onOpen(postId, type, imagePath);
     } catch (error) {
@@ -57,7 +58,7 @@ const PostMenu: React.FC<PostMenuProps> = ({
           />
         </li>
         <li>
-          <button onClick={handleDeletePost}>Delete</button>
+          <button onClick={(e) => handleDeletePost(e)}>Delete</button>
         </li>
       </ul>
     </div>

@@ -65,7 +65,7 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, teams, eventId }) => {
                       away_abbreviation: teams.away.abbrv as string,
                       away_logo: teams.away.logo as string,
                       chosen_team: outcome.description,
-                      event_id: '401570449',
+                      event_id: eventId as string,
                       decimal_odds: '2.0',
                       status: 'pending',
                       wager: betstore.wager,

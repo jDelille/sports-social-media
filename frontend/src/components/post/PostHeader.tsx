@@ -50,6 +50,11 @@ const PostHeader: React.FC<PostHeaderProps> = ({
 
   const isVerified = user?.isVerified === 1;
   
+  const handleMenuClick = (e: any) => {
+    e.stopPropagation();
+    setOpenMenu(!openMenu)
+  }
+  
   return (
     <div className="post-header">
       <div className="avatar">
@@ -66,7 +71,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
       {!hideMenu && (
    !quoteReposted && (
     <div className="menu">
-      <p onClick={() => setOpenMenu(!openMenu)}>
+      <p onClick={(e) => handleMenuClick(e)}>
         <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
       </p>
       <PostMenu
