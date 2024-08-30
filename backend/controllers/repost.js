@@ -15,9 +15,9 @@ export const addRepost = (req, res) => {
       let q;
 
       if(req.body.type === 'post' || req.body.type === "repost") {
-        q = "INSERT INTO reposts (`reposted_post_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
+        q = "INSERT INTO defaultdb.reposts (`reposted_post_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
       } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost") {
-        q = "INSERT INTO reposts (`reposted_quote_repost_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
+        q = "INSERT INTO defaultdb.reposts (`reposted_quote_repost_id`, `reposter_id`, `reposter_username`, `created_at`) VALUES (?)";
       }
   
 
@@ -46,9 +46,9 @@ export const removeRepost = (req, res) => {
     let q;
 
     if(req.body.type === 'post' || req.body.type === "repost") {
-      q = "DELETE FROM reposts WHERE reposted_post_id = ? AND reposter_id = ?";
+      q = "DELETE FROM defaultdb.reposts WHERE reposted_post_id = ? AND reposter_id = ?";
     } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost") {
-      q = "DELETE FROM reposts WHERE reposted_quote_repost_id = ? AND reposter_id = ?";
+      q = "DELETE FROM defaultdb.reposts WHERE reposted_quote_repost_id = ? AND reposter_id = ?";
     }
 
 
@@ -74,9 +74,9 @@ export const isPostReposted = (req, res) => {
     let q;
 
     if (req.query.type === 'post' || req.query.type === "repost") {
-      q = "SELECT * FROM reposts WHERE reposted_post_id = ? AND reposter_id = ?";
+      q = "SELECT * FROM defaultdb.reposts WHERE reposted_post_id = ? AND reposter_id = ?";
     } else if (req.query.type === "quote_repost" || req.query.type === "quote_repost_repost") {
-      q = "SELECT * FROM reposts WHERE reposted_quote_repost_id = ? AND reposter_id = ?";
+      q = "SELECT * FROM defaultdb.reposts WHERE reposted_quote_repost_id = ? AND reposter_id = ?";
     }
     const values = [
       req.query.postId,

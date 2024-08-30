@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 export const getUser = (req, res) => {
     const username = req.params.username;   
-    const q = "SELECT * FROM users WHERE username=?";
+    const q = "SELECT * FROM defaultdb.users WHERE username=?";
 
     db.query(q, [username], (err, data) => {
         if(err) return res.status(500).json(err);
@@ -19,7 +19,7 @@ export const getSuggestedUsers = (req, res) => {
     // Update SQL query to sort by follower count and limit the result to 3
     const q = `
         SELECT * 
-        FROM users 
+        FROM defaultdb.users 
         LIMIT 3
     `;
 
