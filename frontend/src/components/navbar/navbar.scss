@@ -1,0 +1,22 @@
+@use '../../scss/variables' as *;
+
+.navbar {
+    height: 64px;
+    width: 100%;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $lightBorderColor;
+    .menu-btn {
+        width: 34px;
+        height: 34px;
+        // background-color: orange;
+        border-radius: 50%;
+    }
+    .title {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+}

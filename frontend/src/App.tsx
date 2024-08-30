@@ -35,6 +35,7 @@ import GroupPage from "./pages/GroupPage";
 import { BetPostModal, CreateGroupModal, CreatePostModal, CustomizeProfileModal } from "./components/modals";
 import ManageGroup from "./pages/ManageGroup";
 import InviteToGroupModal from "./components/modals/invite-to-group-modal/InviteToGroupModal";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ function App() {
     return (
       <QueryClientProvider client={queryClient}>
         <div className="layout">
+          <Navbar />
           {pathname === "/" && !currentUser ? (
             <>
               <Register />

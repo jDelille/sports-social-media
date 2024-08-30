@@ -1,4 +1,5 @@
 @use './variables' as *;
+@use './breakpoints' as *;
 
 @mixin button() {
     border: none;
@@ -31,4 +32,52 @@
     // background-color: $buttonPrimaryColor;
     padding: 0.9rem 1.5rem;
 
+}
+
+@include breakpoint(md) {
+    .layout {
+        justify-content: flex-start;
+        padding: 0 2rem;
+
+        .main-content {
+            flex: 1;
+            .feed {
+                min-width: 100%;
+            }
+            .feed-selector {
+                width: 100%;
+            }
+            .create-post-container {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@include breakpoint(sm) {
+    .layout {
+        justify-content: flex-start;
+        padding: 0;
+        flex-direction: column;
+        .sidebar-container {
+            display: none;
+        }
+
+        .main-content {
+            max-width: 100vw;
+            .feed {
+                max-width: 100%;
+            }
+            .feed-selector {
+                max-width: 100%;
+            }
+            .create-post-container {
+                max-width: 100%;
+            }
+            .modal {
+                min-height: 100vh;
+                border-radius: 0;
+            }
+        }
+    }
 }
