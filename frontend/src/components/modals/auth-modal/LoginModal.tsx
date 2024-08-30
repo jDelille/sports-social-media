@@ -1,10 +1,11 @@
 import React, { ChangeEvent, MouseEvent, useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import useLoginModal from "../hooks/useLoginModal";
+import { AuthContext } from "../../../context/AuthContext";
+import useLoginModal from "../../../hooks/useLoginModal";
 import { useNavigate } from "react-router-dom";
-import Input from "./input/Input";
-import useRegisterModal from "../hooks/useRegisterModal";
-import Modal from "./modals/modal/Modal";
+import Input from "../../input/Input";
+import useRegisterModal from "../../../hooks/useRegisterModal";
+import Modal from "../modal/Modal";
+import "./authModal.scss";
 
 type LoginProps = {};
 const Login: React.FC<LoginProps> = () => {
@@ -28,7 +29,12 @@ const Login: React.FC<LoginProps> = () => {
     try {
       await login(inputs);
       loginModal.onClose();
-      navigate('/home')
+      navigate("/home");
+      setError(null);
+      setInputs({
+        username: "",
+        password: "",
+      });
     } catch (error: any) {
       setError(error.response.data);
       console.log(error);
@@ -37,34 +43,47 @@ const Login: React.FC<LoginProps> = () => {
 
   const handleClose = () => {
     loginModal.onClose();
+    setError(null);
+    setInputs({
+      username: "",
+      password: "",
+    });
   };
 
   const handleOpenRegister = () => {
     handleClose();
     registerModal.onOpen();
-  }
+  };
 
   const bodyContent = (
     <div className="login">
+      {error && <div className="error">{error}</div>}
+
       <form>
-        <Input 
+        <Input
           type="text"
           name="username"
           id="username"
-          placeholder="Enter your username"
+          placeholder={"Enter your username"}
           label="Username"
           onChange={(e) => handleChange(e)}
         />
-        <Input 
+
+        <Input
           type="password"
           name="password"
           id="password"
-          placeholder="Enter your password"
+          placeholder={"Enter your password"}
           label="Password"
           onChange={(e) => handleChange(e)}
         />
-        <button onClick={handleLogin} className="submit-btn">Login</button>
-        <span className="redirect">Don't have an account? <button onClick={handleOpenRegister}>Sign up</button></span>
+        <button onClick={handleLogin} className="auth-btn">
+          Login
+        </button>
+        <span className="redirect">
+          Don't have an account?{" "}
+          <button onClick={handleOpenRegister}>Sign up</button>
+        </span>
       </form>
     </div>
   );

@@ -1,0 +1,20 @@
+@use '../../../scss/mixins' as *;
+
+.error {
+    background-color: #f8d7da;
+    border: 1px solid #f1aeb5;
+    color: #58151c;
+    padding: 13px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    margin-top: 1rem;
+    font-size: 14px;
+}
+
+.auth-btn {
+    @include button_lg();
+    margin: 0;
+    font-size: 16px;
+}

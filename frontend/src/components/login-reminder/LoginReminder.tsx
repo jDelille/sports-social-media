@@ -39,10 +39,10 @@ const LoginReminder: React.FC<LoginReminderProps> = () => {
         <span>{subText}</span>
         <ul>
           <li>
-            <button onClick={handleLogin}>Log in</button>
+            <button onClick={handleLogin} className="login-btn">Log in</button>
           </li>
           <li>
-            <button onClick={handleSignup}>Sign up</button>
+            <button onClick={handleSignup} className="sign-up-btn">Sign up</button>
           </li>
         </ul>
       </div>

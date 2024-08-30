@@ -11,11 +11,11 @@
     background-color: #e0e7ff;
     &:hover {
         cursor: pointer;
-        background-color: darken(#e0e7ff, 5%);
+        background-color: darken(#e0e7ff, 2%);
     }
     &:disabled {
         cursor: default;
-        background-color: lighten(#e0e7ff, 5%);
+        background-color: lighten(#e0e7ff, 2%);
     }
 }
 

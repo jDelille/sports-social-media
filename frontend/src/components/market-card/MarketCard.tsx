@@ -1,14 +1,12 @@
-import React, { useState } from "react";
-import { ChevronDownIcon } from "../../icons";
-import { useBetSlip } from "../../hooks";
+import React, { useContext, useState } from "react";
+import { AddUserIcon, ChevronDownIcon } from "../../icons";
+import { useBetSlip, useLoginReminder } from "../../hooks";
 import betslipStore, { Pick, Picks } from "../../store/betslipStore";
 import { Teams } from "../market-feed/MarketFeed";
-import "./marketCard.scss";
 import { useParams } from "react-router-dom";
-
-/**
- * Make market types
- */
+import "./marketCard.scss";
+import { AuthContext } from "../../context/AuthContext";
+import { COLOR_CONSTANTS } from "../../constants";
 
 type MarketCardProps = {
   market: any;
@@ -18,12 +16,23 @@ type MarketCardProps = {
 
 const MarketCard: React.FC<MarketCardProps> = ({ market, teams, eventId }) => {
   const [hasClickedMarket, setHasClickedMarket] = useState(false);
+
+  const {currentUser} = useContext(AuthContext) || {};
+  const loginReminder = useLoginReminder();
   const betslip = useBetSlip();
   const betstore = betslipStore;
 
   const { sport, league } = useParams();
 
   const handleOutcomeClick = (bet: Pick) => {
+    if(!currentUser) {
+      loginReminder.onOpen(
+        <AddUserIcon size={50} color={COLOR_CONSTANTS.ACCENT}/>,
+        "Ready to Make Your Move?",
+        `Sign up now to place your bets, track your performance, and join the community of confident bettors.`
+      )
+      return;
+    }
     betstore.addPick(bet);
     betslip.onOpen();
   };

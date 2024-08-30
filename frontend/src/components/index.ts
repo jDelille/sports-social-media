@@ -1,7 +1,7 @@
 export { default as LeftSidebar } from './sidebar/LeftSidebar';
 export { default as RightSidebar } from './sidebar/RightSidebar';
-export { default as Login } from './Login';
-export { default as Register } from './Register';
+export { default as Login } from './modals/auth-modal/LoginModal';
+export { default as Register } from './modals/auth-modal/RegisterModal';
 export { default as CreateQuoteRepost } from './create-quote-repost/CreateQuoteRepost';
 export { default as CreateComment } from './create-comment/CreateComment';
 export { default as DeletePost } from './delete-post/DeletePost';

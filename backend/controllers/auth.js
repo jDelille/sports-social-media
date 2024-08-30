@@ -13,30 +13,34 @@ dotenv.config();
  */
 
 export const register = (req, res) => {
-  // Check is user exists
-  const q = "SELECT * FROM users WHERE username = ?";
+  // Extract user details from request body
+  const { username, email, password, name } = req.body;
 
-  db.query(q, [req.body.username], (err, data) => {
-    if (err) return res.status(500).json(err);
-    if (data.length) return res.status(409).json("User already exists");
-    // Create a new user
+  // Check if user already exists
+  const checkUserQuery = "SELECT * FROM users WHERE username = ?";
+  db.query(checkUserQuery, [username], (err, data) => {
+    if (err) return res.status(500).json({ error: 'Database query error', details: err });
+
+    if (data.length) {
+      return res.status(409).json({ error: 'Username already taken' });
+    }
+
     // Hash the password
     const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const q =
-      "INSERT INTO users (`username`, `email`, `password`, `name`, `created_at`) VALUES ?";
-    const values = [
-      req.body.username,
-      req.body.email,
-      hashedPassword,
-      req.body.name,
-      moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+    // Create a new user
+    const insertUserQuery = `
+      INSERT INTO users (username, email, password, name, created_at)
+      VALUES (?, ?, ?, ?, ?)
+    `;
+    const createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
+    const values = [username, email, hashedPassword, name, createdAt];
 
-    ];
-    db.query(q, [[values]], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.status(200).json("User successfully created.");
+    db.query(insertUserQuery, values, (err) => {
+      if (err) return res.status(500).json({ error: 'Database query error', details: err });
+
+      return res.status(201).json({ message: 'User successfully created' });
     });
   });
 };

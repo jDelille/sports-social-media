@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { ChangeEvent, MouseEvent, useContext, useState } from "react";
-import { APP_CONSTANTS } from "../constants";
-import useRegisterModal from "../hooks/useRegisterModal";
-import useLoginModal from "../hooks/useLoginModal";
-import Input from "./input/Input";
-import { useAccountCreated} from "../hooks";
-import { AuthContext } from "../context/AuthContext";
-import Modal from "./modals/modal/Modal";
+import useRegisterModal from "../../../hooks/useRegisterModal";
+import useLoginModal from "../../../hooks/useLoginModal";
+import { useAccountCreated } from "../../../hooks";
+import { AuthContext } from "../../../context/AuthContext";
+import { APP_CONSTANTS } from "../../../constants";
+import Input from "../../input/Input";
+import Modal from "../modal/Modal";
+import './authModal.scss';
+
 
 type RegisterProps = {};
 const Register: React.FC<RegisterProps> = () => {
@@ -24,15 +26,13 @@ const Register: React.FC<RegisterProps> = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    
   };
-
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     try {
       await axios.post(`${APP_CONSTANTS.API_BASE_URL}/auth/register`, inputs);
       registerModal.onClose();
-      // loginModal.onOpen();
       accountCreatedPopup.onOpen();
       await login({ username: inputs.username, password: inputs.password });
       
@@ -51,8 +51,13 @@ const Register: React.FC<RegisterProps> = () => {
     loginModal.onOpen();
   }
 
+  console.log(error)
+
   const bodyContent = (
     <div className="register">
+      {error && (
+        <div className="error">{error.error}</div>
+      )}
       <form>
         <Input
           type="text"
@@ -94,7 +99,7 @@ const Register: React.FC<RegisterProps> = () => {
           onChange={(e) => handleChange(e)}
         />
 
-        <button onClick={handleClick} className="submit-btn">
+        <button onClick={handleClick} className="auth-btn">
           Create account
         </button>
         <span className="redirect">Already have an account? <button onClick={handleLogin}>Login</button></span>

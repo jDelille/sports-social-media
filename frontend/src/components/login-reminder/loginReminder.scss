@@ -1,4 +1,5 @@
 @use '../../scss/variables' as *;
+@use '../../scss/mixins' as *;
 
 .login-reminder-body {
     display: flex;
@@ -34,6 +35,7 @@
             border-radius: 12px;
             border: none;
             height: 50px;
+            @include button_sm();
             margin: 0;
             background-color: white;
             color: black;
@@ -42,7 +44,11 @@
                 background-color: darken(white, 3%);
                 cursor: pointer;
             }
-        
+           
+        }
+        .login-btn {
+            @include button_sm();
+            margin: 0;
         }
     }
   
