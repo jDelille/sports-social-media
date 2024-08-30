@@ -52,7 +52,7 @@ export const register = (req, res) => {
  */
 
 export const login = (req, res) => {
-  const q = "SELECT * FROM users WHERE username = ?";
+  const q = "SELECT * FROM defaultdb.users WHERE username = ?";
 
   db.query(q, [req.body.username], (err, data) => {
     if (err) return res.status(500).json(err);

@@ -31,7 +31,7 @@ const Register: React.FC<RegisterProps> = () => {
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      await axios.post(`${APP_CONSTANTS.API_BASE_URL}/auth/register`, inputs);
+      await axios.post(`${APP_CONSTANTS.API_PROD_URL}/auth/register`, inputs);
       registerModal.onClose();
       accountCreatedPopup.onOpen();
       await login({ username: inputs.username, password: inputs.password });
