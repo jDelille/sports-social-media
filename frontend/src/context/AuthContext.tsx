@@ -17,7 +17,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (inputs: any) => {
     const res = await axios.post(
-      `${APP_CONSTANTS.API_BASE_URL}/auth/login`,
+      `${APP_CONSTANTS.API_PROD_URL}/auth/login`,
       inputs,
       {
         withCredentials: true,
@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       // Update profile
       const res = await axios.put(
-        `${APP_CONSTANTS.API_BASE_URL}/auth/editProfile`,
+        `${APP_CONSTANTS.API_PROD_URL}/auth/editProfile`,
         profileData,
         {
           withCredentials: true,
@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     await axios.post(
-      `${APP_CONSTANTS.API_BASE_URL}/auth/logout`,
+      `${APP_CONSTANTS.API_PROD_URL}/auth/logout`,
       {},
       {
         withCredentials: true,
