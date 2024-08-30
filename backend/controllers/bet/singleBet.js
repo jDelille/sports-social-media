@@ -35,7 +35,7 @@ export const addSingleBet = (req, res) => {
     } = req.body;
 
     const q = `
-      INSERT INTO single_bets (
+      INSERT INTO defaultdb.single_bets (
         post_id,
         user_id,
         bet_type,
@@ -90,7 +90,7 @@ export const addSingleBet = (req, res) => {
       const betId = data.insertId; // Get the bet_id of the newly inserted bet
 
       const updatePostQuery = `
-          UPDATE posts SET bet_id = ? WHERE id = ?
+          UPDATE defaultdb.posts SET bet_id = ? WHERE id = ?
         `;
 
       db.query(updatePostQuery, [betId, post_id], (err, updateData) => {
@@ -105,7 +105,7 @@ export const getSingleBet = (req, res) => {
   const postId = req.params.postId;
 
   const q = `
-    SELECT * FROM single_bets WHERE post_id = ?
+    SELECT * FROM defaultdb.single_bets WHERE post_id = ?
   `;
 
   db.query(q, [postId], (err, data) => {
