@@ -31,7 +31,7 @@ const Home: React.FC<HomeProps> = () => {
       )}
 
       {selectedFeed === "bets" && (
-        <BetFeed />
+        <BetFeed username={"jdeli"} />
       )}
     </div>
   );

@@ -47,8 +47,7 @@ const Post: React.FC<PostProps> = ({
   const type = post?.type;
 
   useEffect(() => {
-
-    if(!post.bet_id) {
+    if (post.bet_id === null) {
       return;
     }
 
@@ -96,8 +95,8 @@ const Post: React.FC<PostProps> = ({
 
   const handleHashtagClick = (hashtag: string, e: any) => {
     e.stopPropagation();
-    navigate(`/discover/hashtag/${hashtag}`)
-  }
+    navigate(`/discover/hashtag/${hashtag}`);
+  };
 
   const hideUrlsInBody = (body: string) => {
     if (!body) return "";
@@ -166,8 +165,12 @@ const Post: React.FC<PostProps> = ({
 
       {isPostDetailsPage && (
         <div className="post-details-info">
-          <p><span>{likes?.length | 0}</span> Likes</p>
-          <p><span>{comments?.length | 0}</span> Comments</p>
+          <p>
+            <span>{likes?.length | 0}</span> Likes
+          </p>
+          <p>
+            <span>{comments?.length | 0}</span> Comments
+          </p>
           <p className="formatted-date">{formattedDate}</p>
         </div>
       )}

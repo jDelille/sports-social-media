@@ -5,7 +5,6 @@ import {
   getFollowingUsers,
   getFollowStatus,
   getUserCounts,
-  getUserPostsWithBetCount,
   getUserRelationships,
   unfollowUser,
 } from "../controllers/relationship.js";
@@ -22,7 +21,6 @@ router.get("/:userId/relationships", getUserRelationships);
 router.get("/:userId/follow-status", getFollowStatus);
 
 router.get("/:userId/counts", getUserCounts);
-router.get('/:userId/bet-post-count', getUserPostsWithBetCount);
 
 
 export default router;

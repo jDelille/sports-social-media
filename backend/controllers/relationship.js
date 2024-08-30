@@ -294,24 +294,3 @@ export const getUserCounts = (req, res) => {
     });
   });
 };
-
-export const getUserPostsWithBetCount = (req, res) => {
-  const userId = req.params.userId;
-
-  // Query to count the number of posts with a 'bet' field
-  const countBetPostsQuery = `
-    SELECT COUNT(*) AS bet_post_count
-    FROM posts
-    WHERE user_id = ? AND bet IS NOT NULL
-  `;
-
-  db.query(countBetPostsQuery, [userId], (err, result) => {
-    if (err) {
-      console.error('Error fetching post count with bet field:', err);
-      return res.status(500).json({ message: 'Error fetching post count with bet field' });
-    }
-
-    const betPostCount = result[0].bet_post_count;
-    return res.status(200).json({ betPostCount });
-  });
-};
