@@ -1,7 +1,8 @@
 @use "../../scss/variables" as *;
 
 .post,
-.quote-repost {
+.quote-repost,
+.alert-post {
   width: calc(100% - 2px);
   padding: 16px 16px 16px;
   min-height: 140px;
@@ -260,6 +261,14 @@
     }
   }
  
+}
+
+.alert-post {
+  border-bottom: none;
+
+  &:hover {
+    background-color: white;
+  }
 }
 
 .quote-repost {

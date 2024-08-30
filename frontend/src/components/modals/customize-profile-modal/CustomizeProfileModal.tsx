@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Modal from "../modal/Modal";
-import { useCustomizeProfile } from "../../../hooks";
+import { useAxios, useCustomizeProfile } from "../../../hooks";
 import Input from "../../input/Input";
 import { AuthContext } from "../../../context/AuthContext";
 import ProfileImgUpload from "../../profile-img-upload/ProfileImgUpload";
@@ -31,6 +31,15 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
     try {
       await updateProfile(payload);
       console.log("Profile successfully updated");
+
+      await useAxios.post("alerts", {
+        user_id: currentUser.id,
+        type: 'welcome',
+        alerter_id: currentUser.id,
+        link: null,
+        msg: "Welcome to Huddle!",
+        postId: null
+      })
 
     } catch (error) {
       console.error("Error editing profile", error);
@@ -85,7 +94,7 @@ const CustomizeProfileModal: React.FC<CustomizeProfileModalProps> = () => {
           label=""
           onChange={(e) => setLocation(e.target.value)}
         />
-        <button onClick={handleSave}>Next</button>
+        <button onClick={handleSave}>Save</button>
         <p className="skip-step" onClick={customizeProfile.onClose}>
           Skip this step
         </p>

@@ -1,8 +1,8 @@
 import React from "react";
 import Popup from "./Popup";
 import { useAccountCreated, useCustomizeProfile } from "../../hooks";
-import "./accountCreated.scss";
 import { PartyIcon } from "../../icons";
+import "./accountCreated.scss";
 
 type AccountCreatedProps = {};
 const AccountCreated: React.FC<AccountCreatedProps> = () => {

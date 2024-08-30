@@ -22,12 +22,14 @@ type PostProps = {
   post: PostTypes;
   isHashtagPage?: boolean;
   isPostDetailsPage?: boolean;
+  isAlertPage?: boolean;
 };
 
 const Post: React.FC<PostProps> = ({
   post,
   isHashtagPage,
   isPostDetailsPage,
+  isAlertPage
 }) => {
   if (!post) {
     return;
@@ -138,7 +140,7 @@ const Post: React.FC<PostProps> = ({
   };
 
   return (
-    <div className="post" onClick={navigateToPost}>
+    <div className={isAlertPage ? "alert-post" : "post"} onClick={navigateToPost}>
       {type === "repost" && (
         <div className="reposter">
           <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />

@@ -85,7 +85,7 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
         <span>{alert.msg}</span>
       </div>
       
-      <Post post={post} />
+      <Post post={post} isAlertPage />
       <CommentCard comment={comment} username={alert.alerter.username} />
     </div>
   );
