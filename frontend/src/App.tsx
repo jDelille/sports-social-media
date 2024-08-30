@@ -52,7 +52,7 @@ function App() {
     return (
       <QueryClientProvider client={queryClient}>
         <div className="layout">
-          <Navbar />
+          {/* <Navbar /> */}
           {pathname === "/" && !currentUser ? (
             <>
               <Register />
