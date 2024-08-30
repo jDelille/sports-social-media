@@ -72,7 +72,7 @@ export const login = (req, res) => {
 
     res
       .cookie("accessToken", token, {
-        httpOnly: true,
+        httpOnly: false,
         secure: false,
         sameSite: 'lax',
       })
