@@ -38,7 +38,7 @@ export const addPost = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q =
-      "INSERT INTO posts (`body`, `image`, `created_at`, `user_id`, `metadata`) VALUES (?)";
+      "INSERT INTO defaultdb.posts (`body`, `image`, `created_at`, `user_id`, `metadata`) VALUES (?)";
 
     const values = [
       req.body.body,
