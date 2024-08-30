@@ -44,6 +44,14 @@ const RepostButton: React.FC<RepostButtonProps> = ({
           username: username,
           type: type,
         });
+        await useAxios.post("/alerts", {
+          user_id: originalPostUserId,
+          type: 'post',
+          alerter_id: currentUserId,
+          link: `/post/${postId}`,
+          msg: "reposted your post",
+          post_id: postId,
+        })
       } else {
         await useAxios.delete("/reposts", {
           data: {

@@ -51,7 +51,7 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
   
     // Check if alert is defined before accessing its properties
     if (alert) {
-      if (alert.msg === "liked your post") {
+      if (alert.msg === "liked your post" || alert.msg === "reposted your post") {
         fetchPost();
       } else if (alert.msg === "commented on your post") {
         fetchComment();
