@@ -51,8 +51,8 @@ SELECT
 FROM defaultdb.posts p
 JOIN defaultdb.reposts r ON p.id = r.reposted_post_id
 JOIN defaultdb.users ur ON r.reposter_id = ur.id
-LEFT defaultdb.JOIN posts op ON p.id = op.id
-LEFT defaultdb.JOIN users ou ON op.user_id = ou.id
+LEFT JOIN defaultdb.posts op ON p.id = op.id
+LEFT JOIN defaultdb.users ou ON op.user_id = ou.id
 `;
 
 export const forYouQuoteRepostsQuery = `
