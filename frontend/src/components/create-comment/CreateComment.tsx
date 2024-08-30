@@ -7,9 +7,9 @@ import UserTypes from "../../types/User";
 import PostTypes from "../../types/Post";
 import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
 import { Link, useNavigate } from "react-router-dom";
-import "./createComment.scss";
 import Modal from "../modals/modal/Modal";
 import { AuthContext } from "../../context/AuthContext";
+import "./createComment.scss";
 
 type CreateCommentProps = {};
 const CreateComment: React.FC<CreateCommentProps> = () => {
@@ -36,7 +36,7 @@ const CreateComment: React.FC<CreateCommentProps> = () => {
         type: type,
       });
 
-      console.log(response.data.id)
+      console.log(urlMetadata)
 
       const commentId = response.data.id
 

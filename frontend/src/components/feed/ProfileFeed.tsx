@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Post from "../post/Post";
 import QuoteRepost from "../post/QuoteRepost";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -11,7 +11,6 @@ type ProfileFeedProps = {
 };
 const ProfileFeed: React.FC<ProfileFeedProps> = ({
   username,
-  selectedFeed,
 }) => {
   const getUserPosts = async (pageParam: number) => {
     let res;
@@ -19,12 +18,12 @@ const ProfileFeed: React.FC<ProfileFeedProps> = ({
     return res.data;
   };
 
-  const { isLoading, error, data, fetchNextPage, refetch } = useInfiniteQuery({
+  const { error, data } = useInfiniteQuery({
     queryKey: ["user_posts", username],
     queryFn: ({ pageParam }) => getUserPosts(pageParam),
     staleTime: 5000,
     initialPageParam: 1 as any,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (_, allPages) => {
       return allPages.length + 1;
     },
   });

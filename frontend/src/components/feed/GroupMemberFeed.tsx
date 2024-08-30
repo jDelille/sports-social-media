@@ -8,7 +8,7 @@ type GroupMemberFeedProps = {
   groupId: number | undefined;
 };
 const GroupMemberFeed: React.FC<GroupMemberFeedProps> = ({ groupId }) => {
-  const { ref, inView } = useInView();
+  const { ref } = useInView();
 
   const fetchGroupMembers = async (pageParam: number) => {
     const res = await useAxios.get(
@@ -17,7 +17,7 @@ const GroupMemberFeed: React.FC<GroupMemberFeedProps> = ({ groupId }) => {
     return res.data;
   };
 
-  const { data, fetchNextPage, hasNextPage, isLoading, error } =
+  const { data } =
     useInfiniteQuery({
       queryKey: ["members", groupId],
       queryFn: ({ pageParam }) => fetchGroupMembers(pageParam),

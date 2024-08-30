@@ -14,12 +14,12 @@ const HashtagPosts: React.FC<HashtagPostsProps> = ({ hashtag }) => {
     return res.data;
   };
 
-  const { isLoading, error, data, fetchNextPage, refetch } = useInfiniteQuery({
+  const { error, data} = useInfiniteQuery({
     queryKey: ["hashtag_posts", hashtag],
     queryFn: ({ pageParam }) => getHashtagPosts(pageParam),
     staleTime: 5000,
     initialPageParam: 1 as any,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (_, allPages) => {
       return allPages.length + 1;
     },
   });

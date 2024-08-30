@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import React from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { useAxios } from "../../hooks";
 import UserCard from "../user-card/UserCard";
@@ -9,7 +9,7 @@ type FollowingFeedProps = {
     userId: number;
 };
 const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
-  const { ref, inView } = useInView();
+  const { ref } = useInView();
 
   const fetchFollowingUsers = async (pageParam: number) => {
     const res = await useAxios.get(`/relationships/${userId}/following?page=${pageParam}`);
@@ -18,8 +18,6 @@ const FollowingFeed: React.FC<FollowingFeedProps> = ({userId}) => {
 
   const {
     data,
-    fetchNextPage,
-    hasNextPage,
     isLoading,
     error,
   } = useInfiniteQuery({

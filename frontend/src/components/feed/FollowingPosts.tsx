@@ -24,7 +24,7 @@ const FollowingPosts: React.FC<FollowingPostsProps> = ({ userId }) => {
     queryFn: ({ pageParam }) => getFollowingPosts(pageParam),
     staleTime: 5000,
     initialPageParam: 1 as any,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (_, allPages) => {
         return allPages.length + 1;
       },
   });

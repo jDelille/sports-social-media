@@ -17,12 +17,12 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
     return res.data;
   };
 
-  const { isLoading, error, data, fetchNextPage, refetch } = useInfiniteQuery({
+  const { error, data, fetchNextPage } = useInfiniteQuery({
     queryKey: ["posts"],
     queryFn: ({ pageParam }) => getPosts(pageParam),
     staleTime: 5000,
     initialPageParam: 1 as any,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (_, allPages) => {
       return allPages.length + 1;
     },
   });

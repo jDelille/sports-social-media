@@ -77,6 +77,8 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
 
   const icon = getIcon(alert.msg);
 
+
+
   return (
     <div className="post-alert-card alert-card">
       <div className="alert-type">
@@ -85,8 +87,16 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
         <span>{alert.msg}</span>
       </div>
       
-      <Post post={post} isAlertPage />
-      <CommentCard comment={comment} username={alert.alerter.username} />
+      {loading ? (
+        <div className="loading-spinner">Loading...</div>
+      ) : error ? (
+        <div className="error-message">{error}</div>
+      ) : (
+        <>
+          {post && <Post post={post} isAlertPage />}
+          {comment && <CommentCard comment={comment} username={alert.alerter.username} />}
+        </>
+      )}
     </div>
   );
 };

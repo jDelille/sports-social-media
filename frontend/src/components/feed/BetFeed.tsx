@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useAxios } from "../../hooks";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Post from "../post/Post";
@@ -15,12 +15,12 @@ const BetFeed: React.FC<BetFeedProps> = ({ username }) => {
     return res.data;
   };
 
-  const { isLoading, error, data, fetchNextPage, refetch } = useInfiniteQuery({
+  const { error, data} = useInfiniteQuery({
     queryKey: ["user_posts", username],
     queryFn: ({ pageParam }) => getUserPosts(pageParam),
     staleTime: 5000,
     initialPageParam: 1 as any,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (_, allPages) => {
       return allPages.length + 1;
     },
   });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import betslipStore, { Pick } from "../../store/betslipStore";
 import { CloseIcon } from "../../icons";
 import { observer } from "mobx-react";
@@ -27,7 +27,6 @@ const BetSlipPick: React.FC<BetSlipPickProps> = ({ pick }) => {
 
 // Component for wager and payout
 const BetInput: React.FC<{}> = () => {
-  const [payout, setPayout] = useState<number>(0.0);
   return (
     <div className="bet-input-container">
 

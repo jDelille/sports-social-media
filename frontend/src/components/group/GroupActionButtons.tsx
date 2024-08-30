@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Group } from "../../types/GroupTypes";
 import { AuthContext } from "../../context/AuthContext";
 import { BellIcon, MenuDotsIcon } from "../../icons";
 import { useNavigate, useParams } from "react-router-dom";
 import GroupMenu from "./GroupMenu";
-import "./group.scss";
 import { useAxios } from "../../hooks";
+import "./group.scss";
 
 type GroupActionButtonsProps = {
   group: Group;

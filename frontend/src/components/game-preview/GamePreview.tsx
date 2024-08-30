@@ -3,8 +3,6 @@ import { CloseIcon } from "../../icons";
 import { COLOR_CONSTANTS } from "../../constants";
 import { useAxios, useGamePreview } from "../../hooks";
 import GamePreviewHeader from "./GamePreviewHeader";
-import BoxScore from "./box-score/BoxScore";
-import CategorySelector from "./category-selector/CategorySelector";
 import "./gamePreview.scss";
 
 type GamePreviewProps = {};
@@ -41,9 +39,6 @@ const GamePreview: React.FC<GamePreviewProps> = () => {
     return null;
   }
 
-  const homeTeam = game?.boxscore.teams[1].team;
-  const awayTeam = game?.boxscore.teams[0].team;
-
   return (
     <div className="overlay">
       <div className="game-preview">
@@ -57,6 +52,7 @@ const GamePreview: React.FC<GamePreviewProps> = () => {
         <div className="game-info">
           {/* <BoxScore boxscore={game?.boxscore} /> */}
           <h3>Feature coming soon.</h3>
+          <p>{loading}</p>
         </div>
       </div>
     </div>

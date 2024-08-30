@@ -1,6 +1,6 @@
 import React from "react";
-import "./boxscore.scss";
 import { categorizeStats } from "../../../utils/boxscoreUtils";
+import "./boxscore.scss";
 
 type BoxScoreProps = {
   boxscore: any;
@@ -14,10 +14,6 @@ const BoxScore: React.FC<BoxScoreProps> = ({ boxscore }) => {
     homeBoxscore?.statistics,
     awayBoxscore?.statistics
   );
-  const homeLogo = homeBoxscore?.team.logo;
-  const homeAbbrev = homeBoxscore?.team.abbreviation;
-  const awayLogo = awayBoxscore?.team.logo;
-  const awayAbbrev = awayBoxscore?.team.abbreviation;
 
   const renderCategory = (categoryName: string, stats: any[]) => (
     <div className={`box-score-category ${categoryName}`} key={categoryName}>

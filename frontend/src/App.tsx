@@ -26,7 +26,7 @@ import AccountCreated from "./components/popup/AccountCreated";
 import LeaderboardInfo from "./components/popup/LeaderboardInfo";
 import Discover from "./pages/Discover";
 import GamePreview from "./components/game-preview/GamePreview";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PostPage from "./pages/PostPage";
 import Alerts from "./pages/Alerts";
@@ -35,7 +35,6 @@ import GroupPage from "./pages/GroupPage";
 import { BetPostModal, CreateGroupModal, CreatePostModal, CustomizeProfileModal } from "./components/modals";
 import ManageGroup from "./pages/ManageGroup";
 import InviteToGroupModal from "./components/modals/invite-to-group-modal/InviteToGroupModal";
-import Navbar from "./components/navbar/Navbar";
 
 function App() {
   const queryClient = new QueryClient();
@@ -52,7 +51,6 @@ function App() {
     return (
       <QueryClientProvider client={queryClient}>
         <div className="layout">
-          {/* <Navbar /> */}
           {pathname === "/" && !currentUser ? (
             <>
               <Register />
