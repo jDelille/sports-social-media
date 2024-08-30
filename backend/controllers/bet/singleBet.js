@@ -102,22 +102,15 @@ export const addSingleBet = (req, res) => {
 };
 
 export const getSingleBet = (req, res) => {
-  const token = req.cookies.accessToken;
-  if (!token) return res.status(401).json("Not logged in.");
+  const postId = req.params.postId;
 
-  jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
-    if (err) return res.status(403).json("Token is not valid");
+  const q = `
+    SELECT * FROM single_bets WHERE post_id = ?
+  `;
 
-    const postId = req.params.postId;
-
-    const q = `
-      SELECT * FROM single_bets WHERE post_id = ?
-    `;
-
-    db.query(q, [postId], (err, data) => {
-      if (err) return res.status(500).json(err);
-      if (data.length === 0) return res.status(404).json("Bet not found");
-      return res.status(200).json(data);
-    });
+  db.query(q, [postId], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length === 0) return res.status(404).json("Bet not found");
+    return res.status(200).json(data);
   });
 };
