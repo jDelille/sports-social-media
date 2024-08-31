@@ -21,8 +21,8 @@ SELECT
     NULL AS original_post_user,
     p.metadata,
     'post' AS type
-FROM posts p
-JOIN users u ON p.user_id = u.id
+FROM defaultdb.posts p
+JOIN defaultdb.users u ON p.user_id = u.id
 WHERE JSON_EXTRACT(p.bet, '$') IS NOT NULL AND JSON_EXTRACT(p.bet, '$') != '{}'
 `;
 
@@ -49,11 +49,11 @@ SELECT
     NULL AS original_post_user,
     p.metadata,
     'repost' AS type
-FROM posts p
-JOIN reposts r ON p.id = r.reposted_post_id
-JOIN users ur ON r.reposter_id = ur.id
-LEFT JOIN posts op ON p.id = op.id
-LEFT JOIN users ou ON op.user_id = ou.id
+FROM defaultdb.posts p
+JOIN defaultdb.reposts r ON p.id = r.reposted_post_id
+JOIN defaultdb.users ur ON r.reposter_id = ur.id
+LEFT JOIN defaultdb.posts op ON p.id = op.id
+LEFT JOIN defaultdb.users ou ON op.user_id = ou.id
 WHERE JSON_EXTRACT(p.bet, '$') IS NOT NULL AND JSON_EXTRACT(p.bet, '$') != '{}'
 `;
 
@@ -89,11 +89,11 @@ SELECT
     ) AS original_post_user,
     p1.metadata,
     'quote_repost' AS type
-FROM quote_reposts qr
-LEFT JOIN posts p1 ON qr.quote_reposted_post_id = p1.id
-LEFT JOIN quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
-JOIN users ur ON qr.quote_reposter_id = ur.id
-LEFT JOIN users ou ON qr.original_post_user_id = ou.id
+FROM defaultdb.quote_reposts qr
+LEFT JOIN defaultdb.posts p1 ON qr.quote_reposted_post_id = p1.id
+LEFT JOIN defaultdb.quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
+JOIN defaultdb.users ur ON qr.quote_reposter_id = ur.id
+LEFT JOIN defaultdb.users ou ON qr.original_post_user_id = ou.id
 WHERE JSON_EXTRACT(p1.bet, '$') IS NOT NULL AND JSON_EXTRACT(p1.bet, '$') != '{}'
 `;
 
@@ -129,11 +129,11 @@ SELECT
     ) AS original_post_user,
     p1.metadata,
     'quote_repost_repost' AS type
-FROM quote_reposts qr
-JOIN reposts r ON qr.id = r.reposted_quote_repost_id
-JOIN users ur ON r.reposter_id = ur.id
-LEFT JOIN posts p1 ON qr.quote_reposted_post_id = p1.id
-LEFT JOIN quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
-LEFT JOIN users ou ON qr.original_post_user_id = ou.id
+FROM defaultdb.quote_reposts qr
+JOIN defaultdb.reposts r ON qr.id = r.reposted_quote_repost_id
+JOIN defaultdb.users ur ON r.reposter_id = ur.id
+LEFT JOIN defaultdb.posts p1 ON qr.quote_reposted_post_id = p1.id
+LEFT JOIN defaultdb.quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
+LEFT JOIN defaultdb.users ou ON qr.original_post_user_id = ou.id
 WHERE JSON_EXTRACT(p1.bet, '$') IS NOT NULL AND JSON_EXTRACT(p1.bet, '$') != '{}'
 `;
