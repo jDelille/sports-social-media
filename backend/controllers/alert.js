@@ -65,7 +65,7 @@ export const getAlerts = (req, res) => {
         ) AS group_info
       FROM defaultdb.alerts a
       LEFT JOIN defaultdb.users u ON a.alerter_id = u.id
-      LEFT JOIN \`defaultdb.groups\` g ON a.group_id = g.id  -- Use backticks to escape the reserved keyword
+      LEFT JOIN defaultdb.groups g ON a.group_id = g.id 
       WHERE a.user_id = ?
       ORDER BY a.created_at DESC
     `;

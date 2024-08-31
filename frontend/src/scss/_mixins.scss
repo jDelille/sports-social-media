@@ -40,9 +40,9 @@
         padding: 0 2rem;
 
         .main-content {
-            flex: 1;
+            width: 100vw;
             .feed {
-                min-width: 100%;
+                width: 100%;
             }
             .feed-selector {
                 width: 100%;
@@ -61,6 +61,9 @@
         flex-direction: column;
         .sidebar-container {
             display: none;
+        }
+        .navbar {
+            display: flex;
         }
 
         .main-content {

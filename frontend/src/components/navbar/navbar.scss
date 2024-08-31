@@ -7,16 +7,23 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid $lightBorderColor;
+    display: none;
+    position: relative;
+    position: sticky;
+    background-color: white;
+    z-index: 9999;
+    top: 0;
     .menu-btn {
         width: 34px;
-        height: 34px;
-        // background-color: orange;
-        border-radius: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
     }
     .title {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
+        width: calc(100% - 64px);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
