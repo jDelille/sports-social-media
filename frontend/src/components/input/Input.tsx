@@ -37,6 +37,7 @@ const Input: React.FC<InputProps> = ({
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    console.log(password)
     setPassword(value);
     onChange(e);
 
@@ -68,7 +69,6 @@ const Input: React.FC<InputProps> = ({
           type={type}
           placeholder={placeholder}
           id={inputId}
-          value={password}
           {...rest}
           onChange={isPassword ? handlePasswordChange : onChange}
         />
