@@ -1,22 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostTypes from "../../types/Post";
-import { AuthContext } from "../../context/AuthContext";
 import PostHeader from "./PostHeader";
 import {
   useFetchComments,
   useFetchLikes,
-  useCreateQuoteRepostModal,
-  useFetchMutedPosts,
   useAxios,
 } from "../../hooks";
 import { RepostIcon } from "../../icons";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { COLOR_CONSTANTS } from "../../constants";
 import PostFooter from "./PostFooter";
 import ArticleDisplay from "../article-display/ArticleDisplay";
 import Bet from "./post-bet/Bet";
-import "./post.scss";
 import moment from "moment";
+import "./post.scss";
 
 type PostProps = {
   post: PostTypes;
@@ -38,14 +35,13 @@ const Post: React.FC<PostProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [bets, setBets] = useState([]);
 
-  const { currentUser } = useContext(AuthContext) || {};
-  const createQuoteRepostModal = useCreateQuoteRepostModal();
+  // const createQuoteRepostModal = useCreateQuoteRepostModal();
   const navigate = useNavigate();
 
   const { likes } = useFetchLikes(post.id, post.type);
   const { comments } = useFetchComments(post.id, post.type);
 
-  const postId = post?.id;
+  // const postId = post?.id;
   const type = post?.type;
 
   useEffect(() => {
@@ -67,9 +63,9 @@ const Post: React.FC<PostProps> = ({
     }
   }, [post.id]);
 
-  const { muted } = useFetchMutedPosts(postId, type);
+  // const { muted } = useFetchMutedPosts(postId, type);
 
-  const hasMuted = muted?.includes(postId);
+  // const hasMuted = muted?.includes(postId);
 
   const formattedDate = moment(post.created_at).format("MMM D, YYYY, h:mm A");
 
@@ -77,13 +73,13 @@ const Post: React.FC<PostProps> = ({
   //   return null;
   // }
 
-  const handleQuoteRepost = async (
-    postId: number,
-    type: string,
-    originalPostUserId: number
-  ) => {
-    createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
-  };
+  // const handleQuoteRepost = async (
+  //   postId: number,
+  //   type: string,
+  //   originalPostUserId: number
+  // ) => {
+  //   createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
+  // };
 
   const navigateToProfile = (e: any) => {
     e.stopPropagation();
@@ -151,6 +147,9 @@ const Post: React.FC<PostProps> = ({
         </div>
       )}
 
+      {error && (
+        <div>{'error'}</div>
+      )}
       <PostHeader user={post.user} post={post} />
 
       <p className="body">{hideUrlsInBody(post.body)}</p>

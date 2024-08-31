@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./input.scss";
 import { CheckIcon } from "../../icons";
+import "./input.scss";
 
 type InputProps = {
   label: string;
@@ -68,6 +68,7 @@ const Input: React.FC<InputProps> = ({
           type={type}
           placeholder={placeholder}
           id={inputId}
+          value={password}
           {...rest}
           onChange={isPassword ? handlePasswordChange : onChange}
         />

@@ -2,12 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { MentionsInput, Mention, OnChangeHandlerFunc } from "react-mentions";
 import createPostStore from "../../store/createPostStore";
 import { observer } from "mobx-react";
-// import CreatePoll from "../create-poll/CreatePoll";
 import ImagePreview from "./ImagePreview";
 import PostFooter from "./PostFooter";
 import { useClickOutside, useHashTagData, useUrlMetadata } from "../../hooks";
+import { mentionsInputStyle } from "./mentionStyles";
 import "./mentionsTextarea.scss";
-import { mentionsInputStyle, mentionStyle } from "./mentionStyles";
 
 type MentionsTextareaProps = {
   setBody: (body: string) => void;
@@ -57,6 +56,7 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
     ) => {
       let updatedValue = newPlainTextValue;
       mentions.forEach((mention) => {
+        console.log(newValue)
         const mentionText = `@${mention.display}`;
         updatedValue = updatedValue.replace(
           `@[#${mention.id}](worldseries)`,

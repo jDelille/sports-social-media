@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PostTypes from "../../types/Post";
 import PostHeader from "./PostHeader";
-import { AuthContext } from "../../context/AuthContext";
 import { MuteButton } from "./post-controls";
 import { useFetchMutedOriginalPost, useFetchMutedPosts } from "../../hooks";
 import PostFooter from "./PostFooter";
@@ -10,7 +9,6 @@ import { COLOR_CONSTANTS } from "../../constants";
 import { useNavigate } from "react-router-dom";
 import ArticleDisplay from "../article-display/ArticleDisplay";
 import "./post.scss";
-import Bet from "./post-bet/Bet";
 
 type QuoteRepostProps = {
   post: PostTypes;
@@ -18,12 +16,9 @@ type QuoteRepostProps = {
 
 const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
   const [error, setError] = useState<string | null>(null);
-  const [hideMutedPost, setHideMutedPost] = useState(false);
 
-  const { currentUser } = useContext(AuthContext) || {};
   const navigate = useNavigate();
 
-  const currentUserId = currentUser?.id;
   const postId = post.id;
   const type = post.type;
 
@@ -50,6 +45,9 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
 
   return (
     <div className="quote-repost">
+      {error && (
+        <div>error</div>
+      )}
       {type === "quote_repost_repost" && (
         <p className="reposter">
           <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />
@@ -64,7 +62,7 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
 
       <div
         className={
-          isOriginalPostMuted && !hideMutedPost
+          isOriginalPostMuted
             ? "muted-original-post"
             : "original-post"
         }
@@ -81,15 +79,14 @@ const QuoteRepost: React.FC<QuoteRepostProps> = ({ post }) => {
           </div>
         )}
 
-        {(!isOriginalPostMuted || hideMutedPost) && (
+        {(!isOriginalPostMuted) && (
           <>
-            <PostHeader
+            {/* <PostHeader
               user={post.original_post_user}
               post={post}
               quoteReposted
-            />
+            /> */}
             <p className="qr_body">{hideUrlsInBody(post.original_post_body)}</p>
-            <Bet post={post} />
 
             <ArticleDisplay metadata={post.metadata} />
           </>

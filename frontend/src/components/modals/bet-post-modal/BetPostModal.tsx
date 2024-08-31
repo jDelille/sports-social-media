@@ -2,11 +2,10 @@ import React, { useContext, useState } from "react";
 import { useAxios, useBetPostModal, useBetSlip } from "../../../hooks";
 import Modal from "../modal/Modal";
 import MentionsTextarea from "../../mentions-textarea/MentionsTextarea";
-import betslipStore, { Pick } from "../../../store/betslipStore";
+import betslipStore from "../../../store/betslipStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../../../context/AuthContext";
 import "./betpostmodal.scss";
-import { Bet } from "../../../types/BetTypes";
 
 type BetPostModalProps = {};
 

@@ -6,18 +6,18 @@ type SearchBarProps = {
   onSearch?: (query: string) => void;
 };
 
-const SearchBar: React.FC<SearchBarProps> = ({ placeholder = "Search...", onSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ placeholder = "Search..." }) => {
   const [query, setQuery] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
-  const handleSearch = () => {
-    if (onSearch) {
-      onSearch(query);
-    }
-  };
+  // const handleSearch = () => {
+  //   if (onSearch) {
+  //     onSearch(query);
+  //   }
+  // };
 
   return (
     <div className="search-bar">

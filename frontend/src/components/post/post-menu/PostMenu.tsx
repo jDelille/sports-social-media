@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./postMenu.scss";
+import React, { useState } from "react";
 import useDynamicMenuPosition from "../../../hooks/post-hooks/useDynamicMenuPosition";
 import { useDeletePopup, useFetchMutedPosts } from "../../../hooks";
 import { MuteButton } from "../post-controls";
+import "./postMenu.scss";
 
 type PostMenuProps = {
   isOpen: boolean;
@@ -47,6 +47,9 @@ const PostMenu: React.FC<PostMenuProps> = ({
       }`}
       ref={menuRef}
     >
+      {error && (
+        <div>error</div>
+      )}
       {/* Menu items */}
       <ul>
         <li>

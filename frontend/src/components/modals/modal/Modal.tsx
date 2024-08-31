@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { BackIcon, CloseIcon } from '../../../icons';
 import { COLOR_CONSTANTS } from '../../../constants';
 import './modal.scss';
@@ -13,12 +13,12 @@ type ModalProps = {
   };
 
 const Modal: React.FC<ModalProps> = ({ isOpen, body, onClose, title, previousModal, hasBack }) => {
-    const [showModal, setShowModal] = useState(false);
+  //   const [showModal, setShowModal] = useState(false);
 
     
-  useEffect(() => {
-    setShowModal(isOpen);
-  }, [isOpen]);
+  // useEffect(() => {
+  //   setShowModal(isOpen);
+  // }, [isOpen]);
 
   if (!isOpen) {
     return null;

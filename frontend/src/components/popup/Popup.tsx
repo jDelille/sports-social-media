@@ -11,11 +11,11 @@ type PopupProps = {
 };
 
 const Popup: React.FC<PopupProps> = ({ isOpen, body, onClose, hideHeader }) => {
-  const [showPopup, setShowPopup] = useState(false);
+  // const [showPopup, setShowPopup] = useState(false);
 
-  useEffect(() => {
-    setShowPopup(isOpen);
-  }, [isOpen]);
+  // useEffect(() => {
+  //   setShowPopup(isOpen);
+  // }, [isOpen]);
 
   if (!isOpen) {
     return null;

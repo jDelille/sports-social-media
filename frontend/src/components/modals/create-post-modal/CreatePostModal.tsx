@@ -10,7 +10,6 @@ type CreatePostModalProps = {};
 const CreatePostModal: React.FC<CreatePostModalProps> = () => {
   const [body, setBody] = useState("");
   const [file, setFile] = useState(null);
-  const [urlMetadata, setUrlMetadata] = useState<any>(null);
 
   const createPostModal = useCreatePostModal();
   const queryClient = useQueryClient();
@@ -54,7 +53,6 @@ const CreatePostModal: React.FC<CreatePostModalProps> = () => {
         setFile={setFile}
         file={file}
         handleClick={(e) => handlePostClick(e)}
-        setUrlMetadata={setUrlMetadata}
         isActive
       />
     </div>

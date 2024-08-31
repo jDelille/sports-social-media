@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import useLeaderboardInfoPopup from "../../hooks/popups/useLeaderboardInfoPopup";
-import "./widget.scss";
 import { useAxios } from "../../hooks";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "./widget.scss";
 
 type LeaderboardWidgetProps = {};
+
 const LeaderboardWidget: React.FC<LeaderboardWidgetProps> = () => {
   const [isParticipant, setIsParticipant] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const leaderboardInfo = useLeaderboardInfoPopup();
   const { currentUser } = useContext(AuthContext) || {};
@@ -17,29 +18,38 @@ const LeaderboardWidget: React.FC<LeaderboardWidgetProps> = () => {
 
   useEffect(() => {
     const checkIfParticipant = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const response = await useAxios.get("/leaderboard/participant");
         setIsParticipant(response.data.isParticipant);
       } catch (err) {
-        setError(null);
+        setError("Failed to load leaderboard status.");
+        console.error("Error checking participant status:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    checkIfParticipant();
-  }, [currentUser.id]);
-
-  console.log(isParticipant);
+    if (currentUser?.id) {
+      checkIfParticipant();
+    }
+  }, [currentUser?.id]);
 
   const handleGoToLeaderboardClick = () => {
-    navigate('/leaderboard');
-  }
+    navigate("/leaderboard");
+  };
 
   return (
     <div className="widget">
       <p className="title">Leaderboard</p>
-      {!isParticipant ? (
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p className="error-message">{error}</p>
+      ) : !isParticipant ? (
         <>
           <p className="description">
             <span>Join the race to the top!</span> Show your betting strategy
@@ -49,9 +59,8 @@ const LeaderboardWidget: React.FC<LeaderboardWidgetProps> = () => {
         </>
       ) : (
         <>
-        <p className="description">You are currently in 1st place</p>
-        <button onClick={handleGoToLeaderboardClick}>View Standings</button>
-
+          <p className="description">You are currently in 1st place</p>
+          <button onClick={handleGoToLeaderboardClick}>View Standings</button>
         </>
       )}
     </div>

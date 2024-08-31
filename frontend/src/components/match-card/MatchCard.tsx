@@ -1,8 +1,7 @@
 import React from "react";
 import BovadaMatchTypes from "../../types/BovadaMatch";
-import moment from "moment";
-import "./matchCard.scss";
 import { RightArrowSkinny } from "../../icons";
+import "./matchCard.scss";
 
 type MatchCardProps = {
   match: BovadaMatchTypes;
@@ -16,14 +15,6 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, onClick }) => {
   const odds = match.displayGroups?.[0].markets;
 
   const status = match.espnMatch?.status;
-
-  // make into reusable hook
-  const dateString = status?.type.shortDetail;
-  const timePart =
-    dateString?.split(" - ")[1]?.split(" ")[0] +
-    " " +
-    dateString?.split(" - ")[1]?.split(" ")[1];
-  const formattedTime = moment(timePart, "h:mm A").format("h:mm A");
 
   if (!match) {
     return null;

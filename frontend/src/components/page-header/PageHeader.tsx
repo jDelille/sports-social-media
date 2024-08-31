@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
-import './pageHeader.scss';
+import { useNavigate } from "react-router-dom";
 import { BackIcon } from '../../icons';
+import './pageHeader.scss';
 
 type PageHeaderProps = {
     title: string;
@@ -10,12 +10,8 @@ type PageHeaderProps = {
 
 const PageHeader: React.FC<PageHeaderProps> = ({title, hasBack}) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showButton, setShowButton] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const isProfilePage = location.pathname.startsWith('/profile');
 
   const handleBackClick = () => {
     if(!hasBack) {
@@ -27,7 +23,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({title, hasBack}) => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
-      setShowButton(window.scrollY > 180);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -45,11 +40,6 @@ const PageHeader: React.FC<PageHeaderProps> = ({title, hasBack}) => {
       </div>
     )}
       <p>{title}</p>
-      {/* {isProfilePage && (
-      <Button className={showButton ? 'show-btn' : 'hide-btn'}>Edit profile</Button>
-      )} */}
-
-      
     </div>
   );
 };

@@ -26,6 +26,9 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
 
   return (
     <div className="post-footer">
+      {error && (
+        <div>error</div>
+      )}
       <LikeButton
         postId={postId}
         type={type}

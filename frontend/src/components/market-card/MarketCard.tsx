@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { AddUserIcon, ChevronDownIcon } from "../../icons";
 import { useBetSlip, useLoginReminder } from "../../hooks";
-import betslipStore, { Pick, Picks } from "../../store/betslipStore";
+import betslipStore, { Pick } from "../../store/betslipStore";
 import { Teams } from "../market-feed/MarketFeed";
 import { useParams } from "react-router-dom";
-import "./marketCard.scss";
 import { AuthContext } from "../../context/AuthContext";
 import { COLOR_CONSTANTS } from "../../constants";
+import "./marketCard.scss";
 
 type MarketCardProps = {
   market: any;

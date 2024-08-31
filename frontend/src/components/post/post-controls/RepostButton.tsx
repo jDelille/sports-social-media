@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   useAxios,
-  useCreateQuoteRepostModal,
   useLoginReminder,
 } from "../../../hooks";
 import { RepostIcon } from "../../../icons";
-import { APP_CONSTANTS, COLOR_CONSTANTS } from "../../../constants";
+import { COLOR_CONSTANTS } from "../../../constants";
 import RepostPopup from "../../repost-popup/RepostPopup";
 
 type RepostButtonProps = {

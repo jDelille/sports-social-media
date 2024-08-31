@@ -1,10 +1,9 @@
 import React from "react";
-import PostTypes from "../../../types/Post";
 import useBetCheck from "../../../hooks/bet-check/useBetCheck";
 import { useGamePreview } from "../../../hooks";
-import "./bet.scss";
 import { Pick } from "../../../store/betslipStore";
 import { BoostIcon } from "../../../icons";
+import "./bet.scss";
 
 type BetProps = {
   bets: any;
@@ -52,11 +51,11 @@ const Bet: React.FC<BetProps> = ({ bets, betId}) => {
           eventId: bet.event_id,
           team: bet.chosen_team,
           type: bet.bet_type,
-          postId: bet.post_id,
+          postId: bet.post_id as number,
           pickId: index,
           isWinner: bet.is_winner,
           handicap: bet.handicap,
-          userId: bet.user_id,
+          userId: bet.user_id as number,
           betId: betId,
           status: bet.status
         });
@@ -108,12 +107,6 @@ const Bet: React.FC<BetProps> = ({ bets, betId}) => {
           </div>
         );
       })}
-      {/* {hasWager && (
-        <div className="payout">
-          <p>Wagered ${post.bet.wager}</p>
-          <p>Payout ${parseInt(post.bet.payout).toFixed(2)}</p>
-        </div>
-      )} */}
     </div>
   );
 };

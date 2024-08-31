@@ -6,7 +6,7 @@ import { COLOR_CONSTANTS } from "../../constants";
 import UserPlus from "../../icons/UserPlusIcon";
 import { observer } from "mobx-react";
 import { userRelationshipsStore } from "../../store/userRelationshipStore";
-import { showErrorToast, showSuccessToast } from "../../utils/toastUtils";
+import { showSuccessToast } from "../../utils/toastUtils";
 
 type ActionButtonsProps = {
   user: UserTypes;

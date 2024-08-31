@@ -12,6 +12,7 @@ type GroupActionButtonsProps = {
   currentUserId: number;
   isMember: boolean;
 };
+
 const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
   group,
   currentUserId,
@@ -32,14 +33,21 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
   };
 
   const handleJoinGroupClick = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
       await useAxios.post("/group-members/add", {
         groupId: group.id,
         userId: currentUserId,
         role: "member",
       });
+      // Optionally update the UI or state here to reflect the user joining the group
     } catch (error) {
+      setError("Failed to join the group");
       console.error("Error joining group:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,6 +65,7 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
         },
       });
       console.log("Successfully left the group");
+      // Optionally update the UI or state here to reflect the user leaving the group
     } catch (error) {
       setError("Failed to leave the group");
       console.error("Error leaving group:", error);
@@ -68,15 +77,15 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
   return (
     <div className="action-btns">
       {isAdmin ? (
-        // Render buttons for admin
         <>
-          <button className="small-btn">
+          <button className="small-btn" disabled={loading}>
             <BellIcon size={20} color="black" />
           </button>
           <div className="dropdown-menu">
             <button
               className="small-btn"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              disabled={loading}
             >
               <MenuDotsIcon size={20} color="black" />
               {isMenuOpen && (
@@ -84,21 +93,24 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
               )}
             </button>
           </div>
-
-          <button className="large-btn" onClick={handleManageGroupClick}>
-            Manage Group
+          <button
+            className="large-btn"
+            onClick={handleManageGroupClick}
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Manage Group"}
           </button>
         </>
       ) : (
-        // Render buttons for regular members
         <>
-          <button className="small-btn">
+          <button className="small-btn" disabled={loading}>
             <BellIcon size={20} color="black" />
           </button>
           <div className="dropdown-menu">
             <button
               className="small-btn"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              disabled={loading}
             >
               <MenuDotsIcon size={20} color="black" />
               {isMenuOpen && (
@@ -108,16 +120,25 @@ const GroupActionButtons: React.FC<GroupActionButtonsProps> = ({
           </div>
 
           {isMember ? (
-            <button className="large-btn" onClick={handleLeaveGroupClick}>
-              Leave Group
+            <button
+              className="large-btn"
+              onClick={handleLeaveGroupClick}
+              disabled={loading}
+            >
+              {loading ? "Leaving..." : "Leave Group"}
             </button>
           ) : (
-            <button className="large-btn" onClick={handleJoinGroupClick}>
-              Join Group
+            <button
+              className="large-btn"
+              onClick={handleJoinGroupClick}
+              disabled={loading}
+            >
+              {loading ? "Joining..." : "Join Group"}
             </button>
           )}
         </>
       )}
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };
