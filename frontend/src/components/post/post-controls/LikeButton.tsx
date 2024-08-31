@@ -31,7 +31,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   const handleLike = async (postId: number) => {
     try {
       if (!hasLiked) {
-        await useAxios.post("/likes", { postId, type });
+        await useAxios.post("/likes", { postId, type }, { withCredentials: true } );
         await useAxios.post("/alerts", {
           user_id: userId,
           type: 'post',
@@ -39,7 +39,8 @@ const LikeButton: React.FC<LikeButtonProps> = ({
           link: `/post/${postId}`,
           msg: "liked your post",
           post_id: postId,
-        })
+        }, 
+        { withCredentials: true } )
       } else {
         await useAxios.delete("/likes", { data: { postId, type } });
       }
