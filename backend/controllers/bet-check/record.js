@@ -8,7 +8,7 @@ export const getUserBetRecord = (req, res) => {
         SELECT 
             SUM(CASE WHEN JSON_EXTRACT(p.bet, '$.picks[*].betStatus') = 1 THEN 1 ELSE 0 END) AS wins,
             SUM(CASE WHEN JSON_EXTRACT(p.bet, '$.picks[*].betStatus') = 0 THEN 1 ELSE 0 END) AS losses
-        FROM posts p
+        FROM defaultdb.posts p
         WHERE p.user_id = ?;
     `;
 

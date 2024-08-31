@@ -175,7 +175,7 @@ export const getFollowingUsersPosts = (req, res) => {
     // Get following user IDs
     const followingIdsQuery = `
       SELECT followed_id 
-      FROM relationships 
+      FROM defaultdb.relationships 
       WHERE follower_id = ?`;
 
     db.query(followingIdsQuery, [userId], (err, following) => {
@@ -256,13 +256,13 @@ export const deletePost = (req, res) => {
     let values;
 
     if (req.body.type === "post" || req.body.type === "repost") {
-      q = "DELETE FROM posts WHERE id = ? AND user_id = ?";
+      q = "DELETE FROM defaultdb.posts WHERE id = ? AND user_id = ?";
       values = [req.body.postId, userInfo.id];
     } else if (
       req.body.type === "quote_repost" ||
       req.body.type === "quote_repost_repost"
     ) {
-      q = "DELETE FROM quote_reposts WHERE id = ? AND quote_reposter_id = ?";
+      q = "DELETE FROM defaultdb.quote_reposts WHERE id = ? AND quote_reposter_id = ?";
       values = [req.body.postId, userInfo.id];
     } else {
       return res.status(400).json("Invalid post type");

@@ -12,7 +12,7 @@ export const addQuoteRepost = (req, res) => {
     jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
       if (err) return res.status(403).json("Token is not valid");      
   
-      const q = "INSERT INTO quote_reposts (`quote_reposted_post_id`, `quote_reposted_quote_repost_id`, `quote_reposter_id`, `original_post_user_id`, `body`, `image`, `created_at`) VALUES (?)";
+      const q = "INSERT INTO defaultdb.quote_reposts (`quote_reposted_post_id`, `quote_reposted_quote_repost_id`, `quote_reposter_id`, `original_post_user_id`, `body`, `image`, `created_at`) VALUES (?)";
 
       const values = [
         req.body.postId,

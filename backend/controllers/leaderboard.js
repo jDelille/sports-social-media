@@ -15,8 +15,8 @@ export const getLeaderboardUsers = (req, res) => {
 
         const q = `
         SELECT lu.*, u.username, u.email 
-        FROM \`leaderboard_users\` lu
-        JOIN \`users\` u ON lu.user_id = u.id
+        FROM \`defaultdb.leaderboard_users\` lu
+        JOIN \`defaultdb.users\` u ON lu.user_id = u.id
         ORDER BY lu.wins DESC;
     `;
 
@@ -38,7 +38,7 @@ export const isParticipant = (req, res) => {
 
         const q = `
             SELECT 1 
-            FROM leaderboard_users lu
+            FROM defaultdb.leaderboard_users lu
             WHERE lu.user_id = ?
         `;
 
@@ -67,7 +67,7 @@ export const addUser = (req, res) => {
 
         // SQL query to insert or update user leaderboard data
         const leaderboardQuery = `
-            INSERT INTO leaderboard_users (user_id, wins, losses, amount_wagered, amount_won, average_odds)
+            INSERT INTO defaultdb.leaderboard_users (user_id, wins, losses, amount_wagered, amount_won, average_odds)
             VALUES (?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 wins = VALUES(wins),
@@ -81,7 +81,7 @@ export const addUser = (req, res) => {
 
         // Query to add funds for the user
         const fundsQuery = `
-            UPDATE users
+            UPDATE defaultdb.users
             SET funds = IFNULL(funds, 0) + 500
             WHERE id = ?;
         `;
