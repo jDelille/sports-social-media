@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import { CloseIcon } from "../../icons";
 import { COLOR_CONSTANTS } from "../../constants";
 import "./popup.scss";

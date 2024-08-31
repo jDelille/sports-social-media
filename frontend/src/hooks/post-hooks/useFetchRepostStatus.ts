@@ -5,8 +5,7 @@ const useFetchRepostStatus = (postId: number, type: string) => {
 
   const {
     data: repostedStatus,
-    error,
-    isLoading,
+    error
   } = useQuery({
     queryKey: ["reposts", postId],
     queryFn: async () => {

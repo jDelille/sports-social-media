@@ -5,8 +5,7 @@ const useFetchComments = (postId: number, type: string) => {
 
   const {
     data: comments,
-    error,
-    isLoading,
+    error
   } = useQuery({
     queryKey: ["comments", postId],
     queryFn: async () => {

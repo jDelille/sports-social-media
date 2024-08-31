@@ -5,8 +5,7 @@ const useFetchMutedOriginalPost = ( quoteRepostedId: number, quoteRepostedQuoteR
 
   const {
     data: mutedOriginalPost,
-    error,
-    isLoading,
+    error
   } = useQuery({
     queryKey: ["muted"],
     queryFn: async () => {

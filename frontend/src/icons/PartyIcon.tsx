@@ -5,7 +5,7 @@ type PartyIconProps = {
   color: string;
 };
 
-const PartyIcon: React.FC<PartyIconProps> = ({ size, color }) => {
+const PartyIcon: React.FC<PartyIconProps> = ({ size}) => {
   return (
     <svg
       className="size-10 text-secondary-500"

@@ -5,8 +5,7 @@ const useFetchLikes = (postId: number, type: string) => {
 
   const {
     data: likes,
-    error,
-    isLoading,
+    error
   } = useQuery({
     queryKey: ["likes", postId],
     queryFn: async () => {

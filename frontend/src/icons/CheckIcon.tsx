@@ -5,7 +5,7 @@ type CheckIconProps = {
   color: string;
 };
 
-const CheckIcon: React.FC<CheckIconProps> = ({ size, color }) => {
+const CheckIcon: React.FC<CheckIconProps> = ({ size}) => {
   return (
     <svg
       width={size}

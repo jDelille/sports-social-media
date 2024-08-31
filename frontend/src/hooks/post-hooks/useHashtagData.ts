@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 
 /**
  * Hard coded for now, in future get data from db.
@@ -6,7 +5,8 @@ import { useState, useEffect } from "react";
  */
 
 const useHashTagData = () => {
-  const [hashTagData, setHashTagData] = useState([
+
+  const hashTagData = [
     { id: "nfltrades", display: "#NFLtrades" },
     { id: "mlbseason", display: "#MLBseason" },
     { id: "nhlplayoffs", display: "#NHLplayoffs" },
@@ -17,12 +17,8 @@ const useHashTagData = () => {
     { id: "paralympics", display: "#Paralympics" },
     { id: "usopen", display: "#USOpen" },
     { id: "wimbledon", display: "#Wimbledon" },
-  ]);
+  ]
 
-  // You can add a useEffect here if you want to fetch the hashtag data from an API in the future.
-  useEffect(() => {
-    // Example: fetchHashtagData(); // A function to fetch data from an API
-  }, []);
 
   return hashTagData;
 };

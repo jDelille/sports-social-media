@@ -6,7 +6,7 @@ type BackIconProps = {
   onClick?: () => void;
 };
 
-const BackIcon: React.FC<BackIconProps> = ({ size, color, onClick }) => {
+const BackIcon: React.FC<BackIconProps> = ({ size, onClick }) => {
   return (
     <svg
       width={size}

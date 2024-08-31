@@ -7,7 +7,7 @@ type BetHistoryProps = {
  
  }
 const BetHistory: React.FC<BetHistoryProps> = () => {
-    const { totalCount, winCount, lossCount, loading, error } = useBetStats();
+    const { totalCount, winCount, lossCount } = useBetStats();
 
     const winPercentage = totalCount ? (winCount !== null ? (winCount / totalCount) * 100 : 0) : 0;
 

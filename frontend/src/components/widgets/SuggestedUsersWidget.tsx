@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import UserTypes from "../../types/User";
 import { useAxios } from "../../hooks";
 import Avatar from "../avatar/Avatar";
-import './widget.scss';
+import "./widget.scss";
 
 type SuggestedUsersProps = {};
+
 const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
   const [users, setUsers] = useState<UserTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -28,22 +29,30 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
   return (
     <div className="widget">
       <p className="title">Who to follow</p>
-      <div className="users">
-        {users.map((user) => (
-            <div className="user" key={user.id}>
+
+      {loading ? (
+        <div className="loading-spinner">Loading...</div>
+      ) : error ? (
+        <div className="error-message">{error}</div>
+      ) : (
+        <>
+          <div className="users">
+            {users.map((user) => (
+              <div className="user" key={user.id}>
                 <div className="img">
-                    <Avatar src={user.avatar} username={user.username} />
+                  <Avatar src={user.avatar} username={user.username} />
                 </div>
                 <div className="text">
-                    <p className="name">{user.name}</p>
-                    <p className="username">@{user.username}</p>
+                  <p className="name">{user.name}</p>
+                  <p className="username">@{user.username}</p>
                 </div>
                 <button className="follow-btn">Follow</button>
-                
-            </div>
-        ))}
-      </div>
-      <p className="show-more">Show more</p>
+              </div>
+            ))}
+          </div>
+          <p className="show-more">Show more</p>
+        </>
+      )}
     </div>
   );
 };

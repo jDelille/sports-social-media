@@ -4,10 +4,6 @@ type Stat = {
     label: string;
   };
   
-  type Team = {
-    statistics: Stat[];
-  };
-  
   type Categories = {
     [key: string]: { home: Stat | undefined; away: Stat | undefined }[];
   };

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { PageHeader } from '../components';
-import './page.scss';
 import { Group } from '../types/GroupTypes';
 import { useAxios } from '../hooks';
 import { useNavigate, useParams } from 'react-router-dom';
+import './page.scss';
 
 type ManageGroupProps = {
     
@@ -48,6 +48,8 @@ const ManageGroup: React.FC<ManageGroupProps> = () => {
     <div className="page manage-group">
       <PageHeader title='Manage Group' hasBack/>
       <div className="options">
+        {loading && <div>Loading...</div>}
+        {error && <div>Error</div>}
         <div className="delete">
             <p>Delete group</p>
             <button onClick={handleDeleteClick}>Delete</button>

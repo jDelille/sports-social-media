@@ -5,7 +5,7 @@ type CalendarIconProps = {
   color: string;
 };
 
-const CalendarIcon: React.FC<CalendarIconProps> = ({ size, color }) => {
+const CalendarIcon: React.FC<CalendarIconProps> = ({ size}) => {
   return (
     <svg
       width={size}

@@ -32,6 +32,8 @@ const Leaderboard: React.FC<LeaderboardProps> = () => {
 
   return (
     <div className="page leaderboard-page">
+      {loading && <div>Loading...</div>}
+      {error && <div>Error</div>}
       <PageHeader hasBack title="Leaderboard" />
       <LeaderboardHeader />
       <LeaderboardRows users={users} />

@@ -5,8 +5,7 @@ const useFetchMutedPosts = (postId: number, type: string) => {
 
   const {
     data: muted,
-    error,
-    isLoading,
+    error
   } = useQuery({
     queryKey: ["muted", postId],
     queryFn: async () => {

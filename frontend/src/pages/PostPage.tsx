@@ -47,6 +47,8 @@ const PostPage: React.FC<PostPageProps> = () => {
   return (
     <div className="post-page page">
       <PageHeader title="Post Details" hasBack />
+      {loading && <div>Loading...</div>}
+      {error && <div>Error</div>}
       <Post post={post} isPostDetailsPage />
       <PostDetailsFooter
         postId={post?.id}
