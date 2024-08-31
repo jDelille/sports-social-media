@@ -34,9 +34,9 @@ export const getSuggestedGroups = (req, res) => {
 
     const q = `
     SELECT g.id, g.name, g.description, g.avatar, g.header_img, g.privacy, g.admin_id, g.created_at, COUNT(gm.user_id) AS member_count
-    FROM \`defaultdb.groups\` g
+    FROM defaultdb.groups g
     LEFT JOIN defaultdb.group_members gm ON g.id = gm.group_id
-    LEFT JOIN defaultdb.group_members  user_gm ON g.id = user_gm.group_id AND user_gm.user_id = ?
+    LEFT JOIN defaultdb.group_members user_gm ON g.id = user_gm.group_id AND user_gm.user_id = ?
     WHERE user_gm.user_id IS NULL
     GROUP BY g.id
     ORDER BY member_count DESC;
@@ -65,7 +65,7 @@ export const createGroup = (req, res) => {
     const createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
 
     const q =
-      "INSERT INTO `defaultdb.groups` (`name`, `description`, `avatar`, `header_img`, `privacy`, `admin_id`, `created_at`) VALUES (?)";
+      "INSERT INTO defaultdb.groups (`name`, `description`, `avatar`, `header_img`, `privacy`, `admin_id`, `created_at`) VALUES (?)";
 
     const values = [
       req.body.name,
@@ -99,7 +99,7 @@ export const getMyGroups = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q = `
-    SELECT g.* FROM \`defaultdb.groups\` g
+    SELECT g.* FROM defaultdb.groups g
     LEFT JOIN defaultdb.group_members gm ON g.id = gm.group_id
     WHERE g.admin_id = ? OR gm.user_id = ?
   `;
@@ -122,7 +122,7 @@ export const getGroupById = (req, res) => {
 
     const { groupId } = req.params;
 
-    const q = `SELECT * FROM \`defaultdb.groups\` WHERE \`id\` = ?`;
+    const q = `SELECT * FROM defaultdb.groups WHERE id = ?`;
 
     const values = [groupId];
 
@@ -191,7 +191,7 @@ export const updateGroup = (req, res) => {
     values.push(updatedAt);
     values.push(groupId);
 
-    const q = `UPDATE \`defaultdb.groups\` SET ${setClause.join(", ")} WHERE \`id\` = ?`;
+    const q = `UPDATE defaultdb.groups SET ${setClause.join(", ")} WHERE id = ?`;
 
     db.query(q, values, (err, result) => {
       if (err) return res.status(500).json(err);
@@ -217,7 +217,7 @@ export const deleteGroup = (req, res) => {
     let q;
     let values;
 
-    q = "DELETE FROM `defaultdb.groups` WHERE id = ? AND admin_id = ?";
+    q = "DELETE FROM defaultdb.groups WHERE id = ? AND admin_id = ?";
     values = [req.body.groupId, userInfo.id];
 
     db.query(q, values, (err, data) => {
