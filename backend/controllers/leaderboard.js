@@ -1,7 +1,6 @@
 import { db } from "../connect.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import moment from "moment/moment.js";
 
 dotenv.config();
 
@@ -15,8 +14,8 @@ export const getLeaderboardUsers = (req, res) => {
 
         const q = `
         SELECT lu.*, u.username, u.email 
-        FROM \`defaultdb.leaderboard_users\` lu
-        JOIN \`defaultdb.users\` u ON lu.user_id = u.id
+        FROM defaultdb.leaderboard_users lu
+        JOIN defaultdb.users u ON lu.user_id = u.id
         ORDER BY lu.wins DESC;
     `;
 
