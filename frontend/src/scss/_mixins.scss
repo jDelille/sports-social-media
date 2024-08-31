@@ -38,7 +38,6 @@
     .layout {
         justify-content: flex-start;
         padding: 0 2rem;
-
         .main-content {
             width: 100vw;
             .feed {
@@ -65,9 +64,17 @@
         .navbar {
             display: flex;
         }
+        .feed-selector {
+            top: 117px;
+        }
 
         .main-content {
             max-width: 100vw;
+            .page-header,
+            .scrolled {
+                top: 64px;
+            }
+            
             .feed {
                 max-width: 100%;
             }
