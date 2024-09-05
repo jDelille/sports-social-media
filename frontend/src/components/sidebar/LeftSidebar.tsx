@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   BellIcon,
   ChartIcon,
@@ -23,6 +23,7 @@ type LeftSidebarProps = {
 const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
   const [alertCount, setAlertCount] = useState<number | null>(null);
   const [hasAlert, setHasAlert] = useState(false);
+  const navigate = useNavigate();
 
   const {
     handleOpenLogin,
@@ -30,6 +31,10 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
     handleOpenCreatePost,
     handleLogout,
   } = useSidebar();
+
+  const handleLogoClick = () => {
+    navigate('/home');
+  }
 
   useEffect(() => {
     const fetchAlertCount = async () => {
@@ -68,7 +73,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
     <div className="sidebar-container">
       <div className="sidebar left-sidebar">
         <div className="title">
-          <LogoIcon size={100} color="black" />
+          <LogoIcon size={100} color="black" onClick={handleLogoClick} />
         </div>
 
         <ul className="sidebar-links">

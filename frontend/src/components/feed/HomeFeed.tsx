@@ -74,8 +74,6 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
           }
         })}
 
-      {isFetchingNextPage && <p>Loading more posts...</p>}
-
       <div ref={ref}></div>
     </div>
   );
