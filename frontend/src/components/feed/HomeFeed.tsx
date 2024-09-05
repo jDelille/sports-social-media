@@ -38,7 +38,7 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
 
   return (
     <div className="feed home-feed">
-      {!isLoading && (
+      {isLoading && (
        <>
         <PostSkeleton />
         <PostSkeleton />

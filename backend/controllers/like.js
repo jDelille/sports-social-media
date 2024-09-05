@@ -27,8 +27,6 @@ export const getLikes = (req, res) => {
 
 export const addLike = (req, res) => {
 
-  console.log("Cookies received:", req.cookies);
-
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in.");
 
