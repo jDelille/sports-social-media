@@ -47,7 +47,7 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
        </>
       )}
 
-      {/* {!isLoading &&
+      {!isLoading &&
         !error &&
         posts.map((post) => {
           if (post.type === "post" || post.type === "repost") {
@@ -72,9 +72,9 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
               />
             );
           }
-        })} */}
+        })}
 
-      {/* {isFetchingNextPage && <p>Loading more posts...</p>} */}
+      {isFetchingNextPage && <p>Loading more posts...</p>}
 
       <div ref={ref}></div>
     </div>
