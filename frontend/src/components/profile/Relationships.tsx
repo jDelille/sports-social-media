@@ -11,26 +11,33 @@ type RelationshipsProps = {
 const Relationships: React.FC<RelationshipsProps> = observer(
   ({ userId, setSelectedFeed, currentUserId }) => {
 
-    
-
     useEffect(() => {
       const fetchData = async () => {
         try {
           const countsResponse = await useAxios.get(
             `/relationships/${userId}/counts`
           );
-          userRelationshipsStore.setFollowerCount(
-            countsResponse.data.followerCount
-          );
-          userRelationshipsStore.setFollowingCount(
-            countsResponse.data.followingCount
-          );
+
+          // Only update the store when data is valid
+          if (countsResponse.data) {
+            console.log("Fetched counts:", countsResponse.data);
+
+            // Update MobX store here
+            userRelationshipsStore.setFollowerCount(
+              countsResponse.data.followerCount
+            );
+            userRelationshipsStore.setFollowingCount(
+              countsResponse.data.followingCount
+            );
+            userRelationshipsStore.setBetCount(0); // Assuming betCount is always 0
+          }
         } catch (error) {
           console.error("Error fetching data:", error);
         }
       };
+
       fetchData();
-    }, [userId, currentUserId]);
+    }, [userId, useAxios, currentUserId]);
 
     return (
       <div className="relationships">

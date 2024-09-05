@@ -4,6 +4,7 @@ import QuoteRepost from "../post/QuoteRepost";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAxios } from "../../hooks";
 import { useInView } from "react-intersection-observer";
+import PostSkeleton from "../loading-skeletons/PostSkeleton";
 
 import "./feed.scss";
 
@@ -17,7 +18,7 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
     return res.data;
   };
 
-  const { error, data, fetchNextPage } = useInfiniteQuery({
+  const { error, data, fetchNextPage, isLoading } = useInfiniteQuery({
     queryKey: ["posts"],
     queryFn: ({ pageParam }) => getPosts(pageParam),
     staleTime: 5000,
@@ -37,7 +38,17 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
 
   return (
     <div className="feed home-feed">
-      {!error &&
+      {!isLoading && (
+       <>
+        <PostSkeleton />
+        <PostSkeleton />
+        <PostSkeleton />
+        <PostSkeleton />
+       </>
+      )}
+
+      {/* {!isLoading &&
+        !error &&
         posts.map((post) => {
           if (post.type === "post" || post.type === "repost") {
             return (
@@ -61,7 +72,10 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
               />
             );
           }
-        })}
+        })} */}
+
+      {/* {isFetchingNextPage && <p>Loading more posts...</p>} */}
+
       <div ref={ref}></div>
     </div>
   );

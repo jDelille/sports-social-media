@@ -14,6 +14,7 @@ import ArticleDisplay from "../article-display/ArticleDisplay";
 import Bet from "./post-bet/Bet";
 import moment from "moment";
 import "./post.scss";
+import PostSkeleton from "../loading-skeletons/PostSkeleton";
 
 type PostProps = {
   post: PostTypes;
@@ -29,20 +30,17 @@ const Post: React.FC<PostProps> = ({
   isAlertPage
 }) => {
   if (!post) {
-    return;
+    return null; // Ensure null is returned when post is falsy.
   }
   const { hashtag } = useParams();
   const [error, setError] = useState<string | null>(null);
   const [bets, setBets] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false); // Add loading state
 
-  // const createQuoteRepostModal = useCreateQuoteRepostModal();
   const navigate = useNavigate();
 
   const { likes } = useFetchLikes(post.id, post.type);
   const { comments } = useFetchComments(post.id, post.type);
-
-  // const postId = post?.id;
-  const type = post?.type;
 
   useEffect(() => {
     if (post.bet_id === null) {
@@ -50,11 +48,14 @@ const Post: React.FC<PostProps> = ({
     }
 
     const fetchBet = async () => {
+      setLoading(true); // Set loading to true when fetching begins
       try {
         const res = await useAxios.get(`/single-bet/bet/${post.id}`);
         setBets(res.data);
+        setLoading(false); // Set loading to false after data is fetched
       } catch (err) {
         setError("Failed to fetch bet information");
+        setLoading(false); // Set loading to false if an error occurs
       }
     };
 
@@ -63,23 +64,7 @@ const Post: React.FC<PostProps> = ({
     }
   }, [post.id]);
 
-  // const { muted } = useFetchMutedPosts(postId, type);
-
-  // const hasMuted = muted?.includes(postId);
-
   const formattedDate = moment(post.created_at).format("MMM D, YYYY, h:mm A");
-
-  // if(hasMuted) {
-  //   return null;
-  // }
-
-  // const handleQuoteRepost = async (
-  //   postId: number,
-  //   type: string,
-  //   originalPostUserId: number
-  // ) => {
-  //   createQuoteRepostModal.onOpen(postId, type, originalPostUserId);
-  // };
 
   const navigateToProfile = (e: any) => {
     e.stopPropagation();
@@ -99,19 +84,12 @@ const Post: React.FC<PostProps> = ({
   const hideUrlsInBody = (body: string) => {
     if (!body) return "";
 
-    // Regular expression to match URLs
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-
-    // Regular expression to match hashtags
     const hashtagRegex = /#(\w+)/g;
 
-    // Remove URLs
     let cleanedBody = body.replace(urlRegex, "");
-
-    // Split the cleanedBody into parts: text and hashtags
     const parts = cleanedBody.split(/(#\w+)/g);
 
-    // Map over the parts, wrapping hashtags in <a> elements
     const elements = parts.map((part, index) => {
       if (hashtagRegex.test(part)) {
         return (
@@ -135,9 +113,13 @@ const Post: React.FC<PostProps> = ({
     return elements;
   };
 
+  if(loading) {
+    return <PostSkeleton />
+  }
+
   return (
     <div className={isAlertPage ? "alert-post" : "post"} onClick={navigateToPost}>
-      {type === "repost" && (
+      {post.type === "repost" && (
         <div className="reposter">
           <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />
           Reposted by
@@ -147,10 +129,13 @@ const Post: React.FC<PostProps> = ({
         </div>
       )}
 
-      {error && (
-        <div>{'error'}</div>
-      )}
       <PostHeader user={post.user} post={post} />
+
+      {/* Display loading state */}
+      {loading && <p>Loading...</p>}
+
+      {/* Display error state */}
+      {error && <p className="error">{error}</p>}
 
       <p className="body">{hideUrlsInBody(post.body)}</p>
 
@@ -160,9 +145,10 @@ const Post: React.FC<PostProps> = ({
 
       <ArticleDisplay metadata={post.metadata} />
 
-      <Bet bets={bets} betId={post.bet_id} />
+      {/* Render Bet component only if not loading */}
+      {!loading && <Bet bets={bets} betId={post.bet_id} />}
 
-      {!isPostDetailsPage && <PostFooter post={post} type={type} />}
+      {!isPostDetailsPage && <PostFooter post={post} type={post.type} />}
 
       {isPostDetailsPage && (
         <div className="post-details-info">
@@ -175,24 +161,6 @@ const Post: React.FC<PostProps> = ({
           <p className="formatted-date">{formattedDate}</p>
         </div>
       )}
-
-      {/* <button
-        onClick={() => handleQuoteRepost(post.id, post.type, post.user_id)}
-      >
-        quote repost
-      </button>
-
-
-
-      <MuteButton 
-        hasMuted={hasMuted}
-        type={type}
-        postId={postId}
-        setError={setError}
-      />
-      <button onClick={() => handleDeletePost(post.id, post.type)}>
-        Delete
-      </button> */}
     </div>
   );
 };

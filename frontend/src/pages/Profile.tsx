@@ -8,6 +8,7 @@ import ProfileFeed from "../components/feed/ProfileFeed";
 import FollowingFeed from "../components/feed/FollowingFeed";
 import FollowersFeed from "../components/feed/FollowersFeed";
 import "./page.scss";
+import PostSkeleton from "../components/loading-skeletons/PostSkeleton";
 
 type ProfileProps = {};
 
@@ -68,7 +69,9 @@ const Profile: React.FC<ProfileProps> = () => {
       {selectedFeed === "followers" && (
         <FollowersFeed userId={userData?.id || 0} />
       )}
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <PostSkeleton />
+      )}
       {error && <p>{error}</p>}
     </div>
   );

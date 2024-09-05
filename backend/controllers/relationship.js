@@ -170,8 +170,6 @@ export const getUserRelationships = (req, res) => {
 };
 
 export const getFollowingUsers = (req, res) => {
-  const token = req.cookies.accessToken;
-  if (!token) return res.status(401).json("Not logged in.");
 
   const page = parseInt(req.query.page) || 1;
   const pageSize = 7;
@@ -221,8 +219,6 @@ export const getFollowingUsers = (req, res) => {
 };
 
 export const getFollowerUsers = (req, res) => {
-  const token = req.cookies.accessToken;
-  if (!token) return res.status(401).json("Not logged in.");
 
   const page = parseInt(req.query.page) || 1;
   const pageSize = 7;
