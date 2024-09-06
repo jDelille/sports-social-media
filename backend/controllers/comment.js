@@ -24,8 +24,8 @@ export const getComments = (req, res) => {
           'avatar', u.avatar,
           'isVerified', u.isVerified
         ) AS user
-      FROM defaultdb.comments c
-      JOIN defaultdb.users u ON c.user_id = u.id
+      FROM  comments c
+      JOIN  users u ON c.user_id = u.id
       WHERE c.post_id = ?
       ORDER BY c.created_at DESC
     `;
@@ -48,8 +48,8 @@ export const getComments = (req, res) => {
           'avatar', u.avatar,
           'isVerified', u.isVerified
         ) AS user
-      FROM defaultdb.comments c
-      JOIN defaultdb.users u ON c.user_id = u.id
+      FROM  comments c
+      JOIN  users u ON c.user_id = u.id
       WHERE c.quote_repost_id = ?
       ORDER BY c.created_at DESC
     `;
@@ -77,7 +77,7 @@ export const addComment = (req, res) => {
 
     if (req.body.type === "post" || req.body.type === "repost") {
       q = `
-        INSERT INTO defaultdb.comments (user_id, post_id, body, image, created_at)
+        INSERT INTO  comments (user_id, post_id, body, image, created_at)
         VALUES (?, ?, ?, ?, ?);
       `;
       values = [
@@ -92,7 +92,7 @@ export const addComment = (req, res) => {
       req.body.type === "quote_repost_repost"
     ) {
       q = `
-        INSERT INTO defaultdb.comments (user_id, quote_repost_id, body, image, created_at)
+        INSERT INTO  comments (user_id, quote_repost_id, body, image, created_at)
         VALUES (?, ?, ?, ?, ?);
       `;
       values = [
@@ -146,7 +146,7 @@ export const getCommentById = (req, res) => {
           'avatar', u.avatar,
           'isVerified', u.isVerified
         ) AS user
-      FROM defaultdb.comments c
+      FROM  comments c
       JOIN users u ON c.user_id = u.id
       WHERE c.id = ?
       LIMIT 1;

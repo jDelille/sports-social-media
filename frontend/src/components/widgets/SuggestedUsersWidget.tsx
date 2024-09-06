@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserTypes from "../../types/User";
 import { useAxios } from "../../hooks";
 import Avatar from "../avatar/Avatar";
+import { AuthContext } from "../../context/AuthContext";
 import "./widget.scss";
 
 type SuggestedUsersProps = {};
@@ -11,10 +12,12 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const {currentUser} = useContext(AuthContext) || {};
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await useAxios.get("/users/suggested"); // Adjust the endpoint as needed
+        const response = await useAxios.get(`/users/suggested/${currentUser?.id}`); // Adjust the endpoint as needed
         setUsers(response.data);
       } catch (err) {
         setError("Failed to load users");

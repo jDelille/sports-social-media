@@ -34,7 +34,7 @@ export const postProfilePicture = (req, res) => {
 
     const filePath = `/uploads/${req.file.filename}`;
 
-    const query = "UPDATE defaultdb.users SET avatar = ?, updated_at = ? WHERE id = ?";
+    const query = "UPDATE  users SET avatar = ?, updated_at = ? WHERE id = ?";
     const values = [filePath, new Date(), userId];
 
     db.query(query, values, (err, result) => {
@@ -44,7 +44,7 @@ export const postProfilePicture = (req, res) => {
       }
 
       // Fetch the updated user data and return it
-      db.query("SELECT * FROM defaultdb.users WHERE id = ?", [userId], (err, result) => {
+      db.query("SELECT * FROM  users WHERE id = ?", [userId], (err, result) => {
         if (err) {
           console.error("Database fetch error:", err);
           return res
@@ -76,7 +76,7 @@ export const postProfileHeader = (req, res) => {
     const filePath = `/uploads/${req.file.filename}`;
 
     const query =
-      "UPDATE defaultdb.users SET header_img = ?, updated_at = ? WHERE id = ?";
+      "UPDATE  users SET header_img = ?, updated_at = ? WHERE id = ?";
     const values = [filePath, new Date(), userId];
 
     db.query(query, values, (err, result) => {
@@ -86,7 +86,7 @@ export const postProfileHeader = (req, res) => {
       }
 
       // Fetch the updated user data and return it
-      db.query("SELECT * FROM defaultdb.users WHERE id = ?", [userId], (err, result) => {
+      db.query("SELECT * FROM  users WHERE id = ?", [userId], (err, result) => {
         if (err) {
           console.error("Database fetch error:", err);
           return res

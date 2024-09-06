@@ -20,7 +20,7 @@ export const getTotalBetCount = (req, res) => {
     const userId = userInfo.id;
 
     const q = `
-      SELECT COUNT(*) AS count FROM defaultdb.single_bets WHERE user_id = ?
+      SELECT COUNT(*) AS count FROM  single_bets WHERE user_id = ?
     `;
 
     db.query(q, [userId], (err, data) => {
@@ -45,7 +45,7 @@ export const getWinCount = (req, res) => {
 
     const q = `
       SELECT COUNT(*) AS winCount
-      FROM defaultdb.single_bets
+      FROM  single_bets
       WHERE user_id = ? AND is_winner = 1
     `;
 
@@ -71,7 +71,7 @@ export const getLossCount = (req, res) => {
 
     const q = `
       SELECT COUNT(*) AS lossCount
-      FROM defaultdb.single_bets
+      FROM  single_bets
       WHERE user_id = ? AND is_winner = 0 AND status = 'completed'
     `;
 

@@ -13,7 +13,7 @@ export const addAlert = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q =
-      "INSERT INTO defaultdb.alerts (`user_id`, `type`, `msg`, `alerter_id`, `link`, `post_id`, `group_id`, `comment_id`, `created_at`, `is_read`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO  alerts (`user_id`, `type`, `msg`, `alerter_id`, `link`, `post_id`, `group_id`, `comment_id`, `created_at`, `is_read`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const values = [
       req.body.user_id, 
       req.body.type, 
@@ -63,9 +63,9 @@ export const getAlerts = (req, res) => {
           'description', g.description,
           'avatar', g.avatar
         ) AS group_info
-      FROM defaultdb.alerts a
-      LEFT JOIN defaultdb.users u ON a.alerter_id = u.id
-      LEFT JOIN defaultdb.groups g ON a.group_id = g.id 
+      FROM  alerts a
+      LEFT JOIN  users u ON a.alerter_id = u.id
+      LEFT JOIN  groups g ON a.group_id = g.id 
       WHERE a.user_id = ?
       ORDER BY a.created_at DESC
     `;
@@ -88,7 +88,7 @@ export const getAlertCount = (req, res) => {
 
     const q = `
       SELECT COUNT(*) AS alertCount
-      FROM defaultdb.alerts
+      FROM  alerts
       WHERE user_id = ? AND is_read = 0 
     `;
 
@@ -109,7 +109,7 @@ export const checkPendingInvite = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q = `
-      SELECT * FROM defaultdb.invites
+      SELECT * FROM  invites
       WHERE user_id = ? AND group_id = ? AND status = 'pending'
     `;
     const values = [userInfo.id, req.params.groupId];
@@ -129,7 +129,7 @@ export const markAlertsAsRead = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q = `
-      UPDATE defaultdb.alerts
+      UPDATE  alerts
       SET is_read = 1 
       WHERE user_id = ? AND is_read = 0
     `;

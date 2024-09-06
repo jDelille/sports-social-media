@@ -20,7 +20,7 @@ NULL AS quote_reposted_quote_repost_id,
 NULL AS original_post_user,
 p.metadata,
 'post' AS type
-FROM defaultdb.posts p
-JOIN defaultdb.users u ON p.user_id = u.id
+FROM  posts p
+JOIN  users u ON p.user_id = u.id
   WHERE p.id = ?
 `;

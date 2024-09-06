@@ -16,10 +16,10 @@ export const getMutedPosts = (req, res) => {
     let values;
 
     if (req.query.type === "post" || req.query.type === "repost") {
-      q = "SELECT post_id FROM defaultdb.muted_posts WHERE user_id = ? AND post_id = ?";
+      q = "SELECT post_id FROM  muted_posts WHERE user_id = ? AND post_id = ?";
       values = [userInfo.id, req.query.postId];
     } else if (req.query.type === "quote_repost" || req.query.type === "quote_repost_repost") {
-      q = "SELECT quote_repost_id defaultdb.FROM muted_posts WHERE user_id = ? AND quote_repost_id = ?";
+      q = "SELECT quote_repost_id  FROM muted_posts WHERE user_id = ? AND quote_repost_id = ?";
       values = [userInfo.id, req.query.postId];
     } else {
       return res.status(400).json("Invalid type");
@@ -44,10 +44,10 @@ export const mutePost = (req, res) => {
       let values;
   
       if (req.body.type === "post" || req.body.type === "repost") {
-        q = "INSERT INTO defaultdb.muted_posts (`user_id`, `post_id`) VALUES (?, ?)";
+        q = "INSERT INTO  muted_posts (`user_id`, `post_id`) VALUES (?, ?)";
         values = [userInfo.id, req.body.postId];
       } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost") {
-        q = "INSERT INTO defaultdb.muted_posts (`user_id`, `quote_repost_id`) VALUES (?, ?)";
+        q = "INSERT INTO  muted_posts (`user_id`, `quote_repost_id`) VALUES (?, ?)";
         values = [userInfo.id, req.body.postId];
       } else {
         return res.status(400).json("Invalid type");
@@ -71,10 +71,10 @@ export const mutePost = (req, res) => {
       let values;
   
       if (req.body.type === "post" || req.body.type === "repost") {
-        q = "DELETE FROM defaultdb.muted_posts WHERE user_id = ? AND post_id = ?";
+        q = "DELETE FROM  muted_posts WHERE user_id = ? AND post_id = ?";
         values = [userInfo.id, req.body.postId];
       } else if (req.body.type === "quote_repost" || req.body.type === "quote_repost_repost") {
-        q = "DELETE FROM defaultdb.muted_posts WHERE user_id = ? AND quote_repost_id = ?";
+        q = "DELETE FROM  muted_posts WHERE user_id = ? AND quote_repost_id = ?";
         values = [userInfo.id, req.body.postId];
       } else {
         return res.status(400).json("Invalid type");

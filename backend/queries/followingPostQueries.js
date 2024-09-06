@@ -19,8 +19,8 @@ export const originalPostsQuery = `
     NULL AS original_post_user,
     p.metadata,
     'post' AS type
-  FROM defaultdb.posts p
-  JOIN defaultdb.users u ON p.user_id = u.id
+  FROM  posts p
+  JOIN  users u ON p.user_id = u.id
   WHERE p.user_id IN (?)`;
 
 export const repostsQuery = `
@@ -44,11 +44,11 @@ export const repostsQuery = `
     NULL AS original_post_user,
     p.metadata,
     'repost' AS type
-  FROM defaultdb.posts p
-  JOIN defaultdb.reposts r ON p.id = r.reposted_post_id
-  JOIN defaultdb.users ur ON r.reposter_id = ur.id
-  LEFT JOIN defaultdb.posts op ON p.id = op.id
-  LEFT JOIN defaultdb.users ou ON op.user_id = ou.id
+  FROM  posts p
+  JOIN  reposts r ON p.id = r.reposted_post_id
+  JOIN  users ur ON r.reposter_id = ur.id
+  LEFT JOIN  posts op ON p.id = op.id
+  LEFT JOIN  users ou ON op.user_id = ou.id
   WHERE p.user_id IN (?)`;
 
 export const quoteRepostsRepostsQuery = `
@@ -81,11 +81,11 @@ export const quoteRepostsRepostsQuery = `
     p1.metadata,
     'quote_repost_repost' AS type
   FROM quote_reposts qr
-  JOIN defaultdb.reposts r ON qr.id = r.reposted_quote_repost_id
-  JOIN defaultdb.users ur ON r.reposter_id = ur.id
-  LEFT JOIN defaultdb.posts p1 ON qr.quote_reposted_post_id = p1.id
-  LEFT JOIN defaultdb.quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
-  LEFT JOIN defaultdb.users ou ON qr.original_post_user_id = ou.id
+  JOIN  reposts r ON qr.id = r.reposted_quote_repost_id
+  JOIN  users ur ON r.reposter_id = ur.id
+  LEFT JOIN  posts p1 ON qr.quote_reposted_post_id = p1.id
+  LEFT JOIN  quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
+  LEFT JOIN  users ou ON qr.original_post_user_id = ou.id
   WHERE qr.quote_reposter_id IN (?)`;
 
   export const quoteRepostsQuery = `
@@ -118,8 +118,8 @@ export const quoteRepostsRepostsQuery = `
     p1.metadata,
     'quote_repost' AS type
   FROM quote_reposts qr
-  LEFT JOIN defaultdb.posts p1 ON qr.quote_reposted_post_id = p1.id
-  LEFT JOIN defaultdb.quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
-  JOIN defaultdb.users ur ON qr.quote_reposter_id = ur.id
-  LEFT JOIN defaultdb.users ou ON qr.original_post_user_id = ou.id
+  LEFT JOIN  posts p1 ON qr.quote_reposted_post_id = p1.id
+  LEFT JOIN  quote_reposts qrr ON qr.quote_reposted_quote_repost_id = qrr.id
+  JOIN  users ur ON qr.quote_reposter_id = ur.id
+  LEFT JOIN  users ou ON qr.original_post_user_id = ou.id
   WHERE qr.quote_reposter_id IN (?)`;

@@ -43,7 +43,7 @@ const Post: React.FC<PostProps> = ({
   const { comments } = useFetchComments(post.id, post.type);
 
   useEffect(() => {
-    if (post.bet_id === null) {
+    if (post.bet_id === null || post.bet_id === undefined) {
       return;
     }
 
