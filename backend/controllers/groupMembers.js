@@ -20,8 +20,8 @@ export const getGroupMembers = (req, res) => {
 
     const q = `
       SELECT u.id, u.username, u.name, u.avatar, u.created_at, u.isVerified
-      FROM  group_members gm
-      JOIN users u ON gm.user_id = u.id
+      FROM defaultdb.group_members gm
+      JOIN defaultdb.users u ON gm.user_id = u.id
       WHERE gm.group_id = ?
       LIMIT ${pageSize} OFFSET ${offset}
     `;
@@ -47,7 +47,7 @@ export const addGroupMember = (req, res) => {
 
     // SQL query to add a member to a group
     const q = `
-          INSERT INTO  group_members (group_id, user_id, role, joined_at) VALUES (?, ?, ?, ?)
+          INSERT INTO defaultdb.group_members (group_id, user_id, role, joined_at) VALUES (?, ?, ?, ?)
         `;
 
     const values = [groupId, userId, role, joinedAt];
@@ -69,7 +69,7 @@ export const removeGroupMember = (req, res) => {
     const { groupId, userId } = req.body;
 
     const q = `
-        DELETE FROM  group_members 
+        DELETE FROM defaultdb.group_members 
         WHERE group_id = ? AND user_id = ?
       `;
 

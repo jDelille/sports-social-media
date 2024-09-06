@@ -217,7 +217,7 @@ export const deleteGroup = (req, res) => {
     let q;
     let values;
 
-    q = "DELETE FROM \`groups\` WHERE id = ? AND admin_id = ?";
+    q = "DELETE FROM \`defaultdb.groups\` WHERE id = ? AND admin_id = ?";
     values = [req.body.groupId, userInfo.id];
 
     db.query(q, values, (err, data) => {
@@ -241,7 +241,7 @@ export const checkPendingInvite = (req, res) => {
     if (err) return res.status(403).json("Token is not valid");
 
     const q = `
-      SELECT * FROM  invites
+      SELECT * FROM defaultdb.invites
       WHERE user_id = ? AND group_id = ? AND status = 'pending'
     `;
     const values = [userInfo.id, req.params.groupId];
@@ -265,7 +265,7 @@ export const getMemberCount = (req, res) => {
     // SQL query to count members in the specified group
     const q = `
       SELECT COUNT(*) AS memberCount
-      FROM  group_members
+      FROM defaultdb.group_members
       WHERE group_id = ?
     `;
 
@@ -286,7 +286,7 @@ export const isMember = (req, res) => {
     const { userId, groupId } = req.params;
 
     const q = `
-        SELECT 1 FROM  group_members 
+        SELECT 1 FROM defaultdb.group_members 
         WHERE group_id = ? AND user_id = ?
       `;
 

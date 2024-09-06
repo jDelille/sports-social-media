@@ -18,7 +18,7 @@ export const sendInvite = (req, res) => {
       }
   
       const q = `
-        INSERT INTO  invites (user_id, group_id, alerter_id, status)
+        INSERT INTO defaultdb.invites (user_id, group_id, alerter_id, status)
         VALUES (?, ?, ?, 'pending')
       `;
       const values = [user_id, group_id, userInfo.id];
@@ -42,7 +42,7 @@ export const getPendingInvites = (req, res) => {
         i.id,
         i.group_id,
         i.user_id
-      FROM  invites i
+      FROM defaultdb.invites i
       WHERE i.user_id = ? AND i.status = 'pending'
     `;
       const values = [userInfo.id];
@@ -69,7 +69,7 @@ export const getPendingInvites = (req, res) => {
       }
   
       const q = `
-        UPDATE  invites
+        UPDATE defaultdb.invites
         SET status = ?, updated_at = CURRENT_TIMESTAMP
         WHERE id = ? AND user_id = ?
       `;

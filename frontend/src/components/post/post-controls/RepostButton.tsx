@@ -70,6 +70,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
       queryClient.refetchQueries();
       handleOpenRepostPopup();
     },
+    onMutate: () => setOpenRepostPopup(false),
     mutationKey: ["addLike"],
   });
 

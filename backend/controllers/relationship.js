@@ -208,7 +208,7 @@ export const getFollowingUsers = (req, res) => {
   // Get following user IDs
   const followingIdsQuery = `
       SELECT followed_id 
-      FROM  relationships 
+      FROM defaultdb.relationships 
       WHERE follower_id = ?`;
   db.query(followingIdsQuery, [userId], (err, following) => {
     if (err) {
@@ -231,7 +231,7 @@ export const getFollowingUsers = (req, res) => {
         SELECT u.id, u.username, u.name, u.avatar, u.created_at, u.isVerified, 
                (SELECT COUNT(*) FROM  posts WHERE user_id = u.id) AS post_count,
                (SELECT COUNT(*) FROM  relationships WHERE followed_id = u.id) AS follower_count
-        FROM  users u
+        FROM defaultdb.users u
         WHERE u.id IN (?)`;
     db.query(
       followedUsersQuery,
@@ -260,7 +260,7 @@ export const getFollowerUsers = (req, res) => {
   // Get follower user IDs
   const followerIdsQuery = `
       SELECT follower_id 
-      FROM  relationships 
+      FROM defaultdb.relationships 
       WHERE followed_id = ?`;
   db.query(followerIdsQuery, [userId], (err, followers) => {
     if (err) {
@@ -283,7 +283,7 @@ export const getFollowerUsers = (req, res) => {
         SELECT u.id, u.username, u.name, u.avatar, u.created_at, u.isVerified,
                (SELECT COUNT(*) FROM  posts WHERE user_id = u.id) AS post_count,
                (SELECT COUNT(*) FROM  relationships WHERE followed_id = u.id) AS follower_count
-        FROM  users u
+        FROM defaultdb.users u
         WHERE u.id IN (?)
         LIMIT ?, ?`;
     db.query(
@@ -308,14 +308,14 @@ export const getUserCounts = (req, res) => {
 
   // Get follower count
   const followerCountQuery =
-    "SELECT COUNT(*) AS follower_count FROM  relationships WHERE followed_id = ?";
+    "SELECT COUNT(*) AS follower_count FROM defaultdb.relationships WHERE followed_id = ?";
   db.query(followerCountQuery, [userId], (err, followerData) => {
     if (err)
       return res.status(500).json({ error: "Error fetching follower count" });
 
     // Get following count
     const followingCountQuery =
-      "SELECT COUNT(*) AS following_count FROM  relationships WHERE follower_id = ?";
+      "SELECT COUNT(*) AS following_count FROM defaultdb.relationships WHERE follower_id = ?";
     db.query(followingCountQuery, [userId], (err, followingData) => {
       if (err)
         return res

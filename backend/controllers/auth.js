@@ -17,7 +17,7 @@ export const register = (req, res) => {
   const { username, email, password, name } = req.body;
 
   // Check if user already exists
-  const checkUserQuery = "SELECT * FROM  users WHERE username = ?";
+  const checkUserQuery = "SELECT * FROM defaultdb.users WHERE username = ?";
   db.query(checkUserQuery, [username], (err, data) => {
     if (err) return res.status(500).json({ error: 'Database query error', details: err });
 
@@ -31,7 +31,7 @@ export const register = (req, res) => {
 
     // Create a new user
     const insertUserQuery = `
-      INSERT INTO  users (username, email, password, name, created_at)
+      INSERT INTO defaultdb.users (username, email, password, name, created_at)
       VALUES (?, ?, ?, ?, ?)
     `;
     const createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
@@ -52,7 +52,7 @@ export const register = (req, res) => {
  */
 
 export const login = (req, res) => {
-  const q = "SELECT * FROM  users WHERE username = ?";
+  const q = "SELECT * FROM defaultdb.users WHERE username = ?";
 
   db.query(q, [req.body.username], (err, data) => {
     if (err) return res.status(500).json(err);
@@ -106,7 +106,7 @@ export const editProfile = (req, res) => {
   const userId = req.body.id;
   const { name, username, location, bio, avatar, header_img, website} = req.body;
 
-  let query = "UPDATE  users SET ";
+  let query = "UPDATE defaultdb.users SET ";
   const values = [];
 
   if (name) {
@@ -154,7 +154,7 @@ export const editProfile = (req, res) => {
     if (err) return res.status(500).json(err);
 
     // Fetch the updated user data and return it
-    db.query("SELECT * FROM  users WHERE id = ?", [userId], (err, result) => {
+    db.query("SELECT * FROM defaultdb.users WHERE id = ?", [userId], (err, result) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json(result[0]);
     });
