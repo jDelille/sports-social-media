@@ -12,6 +12,7 @@ export const getComments = (req, res) => {
   if (req.query.type === "post" || req.query.type === "repost") {
     q = `
       SELECT
+        c.id,
         c.user_id,
         c.body,
         c.image,
@@ -36,6 +37,7 @@ export const getComments = (req, res) => {
   ) {
     q = `
       SELECT
+        c.id,
         c.user_id,
         c.body,
         c.image,
@@ -54,6 +56,28 @@ export const getComments = (req, res) => {
       ORDER BY c.created_at DESC
     `;
     values = [req.query.postId];
+  } else if (req.query.type === "comment") {
+    q = `
+      SELECT
+        c.id,
+        c.user_id,
+        c.body,
+        c.image,
+        c.created_at,
+        c.updated_at,
+        JSON_OBJECT(
+          'id', u.id,
+          'name', u.name,
+          'username', u.username,
+          'avatar', u.avatar,
+          'isVerified', u.isVerified
+        ) AS user
+      FROM defaultdb.comments c
+      JOIN defaultdb.users u ON c.user_id = u.id
+      WHERE c.id = ?
+      ORDER BY c.created_at DESC
+    `;
+    values = [req.query.commentId]; // Use appropriate query parameter for comments
   } else {
     return res.status(400).json("Invalid type");
   }
@@ -134,6 +158,7 @@ export const getCommentById = (req, res) => {
 
     const q = `
       SELECT
+        c.id,
         c.user_id,
         c.body,
         c.image,

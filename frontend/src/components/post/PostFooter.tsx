@@ -8,30 +8,32 @@ import useFetchRepostStatus from "../../hooks/post-hooks/useFetchRepostStatus";
 type PostFooterProps = {
   post: PostTypes;
   type: string;
+  commentId?: number;
 };
-const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
+const PostFooter: React.FC<PostFooterProps> = ({ type, post, commentId }) => {
   const [error, setError] = useState<string | null>(null);
   const { currentUser } = useContext(AuthContext) || {};
 
   const currentUserId = currentUser?.id;
   const postId = post?.id;
 
-  const { likes } = useFetchLikes(postId, type);
-  const { comments } = useFetchComments(postId, type);
-  const { repostedStatus } = useFetchRepostStatus(postId, type);
+  const validPostId = commentId ?? postId;
+  const validType = type ?? "post";
+
+  const { likes } = useFetchLikes(validPostId, validType);
+  const { comments } = useFetchComments(validPostId, validType);
+  const { repostedStatus } = useFetchRepostStatus(validPostId, validType);
 
   const hasLiked = likes?.includes(currentUserId);
-  const hasReposted = repostedStatus?.reposted
+  const hasReposted = repostedStatus?.reposted;
   const repostCount = repostedStatus?.count;
 
   return (
     <div className="post-footer">
-      {error && (
-        <div>error</div>
-      )}
+      {error && <div>{error}</div>}
       <LikeButton
-        postId={postId}
-        type={type}
+        postId={validPostId}
+        type={validType}
         hasLiked={hasLiked}
         likesCount={likes?.length}
         setError={setError}
@@ -40,17 +42,16 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         userId={post?.user_id}
       />
       <CommentButton
-        postId={postId}
-        type={type}
+        postId={validPostId}
+        type={validType}
         commentsCount={comments?.length}
         currentUserId={currentUser?.id}
         postUsername={post?.user.username}
         post={post}
-
       />
       <RepostButton
-        postId={postId}
-        type={type}
+        postId={validPostId}
+        type={validType}
         username={currentUser?.username}
         setError={setError}
         hasReposted={hasReposted}
@@ -58,7 +59,6 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post }) => {
         originalPostUserId={post?.user_id}
         currentUserId={currentUser?.id}
         postUsername={post?.user.username}
-
       />
     </div>
   );
