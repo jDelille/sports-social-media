@@ -8,6 +8,7 @@ import PostDetailsFooter from "../components/post/post-details-footer/PostDetail
 import { AuthContext } from "../context/AuthContext";
 import { CommentTypes } from "../types/CommentTypes";
 import CommentCard from "../components/comment-card/CommentCard";
+import useFetchRepostStatus from "../hooks/post-hooks/useFetchRepostStatus";
 
 type PostPageProps = {};
 
@@ -38,11 +39,11 @@ const PostPage: React.FC<PostPageProps> = () => {
   }, [postId]);
 
   const { comments } = useFetchComments(post?.id, post?.type);
-
   const { likes } = useFetchLikes(post?.id, post?.type);
+  const { repostedStatus } = useFetchRepostStatus(post?.id, post?.type);
 
   const hasLiked = likes?.includes(currentUser?.id);
-
+  const hasReposted = repostedStatus?.reposted;
 
   return (
     <div className="post-page page">
@@ -56,6 +57,7 @@ const PostPage: React.FC<PostPageProps> = () => {
         postUsername={post?.user.username}
         currentUserId={currentUser?.id}
         hasLiked={hasLiked}
+        hasReposted={hasReposted}
       />
       {comments?.map((comment: CommentTypes) => (
         <CommentCard key={comment.id} comment={comment} username={post.user.username} />
