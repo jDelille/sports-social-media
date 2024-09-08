@@ -35,7 +35,7 @@ export const addSingleBet = (req, res) => {
     } = req.body;
 
     const q = `
-      INSERT INTO  single_bets (
+      INSERT INTO defaultdb.single_bets (
         post_id,
         user_id,
         bet_type,
