@@ -35,6 +35,7 @@ class BetslipStore {
   payout = 0;
   isParlay = false;
   decimalOdds = false;
+  isParticipant = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -58,6 +59,10 @@ class BetslipStore {
 
   setPayout(payout: number) {
     this.payout = payout;
+  }
+
+  setIsParticipant(participant: boolean) {
+    this.isParticipant = participant
   }
 
   toggleParlay() {

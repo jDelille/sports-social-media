@@ -3,6 +3,7 @@ import useLeaderboardInfoPopup from "../../hooks/popups/useLeaderboardInfoPopup"
 import { useAxios } from "../../hooks";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
 import "./widget.scss";
 
 type LeaderboardWidgetProps = {};
@@ -41,6 +42,7 @@ const LeaderboardWidget: React.FC<LeaderboardWidgetProps> = () => {
     navigate("/leaderboard");
   };
 
+
   return (
     <div className="widget">
       <p className="title">Leaderboard</p>
@@ -59,7 +61,9 @@ const LeaderboardWidget: React.FC<LeaderboardWidgetProps> = () => {
         </>
       ) : (
         <>
-          <p className="description">You are currently in 1st place</p>
+
+
+                <p className="description">You are currently in 1st place</p>
           <button onClick={handleGoToLeaderboardClick}>View Standings</button>
         </>
       )}

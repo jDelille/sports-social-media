@@ -10,6 +10,7 @@
     location: string;
     follower_count: number;
     website: string;
+    funds: number;
 }
 
 export default UserTypes;

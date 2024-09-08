@@ -23,7 +23,6 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   likesCount,
   currentUserId,
   postUsername,
-  userId
 }) => {
   
   const queryClient = useQueryClient();

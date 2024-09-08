@@ -25,14 +25,16 @@
     padding-left: 15px;
     padding-bottom: 10px;
     position: relative;
-    .menu-wrapper {
+    .menu-wrapper,
+    .funds-wrapper {
       position: absolute;
       right: 10px;
       top: 10px;
       display: flex;
       align-items: center;
       gap: 5px;
-      .menu-btn {
+      .menu-btn,
+      .funds {
         border: 2px solid #e0dede;
         width: fit-content;
         padding: 5px 8px;
@@ -46,6 +48,15 @@
         }
       }
      
+    }
+    .funds-wrapper {
+      right: 170px;
+      font-size: 12px;
+      top: 13px;
+      .funds {
+        padding: 8px 8px;
+
+      }
     }
     .action-buttons {
       .follow-btn,

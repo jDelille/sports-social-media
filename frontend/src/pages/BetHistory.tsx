@@ -11,7 +11,6 @@ const BetHistory: React.FC<BetHistoryProps> = () => {
 
     const winPercentage = totalCount ? (winCount !== null ? (winCount / totalCount) * 100 : 0) : 0;
 
-
   return (
     <div className="page">
       <PageHeader title='Bet History' hasBack/>
