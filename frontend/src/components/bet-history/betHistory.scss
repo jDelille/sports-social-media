@@ -1,0 +1,34 @@
+@use '../../scss/variables' as *;
+
+.bet-history-header {
+    padding: 1rem 15px;
+    h2 {
+        margin-bottom: 1rem;
+    }
+    .balance {
+        border: 1px solid $lightBorderColor;
+        padding: 15px 10px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .coins,
+        .profit,
+        .record,
+        .streak,
+        .total-bets {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;            
+            .label {
+                color: $lightgray;
+                font-size: 14px;
+            }
+            .coin-balance,
+            .profit-balance {
+                color: $lightgreen;
+            }
+        }
+    }
+}
