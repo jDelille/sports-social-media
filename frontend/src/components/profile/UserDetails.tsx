@@ -20,9 +20,9 @@ const UserDetails: React.FC<UserDetailsProps> = ({
 
   return (
     <div className="user-content">
-      <div className="funds-wrapper">
+      {/* <div className="funds-wrapper">
         <p className="funds">{user?.funds} coins</p>
-      </div>
+      </div> */}
       <div className="menu-wrapper">
         <div className="menu-btn">
           <MenuDotsIcon color="black" size={20} />

@@ -3,6 +3,6 @@ import { checkSpread } from '../../controllers/bet-check/spread.js';
 
 const router = express.Router();
 
-router.post('/check/:sport/:league/:eventId/:type/:postId/:pickId/:handicap/:team/:userId', checkSpread);
+router.post('/check', checkSpread);
 
 export default router;

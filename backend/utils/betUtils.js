@@ -12,22 +12,23 @@ export const updateWinLossRecord = (
 ) => {
   // First, check if the isWinner has already been set
   const getBetQuery = `
-    SELECT is_winner, wager, payout, price, status
-    FROM single_bets
+    SELECT *
+    FROM defaultdb.single_bets
     WHERE id = ?
   `;
+
 
   db.query(getBetQuery, [betId], (err, results) => {
     if (err) {
       console.error("Error fetching bet data:", err);
       return res.status(500).json({ error: "Error fetching bet data" });
     }
-
+    
     const { is_winner, status } = results[0];
 
     if (status === 'pending') {
       const updateBetQuery = `
-        UPDATE single_bets
+        UPDATE defaultdb.single_bets
         SET is_winner = ?, home_score = ?, away_score = ?, status = 'completed'
         WHERE id = ?
       `;
@@ -45,13 +46,13 @@ export const updateWinLossRecord = (
           let updateLeaderboardQuery;
           if (result === true) {
             updateLeaderboardQuery = `
-              UPDATE leaderboard_users
+              UPDATE defaultdb.leaderboard_users
               SET wins = wins + 1
               WHERE user_id = ?
             `;
           } else {
             updateLeaderboardQuery = `
-              UPDATE leaderboard_users
+              UPDATE defaultdb.leaderboard_users
               SET losses = losses + 1
               WHERE user_id = ?
             `;

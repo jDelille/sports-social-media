@@ -4,8 +4,8 @@ import { updateWinLossRecord } from "../../utils/betUtils.js";
 
 export const checkSpread = async (req, res) => {
   try {
-    const { sport, league, eventId, type, postId, pickId, handicap, team, userId } =
-      req.params;
+    const { sport, league, eventId, type, postId, pickId, handicap, team, userId, betId } =
+      req.body;
 
     // Fetching data from ESPN API
     const response = await axios.get(
@@ -58,7 +58,7 @@ export const checkSpread = async (req, res) => {
       }
     }
      // Use the reusable function to handle win/loss updates
-    updateWinLossRecord(userId, result, pickId, postId, homeScore, awayScore, res);
+    updateWinLossRecord(userId, result, pickId, postId, homeScore, awayScore, res, betId);
 
   } catch (error) {
     console.error("Error fetching spread data:", error);

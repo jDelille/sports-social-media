@@ -9,8 +9,6 @@ export const getLikes = (req, res) => {
   let q;
   let values;
 
-  console.log(req.query)
-
   if (req.query.type === "post" || req.query.type === "repost") {
     q = "SELECT user_id FROM defaultdb.likes WHERE post_id = ?";
     values = [req.query.postId];

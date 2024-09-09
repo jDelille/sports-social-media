@@ -42,6 +42,7 @@ const useBetCheck = (props: BetProps) => {
         status
       });
     case "Runline":
+    case "Point Spread":
       return useSpreadCheck({
         sport,
         league,
@@ -52,7 +53,8 @@ const useBetCheck = (props: BetProps) => {
         isWinner,
         handicap: handicap ?? "",
         team,
-        userId
+        userId,
+        betId,
       });
       case "Total":
       return useTotalCheck({
