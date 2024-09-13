@@ -1,5 +1,5 @@
 import React from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios, useLoginReminder } from "../../../hooks";
 import { LikeIcon, LikedIcon } from "../../../icons";
 import { COLOR_CONSTANTS } from "../../../constants";
@@ -23,6 +23,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   likesCount,
   currentUserId,
   postUsername,
+  userId
 }) => {
   
   const queryClient = useQueryClient();
@@ -32,14 +33,14 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     try {
       if (!hasLiked) {
         await useAxios.post("/likes", { postId, type });
-        // await useAxios.post("/alerts", {
-        //   user_id: userId,
-        //   type: type,
-        //   alerter_id: currentUserId,
-        //   link: `/post/${postId}`,
-        //   msg: "liked your post",
-        //   post_id: postId,
-        // })
+        await useAxios.post("/alerts", {
+          user_id: userId,
+          type: type,
+          alerter_id: currentUserId,
+          link: `/post/${postId}`,
+          msg: "liked your post",
+          post_id: postId,
+        })
       } else {
         await useAxios.delete("/likes", { data: { postId, type } });
       }
@@ -50,6 +51,26 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 
   const { mutate } = useMutation({
     mutationFn: handleLike,
+    onMutate: async (postId: number) => {
+      const queryKey = ["likes", postId, type];
+      
+      await queryClient.cancelQueries({queryKey});
+
+      const previousLikes = queryClient.getQueryData(queryKey);
+
+      queryClient.setQueryData(queryKey, (oldLikes: any) => {
+        const newLikes = [...(oldLikes || [])];
+        if (hasLiked) {
+          const index = newLikes.indexOf(currentUserId);
+          if (index > -1) newLikes.splice(index, 1);
+        } else {
+          newLikes.push(currentUserId);
+        }
+        return newLikes;
+      });
+
+      return { previousLikes };
+    },
     onSettled: async () => {
       queryClient.refetchQueries();
     },

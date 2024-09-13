@@ -106,10 +106,6 @@ const Post: React.FC<PostProps> = ({
 
       <PostHeader user={post.user} post={post} />
 
-      {/* Display loading state */}
-      {loading && <p>Loading...</p>}
-
-      {/* Display error state */}
       {error && <p className="error">{error}</p>}
 
       <p className="body">{hideUrlsInBody(post.body)}</p>
@@ -120,7 +116,6 @@ const Post: React.FC<PostProps> = ({
 
       <ArticleDisplay metadata={post.metadata} />
 
-      {/* Render Bet component only if not loading */}
       {!loading && <Bet bets={bets} betId={post.bet_id} />}
 
       {!isPostDetailsPage && <PostFooter post={post} type={post.type} />}
