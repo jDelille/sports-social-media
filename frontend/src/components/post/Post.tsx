@@ -5,6 +5,7 @@ import {
   useFetchComments,
   useFetchLikes,
   useAxios,
+  useHideUrlsInBody,
 } from "../../hooks";
 import { RepostIcon } from "../../icons";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,8 +14,8 @@ import PostFooter from "./PostFooter";
 import ArticleDisplay from "../article-display/ArticleDisplay";
 import Bet from "./post-bet/Bet";
 import moment from "moment";
-import "./post.scss";
 import PostSkeleton from "../loading-skeletons/PostSkeleton";
+import "./post.scss";
 
 type PostProps = {
   post: PostTypes;
@@ -81,38 +82,11 @@ const Post: React.FC<PostProps> = ({
     navigate(`/discover/hashtag/${hashtag}`);
   };
 
-  const hideUrlsInBody = (body: string) => {
-    if (!body) return "";
-
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const hashtagRegex = /#(\w+)/g;
-
-    // Remove URLs
-    let cleanedBody = body.replace(urlRegex, "");
-
-    // Split text by hashtags
-    const parts = cleanedBody.split(/(#\w+)/g);
-
-    return parts.map((part, index) => {
-      if (hashtagRegex.test(part)) {
-        return (
-          <span
-            onClick={(e) => handleHashtagClick(part.substring(1), e)}
-            className={
-              isHashtagPage && part.substring(1) === hashtag
-                ? "hashtag-page-hashtag"
-                : "hashtag"
-            }
-            key={index}
-          >
-            {part}
-          </span>
-        );
-      } else {
-        return <span key={index}>{part}</span>;
-      }
-    });
-  };
+  const hideUrlsInBody = useHideUrlsInBody({
+    handleHashtagClick,
+    isHashtagPage: isHashtagPage || false,
+    hashtag: hashtag || ""
+  });
 
   if(loading) {
     return <PostSkeleton />

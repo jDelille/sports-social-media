@@ -17,3 +17,4 @@ export { default as useUrlMetadata} from './post-hooks/useDetectUrls';
 export { default as useGamePreview } from './game-preview/useGamePreview';
 export { default as useCreateGroupModal} from './useCreateGroupModal';
 export { default as useInviteModal} from './useInviteModal';
+export { default as useHideUrlsInBody} from './post-hooks/useHideUrlsInBody';
