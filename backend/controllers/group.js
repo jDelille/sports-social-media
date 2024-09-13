@@ -35,8 +35,8 @@ export const getSuggestedGroups = (req, res) => {
     const q = `
     SELECT g.id, g.name, g.description, g.avatar, g.header_img, g.privacy, g.admin_id, g.created_at, COUNT(gm.user_id) AS member_count
     FROM defaultdb.groups g
-    LEFT JOIN  group_members gm ON g.id = gm.group_id
-    LEFT JOIN  group_members user_gm ON g.id = user_gm.group_id AND user_gm.user_id = ?
+    LEFT JOIN group_members gm ON g.id = gm.group_id
+    LEFT JOIN group_members user_gm ON g.id = user_gm.group_id AND user_gm.user_id = ?
     WHERE user_gm.user_id IS NULL
     GROUP BY g.id
     ORDER BY member_count DESC;
@@ -100,7 +100,7 @@ export const getMyGroups = (req, res) => {
 
     const q = `
     SELECT g.* FROM defaultdb.groups g
-    LEFT JOIN  group_members gm ON g.id = gm.group_id
+    LEFT JOIN defaultdb.group_members gm ON g.id = gm.group_id
     WHERE g.admin_id = ? OR gm.user_id = ?
   `;
 
