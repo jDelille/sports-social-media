@@ -9,6 +9,7 @@ import { AuthContext } from "../context/AuthContext";
 import { CommentTypes } from "../types/CommentTypes";
 import CommentCard from "../components/comment-card/CommentCard";
 import useFetchRepostStatus from "../hooks/post-hooks/useFetchRepostStatus";
+import PostSkeleton from "../components/loading-skeletons/PostSkeleton";
 
 type PostPageProps = {};
 
@@ -48,7 +49,9 @@ const PostPage: React.FC<PostPageProps> = () => {
   return (
     <div className="post-page page">
       <PageHeader title="Post Details" hasBack />
-      {loading && <div>Loading...</div>}
+      {loading && (
+        <PostSkeleton />
+      )}
       {error && <div>Error</div>}
       <Post post={post} isPostDetailsPage />
       <PostDetailsFooter

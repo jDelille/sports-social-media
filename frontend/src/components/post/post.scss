@@ -129,9 +129,8 @@
     padding: 14px 0;
     font-size: 14px;
     color: rgb(8, 5, 27);
+    white-space: pre-wrap; 
     word-wrap: break-word;
-    white-space: pre-wrap;
-    display: flex;
     .hashtag,
     .hashtag-page-hashtag {
       color: $accent;

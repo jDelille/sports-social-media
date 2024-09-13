@@ -87,13 +87,16 @@ const Post: React.FC<PostProps> = ({
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const hashtagRegex = /#(\w+)/g;
 
+    // Remove URLs
     let cleanedBody = body.replace(urlRegex, "");
+
+    // Split text by hashtags
     const parts = cleanedBody.split(/(#\w+)/g);
 
-    const elements = parts.map((part, index) => {
+    return parts.map((part, index) => {
       if (hashtagRegex.test(part)) {
         return (
-          <p
+          <span
             onClick={(e) => handleHashtagClick(part.substring(1), e)}
             className={
               isHashtagPage && part.substring(1) === hashtag
@@ -103,14 +106,12 @@ const Post: React.FC<PostProps> = ({
             key={index}
           >
             {part}
-          </p>
+          </span>
         );
       } else {
         return <span key={index}>{part}</span>;
       }
     });
-
-    return elements;
   };
 
   if(loading) {
