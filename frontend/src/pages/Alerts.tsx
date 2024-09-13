@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAxios } from "../hooks";
 import { PageHeader } from "../components";
 import AlertCard from "../components/alert-cards/AlertCard";
-import './page.scss';
+import FeedSelector from "../components/feed-selector/FeedSelector";
+import "./page.scss";
 
 export type Alert = {
   id: number;
@@ -27,11 +28,12 @@ export type Alert = {
     id: number;
     name: string;
     link: string;
-  }
+  };
 };
 
 const Alerts: React.FC = () => {
   const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [selectedFeed, setSelectedFeed] = useState<string>("All");
 
   useEffect(() => {
     const fetchAlerts = async () => {
@@ -47,24 +49,29 @@ const Alerts: React.FC = () => {
     fetchAlerts();
   }, []);
 
+  const feeds = ["All", "Mentions", "Invites"]
+
   return (
     <div className="alerts-page page">
       <PageHeader title="Alerts" hasBack />
+      <FeedSelector feeds={feeds} selectedFeed={selectedFeed} setSelectedFeed={setSelectedFeed}/>
       {alerts && (
- <ul>
- {alerts.map((alert, index) => (
-  <AlertCard key={alert.id + index} alert={alert} />
- ))}
-</ul>
+        <ul>
+          {alerts.map((alert, index) => (
+            <AlertCard key={alert.id + index} alert={alert} />
+          ))}
+        </ul>
       )}
 
       {alerts.length === 0 && (
         <div className="empty">
-          <p>You don't have any notifications yet. When other people interact with you, you will see it here.</p>
+          <p>
+            You don't have any notifications yet. When other people interact
+            with you, you will see it here.
+          </p>
           <p></p>
         </div>
       )}
-     
     </div>
   );
 };
