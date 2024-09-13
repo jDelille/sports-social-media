@@ -7,4 +7,18 @@ const useAxios = axios.create({
     
 });
 
+useAxios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response && error.response.status === 403) {
+        // Trigger a modal or popup when token is invalid
+        alert("Session expired. Please sign back in.");
+        console.log(error)
+        // You could also programmatically open a custom modal or redirect to a login page
+        window.location.href = '/login'; // Redirect to login page
+      }
+      return Promise.reject(error);
+    }
+  );
+
 export default useAxios;
