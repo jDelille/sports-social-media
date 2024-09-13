@@ -35,9 +35,14 @@ const MentionsTextarea: React.FC<MentionsTextareaProps> = observer(
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [openPoll, setOpenPoll] = useState(false);
     const hashTagData = useHashTagData();
+    
     useClickOutside(
       textareaRef,
-      () => createPostStore.setIsInactive(),
+      () => {
+        if (body.trim() === "") {
+          createPostStore.setIsInactive();
+        }
+      },
       !isComment
     );
     const urlMetadata = useUrlMetadata(body);

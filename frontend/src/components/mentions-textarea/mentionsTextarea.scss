@@ -1,6 +1,6 @@
 .mentions-textarea-container,
 .mentions-textarea-container-active {
-    min-height: 50px;
+    max-height: 40px;
     display: flex;
     flex-direction: column;
     .mentions-textarea {
@@ -31,13 +31,13 @@
 }
 
 .mentions-textarea-container-active {
-    min-height: 170px;
+    min-height: 280px;
     position: relative;
-    height: fit-content;
+    max-height: fit-content;
     .mentions-textarea  {
         margin-bottom: 20px;
         position: relative;
-      
+        height: fit-content;
       
     }
     .image-preview {

@@ -24,7 +24,7 @@ const HomeFeed: React.FC<HomeFeedProps> = () => {
     staleTime: 5000,
     initialPageParam: 1 as any,
     getNextPageParam: (_, allPages) => {
-      return allPages.length + 1;
+      return allPages.length + 1 ?? undefined;
     },
   });
 

@@ -46,6 +46,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
       setBody("");
       setUrlMetadata("");
       setFile(null)
+      createPostStore.setIsInactive();
     },
     mutationKey: ["addPost"],
   });
