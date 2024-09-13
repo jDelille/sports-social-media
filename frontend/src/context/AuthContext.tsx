@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { createContext, useEffect, useState } from "react";
 import { APP_CONSTANTS } from "../constants/appConstants";
-import axios from "axios";
+import { useAxios } from "../hooks";
 
 export const AuthContext = createContext<any>(null);
 
@@ -16,26 +16,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<string | null>(initialUser);
 
   const login = async (inputs: any) => {
-    const res = await axios.post(
-      `${APP_CONSTANTS.API_BASE_URL}/auth/login`,
-      inputs,
-      {
-        withCredentials: true,
-      }
-    );
-
-    setCurrentUser(res.data);
+    try {
+      const res = await useAxios.post(
+        `${APP_CONSTANTS.API_BASE_URL}/auth/login`,
+        inputs
+      );
+      setCurrentUser(res.data);
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Handle login error (e.g., show an error message)
+    }
   };
 
   const updateProfile = async (profileData: any) => {
     try {
       // Update profile
-      const res = await axios.put(
+      const res = await useAxios.put(
         `${APP_CONSTANTS.API_BASE_URL}/auth/editProfile`,
-        profileData,
-        {
-          withCredentials: true,
-        }
+        profileData
       );
 
       // Update state and localStorage with the updated user data
@@ -47,13 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
-    await axios.post(
-      `${APP_CONSTANTS.API_BASE_URL}/auth/logout`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+    await useAxios.post(`${APP_CONSTANTS.API_BASE_URL}/auth/logout`);
     setCurrentUser(null);
     localStorage.removeItem("user");
   };
@@ -66,9 +58,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     currentUser,
     login,
     logout,
-    updateProfile
+    updateProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-

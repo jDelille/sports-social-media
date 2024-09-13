@@ -58,23 +58,22 @@ export const login = (req, res) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) return res.status(404).json("User does not exist.");
 
-    const checkPassword = bcrypt.compareSync(
-      req.body.password,
-      data[0].password
-    );
+    // Check the password
+    const checkPassword = bcrypt.compareSync(req.body.password, data[0].password);
 
-    if (!checkPassword)
-      return res.status(400).json("Invalid username or password.");
+    if (!checkPassword) return res.status(400).json("Invalid username or password.");
 
-    const token = jwt.sign({ id: data[0].id }, process.env.SECRET_KEY);
+    // Generate a JWT token
+    const token = jwt.sign({ id: data[0].id }, process.env.SECRET_KEY, { expiresIn: '1h' }); // Set an expiration time for the token
 
     const { password, ...others } = data[0];
 
+    // Set the cookie with security options enabled
     res
       .cookie("accessToken", token, {
-        // httpOnly: true,
-        // secure: true,
-        // sameSite: "None"
+        httpOnly: true, 
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: "Strict", 
       })
       .status(200)
       .json(others);
