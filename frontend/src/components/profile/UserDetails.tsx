@@ -3,6 +3,9 @@ import UserTypes from "../../types/User";
 import moment from "moment";
 import Relationships from "./Relationships";
 import ActionButtons from "./ActionButtons";
+import { useRef, useState } from "react";
+import ProfileMenu from "./ProfileMenu";
+import { useClickOutside } from "../../hooks";
 
 type UserDetailsProps = {
   user: UserTypes;
@@ -15,18 +18,41 @@ const UserDetails: React.FC<UserDetailsProps> = ({
   currentUser,
   setSelectedFeed,
 }) => {
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null); 
+  const buttonRef = useRef<HTMLDivElement>(null);
+
   const joinedDate = moment(user?.created_at).format("MMMM YYYY");
   const isUserProfile = currentUser?.id === user?.id;
+
+  const handleOpenMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();  // Prevent the click event from bubbling up
+    setIsMenuOpen((prev) => !prev);  // Toggle the menu state
+  };
+
+  useClickOutside(menuRef, (event) => {
+    if (buttonRef.current && buttonRef.current.contains(event?.target as Node)) {
+      return; // Ignore clicks on the button itself
+    }
+    setIsMenuOpen(false); // Close the menu for any other outside click
+  }, isMenuOpen);
 
   return (
     <div className="user-content">
       {/* <div className="funds-wrapper">
         <p className="funds">{user?.funds} coins</p>
       </div> */}
-      <div className="menu-wrapper">
-        <div className="menu-btn">
+       <div className="menu-wrapper">
+        <div ref={buttonRef} className="menu-btn" onClick={handleOpenMenu}>
           <MenuDotsIcon color="black" size={20} />
         </div>
+
+        {isMenuOpen && (
+          <div ref={menuRef} className="hide">
+            <ProfileMenu isUserProfile={isUserProfile} />
+          </div>
+        )}
 
         <ActionButtons
           isUserProfile={isUserProfile}

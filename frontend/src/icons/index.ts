@@ -40,3 +40,7 @@ export { default as ChevronRightIcon} from './ChevronRightIcon';
 export { default as ChevronLeftIcon} from './ChevronLeftIcon';
 export { default as BoostIcon} from './BoostIcon';
 export { default as ChartIcon} from './ChartIcon';
+export { default as CopyIcon} from './CopyIcon';
+export { default as MuteIcon} from './MuteIcon';
+export { default as BlockIcon} from './BlockIcon';
+export { default as ReportIcon} from './ReportIcon';

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const useClickOutside = (
   ref: React.RefObject<HTMLElement>,
-  callback: () => void,
+  callback: (event?: MouseEvent) => void, // Change the signature to accept an optional event
   active: boolean = true
 ) => {
   useEffect(() => {
@@ -10,7 +10,7 @@ const useClickOutside = (
 
     const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        callback();
+        callback(e);  // Pass the event to the callback
       }
     };
 
