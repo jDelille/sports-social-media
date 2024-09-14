@@ -18,7 +18,7 @@ export const getUser = (req, res) => {
 export const getSuggestedUsers = (req, res) => {
   const userId = req.params.id || null;
   let q = `
-    SELECT id, username, name, avatar
+    SELECT id, username, name, avatar, isVerified
     FROM defaultdb.users
   `;
   if (userId) {

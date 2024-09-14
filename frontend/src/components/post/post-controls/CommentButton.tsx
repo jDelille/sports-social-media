@@ -44,7 +44,7 @@ const CommentButton: React.FC<CommentButtonProps> = ({
         color={COLOR_CONSTANTS.LIGHTGRAY}
        
       />
-      <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{commentsCount}</span>
+      <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{commentsCount || 0}</span>
     </div>
   );
 };

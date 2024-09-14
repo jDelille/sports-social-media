@@ -4,6 +4,7 @@ import { useAxios } from "../../hooks";
 import Avatar from "../avatar/Avatar";
 import { AuthContext } from "../../context/AuthContext";
 import "./widget.scss";
+import { CheckIcon } from "../../icons";
 
 type SuggestedUsersProps = {};
 
@@ -29,6 +30,8 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
     fetchUsers();
   }, []);
 
+
+
   return (
     <div className="widget">
       <p className="title">Who to follow</p>
@@ -46,7 +49,7 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
                   <Avatar src={user.avatar} username={user.username} />
                 </div>
                 <div className="text">
-                  <p className="name">{user.name}</p>
+                  <p className="name">{user.name} {user?.isVerified && <CheckIcon color="#ff4775" size={34} />} </p>
                   <p className="username">@{user.username}</p>
                 </div>
                 <button className="follow-btn">Follow</button>

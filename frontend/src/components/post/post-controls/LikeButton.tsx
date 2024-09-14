@@ -98,12 +98,12 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   return hasLiked ? (
     <div className="icon like-icon" onClick={(e) => handleLikeClick(postId, e)}>
       <LikedIcon size={18} color={COLOR_CONSTANTS.LIKE_COLOR} />
-      <span style={{ color: COLOR_CONSTANTS.LIKE_COLOR }}>{likesCount}</span>
+      <span style={{ color: COLOR_CONSTANTS.LIKE_COLOR }}>{likesCount || 0}</span>
     </div>
   ) : (
     <div className="icon like-icon" onClick={(e) => handleLikeClick(postId, e)}>
       <LikeIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} />
-      <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{likesCount}</span>
+      <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>{likesCount || 0}</span>
     </div>
   );
 };

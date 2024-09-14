@@ -105,14 +105,14 @@ const RepostButton: React.FC<RepostButtonProps> = ({
         <div className="icon repost-icon" onClick={(e) => handleOpenRepostPopup(e)}>
           <RepostIcon size={18} color={COLOR_CONSTANTS.REPOST_COLOR} />
           <span style={{ color: COLOR_CONSTANTS.REPOST_COLOR }}>
-            {repostCount}
+            {repostCount || 0}
           </span>
         </div>
       ) : (
         <div className="icon repost-icon" onClick={(e) => handleOpenRepostPopup(e)}>
           <RepostIcon size={18} color={COLOR_CONSTANTS.LIGHTGRAY} />
           <span style={{ color: COLOR_CONSTANTS.LIGHTGRAY }}>
-            {repostCount}
+            {repostCount || 0}
           </span>
         </div>
       )}
