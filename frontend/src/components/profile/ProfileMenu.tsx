@@ -8,22 +8,40 @@ import {
   SettingsIcon,
   UserIcon,
 } from "../../icons";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type ProfileMenuProps = {
   isUserProfile: boolean;
+  username: string;
 };
-const ProfileMenu: React.FC<ProfileMenuProps> = ({ isUserProfile }) => {
+const ProfileMenu: React.FC<ProfileMenuProps> = ({ isUserProfile, username}) => {
+    const navigate = useNavigate();
+
+    const handleCopyLinkToProfile = () => {
+        const profileUrl = `${window.location.origin}/profile/${username}`; 
+        navigator.clipboard
+        .writeText(profileUrl)
+        .then(() => {
+          toast.success("Profile link copied to clipboard!"); 
+        })
+        .catch((err) => {
+          toast.error("Failed to copy the profile link"); 
+          console.error("Failed to copy: ", err);
+        });
+      };
+
   return (
     <div className="profile-menu">
       <ul>
-        <li>
+        <li onClick={handleCopyLinkToProfile}>
           <CopyIcon color="gray" size={18} />
           Copy link to profile
         </li>
         <div className="divider"></div>
         {isUserProfile ? (
           <>
-            <li>
+            <li onClick={() => navigate("/settings/profile")}>
               <UserIcon color="gray" size={18} /> Edit profile
             </li>
             <li>
@@ -31,11 +49,11 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ isUserProfile }) => {
               Preferences
             </li>
             <div className="divider"></div>
-            <li>
+            <li onClick={() => navigate('/mutes')}>
               <MuteIcon color="gray" size={19} />
               Mutes
             </li>
-            <li>
+            <li onClick={() => navigate('/blocks')}>
               <BlockIcon color="gray" size={17} />
               Blocks
             </li>
@@ -43,12 +61,10 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ isUserProfile }) => {
         ) : (
           <>
             <li>
-              {" "}
               <MuteIcon color="gray" size={19} />
               Mute
             </li>
             <li>
-              {" "}
               <BlockIcon color="gray" size={17} />
               Block
             </li>

@@ -45,7 +45,7 @@ const FollowersFeed: React.FC<FollowersFeedProps> = ({userId}) => {
   return (
     <div className="followers-feed feed">
       {followerUsers.map((user) => (
-        <UserCard key={user.id} user={user} /> 
+        <UserCard key={user.id} user={user} isFollower/> 
       ))}
       <div ref={ref}></div> {/* This is the trigger for loading the next page */}
       {/* {!hasNextPage && <p>No more users to load.</p>} */}

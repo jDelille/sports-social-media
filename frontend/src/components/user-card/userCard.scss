@@ -31,6 +31,14 @@
         .username {
             font-size: 13px;
             color: gray;
+            .follows-badge {
+                background-color: $lightBorderColor;
+                font-size: 11px;
+                padding: 2px 4px;
+                margin-left: 3px;
+                border-radius: 4px;
+                color: darken(gray, 10%);
+            }
         }
     }
     .follow-btn {

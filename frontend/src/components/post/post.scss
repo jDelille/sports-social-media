@@ -12,7 +12,7 @@
   &:hover {
     background-color: darken(white, 1%);
     cursor: pointer;
-    border-radius: 1px solid $lightBorderColor;;
+    border-radius: 1px solid $lightBorderColor;
   }
   .reposter {
     font-size: 12px;
@@ -57,7 +57,7 @@
       width: 40px;
       height: 40px;
       object-fit: cover;
-      border-radius: 50%;
+      border-radius: 5px;
       display: flex;
       align-items: center;
       position: relative;
@@ -69,7 +69,8 @@
       }
       img {
         object-fit: cover;
-        border-radius: 50%;
+        border-radius: 5px;
+        image-rendering: auto;
       }
     }
     .user,
@@ -129,7 +130,7 @@
     padding: 14px 0;
     font-size: 14px;
     color: rgb(8, 5, 27);
-    white-space: pre-wrap; 
+    white-space: pre-wrap;
     word-wrap: break-word;
     .hashtag,
     .hashtag-page-hashtag {
@@ -256,10 +257,8 @@
       color: rgb(115, 125, 143);
       margin-left: auto;
       font-weight: 400;
-  
     }
   }
- 
 }
 
 .alert-post {

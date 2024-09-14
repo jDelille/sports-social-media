@@ -5,7 +5,8 @@ import Relationships from "./Relationships";
 import ActionButtons from "./ActionButtons";
 import { useRef, useState } from "react";
 import ProfileMenu from "./ProfileMenu";
-import { useClickOutside } from "../../hooks";
+import { useClickOutside, useHideUrlsInBody } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 
 type UserDetailsProps = {
   user: UserTypes;
@@ -22,6 +23,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null); 
   const buttonRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const joinedDate = moment(user?.created_at).format("MMMM YYYY");
   const isUserProfile = currentUser?.id === user?.id;
@@ -38,6 +40,18 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     setIsMenuOpen(false); // Close the menu for any other outside click
   }, isMenuOpen);
 
+  const handleHashtagClick = (hashtag: string, e: any) => {
+    e.stopPropagation();
+    navigate(`/discover/hashtag/${hashtag}`);
+  };
+
+
+  const hideUrlsInBody = useHideUrlsInBody({
+    handleHashtagClick,
+    isHashtagPage: false,
+    hashtag: ""
+  });
+
   return (
     <div className="user-content">
       {/* <div className="funds-wrapper">
@@ -50,7 +64,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
 
         {isMenuOpen && (
           <div ref={menuRef} className="hide">
-            <ProfileMenu isUserProfile={isUserProfile} />
+            <ProfileMenu isUserProfile={isUserProfile} username={user.username} />
           </div>
         )}
 
@@ -60,10 +74,10 @@ const UserDetails: React.FC<UserDetailsProps> = ({
           currentUser={currentUser}
         />
       </div>
-
+      
       <p className="name">{user?.name}</p>
       <p className="username">@{user?.username}</p>
-      {user?.bio && <p className="bio">{user?.bio}</p>}
+      {user?.bio && <p className="bio">{hideUrlsInBody(user.bio)}</p>}
 
       <Relationships
         userId={user?.id}

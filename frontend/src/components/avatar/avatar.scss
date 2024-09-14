@@ -9,7 +9,7 @@
         width: 35px;
         height: 35px;
         object-fit: cover;
-        border-radius: 50%;
+        border-radius: 5px;
         position: relative;
         z-index: 0;
         cursor: pointer;
@@ -17,8 +17,8 @@
     }
     svg {
         position: absolute;
-        bottom: 0;
-        right: 0;
+        bottom: -11px;
+        right: -13px;
         
     }
 

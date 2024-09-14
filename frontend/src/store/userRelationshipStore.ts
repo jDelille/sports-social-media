@@ -20,6 +20,14 @@ class UserRelationshipsStore {
   setBetCount(count: number) {
     this.betCount = count;
   }
+
+  setRemoveFollowing() {
+    this.followingCount -= 1;
+  }
+
+  setAddFollowing() {
+    this.followingCount += 1;
+  }
 }
 
 export const userRelationshipsStore = new UserRelationshipsStore();

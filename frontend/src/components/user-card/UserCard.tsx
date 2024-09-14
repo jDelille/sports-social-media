@@ -6,15 +6,17 @@ import { AuthContext } from "../../context/AuthContext";
 import { useAxios } from "../../hooks";
 import { CheckIcon } from "../../icons";
 import { useNavigate } from "react-router-dom";
+import { userRelationshipsStore } from "../../store/userRelationshipStore";
 import "./userCard.scss";
 
 type UserCardProps = {
   user: UserTypes;
   actionButtonLabel?: string;
   handleClick?: () => void;
+  isFollower?: boolean;
 };
 const UserCard: React.FC<UserCardProps> = observer(
-  ({ user, actionButtonLabel, handleClick }) => {
+  ({ user, actionButtonLabel, handleClick, isFollower }) => {
     const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
     const { currentUser } = useContext(AuthContext) || {};
@@ -59,7 +61,8 @@ const UserCard: React.FC<UserCardProps> = observer(
       fetchFollowStatus();
     }, [currentUser, user?.id]);
 
-    const handleFollowClick = async () => {
+    const handleFollowClick = async (e: any) => {
+      e.stopPropagation();
       const newIsFollowing = !isFollowing;
 
       setIsFollowing(newIsFollowing);
@@ -67,8 +70,10 @@ const UserCard: React.FC<UserCardProps> = observer(
       try {
         if (newIsFollowing) {
           await useAxios.post(`/relationships/${user.id}/follow`);
+          userRelationshipsStore.setAddFollowing();
         } else {
           await useAxios.delete(`/relationships/${user.id}/unfollow`);
+          userRelationshipsStore.setRemoveFollowing();
         }
       } catch (error) {
         console.error("Error updating follow status:", error);
@@ -83,11 +88,11 @@ const UserCard: React.FC<UserCardProps> = observer(
           <p className="name">
             {name} {isVerified && <CheckIcon color="#ff4775" size={34} />}
           </p>
-          <p className="username">@{username}</p>
+          <p className="username">@{username} {currentUser.id !== user.id && isFollower && <span className="follows-badge">Follows you</span>}</p>
         </div>
         {!handleClick && currentUser.id !== user.id && (
           <button className="follow-btn" onClick={handleFollowClick}>
-            {isFollowing ? "Unfollow" : "Follow"}
+            {isFollowing ? "Unfollow" : "Follow back"}
           </button>
         )}
         {handleClick && (

@@ -20,8 +20,6 @@ const Relationships: React.FC<RelationshipsProps> = observer(
 
           // Only update the store when data is valid
           if (countsResponse.data) {
-            console.log("Fetched counts:", countsResponse.data);
-
             // Update MobX store here
             userRelationshipsStore.setFollowerCount(
               countsResponse.data.followerCount
