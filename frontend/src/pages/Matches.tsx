@@ -7,6 +7,7 @@ import matchStore from "../store/matchStore";
 import SportPicker from "../components/sport-picker/SportPicker";
 import MatchCard from "../components/match-card/MatchCard";
 import "./page.scss";
+import MatchCardSkeleton from "../components/loading-skeletons/MatchCardSkeleton";
 
 type Sport = {
   sport: string;
@@ -72,7 +73,7 @@ const Matches: React.FC<MatchesProps> = () => {
 
       <div className="matches-content">
         {loading ? (
-          <div className="loading-indicator">Loading...</div>
+          <MatchCardSkeleton />
         ) : (
           matches.map((match) => {
             if (match.espnMatch) {

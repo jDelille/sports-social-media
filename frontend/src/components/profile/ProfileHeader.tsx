@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import AvatarSection from "./AvatarSection";
 import UserDetails from "./UserDetails";
 import { observer } from "mobx-react";
+import ProfileHeaderSkeleton from "../loading-skeletons/ProfileHeaderSkeleton";
 import "./profileheader.scss";
 
 type ProfileHeaderProps = {
@@ -17,11 +18,15 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = observer(
     return (
       <div className="profile-header">
         <AvatarSection user={user} />
-        <UserDetails
-          user={user}
-          currentUser={currentUser}
-          setSelectedFeed={setSelectedFeed}
-        />
+        {!user ? (
+          <ProfileHeaderSkeleton />
+        ) : (
+          <UserDetails
+            user={user}
+            currentUser={currentUser}
+            setSelectedFeed={setSelectedFeed}
+          />
+        )}
       </div>
     );
   }
