@@ -1,5 +1,5 @@
 import React from "react";
-import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAxios, useLoginReminder } from "../../../hooks";
 import { LikeIcon, LikedIcon } from "../../../icons";
 import { COLOR_CONSTANTS } from "../../../constants";
