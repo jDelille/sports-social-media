@@ -49,7 +49,7 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
                   <Avatar src={user.avatar} username={user.username} />
                 </div>
                 <div className="text">
-                  <p className="name">{user.name} {user?.isVerified && <CheckIcon color="#ff4775" size={34} />} </p>
+                  <p className="name">{user.name} {user?.isVerified === 1 && <CheckIcon color="#ff4775" size={17} />} </p>
                   <p className="username">@{user.username}</p>
                 </div>
                 <button className="follow-btn">Follow</button>

@@ -59,6 +59,10 @@
           font-size: 14px;
           position: relative;
           left: 1px;
+          display: flex;
+          align-items: center;
+          gap: 2px;
+
         }
         .username {
           font-size: 12px;
