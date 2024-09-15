@@ -61,7 +61,10 @@ const PostHeader: React.FC<PostHeaderProps> = ({
         <Avatar username={post?.user.username} src={user?.avatar}  />
       </div>
       <div className={quoteReposted ? "qr_user" : "user"}>
-        <p className="name">{user?.name} {isVerified && <CheckIcon color="#ff4775" size={34} />}</p>
+        <p className="name">
+          {user?.name} 
+          {isVerified && <CheckIcon color="#ff4775" size={34} />}
+          </p>
         <p className="username">
           @{user?.username} ·{" "}
           <span className="date">{moment(post?.created_at).fromNow()}</span>

@@ -63,7 +63,9 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
     >
       {icon}
       {hasAlert && label === "Alerts" && (
-        <div className="circle">{alertCount}</div>
+        <div className="circle">
+          <p>{alertCount}</p>
+        </div>
       )}
       {label}
     </NavLink>

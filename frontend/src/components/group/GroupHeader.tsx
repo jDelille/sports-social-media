@@ -64,7 +64,7 @@ const GroupHeader: React.FC<GroupHeaderProps> = ({
         <img src={group.header_img} alt="" />
         <img src={group.avatar} alt="" className="avatar" />
       </div>
-      <div className="group-info">
+      <div className="group-page-info">
         <p className="name">{group.name}</p>
         <div className="stats">
           <p className="privacy">

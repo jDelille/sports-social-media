@@ -27,7 +27,7 @@ const UserCard: React.FC<UserCardProps> = observer(
 
     const { name, username, avatar } = user;
 
-    const isVerified = user.isVerified === 1;
+    const isVerified = user?.isVerified === 1;
 
     const navigate = useNavigate();
 
@@ -69,10 +69,10 @@ const UserCard: React.FC<UserCardProps> = observer(
 
       try {
         if (newIsFollowing) {
-          await useAxios.post(`/relationships/${user.id}/follow`);
+          await useAxios.post(`/relationships/${user?.id}/follow`);
           userRelationshipsStore.setAddFollowing();
         } else {
-          await useAxios.delete(`/relationships/${user.id}/unfollow`);
+          await useAxios.delete(`/relationships/${user?.id}/unfollow`);
           userRelationshipsStore.setRemoveFollowing();
         }
       } catch (error) {
@@ -88,9 +88,9 @@ const UserCard: React.FC<UserCardProps> = observer(
           <p className="name">
             {name} {isVerified && <CheckIcon color="#ff4775" size={34} />}
           </p>
-          <p className="username">@{username} {currentUser.id !== user.id && isFollower && <span className="follows-badge">Follows you</span>}</p>
+          <p className="username">@{username} {currentUser?.id !== user?.id && isFollower && <span className="follows-badge">Follows you</span>}</p>
         </div>
-        {!handleClick && currentUser.id !== user.id && (
+        {!handleClick && currentUser?.id !== user?.id && (
           <button className="follow-btn" onClick={handleFollowClick}>
             {isFollowing ? "Unfollow" : "Follow back"}
           </button>

@@ -13,12 +13,14 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const {currentUser} = useContext(AuthContext) || {};
+  const { currentUser } = useContext(AuthContext) || {};
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await useAxios.get(`/users/suggested/${currentUser?.id}`); // Adjust the endpoint as needed
+        const response = await useAxios.get(
+          `/users/suggested/${currentUser?.id}`
+        ); // Adjust the endpoint as needed
         setUsers(response.data);
       } catch (err) {
         setError("Failed to load users");
@@ -29,8 +31,6 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
 
     fetchUsers();
   }, []);
-
-
 
   return (
     <div className="widget">
@@ -49,7 +49,12 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
                   <Avatar src={user.avatar} username={user.username} />
                 </div>
                 <div className="text">
-                  <p className="name">{user.name} {user?.isVerified === 1 && <CheckIcon color="#ff4775" size={17} />} </p>
+                  <div className="name">
+                    <p className="user-name">{user.name}</p>
+                    {user?.isVerified === 1 && (
+                      <CheckIcon color="#ff4775" size={17} />
+                    )}
+                  </div>
                   <p className="username">@{user.username}</p>
                 </div>
                 <button className="follow-btn">Follow</button>

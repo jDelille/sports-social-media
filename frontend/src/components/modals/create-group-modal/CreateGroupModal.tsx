@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import GroupSettings from "./group-settings/GroupSettings";
-import GroupInfo from "./group-info/GroupInfo";
-import "./createGroupModal.scss";
 import Modal from "../modal/Modal";
 import { useAxios, useCreateGroupModal } from "../../../hooks";
-import { uploadGroupHeaderImage, uploadGroupProfilePicture } from "../../../utils/firebaseUtils";
+import {
+  uploadGroupHeaderImage,
+  uploadGroupProfilePicture,
+} from "../../../utils/firebaseUtils";
 import ProfileImgUpload from "../../profile-img-upload/ProfileImgUpload";
+import "./createGroupModal.scss";
 
 type CreateGroupModalProps = {};
 const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
@@ -55,7 +57,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
           headerImageUrl = await uploadGroupHeaderImage(profileHeader, groupId);
         }
       } catch (error) {
-        console.error('Failed to upload header image:', error);
+        console.error("Failed to upload header image:", error);
       }
 
       const updateData: { avatar?: string; header_img?: string } = {};
@@ -66,7 +68,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
         try {
           await useAxios.patch(`/group/${groupId}`, updateData);
         } catch (error) {
-          console.error('Failed to update group with image URLs:', error);
+          console.error("Failed to update group with image URLs:", error);
           // Optionally, notify the user of the update failure
         }
       }
@@ -86,17 +88,9 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
               privacy={privacy}
               setPrivacy={setPrivacy}
               handleNext={handleNext}
-            />
-          </div>
-        );
-      case 2:
-        return (
-          <div className="create-group-modal">
-            <GroupInfo
-              handleNext={handleNext}
+              setGroupName={setGroupName}
               setDescription={setDescription}
               description={description}
-              setGroupName={setGroupName}
               setProfileHeader={setProfileHeader}
               setProfilePicture={setProfilePicture}
               profilePicture={profilePicture}
@@ -104,7 +98,7 @@ const CreateGroupModal: React.FC<CreateGroupModalProps> = () => {
             />
           </div>
         );
-      case 3:
+      case 2:
         return (
           <div className="create-group-modal">
             <ProfileImgUpload

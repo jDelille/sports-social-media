@@ -42,7 +42,6 @@ const LeaderboardWidget: React.FC<LeaderboardWidgetProps> = () => {
     navigate("/leaderboard");
   };
 
-
   return (
     <div className="widget">
       <p className="title">Leaderboard</p>
@@ -61,10 +60,8 @@ const LeaderboardWidget: React.FC<LeaderboardWidgetProps> = () => {
         </>
       ) : (
         <>
-
-
-                <p className="description">You are currently in 1st place</p>
-          <button onClick={handleGoToLeaderboardClick}>View Standings</button>
+          <p className="description">You are currently in 1st place</p>
+          <button onClick={handleGoToLeaderboardClick} className="standings-btn">View Standings</button>
         </>
       )}
     </div>

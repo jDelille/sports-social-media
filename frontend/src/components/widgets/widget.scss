@@ -56,12 +56,20 @@
       .text {
         .name {
           font-weight: 500;
-          font-size: 14px;
+          font-size: 13px;
           position: relative;
           left: 1px;
           display: flex;
           align-items: center;
           gap: 2px;
+          .user-name {
+            text-wrap: nowrap;
+            overflow-x: hidden;
+            max-width: 90px;
+          }
+          svg {
+            min-width: 20px;
+          }
 
         }
         .username {

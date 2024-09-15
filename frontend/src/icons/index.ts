@@ -44,3 +44,4 @@ export { default as CopyIcon} from './CopyIcon';
 export { default as MuteIcon} from './MuteIcon';
 export { default as BlockIcon} from './BlockIcon';
 export { default as ReportIcon} from './ReportIcon';
+export { default as UploadIcon} from './UploadIcon';

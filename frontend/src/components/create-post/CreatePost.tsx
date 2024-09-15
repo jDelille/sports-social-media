@@ -77,7 +77,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
     }
     loginReminder.onOpen(
       <PencilIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={50} />,
-      "Share your thoughts.",
+      "Got something to say?",
       "Create an account to share your thoughts with the community."
     );
   };

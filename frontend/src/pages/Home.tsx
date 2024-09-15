@@ -14,6 +14,7 @@ const Home: React.FC<HomeProps> = () => {
   const { currentUser } = useContext(AuthContext) || {};
 
   const feeds = ["For You", "Following", "Bets"];
+  const noUserFeeds = ["For You", "Bets"];
 
   return (
     <div className="page">
@@ -22,7 +23,7 @@ const Home: React.FC<HomeProps> = () => {
       <FeedSelector
         setSelectedFeed={setSelectedFeed}
         selectedFeed={selectedFeed}
-        feeds={feeds}
+        feeds={!currentUser ? noUserFeeds : feeds}
       />
       {selectedFeed === "for you" && <HomeFeed />}
 
