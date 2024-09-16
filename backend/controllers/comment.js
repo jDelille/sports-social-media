@@ -156,8 +156,7 @@ export const getCommentById = (req, res) => {
     const commentId = req.params.commentId;
     if (!commentId) return res.status(400).json("Comment ID is required.");
 
-    // Query to only get the comment body
-    const q = `
+      const q = `
       SELECT
         c.body
       FROM defaultdb.comments c
@@ -168,9 +167,7 @@ export const getCommentById = (req, res) => {
     db.query(q, [commentId], (err, data) => {
       if (err) return res.status(500).json(err);
       if (data.length === 0) return res.status(404).json("Comment not found.");
-      
-      // Return only the body
-      return res.status(200).json(data[0].body);
+      return res.status(200).json(data[0]);
     });
   });
 };

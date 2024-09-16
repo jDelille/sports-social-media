@@ -19,6 +19,7 @@ NULL AS quote_reposted_post_id,
 NULL AS quote_reposted_quote_repost_id,
 NULL AS original_post_user,
 p.metadata,
+p.bet_id,
 'post' AS type
 FROM defaultdb.posts p
 JOIN defaultdb.users u ON p.user_id = u.id

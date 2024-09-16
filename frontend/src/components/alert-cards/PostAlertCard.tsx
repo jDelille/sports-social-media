@@ -5,6 +5,7 @@ import { useAxios } from "../../hooks";
 import { COLOR_CONSTANTS } from "../../constants";
 import { CommentTypes } from "../../types/CommentTypes";
 import "./alertCard.scss";
+import { useNavigate } from "react-router-dom";
 
 type PostAlertCardProps = {
   alert: Alert;
@@ -16,10 +17,12 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await useAxios.get(`posts/${alert.post_id}`);
+        const response = await useAxios.get(`posts/${alert?.post_id}`);
         if (!response || response.status !== 200) {
           throw new Error("Failed to fetch post");
         }
@@ -98,13 +101,15 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
     );
   };
 
-
+  const handleNavigateToProfile = (username: string) => {
+    navigate(`/profile/${username}`)
+  }
 
   return (
     <div className="post-alert-card alert-card">
       <div className="alert-type">
         {icon}
-        <p className="alerter-username">{alerter.username}</p>
+        <p className="alerter-username" onClick={() => handleNavigateToProfile(alerter.username)}>{alerter.username}</p>
         <span>{alert.msg}</span>
       </div>
       
