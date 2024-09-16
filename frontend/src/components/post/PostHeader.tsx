@@ -18,9 +18,8 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   user,
   post,
   quoteReposted,
-  hideMenu
+  hideMenu,
 }) => {
-  
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleMenuClose = () => {
@@ -49,45 +48,43 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   });
 
   const isVerified = user?.isVerified === 1;
-  
+
   const handleMenuClick = (e: any) => {
     e.stopPropagation();
-    setOpenMenu(!openMenu)
-  }
-  
+    setOpenMenu(!openMenu);
+  };
+
   return (
     <div className="post-header">
       <div className="avatar">
-        <Avatar username={post?.user.username} src={user?.avatar}  />
+        <Avatar username={post?.user.username} src={user?.avatar} />
       </div>
       <div className={quoteReposted ? "qr_user" : "user"}>
         <p className="name">
-          {user?.name} 
+          {user?.name}
           {isVerified && <CheckIcon color="#ff4775" size={34} />}
-          </p>
+        </p>
         <p className="username">
           @{user?.username} ·{" "}
           <span className="date">{moment(post?.created_at).fromNow()}</span>
         </p>
       </div>
 
-      {!hideMenu && (
-   !quoteReposted && (
-    <div className="menu">
-      <p onClick={(e) => handleMenuClick(e)}>
-        <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
-      </p>
-      <PostMenu
-        isOpen={openMenu}
-        onClose={handleMenuClose}
-        postId={post?.id}
-        type={post?.type}
-        imagePath={post?.image}
-      />
-    </div>
-  )
+      {!hideMenu && !quoteReposted && (
+        <div className="menu">
+          <p onClick={(e) => handleMenuClick(e)}>
+            <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
+          </p>
+          <PostMenu
+            isOpen={openMenu}
+            onClose={handleMenuClose}
+            postId={post?.id}
+            type={post?.type}
+            imagePath={post?.image}
+            username={post.user.username}
+          />
+        </div>
       )}
-   
     </div>
   );
 };

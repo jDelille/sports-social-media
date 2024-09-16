@@ -5,11 +5,12 @@ import { useAxios, useLoginReminder } from "../../hooks";
 import Avatar from "../avatar/Avatar";
 import { AuthContext } from "../../context/AuthContext";
 import MentionsTextarea from "../mentions-textarea/MentionsTextarea";
-import { COLOR_CONSTANTS, TEXT_CONSTANTS } from "../../constants";
-import { ChevronDownIcon, GlobeIcon, PencilIcon } from "../../icons";
+import { COLOR_CONSTANTS } from "../../constants";
+import { ChevronDownIcon, PencilIcon } from "../../icons";
 import createPostStore from "../../store/createPostStore";
 import {uploadImage} from '../../utils/firebaseUtils';
 import "./createPost.scss";
+import PostingMenu from "./PostingMenu";
 
 type CreatePostProps = {};
 const CreatePost: React.FC<CreatePostProps> = () => {
@@ -17,6 +18,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
   const [body, setBody] = useState("");
   const [openPostMenu, setOpenPostMenu] = useState(false);
   const [urlMetadata, setUrlMetadata] = useState<any>(null);
+  const [postingArea, setPostingArea] = useState<string>("Public")
 
   const createPostModal = useCreatePostModal();
   const loginReminder = useLoginReminder();
@@ -92,27 +94,11 @@ const CreatePost: React.FC<CreatePostProps> = () => {
           className={openPostMenu ? "active" : "privacy"}
           onClick={handleOpenPostMenu}
         >
-          <p>{TEXT_CONSTANTS.POST_TO_PUBLIC}</p>
+          <p>Post to {postingArea}</p>
           <ChevronDownIcon size={17} color="black" />
 
           {openPostMenu && (
-            <div className="posting-menu">
-              <ul>
-                <li>
-                  <span>
-                    <GlobeIcon size={16} color={COLOR_CONSTANTS.ACCENT} />
-                  </span>
-                  Public
-                </li>
-                <li className="groups">
-                  My Groups
-                  <p>
-                    Join groups so you can share your thoughts and ideas with
-                    more people.
-                  </p>
-                </li>
-              </ul>
-            </div>
+           <PostingMenu setPostingArea={setPostingArea} />
           )}
         </div>
       </div>

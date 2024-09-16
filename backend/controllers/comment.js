@@ -156,23 +156,11 @@ export const getCommentById = (req, res) => {
     const commentId = req.params.commentId;
     if (!commentId) return res.status(400).json("Comment ID is required.");
 
+    // Query to only get the comment body
     const q = `
       SELECT
-        c.id,
-        c.user_id,
-        c.body,
-        c.image,
-        c.created_at,
-        c.updated_at,
-        JSON_OBJECT(
-          'id', u.id,
-          'name', u.name,
-          'username', u.username,
-          'avatar', u.avatar,
-          'isVerified', u.isVerified
-        ) AS user
+        c.body
       FROM defaultdb.comments c
-      JOIN defaultdb.users u ON c.user_id = u.id
       WHERE c.id = ?
       LIMIT 1;
     `;
@@ -180,7 +168,9 @@ export const getCommentById = (req, res) => {
     db.query(q, [commentId], (err, data) => {
       if (err) return res.status(500).json(err);
       if (data.length === 0) return res.status(404).json("Comment not found.");
-      return res.status(200).json(data[0]);
+      
+      // Return only the body
+      return res.status(200).json(data[0].body);
     });
   });
 };

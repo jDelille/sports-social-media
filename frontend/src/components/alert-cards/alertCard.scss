@@ -2,7 +2,7 @@
 @use '../../scss/mixins' as *;
 
 .alert-card {
-    padding: 10px 15px;
+    padding: 10px 0px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -30,6 +30,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        padding: 0 43px;
         .text {
             .name {
                 font-size: 14px;
@@ -74,5 +75,19 @@
     }
     .alert-content {
         font-size: 14px;
+    }
+    .post-body,
+    .comment-body {
+        padding: 0px 45px;
+        font-size: 14px;
+        padding-bottom: 3px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        a {
+            color: black;
+            text-decoration: none;
+            pointer-events: none;
+        }
     }
 }

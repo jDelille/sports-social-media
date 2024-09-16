@@ -43,23 +43,27 @@ const SuggestedUsers: React.FC<SuggestedUsersProps> = () => {
       ) : (
         <>
           <div className="users">
-            {users.map((user) => (
-              <div className="user" key={user.id}>
-                <div className="img">
-                  <Avatar src={user.avatar} username={user.username} />
-                </div>
-                <div className="text">
-                  <div className="name">
-                    <p className="user-name">{user.name}</p>
-                    {user?.isVerified === 1 && (
-                      <CheckIcon color="#ff4775" size={17} />
-                    )}
+            {users.map((user) => {
+              if (user.id !== currentUser.id) {
+                return (
+                  <div className="user" key={user.id}>
+                    <div className="img">
+                      <Avatar src={user.avatar} username={user.username} />
+                    </div>
+                    <div className="text">
+                      <div className="name">
+                        <p className="user-name">{user.name}</p>
+                        {user?.isVerified === 1 && (
+                          <CheckIcon color="#ff4775" size={17} />
+                        )}
+                      </div>
+                      <p className="username">@{user.username}</p>
+                    </div>
+                    <button className="follow-btn">Follow</button>
                   </div>
-                  <p className="username">@{user.username}</p>
-                </div>
-                <button className="follow-btn">Follow</button>
-              </div>
-            ))}
+                );
+              }
+            })}
           </div>
           <p className="show-more">Show more</p>
         </>

@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./groupCard.scss";
 import { MenuDotsIcon } from "../../icons";
-import { useInviteModal } from "../../hooks";
+import { useAxios, useInviteModal } from "../../hooks";
+import "./groupCard.scss";
 
 type GroupCardProps = {
   group: any;
 };
 const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
-  const navigate = useNavigate();
+  const [memberCount, setMemberCount] = useState<number>(1);
 
+  const navigate = useNavigate();
   const inviteModal = useInviteModal();
 
   const handleInviteClick = (e: any) => {
@@ -20,6 +21,20 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
   const handleGroupClick = () => {
     navigate(`/group/${group.id}`);
   };
+
+  useEffect(() => {
+    const fetchMemberCount = async () => {
+      try {
+        const response = await useAxios.get(`/group/member-count/${group.id}`);
+        
+        setMemberCount(response.data);
+      } catch (error) {
+        console.error("Error fetching member count:", error);
+      }
+    };
+    fetchMemberCount();
+  }, [])
+
 
   return (
     <div className="group-card" onClick={handleGroupClick}>
@@ -36,7 +51,7 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
           </div>
 
           {/* <p className="description">{group.description}</p> */}
-          <p className="members">2 members</p>
+          <p className="members">{memberCount + 1}  members</p>
           <p className="invite" onClick={(e) => handleInviteClick(e)}>
             invite
           </p>

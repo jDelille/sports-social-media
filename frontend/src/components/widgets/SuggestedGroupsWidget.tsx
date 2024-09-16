@@ -10,6 +10,7 @@ const SuggestedGroups: React.FC<SuggestedGroupsProps> = () => {
   const [groups, setGroups] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [memberCounts, setMemberCounts] = useState<{ [key: number]: number }>({});
 
   const navigate = useNavigate();
 
@@ -27,6 +28,27 @@ const SuggestedGroups: React.FC<SuggestedGroupsProps> = () => {
 
     fetchSuggestedGroups();
   }, []);
+
+  const fetchMemberCount = async (groupId: number) => {
+    try {
+      const response = await useAxios.get(`/group/member-count/${groupId}`);
+      setMemberCounts((prevCounts) => ({
+        ...prevCounts,
+        [groupId]: response.data, // Adjust the response structure if needed
+      }));
+    } catch (error) {
+      console.error("Error fetching member count:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch member count for each group after groups are loaded
+    if (groups.length > 0) {
+      groups.forEach((group) => {
+        fetchMemberCount(group.id);
+      });
+    }
+  }, [groups]);
 
   const capitalizeFirstLetter = (string: string) => {
     if (!string) return "";
@@ -67,7 +89,11 @@ const SuggestedGroups: React.FC<SuggestedGroupsProps> = () => {
                       {capitalizeFirstLetter(group.privacy)}
                     </p>
                     <p>•</p>
-                    <p>2.2k members</p>
+                    <p>
+                      {memberCounts[group.id] !== undefined
+                        ? `${memberCounts[group.id] + 1} members`
+                        : "Loading..."}
+                    </p>
                   </div>
                 </div>
               </div>

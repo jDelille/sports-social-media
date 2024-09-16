@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Alert } from "../../pages/Alerts";
 import { CommentIcon, LikeIcon, RepostIcon } from "../../icons";
 import { useAxios } from "../../hooks";
-import Post from "../post/Post";
 import { COLOR_CONSTANTS } from "../../constants";
 import { CommentTypes } from "../../types/CommentTypes";
-import CommentCard from "../comment-card/CommentCard";
 import "./alertCard.scss";
 
 type PostAlertCardProps = {
@@ -77,6 +75,29 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
 
   const icon = getIcon(alert.msg);
 
+  const moveTextInFrontOfLink = (body: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+  
+    const parts = body.split(urlRegex);
+  
+    const textParts = parts.filter(part => !urlRegex.test(part) && part.trim() !== "");
+    const urlParts = parts.filter(part => urlRegex.test(part));
+  
+    return (
+      <>
+        {textParts.join(" ")}
+        {urlParts.length > 0 && (
+          <>
+            <br />
+            <a href={urlParts[0]} target="_blank" rel="noopener noreferrer">
+              {urlParts[0]}
+            </a>
+          </>
+        )}
+      </>
+    );
+  };
+
 
 
   return (
@@ -93,8 +114,10 @@ const PostAlertCard: React.FC<PostAlertCardProps> = ({ alert }) => {
         <div className="error-message">{error}</div>
       ) : (
         <>
-          {post && <Post post={post} isAlertPage />}
-          {comment && <CommentCard comment={comment} username={alert.alerter.username} />}
+          {/* {post && <Post post={post} isAlertPage />}
+          {comment && <CommentCard comment={comment} username={alert.alerter.username} />} */}
+          {post && <p className="post-body">{post.metadata ? moveTextInFrontOfLink(post.body) : post.body}</p>}
+          {comment && <p className="comment-body">{comment.body}</p>}
         </>
       )}
     </div>

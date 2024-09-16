@@ -41,3 +41,21 @@ export const getSuggestedUsers = (req, res) => {
     return res.json(users);
   });
 };
+
+export const getMentionUsers = (req, res) => {
+
+  let q = `SELECT username FROM defaultdb.users`
+
+  db.query(q, (err, data) => {
+    if (err) return res.status(500).json(err);
+
+    if (!data || data.length === 0) {
+      return res.status(404).json({message: "No mention users found"});
+    }
+
+    const users = data.map((user) => user.username);
+    
+    res.status(200).json(users);
+
+  })
+}

@@ -26,8 +26,6 @@ const GroupSettings: React.FC<GroupSettingsProps> = ({
   setPrivacy,
   handleNext,
   setGroupName,
-  description,
-  setDescription,
   setProfileHeader,
   setProfilePicture,
   profilePicture,

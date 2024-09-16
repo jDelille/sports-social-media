@@ -82,10 +82,16 @@ const Post: React.FC<PostProps> = ({
     navigate(`/discover/hashtag/${hashtag}`);
   };
 
+  const handleMentionClick = (mention: string, e: any) => {
+    e.stopPropagation();
+    navigate(`/profile/${mention}`)
+  }
+
   const hideUrlsInBody = useHideUrlsInBody({
     handleHashtagClick,
     isHashtagPage: isHashtagPage || false,
-    hashtag: hashtag || ""
+    hashtag: hashtag || "",
+    handleMentionClick
   });
 
   if(loading) {

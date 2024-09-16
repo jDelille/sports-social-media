@@ -10,6 +10,7 @@ type PostMenuProps = {
   postId: number;
   type: string;
   imagePath: string;
+  username: string;
 };
 
 const PostMenu: React.FC<PostMenuProps> = ({
@@ -17,7 +18,8 @@ const PostMenu: React.FC<PostMenuProps> = ({
   onClose,
   postId,
   type,
-  imagePath
+  imagePath,
+  username
 }) => {
   const [error, setError] = useState<string | null>(null);
   const { menuRef, openUpwards } = useDynamicMenuPosition(isOpen, onClose);
@@ -52,6 +54,8 @@ const PostMenu: React.FC<PostMenuProps> = ({
       )}
       {/* Menu items */}
       <ul>
+        <li>Copy link to post</li>
+        <div className="divider"></div>
         <li>
           <MuteButton
             postId={postId}
@@ -63,6 +67,10 @@ const PostMenu: React.FC<PostMenuProps> = ({
         <li>
           <button onClick={(e) => handleDeletePost(e)}>Delete</button>
         </li>
+        <div className="divider"></div>
+        <li>Mute @{username}</li>
+        <li>Block @{username}</li>
+        <li>Report @{username}</li>
       </ul>
     </div>
   );

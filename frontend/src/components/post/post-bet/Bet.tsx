@@ -10,7 +10,7 @@ type BetProps = {
   betId: number;
 };
 
-const Bet: React.FC<BetProps> = ({ bets, betId}) => {
+const Bet: React.FC<BetProps> = ({ bets, betId }) => {
   if (bets.length === 0) {
     return null;
   }
@@ -19,13 +19,6 @@ const Bet: React.FC<BetProps> = ({ bets, betId}) => {
 
   const hasWager = true;
   const isParlay = false;
-
-  // const winCount =
-  //   post.bet.picks?.filter((pick) => pick.isWinner).length || 0;
-  // const lossCount =
-  //   post.bet.picks?.filter((pick) => !pick.isWinner).length || 0;
-  // const inProgressCount =
-  //   post.bet.picks?.filter((pick) => pick.isWinner === undefined).length || 0;
 
   const onGameClick = (e: any, league: string, gameId: string) => {
     e.stopPropagation();
@@ -37,11 +30,6 @@ const Bet: React.FC<BetProps> = ({ bets, betId}) => {
       <div className="info">
         {isParlay && <p className="info-title">{bets.length}-Leg Parlay</p>}
         {!isParlay && <p className="info-title">{bets.length}-Pick Entry</p>}
-        {/* <div className="ratio">
-          {winCount > 0 && <p>{winCount} wins</p>}
-          {lossCount > 0 && <p> {lossCount} loss</p>}
-          {inProgressCount > 0 && <p> {inProgressCount} in-progress</p>}
-        </div> */}
       </div>
 
       {bets.map((bet: Pick, index: number) => {
@@ -57,11 +45,18 @@ const Bet: React.FC<BetProps> = ({ bets, betId}) => {
           handicap: bet.handicap,
           userId: bet.user_id as number,
           betId: betId,
-          status: bet.status
+          status: bet.status,
         });
 
-        const isWinningBet = bet.is_winner === 1
+        const isWinningBet = bet.is_winner === 1;
         const isInProgress = bet.status === "pending";
+
+        const accurateHandicap =
+          bet.handicap === null
+            ? ""
+            : parseFloat(bet.handicap) < 0
+            ? bet.handicap
+            : `+${bet.handicap}`;
 
         return (
           <div className="bet-container">
@@ -79,7 +74,7 @@ const Bet: React.FC<BetProps> = ({ bets, betId}) => {
               <p className="description">
                 {bet.bet_type} <p>&#8226;</p>{" "}
                 <span>
-                  {bet.chosen_team} {bet.handicap}
+                  {bet.chosen_team} {accurateHandicap}
                 </span>
                 {bet.is_boosted === 1 && (
                   <div className="boosted">
