@@ -30,6 +30,7 @@ export const checkMoneyline = async (req, res) => {
 
     const status = game.status.type;
 
+
     if (!status.completed) {
       return res.status(200).json({ message: "Game not completed yet." });
     }

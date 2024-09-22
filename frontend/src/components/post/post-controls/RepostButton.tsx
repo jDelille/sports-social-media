@@ -64,8 +64,6 @@ const RepostButton: React.FC<RepostButtonProps> = ({
     }
   };
 
-  console.log(repostCount)
-
   const { mutate } = useMutation({
     mutationFn: handleRepost,
     onSettled: async () => {

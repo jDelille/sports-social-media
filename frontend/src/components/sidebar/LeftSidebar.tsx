@@ -98,7 +98,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
                 icon={<BellIcon size={20} color="#888595" />}
               />
               <MenuItem
-                to="/matches/nfl"
+                to="/matches"
                 label="Matches"
                 icon={<TrophyIcon size={20} color="#888595" />}
               />

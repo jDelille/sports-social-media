@@ -23,7 +23,6 @@ const PostFooter: React.FC<PostFooterProps> = ({ type, post, commentId }) => {
   const { likes } = useFetchLikes(validPostId, validType);
   const { comments } = useFetchComments(validPostId, validType);
   const { repostedStatus } = useFetchRepostStatus(validPostId, validType);
-  console.log(repostedStatus)
 
   const hasLiked = likes?.includes(currentUserId);
   const hasReposted = repostedStatus?.reposted;

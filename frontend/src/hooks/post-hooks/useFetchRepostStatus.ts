@@ -10,7 +10,6 @@ const useFetchRepostStatus = (postId: number, type: string) => {
     queryKey: ["reposts", postId, type],
     queryFn: async () => {
       const res = await useAxios.get(`/reposts?postId=${postId}&type=${type}`);
-      console.log(res)
       return res.data;
     },
   });
