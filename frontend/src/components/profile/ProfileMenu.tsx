@@ -9,7 +9,7 @@ import {
   UserIcon,
 } from "../../icons";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { handleCopyLink } from "../../hooks/actions/useHandleCopyLink";
 
 type ProfileMenuProps = {
   isUserProfile: boolean;
@@ -19,16 +19,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ isUserProfile, username}) => 
     const navigate = useNavigate();
 
     const handleCopyLinkToProfile = () => {
-        const profileUrl = `${window.location.origin}/profile/${username}`; 
-        navigator.clipboard
-        .writeText(profileUrl)
-        .then(() => {
-          toast.success("Profile link copied to clipboard!"); 
-        })
-        .catch((err) => {
-          toast.error("Failed to copy the profile link"); 
-          console.error("Failed to copy: ", err);
-        });
+        handleCopyLink('profile', username)
       };
 
   return (

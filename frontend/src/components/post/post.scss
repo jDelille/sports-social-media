@@ -10,7 +10,7 @@
   transition: all 200ms ease-in-out;
 
   &:hover {
-    background-color: darken(white, 1%);
+    background-color: darken(white, 0.5%);
     cursor: pointer;
     border-radius: 1px solid $lightBorderColor;
   }

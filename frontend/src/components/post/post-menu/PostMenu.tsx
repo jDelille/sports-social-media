@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { RefObject, useState } from "react";
 import useDynamicMenuPosition from "../../../hooks/post-hooks/useDynamicMenuPosition";
 import { useDeletePopup, useFetchMutedPosts } from "../../../hooks";
 import { MuteButton } from "../post-controls";
+import { handleCopyLink } from "../../../hooks/actions/useHandleCopyLink";
 import "./postMenu.scss";
 
 type PostMenuProps = {
@@ -11,6 +12,7 @@ type PostMenuProps = {
   type: string;
   imagePath: string;
   username: string;
+  buttonRef: RefObject<HTMLElement>
 };
 
 const PostMenu: React.FC<PostMenuProps> = ({
@@ -19,10 +21,12 @@ const PostMenu: React.FC<PostMenuProps> = ({
   postId,
   type,
   imagePath,
-  username
+  username,
+  buttonRef
 }) => {
   const [error, setError] = useState<string | null>(null);
-  const { menuRef, openUpwards } = useDynamicMenuPosition(isOpen, onClose);
+
+  const { menuRef, openUpwards } = useDynamicMenuPosition(isOpen, onClose, buttonRef);
   const deletePopup = useDeletePopup();
 
   const { muted } = useFetchMutedPosts(postId, type);
@@ -38,6 +42,12 @@ const PostMenu: React.FC<PostMenuProps> = ({
     }
   };
 
+  const handleCopyPostLink = (e: any) => {
+    e.stopPropagation();
+    handleCopyLink("post", postId);
+  };
+
+
   if (!isOpen) {
     return null;
   }
@@ -49,14 +59,11 @@ const PostMenu: React.FC<PostMenuProps> = ({
       }`}
       ref={menuRef}
     >
-      {error && (
-        <div>error</div>
-      )}
-      {/* Menu items */}
+      {error && <div>error</div>}
       <ul>
-        <li>Copy link to post</li>
+        <li onClick={handleCopyPostLink}>Copy link to post</li>
         <div className="divider"></div>
-        <li>
+        <li >
           <MuteButton
             postId={postId}
             type={type}
@@ -64,8 +71,8 @@ const PostMenu: React.FC<PostMenuProps> = ({
             hasMuted={hasMuted}
           />
         </li>
-        <li>
-          <button onClick={(e) => handleDeletePost(e)}>Delete</button>
+        <li onClick={(e) => handleDeletePost(e)}>
+          Delete
         </li>
         <div className="divider"></div>
         <li>Mute @{username}</li>

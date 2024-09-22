@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import UserTypes from "../../types/User";
 import PostTypes from "../../types/Post";
 import moment from "moment";
@@ -21,6 +21,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   hideMenu,
 }) => {
   const [openMenu, setOpenMenu] = useState(false);
+  const buttonRef = useRef<HTMLParagraphElement>(null);
 
   const handleMenuClose = () => {
     setOpenMenu(false);
@@ -51,7 +52,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
 
   const handleMenuClick = (e: any) => {
     e.stopPropagation();
-    setOpenMenu(!openMenu);
+    setOpenMenu((prev) => !prev);
   };
 
   return (
@@ -72,7 +73,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
 
       {!hideMenu && !quoteReposted && (
         <div className="menu">
-          <p onClick={(e) => handleMenuClick(e)}>
+          <p onClick={(e) => handleMenuClick(e)} ref={buttonRef}>
             <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
           </p>
           <PostMenu
@@ -82,6 +83,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
             type={post?.type}
             imagePath={post?.image}
             username={post.user.username}
+            buttonRef={buttonRef}
           />
         </div>
       )}

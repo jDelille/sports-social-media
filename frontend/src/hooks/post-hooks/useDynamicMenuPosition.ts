@@ -1,11 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 
-const useDynamicMenuPosition = (isOpen: boolean, onClose: () => void) => {
+const useDynamicMenuPosition = (
+  isOpen: boolean, 
+  onClose: () => void, 
+  buttonRef: React.RefObject<HTMLElement> // Add buttonRef to handle button clicks
+) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [openUpwards, setOpenUpwards] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      // If the click is on the button, don't close the menu
+      if (buttonRef.current && buttonRef.current.contains(event.target as Node)) {
+        return;
+      }
+
+      // If the click is outside the menu, close it
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         onClose();
       }
@@ -38,7 +48,7 @@ const useDynamicMenuPosition = (isOpen: boolean, onClose: () => void) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, buttonRef]);
 
   return { menuRef, openUpwards };
 };

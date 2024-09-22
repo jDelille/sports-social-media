@@ -28,7 +28,7 @@ const Post: React.FC<PostProps> = ({
   post,
   isHashtagPage,
   isPostDetailsPage,
-  isAlertPage
+  isAlertPage,
 }) => {
   if (!post) {
     return null; // Ensure null is returned when post is falsy.
@@ -47,7 +47,6 @@ const Post: React.FC<PostProps> = ({
     if (post.bet_id === null || post.bet_id === undefined) {
       return;
     }
-
 
     const fetchBet = async () => {
       setLoading(true); // Set loading to true when fetching begins
@@ -85,22 +84,25 @@ const Post: React.FC<PostProps> = ({
 
   const handleMentionClick = (mention: string, e: any) => {
     e.stopPropagation();
-    navigate(`/profile/${mention}`)
-  }
+    navigate(`/profile/${mention}`);
+  };
 
   const hideUrlsInBody = useHideUrlsInBody({
     handleHashtagClick,
     isHashtagPage: isHashtagPage || false,
     hashtag: hashtag || "",
-    handleMentionClick
+    handleMentionClick,
   });
 
-  if(loading) {
-    return <PostSkeleton />
+  if (loading) {
+    return <PostSkeleton />;
   }
-  
+
   return (
-    <div className={isAlertPage ? "alert-post" : "post"} onClick={navigateToPost}>
+    <div
+      className={isAlertPage ? "alert-post" : "post"}
+      onClick={navigateToPost}
+    >
       {post.type === "repost" && (
         <div className="reposter">
           <RepostIcon size={15} color={COLOR_CONSTANTS.REPOST_COLOR} />

@@ -29,8 +29,8 @@ const UserDetails: React.FC<UserDetailsProps> = ({
   const isUserProfile = currentUser?.id === user?.id;
 
   const handleOpenMenu = (e: React.MouseEvent) => {
-    e.stopPropagation();  // Prevent the click event from bubbling up
-    setIsMenuOpen((prev) => !prev);  // Toggle the menu state
+    e.stopPropagation(); 
+    setIsMenuOpen((prev) => !prev);  
   };
 
   useClickOutside(menuRef, (event) => {

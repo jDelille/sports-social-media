@@ -55,13 +55,16 @@ const DeletePost: React.FC<DeletePostProps> = () => {
 
   const bodyContent = (
     <div className="delete-post">
+      <p className="title">Delete post</p>
       <p className="message">Are you sure you want to delete your post?</p>
       <ul className="action-btn-list">
         <li>
-          <button onClick={() => handleDeleteClick(postId)} className="delete-btn">Delete</button>
+        <button onClick={deletePopup.onClose} className="cancel-btn">Cancel</button>
+
         </li>
         <li>
-          <button onClick={deletePopup.onClose} className="cancel-btn">Cancel</button>
+        <button onClick={() => handleDeleteClick(postId)} className="delete-btn">Delete</button>
+
         </li>
       </ul>
     </div>
