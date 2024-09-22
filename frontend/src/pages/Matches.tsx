@@ -39,6 +39,16 @@ const Matches: React.FC<MatchesProps> = () => {
 
   useEffect(() => {
     const fetchOdds = async () => {
+      const cacheKey = `${sport}-${league}`;
+      const cachedData = localStorage.getItem(cacheKey);
+  
+      if (cachedData) {
+        // Use cached data if available
+        setMatches(JSON.parse(cachedData));
+        return;
+      }
+  
+      // If no cached data, fetch from APIs
       setLoading(true);
       try {
         const bovadaResponse = await useAxios.get(`/odds/${sport}/${league}`);
@@ -46,6 +56,9 @@ const Matches: React.FC<MatchesProps> = () => {
         const bovadaData = bovadaResponse.data;
         const espnData = espnResponse.data.events;
         const combinedData = combineData(bovadaData, espnData);
+  
+        // Store data in localStorage for future use
+        localStorage.setItem(cacheKey, JSON.stringify(combinedData));
         setMatches(combinedData);
       } catch (error) {
         console.error("Error fetching odds:", error);
@@ -53,6 +66,7 @@ const Matches: React.FC<MatchesProps> = () => {
         setLoading(false);
       }
     };
+  
     fetchOdds();
   }, [sport, league]);
 

@@ -45,11 +45,16 @@ const UserDetails: React.FC<UserDetailsProps> = ({
     navigate(`/discover/hashtag/${hashtag}`);
   };
 
+  const handleMentionClick = (mention: string, e: any) => {
+    e.stopPropagation();
+    navigate(`/profile/${mention}`)
+  }
 
   const hideUrlsInBody = useHideUrlsInBody({
     handleHashtagClick,
     isHashtagPage: false,
-    hashtag: ""
+    hashtag: "",
+    handleMentionClick
   });
 
   return (

@@ -7,6 +7,7 @@ import FollowingPosts from "../components/feed/FollowingPosts";
 import "./page.scss";
 import { AuthContext } from "../context/AuthContext";
 import BetFeed from "../components/feed/BetFeed";
+import NewsFeed from "../components/feed/NewsFeed";
 
 type HomeProps = {};
 const Home: React.FC<HomeProps> = () => {
@@ -33,6 +34,10 @@ const Home: React.FC<HomeProps> = () => {
 
       {selectedFeed === "bets" && (
         <BetFeed username={"jdeli"} />
+      )}
+
+      {selectedFeed === "news" && (
+        <NewsFeed />
       )}
     </div>
   );

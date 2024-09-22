@@ -2,7 +2,6 @@ import React from "react";
 import SiteLinks from "../site-links/SiteLinks";
 import {
   CreateGroupWidget,
-  LeaderboardWidget,
   SuggestedGroupsWidget,
   SuggestedUsersWidget,
 } from "../widgets";
@@ -29,7 +28,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({ currentUser }) => {
             ) : (
               <>
                 <SuggestedUsersWidget />
-                <LeaderboardWidget />
+                {/* <LeaderboardWidget /> */}
               </>
             )}
             <SuggestedGroupsWidget />

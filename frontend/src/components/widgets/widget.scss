@@ -145,4 +145,18 @@
     width: 300px;
     height: 200px;
   }
+  .news-card {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    .categories {
+      width: 100%;
+      display: flex;
+      
+      .category {
+        font-size: 12px;
+      }
+    }
+  }
 }

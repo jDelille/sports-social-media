@@ -43,9 +43,6 @@ const Post: React.FC<PostProps> = ({
   const { likes } = useFetchLikes(post.id, post.type);
   const { comments } = useFetchComments(post.id, post.type);
 
-  console.log(post)
-
-
   useEffect(() => {
     if (post.bet_id === null || post.bet_id === undefined) {
       return;
@@ -101,9 +98,7 @@ const Post: React.FC<PostProps> = ({
   if(loading) {
     return <PostSkeleton />
   }
-
-  console.log(bets)
-
+  
   return (
     <div className={isAlertPage ? "alert-post" : "post"} onClick={navigateToPost}>
       {post.type === "repost" && (

@@ -15,6 +15,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = observer(
   ({ user, setSelectedFeed }) => {
     const { currentUser } = useContext(AuthContext);
 
+    console.log("ProfileHeader props:", { user });
+
+
     return (
       <div className="profile-header">
         <AvatarSection user={user} />

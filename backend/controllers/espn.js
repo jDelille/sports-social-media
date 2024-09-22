@@ -21,7 +21,23 @@ export const getGameData = async (req, res) => {
     const response = await axios.get(url);
     res.json(response.data);
   } catch (error) {
-    console.error("Error fetching ESPN data:", error);
-    res.status(500).send("Error fetching ESPN data");
+    console.error("Error fetching ESPN game data:", error);
+    res.status(500).send("Error fetching ESPN game data");
+  }
+};
+
+export const getESPNNFLNews = async (req, res) => {
+  const url = `https://site.api.espn.com/apis/site/v2/sports/football/nfl/news`;
+  console.log("Fetching data from URL:", url);  // Log the URL
+  try {
+    const response = await axios.get(url);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error fetching ESPN news:", {
+      message: error.message,
+      response: error.response?.data,
+      config: error.config
+    });
+    res.status(500).send("Error fetching ESPN news.");
   }
 };
