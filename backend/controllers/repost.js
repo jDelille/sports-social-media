@@ -81,18 +81,43 @@ export const isPostReposted = (req, res) => {
   jwt.verify(token, process.env.SECRET_KEY, (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid");
 
-    const postId = req.params.postId;
+    const { postId } = req.query;
+
     if (!postId) return res.status(400).json("Post ID is required.");
 
-    const q = `SELECT * FROM defaultdb.reposts WHERE postId = ? AND reposterId = ?`;
+    // Query to check if the post has been reposted by the current user
+    const repostStatusQuery = `
+      SELECT * 
+      FROM defaultdb.reposts 
+      WHERE reposted_post_id = ? AND reposter_id = ?`;
 
-    db.query(q, [postId, userInfo.id], (err, data) => {
+    // Query to get the total repost count for the post
+    const repostCountQuery = `
+      SELECT COUNT(*) AS repostCount 
+      FROM defaultdb.reposts 
+      WHERE reposted_post_id = ?`;
+
+    db.query(repostStatusQuery, [postId, userInfo.id], (err, repostStatusData) => {
       if (err) {
         console.error("Database query error:", err);
         return res.status(500).json("Database query error.");
       }
-      if (data.length === 0) return res.status(404).json("No repost found.");
-      return res.status(200).json(data[0]);
+
+      const hasReposted = repostStatusData.length > 0;
+
+      db.query(repostCountQuery, [postId], (err, repostCountData) => {
+        if (err) {
+          console.error("Database query error:", err);
+          return res.status(500).json("Database query error.");
+        }
+
+        const repostCount = repostCountData[0].repostCount;
+
+        return res.status(200).json({
+          reposted: hasReposted,
+          count: repostCount,
+        });
+      });
     });
   });
 };
