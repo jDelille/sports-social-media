@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import betslipStore from "../../store/betslipStore";
 import Toggle from "../toggle/Toggle";
-import "./betcontrols.scss";
 import { useAxios } from "../../hooks";
 import { AuthContext } from "../../context/AuthContext";
+import "./betcontrols.scss";
 
-type BetControlsProps = {};
-const BetControls: React.FC<BetControlsProps> = () => {
+type BetControlsProps = {
+  canParlay: any;
+};
+const BetControls: React.FC<BetControlsProps> = ({ canParlay }) => {
   const [parlayChecked, setParlayChecked] = useState(betslipStore.isParlay);
   const [decimalChecked, setDecimalChecked] = useState(
     betslipStore.decimalOdds
@@ -17,7 +19,7 @@ const BetControls: React.FC<BetControlsProps> = () => {
   const betstore = betslipStore;
   const [isParticipant, setIsParticipant] = useState(false);
 
-  const {currentUser} = useContext(AuthContext) || {};
+  const { currentUser } = useContext(AuthContext) || {};
 
   useEffect(() => {
     setParlayChecked(betstore.isParlay);
@@ -35,7 +37,7 @@ const BetControls: React.FC<BetControlsProps> = () => {
 
   const handleParticipantToggle = () => {
     setParticipantChecked(!participantChecked);
-  }
+  };
 
   useEffect(() => {
     const checkIfParticipant = async () => {
@@ -66,18 +68,21 @@ const BetControls: React.FC<BetControlsProps> = () => {
 
       {!loading && !error && (
         <div className="control">
-          <div className="parlay">
-            <div className="text">
-              <p className="title">Parlay</p>
-              <span className="info">
-                Turning this on will remove individual bets.
-              </span>
+          {canParlay && (
+            <div className="parlay">
+              <div className="text">
+                <p className="title">Parlay</p>
+                <span className="info">
+                  Turning this on will remove individual bets.
+                </span>
+              </div>
+              <Toggle
+                handleToggle={handleParlayToggle}
+                isToggled={parlayChecked}
+              />
             </div>
-            <Toggle
-              handleToggle={handleParlayToggle}
-              isToggled={parlayChecked}
-            />
-          </div>
+          )}
+
           {isParticipant && (
             <div className="participating-bet">
               <div className="text">

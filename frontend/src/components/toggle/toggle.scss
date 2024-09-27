@@ -2,7 +2,7 @@
 
 .toggle,
 .selected-toggle {
-  border: 2px solid $accent;
+  border: 2px solid #e0e7ff;
   width: 25px;
   height: 25px;
   border-radius: 50%;
@@ -14,5 +14,5 @@
   }
 }
 .selected-toggle {
-  background-color: $accent;
+  background-color: darken(#e0e7ff, 30%);
 }

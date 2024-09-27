@@ -72,7 +72,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
       </div>
 
       {!hideMenu && !quoteReposted && (
-        <div className="menu">
+        <div className={openMenu ? "open-menu" : "menu"}>
           <p onClick={(e) => handleMenuClick(e)} ref={buttonRef}>
             <MenuIcon color={COLOR_CONSTANTS.LIGHTGRAY} size={20} />
           </p>

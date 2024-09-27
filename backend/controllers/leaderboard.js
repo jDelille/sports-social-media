@@ -13,7 +13,7 @@ export const getLeaderboardUsers = (req, res) => {
         if (err) return res.status(403).json("Token is not valid");
 
         const q = `
-        SELECT lu.*, u.username, u.email 
+        SELECT lu.*, u.username, u.email, u.avatar 
         FROM defaultdb.leaderboard_users lu
         JOIN defaultdb.users u ON lu.user_id = u.id
         ORDER BY lu.wins DESC;

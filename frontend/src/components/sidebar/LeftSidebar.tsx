@@ -112,6 +112,11 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ currentUser }) => {
                 label="Profile"
                 icon={<ProfileIcon size={20} color="#888595" />}
               />
+               <MenuItem
+                to="/leaderboard"
+                label="Leaderboard"
+                icon={<TrophyIcon size={20} color="#888595" />}
+              />
               <MenuItem
                 to="/bet-history"
                 label="Bet History"

@@ -37,16 +37,23 @@ const MarketCard: React.FC<MarketCardProps> = ({ market, teams, eventId }) => {
     betslip.onOpen();
   };
 
+  const isTrackedBet = ["Moneyline", "Runline", "Total"].includes(market.description);
+
+  console.log(market.period.description)
+  
   return (
     <div
       className="market-card"
       onClick={() => setHasClickedMarket(!hasClickedMarket)}
     >
       <div key={market.description} className="market-info">
-        <p className="description">
+        <div className="description">
           {market.description} <span>- {market.period.description}</span>
+          {isTrackedBet && market.period.description === "Game" && (
+            <div className="tracked-badge">Tracked bet</div>
+          )}
           <ChevronDownIcon size={20} color="black" />
-        </p>
+        </div>
 
         {hasClickedMarket && (
           <div className="market1">

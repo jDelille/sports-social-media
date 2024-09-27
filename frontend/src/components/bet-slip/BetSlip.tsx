@@ -7,7 +7,7 @@ import BetAmount from "./BetAmount";
 import EmptyState from "./EmptyState";
 import BetControls from "./BetControls";
 import Modal from "../modals/modal/Modal";
-import './betslip.scss';
+import "./betslip.scss";
 
 const BetSlip: React.FC = observer(() => {
   const betSlip = useBetSlip();
@@ -25,14 +25,15 @@ const BetSlip: React.FC = observer(() => {
       return <EmptyState />;
     }
 
+
     return (
       <div className="bet-content-wrapper">
         {picks.map((pick) => (
           <BetSlipPick key={pick.id} pick={pick} />
         ))}
-        {betstore.isParlay && <BetAmount />}
-        <BetControls />
-    
+        {betstore.isParlay && <BetAmount isDecimal={betslipStore.decimalOdds} />}
+        <BetControls canParlay={picks.length > 1} />
+
         <button
           className="confirm-btn"
           onClick={handleConfirmPicks}
@@ -40,7 +41,6 @@ const BetSlip: React.FC = observer(() => {
         >
           Confirm Picks
         </button>
-     
       </div>
     );
   };

@@ -79,11 +79,11 @@ const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
           </div>
         </div>
         <div className="price-wrapper">
-          {/* <p className="price">
+          <p className="price">
             {betslipStore.decimalOdds
-              ? parseFloat(pick.decimal).toFixed(2)
+              ? parseFloat(pick.decimal_odds).toFixed(2)
               : pick.price}
-          </p> */}
+          </p>
           {!betslipStore.isParlay && (
             <>
               <div className="input-wrapper">
@@ -93,7 +93,7 @@ const BetInfo: React.FC<{ pick: Pick }> = observer(({ pick }) => {
                   min="0"
                   step="0.01"
                   onChange={handleWagerChange}
-                  placeholder="Enter wager"
+                  placeholder="0.00"
                 />
               </div>
               <p className="payout">Payout: ${payout.toFixed(2)}</p>

@@ -1,3 +1,5 @@
+@use '../../scss/variables' as *;
+
 .labels {
     margin-top: 20px;
     height: 50px;
@@ -18,17 +20,14 @@
         display: flex;
         justify-content: space-between;
         width: 70%;
+        color: #6c757d;
+
         .wins,
-        .loss,
+        .profit,
         .odds {
             flex: 1;
-        }
-        .wagered {
-            flex: 1;
-        }
-        .profit {
-            flex: 1;
-
+            display: flex;
+            justify-content: center;
         }
       
     }
@@ -50,21 +49,31 @@
     }
     .player {
         width: 25%;
+        color: $accent;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        img {
+            max-width: 23px;
+            border-radius: 50%;
+        }
     }
     .stats {
         display: flex;
         justify-content: space-between;
         width: 70%;
+        
         .wins,
-        .loss,
+        .profit,
         .odds {
             flex: 1;
-        }
-        .wagered {
-            flex: 1;
-        }
-        .profit {
-            flex: 1;
+            display: flex;
+            justify-content: center;
+            color: #6c757d;
 
         }
     }

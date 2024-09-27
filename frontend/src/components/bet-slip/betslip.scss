@@ -1,10 +1,12 @@
 @use "../../scss/variables" as *;
+@use "../../scss/mixins" as *;
 
 .bet-content-wrapper {
   max-height: 580px;
   overflow-y: auto;
   overflow-x: hidden;
   margin: 1rem 0;
+  margin-top: 0;
   padding: 1rem 0;
   padding-bottom: 0;
   display: flex;
@@ -12,6 +14,7 @@
   gap: 1rem;
   position: relative;
   padding-right: 0.75rem;
+  height: 100%;
 }
 .bet-content {
   display: flex;
@@ -24,8 +27,6 @@
   position: relative;
   max-height: 200px;
   .info-wrapper {
-    // display: flex;
-    // align-items: center;
     gap: 1rem;
     width: 100%;
     .info {
@@ -174,20 +175,19 @@
 }
 
 .confirm-btn {
-  background-color: #6947ff;
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 22px;
-  font-size: 14px;
-  color: white;
   width: 100%;
-  // margin-top: 15px;
+  @include button_lg();
+  font-size: 15px;
+  font-weight: 500;
+
+  margin: 0;
   &:hover {
     cursor: pointer;
-    background-color: lighten(#6947ff, 3%);
   }
   &:disabled {
-    background-color: lighten(#6947ff, 10%);
     cursor: default;
     pointer-events: none;
   }
